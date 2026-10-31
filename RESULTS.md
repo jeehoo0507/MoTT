@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-10-31 12:37 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-10-31 13:08 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -41,7 +41,7 @@
 | r2a_s2_rl | 0.98 / 0.74 / 1.01 [50] | – | 0.92 / 0.83 / 0.21 [50] | – | 0.80 / 0.91 / 0.62 [50] | – |
 | r2am_rl | 1.00 / 0.74 / 1.01 [50] | – | 0.94 / 0.83 / 0.19 [50] | – | 0.86 / 0.85 / 0.61 [50] | – |
 | r3_loop_distill | 0.82 / 0.77 / 1.03 [50] | – | 0.84 / 0.86 / 0.24 [50] | – | 0.80 / 0.89 / 0.65 [50] | – |
-| r3_loop_rl | 0.98 / 0.74 / 1.01 [50] | – | 0.84 / 0.84 / 0.22 [50] | 0.92 / 0.96 / 0.28 [25] | 0.88 / 0.84 / 0.59 [50] | – |
+| r3_loop_rl | 0.98 / 0.74 / 1.01 [50] | – | 0.84 / 0.84 / 0.22 [50] | 0.92 / 0.96 / 0.28 [25] | 0.88 / 0.84 / 0.59 [50] | 0.56 / 0.71 / 0.47 [25] |
 | r3_loop_rl@R16 | 1.00 / 0.74 / 1.01 [50] | – | 0.78 / 0.89 / 0.26 [50] | – | 0.78 / 0.83 / 0.57 [50] | – |
 | r3_loop_rl@R2 | 1.00 / 0.74 / 1.01 [50] | – | 0.90 / 0.88 / 0.20 [50] | – | 0.74 / 0.84 / 0.59 [50] | – |
 | r3_loop_rl@R4 | 1.00 / 0.74 / 1.01 [50] | – | 0.88 / 0.85 / 0.21 [50] | – | 0.88 / 0.82 / 0.59 [50] | – |
@@ -176,6 +176,7 @@
 | pkg 16 | r0_coord_rl | 25 | -0.24 [-0.52, +0.04] | 0.471 [0.344, 0.604] |
 | pkg 16 | r1_modal_rl | 25 | -0.36 [-0.64, -0.08] | 0.447 [0.345, 0.556] |
 | pkg 16 | r2_mott_rl | 25 | -0.36 [-0.60, -0.08] | 0.445 [0.308, 0.643] |
+| pkg 16 | r3_loop_rl | 25 | -0.24 [-0.44, -0.04] | 0.469 [0.353, 0.584] |
 
 ## greedy+prune 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
@@ -306,6 +307,7 @@
 | pkg 16 | r0_coord_rl | 50 | -0.18 [-0.36, -0.02] | 0.633 [0.533, 0.735] |
 | pkg 16 | r1_modal_rl | 25 | -0.36 [-0.56, -0.12] | 0.742 [0.618, 0.874] |
 | pkg 16 | r2_mott_rl | 25 | -0.36 [-0.60, -0.12] | 0.830 [0.659, 1.019] |
+| pkg 16 | r3_loop_rl | 25 | -0.24 [-0.48, +0.00] | 0.709 [0.524, 0.890] |
 
 ## 비학습 모달 규칙 `modal_rule` (US 6789241식, 공진 피크에 SRF 맞는 decap) 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
@@ -345,6 +347,7 @@
 | pkg 16 | r0_coord_rl | 50 | +0.04 [-0.12, +0.20] | 0.820 [0.766, 0.872] |
 | pkg 16 | r1_modal_rl | 25 | -0.24 [-0.48, +0.00] | 0.819 [0.770, 0.863] |
 | pkg 16 | r2_mott_rl | 25 | -0.24 [-0.48, +0.00] | 0.845 [0.745, 0.981] |
+| pkg 16 | r3_loop_rl | 25 | -0.12 [-0.40, +0.12] | 0.952 [0.872, 1.063] |
 
 ## 3단 + 주파수 궁합 편향 (dec_from_mode): `r3a_rl` vs 같은 단 편향 없는 `r3_loop_rl` 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
@@ -378,6 +381,7 @@
 | pcb 10 | r3_loop_rl | 50 | -0.04 [-0.16, +0.08] | 1.061 [0.994, 1.130] |
 | pcb 16 | r3_loop_rl | 25 | +0.00 [-0.16, +0.16] | 1.065 [0.977, 1.157] |
 | pkg 10 | r3_loop_rl | 50 | +0.16 [+0.06, +0.28] | 0.959 [0.909, 1.008] |
+| pkg 16 | r3_loop_rl | 25 | +0.12 [-0.12, +0.36] | 1.097 [0.977, 1.206] |
 
 ## 증류 → RL: 같은 단 `*_rl` vs `*_distill` 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
@@ -558,6 +562,7 @@
 | r0_coord_rl | 50 (0, 1) | 0.64 | 8.66 | 0.633 | 0.471 | 34.125 | `runs/2026-10-28/r0_coord_rl/eval/eval_pkg16_0__r0_coord_rl.json`, `runs/2026-10-28/r0_coord_rl/eval/eval_pkg16_1__r0_coord_rl.json` |
 | r1_modal_rl | 25 (0) | 0.44 | 7.09 | 0.742 | 0.447 | 5.414 | `runs/2026-10-28/r1_modal_rl/eval/eval_pkg16_0__r1_modal_rl.json` |
 | r2_mott_rl | 25 (0) | 0.44 | 7.73 | 0.830 | 0.445 | 4.992 | `runs/2026-10-28/r2_mott_rl/eval/eval_pkg16_0__r2_mott_rl.json` |
+| r3_loop_rl | 25 (0) | 0.56 | 10.43 | 0.709 | 0.469 | 4.344 | `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_0__r3_loop_rl.json` |
 
 ## decap 종류 비율 (놓인 decap 중, 정확 검사 성공/실패 문제별; 종류 0 = C가 가장 큰 것, `decap_loop/techs.py`)
 
@@ -797,6 +802,8 @@
 | pkg 16 | r1_modal_rl | 실패 | 14 | 14.1 | 0.56 | 0.14 | 0.31 |
 | pkg 16 | r2_mott_rl | 성공 | 11 | 7.7 | 0.22 | 0.14 | 0.64 |
 | pkg 16 | r2_mott_rl | 실패 | 14 | 14.7 | 0.42 | 0.09 | 0.50 |
+| pkg 16 | r3_loop_rl | 성공 | 14 | 10.4 | 0.30 | 0.12 | 0.58 |
+| pkg 16 | r3_loop_rl | 실패 | 11 | 13.5 | 0.59 | 0.09 | 0.32 |
 
 ## greedy+prune 실패 문제의 최악 주파수 (`scripts/analyze_ip_gp_fail.py`, 기록된 occ로 정확 검사 격자 재계산)
 
@@ -821,6 +828,7 @@
 | eval_ip10_1 | 0 (100 pF, 5 pH, 0.05 Ω) | 1.00 | 8.68 | 0.707 | 1.000 | 0.40 | 0.96 | 0.135 | `runs/analysis/gp_one_type/eval_ip10_1__greedy+prune@type0.json` |
 | eval_ip10_1 | 1 (20 pF, 2 pH, 0.1 Ω) | 0.24 | 33.67 | 5.351 | 9.224 | 0.40 | 0.96 | 4.317 | `runs/analysis/gp_one_type/eval_ip10_1__greedy+prune@type1.json` |
 | eval_ip10_1 | 2 (5 pF, 1 pH, 0.2 Ω) | 0.00 | – | – | – | 0.40 | 0.96 | 5.372 | `runs/analysis/gp_one_type/eval_ip10_1__greedy+prune@type2.json` |
+| eval_ip16_0 | 0 (100 pF, 5 pH, 0.05 Ω) | 1.00 | 11.52 | 0.277 | – | 0.64 | – | 1.291 | `runs/analysis/gp_one_type/eval_ip16_0__greedy+prune@type0.json` |
 | eval_pcb10_0 | 0 (10000 pF, 100 pH, 0.02 Ω) | 0.04 | 32.00 | 4.571 | 4.571 | 1.00 | 0.84 | 9.110 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type0.json` |
 | eval_pcb10_0 | 1 (1000 pF, 30 pH, 0.05 Ω) | 0.72 | 48.39 | 5.002 | 6.485 | 1.00 | 0.84 | 9.077 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type1.json` |
 | eval_pcb10_0 | 2 (100 pF, 10 pH, 0.1 Ω) | 0.00 | – | – | – | 1.00 | 0.84 | 6.620 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type2.json` |
@@ -836,9 +844,9 @@
 | eval_pkg10_1 | 0 (1000 pF, 40 pH, 0.03 Ω) | 0.72 | 16.61 | 1.921 | 2.434 | 0.88 | 0.88 | 3.466 | `runs/analysis/gp_one_type/eval_pkg10_1__greedy+prune@type0.json` |
 | eval_pkg10_1 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.56 | 10.50 | 1.210 | 1.492 | 0.88 | 0.88 | 2.771 | `runs/analysis/gp_one_type/eval_pkg10_1__greedy+prune@type1.json` |
 | eval_pkg10_1 | 2 (47 pF, 8 pH, 0.1 Ω) | 0.00 | – | – | – | 0.88 | 0.88 | 4.805 | `runs/analysis/gp_one_type/eval_pkg10_1__greedy+prune@type2.json` |
-| eval_pkg16_0 | 0 (1000 pF, 40 pH, 0.03 Ω) | 0.72 | 36.22 | 2.087 | – | 0.80 | – | 191.211 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type0.json` |
-| eval_pkg16_0 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.44 | 36.73 | 1.415 | – | 0.80 | – | 162.212 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type1.json` |
-| eval_pkg16_0 | 2 (47 pF, 8 pH, 0.1 Ω) | 0.08 | 120.50 | 7.333 | – | 0.80 | – | 113.645 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type2.json` |
+| eval_pkg16_0 | 0 (1000 pF, 40 pH, 0.03 Ω) | 0.72 | 36.22 | 2.087 | 3.506 | 0.80 | 0.56 | 191.211 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type0.json` |
+| eval_pkg16_0 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.44 | 36.73 | 1.415 | 2.217 | 0.80 | 0.56 | 162.212 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type1.json` |
+| eval_pkg16_0 | 2 (47 pF, 8 pH, 0.1 Ω) | 0.08 | 120.50 | 7.333 | 13.667 | 0.80 | 0.56 | 113.645 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type2.json` |
 
 ## 종류 인식 greedy: 판 종류마다 맞는 decap 종류 (`scripts/analyze_gp_one_type.py`, `scripts/make_type_aware.py`)
 
