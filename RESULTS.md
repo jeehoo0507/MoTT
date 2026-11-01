@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-10-31 21:13 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-01 03:44 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -23,6 +23,7 @@
 | lo_pcb_r0_rl | 1.00 / 0.98 / 1.33 [50] | – | 0.60 / 0.86 / 0.22 [50] | – | 0.64 / 0.81 / 0.56 [50] | – |
 | lo_pcb_r0_s1_rl | 1.00 / 1.08 / 1.46 [50] | – | 0.64 / 1.24 / 0.40 [50] | – | 0.82 / 0.81 / 0.54 [50] | – |
 | lo_pcb_r1_rl | 0.98 / 0.78 / 1.18 [50] | – | 0.80 / 0.91 / 0.21 [50] | – | 0.74 / 0.80 / 0.56 [50] | – |
+| lo_pcb_r1_s1_rl | – | – | – | – | 0.80 / 0.77 / 0.58 [25] | – |
 | lo_pcb_r2_rl | 1.00 / 0.74 / 1.01 [50] | – | 0.92 / 0.95 / 0.22 [50] | – | 0.82 / 0.90 / 0.62 [50] | – |
 | lo_pkg_r0_rl | 0.98 / 0.88 / 1.29 [50] | – | 0.94 / 0.82 / 0.20 [50] | – | 0.78 / 1.03 / 0.74 [50] | – |
 | lo_pkg_r1_rl | 0.98 / 0.83 / 1.20 [50] | – | 0.98 / 0.78 / 0.19 [50] | – | 0.74 / 0.78 / 0.54 [50] | – |
@@ -164,6 +165,7 @@
 | pkg 10 | lo_pcb_r0_rl | 50 | -0.18 [-0.36, +0.00] | 0.560 [0.482, 0.638] |
 | pkg 10 | lo_pcb_r0_s1_rl | 50 | +0.00 [-0.14, +0.14] | 0.545 [0.479, 0.618] |
 | pkg 10 | lo_pcb_r1_rl | 50 | -0.08 [-0.24, +0.08] | 0.563 [0.490, 0.638] |
+| pkg 10 | lo_pcb_r1_s1_rl | 25 | +0.00 [-0.20, +0.20] | 0.583 [0.498, 0.659] |
 | pkg 10 | lo_pcb_r2_rl | 50 | +0.00 [-0.14, +0.14] | 0.624 [0.539, 0.714] |
 | pkg 10 | lo_pkg_r0_rl | 50 | -0.04 [-0.18, +0.10] | 0.741 [0.631, 0.862] |
 | pkg 10 | lo_pkg_r1_rl | 50 | -0.08 [-0.24, +0.08] | 0.539 [0.469, 0.614] |
@@ -311,6 +313,7 @@
 | pkg 10 | lo_pcb_r0_rl | 50 | -0.26 [-0.38, -0.12] | 0.812 [0.742, 0.882] |
 | pkg 10 | lo_pcb_r0_s1_rl | 50 | -0.08 [-0.20, +0.04] | 0.814 [0.755, 0.876] |
 | pkg 10 | lo_pcb_r1_rl | 50 | -0.16 [-0.30, -0.02] | 0.797 [0.731, 0.861] |
+| pkg 10 | lo_pcb_r1_s1_rl | 25 | -0.08 [-0.28, +0.12] | 0.765 [0.687, 0.846] |
 | pkg 10 | lo_pcb_r2_rl | 50 | -0.08 [-0.20, +0.04] | 0.905 [0.808, 1.029] |
 | pkg 10 | lo_pkg_r0_rl | 50 | -0.12 [-0.24, +0.00] | 1.026 [0.935, 1.120] |
 | pkg 10 | lo_pkg_r1_rl | 50 | -0.16 [-0.30, -0.02] | 0.776 [0.721, 0.830] |
@@ -582,6 +585,7 @@
 | lo_pcb_r0_rl | 50 (0, 1) | 0.64 | 5.88 | 0.812 | 0.560 | 1.609 | `runs/2026-10-29/lo_pcb_r0_rl/eval/eval_pkg10_0__lo_pcb_r0_rl.json`, `runs/2026-10-29/lo_pcb_r0_rl/eval/eval_pkg10_1__lo_pcb_r0_rl.json` |
 | lo_pcb_r0_s1_rl | 50 (0, 1) | 0.82 | 5.98 | 0.814 | 0.545 | 1.465 | `runs/2026-10-29/lo_pcb_r0_s1_rl/eval/eval_pkg10_0__lo_pcb_r0_s1_rl.json`, `runs/2026-10-29/lo_pcb_r0_s1_rl/eval/eval_pkg10_1__lo_pcb_r0_s1_rl.json` |
 | lo_pcb_r1_rl | 50 (0, 1) | 0.74 | 5.95 | 0.797 | 0.563 | 0.868 | `runs/2026-10-29/lo_pcb_r1_rl/eval/eval_pkg10_0__lo_pcb_r1_rl.json`, `runs/2026-10-29/lo_pcb_r1_rl/eval/eval_pkg10_1__lo_pcb_r1_rl.json` |
+| lo_pcb_r1_s1_rl | 25 (1) | 0.80 | 6.30 | 0.765 | 0.583 | 1.231 | `runs/2026-10-29/lo_pcb_r1_s1_rl/eval/eval_pkg10_1__lo_pcb_r1_s1_rl.json` |
 | lo_pcb_r2_rl | 50 (0, 1) | 0.82 | 6.71 | 0.905 | 0.624 | 0.997 | `runs/2026-10-29/lo_pcb_r2_rl/eval/eval_pkg10_0__lo_pcb_r2_rl.json`, `runs/2026-10-29/lo_pcb_r2_rl/eval/eval_pkg10_1__lo_pcb_r2_rl.json` |
 | lo_pkg_r0_rl | 50 (0, 1) | 0.78 | 7.72 | 1.026 | 0.741 | 3.082 | `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_0__lo_pkg_r0_rl.json`, `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_1__lo_pkg_r0_rl.json` |
 | lo_pkg_r1_rl | 50 (0, 1) | 0.74 | 5.73 | 0.776 | 0.539 | 0.983 | `runs/2026-10-29/lo_pkg_r1_rl/eval/eval_pkg10_0__lo_pkg_r1_rl.json`, `runs/2026-10-29/lo_pkg_r1_rl/eval/eval_pkg10_1__lo_pkg_r1_rl.json` |
@@ -819,6 +823,8 @@
 | pkg 10 | lo_pcb_r0_s1_rl | 실패 | 9 | 20.4 | 0.64 | 0.05 | 0.32 |
 | pkg 10 | lo_pcb_r1_rl | 성공 | 37 | 5.9 | 0.15 | 0.24 | 0.62 |
 | pkg 10 | lo_pcb_r1_rl | 실패 | 13 | 12.5 | 0.42 | 0.10 | 0.48 |
+| pkg 10 | lo_pcb_r1_s1_rl | 성공 | 20 | 6.3 | 0.21 | 0.21 | 0.59 |
+| pkg 10 | lo_pcb_r1_s1_rl | 실패 | 5 | 23.0 | 0.57 | 0.13 | 0.30 |
 | pkg 10 | lo_pcb_r2_rl | 성공 | 41 | 6.7 | 0.28 | 0.12 | 0.61 |
 | pkg 10 | lo_pcb_r2_rl | 실패 | 9 | 22.4 | 0.81 | 0.05 | 0.13 |
 | pkg 10 | lo_pkg_r0_rl | 성공 | 39 | 7.7 | 0.15 | 0.18 | 0.66 |
@@ -929,6 +935,7 @@
 | eval_pcb16_0 | 0 (10000 pF, 100 pH, 0.02 Ω) | 0.08 | 73.50 | 7.254 | 7.675 | 0.96 | 0.92 | 217.392 | `runs/analysis/gp_one_type/eval_pcb16_0__greedy+prune@type0.json` |
 | eval_pcb16_0 | 1 (1000 pF, 30 pH, 0.05 Ω) | 0.36 | 40.33 | 3.871 | 4.605 | 0.96 | 0.92 | 192.802 | `runs/analysis/gp_one_type/eval_pcb16_0__greedy+prune@type1.json` |
 | eval_pcb16_0 | 2 (100 pF, 10 pH, 0.1 Ω) | 0.16 | 63.00 | 4.123 | 5.660 | 0.96 | 0.92 | 143.973 | `runs/analysis/gp_one_type/eval_pcb16_0__greedy+prune@type2.json` |
+| eval_pcb16_1 | 0 (10000 pF, 100 pH, 0.02 Ω) | 0.00 | – | – | – | 0.88 | – | 217.338 | `runs/analysis/gp_one_type/eval_pcb16_1__greedy+prune@type0.json` |
 | eval_pkg10_0 | 0 (1000 pF, 40 pH, 0.03 Ω) | 0.76 | 16.00 | 2.297 | 2.793 | 0.92 | 0.88 | 3.414 | `runs/analysis/gp_one_type/eval_pkg10_0__greedy+prune@type0.json` |
 | eval_pkg10_0 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.40 | 8.70 | 1.262 | 1.629 | 0.92 | 0.88 | 1.911 | `runs/analysis/gp_one_type/eval_pkg10_0__greedy+prune@type1.json` |
 | eval_pkg10_0 | 2 (47 pF, 8 pH, 0.1 Ω) | 0.08 | 6.00 | 1.333 | 1.300 | 0.92 | 0.88 | 1.977 | `runs/analysis/gp_one_type/eval_pkg10_0__greedy+prune@type2.json` |
@@ -1095,10 +1102,14 @@
 | runs/2026-10-29/lo_ip_r0_rl | coord / grid | rl | 300 | 1.27 | val_pcb10_0: 0.96/0.25, val_pkg10_0: 1.00/0.69 | `runs/2026-10-29/lo_ip_r0_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r0_s1_distill | coord / grid | distill | 2318 | 0.77 | val_pcb10_0: 1.90/0.50, val_pkg10_0: 1.27/0.69 | `runs/2026-10-29/lo_ip_r0_s1_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r0_s1_rl | coord / grid | rl | 289 | 1.27 | val_pcb10_0: 1.03/0.62, val_pkg10_0: 1.00/0.81 | `runs/2026-10-29/lo_ip_r0_s1_rl/metrics.json` |
+| runs/2026-10-29/lo_ip_r0_s2_distill | coord / grid | distill | 2303 | 0.77 | val_pcb10_0: 3.81/0.62, val_pkg10_0: 1.73/0.69 | `runs/2026-10-29/lo_ip_r0_s2_distill/metrics.json` |
+| runs/2026-10-29/lo_ip_r0_s2_rl | coord / grid | rl | 306 | 1.27 | val_pcb10_0: 1.19/0.31, val_pkg10_0: 0.90/0.69 | `runs/2026-10-29/lo_ip_r0_s2_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r1_distill | modal / grid | distill | 2176 | 0.77 | val_pcb10_0: 1.32/0.69, val_pkg10_0: 0.94/0.81 | `runs/2026-10-29/lo_ip_r1_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r1_rl | modal / grid | rl | 343 | 1.27 | val_pcb10_0: 1.21/0.69, val_pkg10_0: 0.94/0.62 | `runs/2026-10-29/lo_ip_r1_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r1_s1_distill | modal / grid | distill | 2195 | 0.77 | val_pcb10_0: 0.99/0.44, val_pkg10_0: 1.00/0.69 | `runs/2026-10-29/lo_ip_r1_s1_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r1_s1_rl | modal / grid | rl | 340 | 1.27 | val_pcb10_0: 0.86/0.50, val_pkg10_0: 0.88/0.75 | `runs/2026-10-29/lo_ip_r1_s1_rl/metrics.json` |
+| runs/2026-10-29/lo_ip_r1_s2_distill | modal / grid | distill | 2200 | 0.77 | val_pcb10_0: 1.14/0.69, val_pkg10_0: 1.06/0.62 | `runs/2026-10-29/lo_ip_r1_s2_distill/metrics.json` |
+| runs/2026-10-29/lo_ip_r1_s2_rl | modal / grid | rl | 351 | 1.27 | val_pcb10_0: 1.08/0.69, val_pkg10_0: 1.00/0.56 | `runs/2026-10-29/lo_ip_r1_s2_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r2_distill | mott / mott | distill | 1621 | 0.77 | val_pcb10_0: 1.14/0.56, val_pkg10_0: 1.08/0.75 | `runs/2026-10-29/lo_ip_r2_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r2_rl | mott / mott | rl | 306 | 1.27 | val_pcb10_0: 1.02/0.50, val_pkg10_0: 1.02/0.50 | `runs/2026-10-29/lo_ip_r2_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r2_s1_distill | mott / mott | distill | 1641 | 0.77 | val_pcb10_0: 1.02/0.62, val_pkg10_0: 1.00/0.69 | `runs/2026-10-29/lo_ip_r2_s1_distill/metrics.json` |
@@ -1110,8 +1121,11 @@
 | runs/2026-10-29/lo_pcb_r1_distill | modal / grid | distill | 2325 | 0.76 | val_pkg10_0: 1.33/0.69, val_ip10_0: 0.69/0.31 | `runs/2026-10-29/lo_pcb_r1_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r1_rl | modal / grid | rl | 456 | 1.27 | val_pkg10_0: 0.94/0.81, val_ip10_0: 0.76/0.38 | `runs/2026-10-29/lo_pcb_r1_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r1_s1_distill | modal / grid | distill | 2260 | 0.76 | val_pkg10_0: 1.07/0.50, val_ip10_0: 0.73/0.25 | `runs/2026-10-29/lo_pcb_r1_s1_distill/metrics.json` |
+| runs/2026-10-29/lo_pcb_r1_s1_rl | modal / grid | rl | 438 | 1.27 | val_pkg10_0: 0.97/0.69, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r1_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2_distill | mott / mott | distill | 1770 | 0.76 | val_pkg10_0: 0.96/0.75, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2_rl | mott / mott | rl | 378 | 1.26 | val_pkg10_0: 0.94/0.44, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2_rl/metrics.json` |
+| runs/2026-10-29/lo_pcb_r2_s1_distill | mott / mott | distill | 1737 | 0.76 | val_pkg10_0: 1.00/0.81, val_ip10_0: 0.69/0.25 | `runs/2026-10-29/lo_pcb_r2_s1_distill/metrics.json` |
+| runs/2026-10-29/lo_pcb_r2_s1_rl | mott / mott | rl | 359 | 1.26 | val_pkg10_0: 1.00/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_r0_distill | coord / grid | distill | 2361 | 0.76 | val_pcb10_0: 1.78/0.38, val_ip10_0: 0.81/0.25 | `runs/2026-10-29/lo_pkg_r0_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_r0_rl | coord / grid | rl | 371 | 1.26 | val_pcb10_0: 1.01/0.62, val_ip10_0: 0.67/0.31 | `runs/2026-10-29/lo_pkg_r0_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_r1_distill | modal / grid | distill | 2202 | 0.76 | val_pcb10_0: 1.67/0.75, val_ip10_0: 0.79/0.38 | `runs/2026-10-29/lo_pkg_r1_distill/metrics.json` |
