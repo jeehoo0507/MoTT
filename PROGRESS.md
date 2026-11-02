@@ -1,4 +1,27 @@
-# PROGRESS (갱신 2026-10-29 14:25 UTC, 라운드 59 — 루프 종료)
+# PROGRESS (갱신 2026-11-02 05:00 UTC, 재개 라운드 1)
+
+## 재개 라운드 1 (2026-11-02 04:21~ UTC) — 진단 가설 (확인 전에 적음, QUEUE 11/01 15:10 할 일 2 + 23:45)
+MoTT pcb 이상 (pcb를 보고 학습한 2단 0.83 < 뺀 2단 0.90 < 0단 0.96)과 pkg·ip seed 불안정 (lo_pkg_r2_s1 0.56, lo_ip_r2_s1 0.66):
+- **H1 best.pt 선택 잡음:** RL val은 100 iter마다 3번뿐 (판마다 16문제), score = 평균(개수비 + 2·fail). → 맞으면 (같은 run의 last.pt가 pcb에서 best.pt와 크게 다름) val을 늘리거나 val 두 파일을 쓰는 쪽을 고친다. 확인: `runs/analysis/ckpt_last/` (r2_mott seed 0·1·2 last.pt를 pcb10 두 파일에서 평가, 백그라운드).
+- **H2 학습 격자 부족 → 보상 오지정 (격자 틈 이용):** RL 보상은 작업 격자에서 계산되고 정확 검사는 인스턴스마다 가장 좋은 샘플 하나만; 격자는 풀마다 처음 F의 1.5배에서 막힘. → 맞으면 (실패가 목표 바로 위의 근소 실패이고, 학습 중 cert-bad가 pcb·pkg에서 높고, 격자 상한에 일찍 닿음) 학습 쪽 검사를 고친다 (예: 격자 상한 완화 또는 M개 샘플 전부 검사) — 학습법 변경이므로 r2_mott 하나만 바꿔 짝지어 비교.
+- **H3 pcb 선생님 (g+p) 모방이 MoTT를 g+p식 배치로 끌어당김:** → 맞으면 pcb 실패 해의 종류 비율이 g+p (종류 0 많음)와 닮음. 그러면 선생님을 고친다.
+- **H4 (pkg 반전) pkg가 학습한 두 종류와 가까워 좌표가 쉽게 전이:** → 맞으면 pkg 입력 분포 (판 모양·맨판 최악·위반 대역)가 pcb·ip 중 하나와 겹침. 판정에는 영향 없음 (기준대로 판정), 해석에만 씀.
+
+### 이 라운드에서 한 것 (05:10 UTC)
+- 상태: GPU 비어 있었음 (큐 다 끝남), pod 4 GiB / 60, oom_kill 0. `ensure_running.py` 정상.
+- **GPU: `lo_pcb_r3` 시작 (04:23, QUEUE 10/31 11:40 첫 실험 기본안 그대로)** — arm `--model loop --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0`, seed 0, distill 0.75 h + RL 1.25 h (끝 ~06:25). 결정: 기본안 유지 — 더 나은 설계의 근거 없음. 평가·표 (`loop_vs_plain_table`)는 자동.
+- 결정: CPU 큐에서 `eval16 eval_pkg16_1 r0~r3` 4개를 `e0plus16 eval_pkg16_1 type1·2` 앞으로 — 서로 독립, 16칸 E0+ 1개가 4~7 h라 lo_pcb_r3 평가 (06:25 뒤)가 그 뒤에 막히지 않게 (메모 day2-driver-cpu-lane).
+- **할 일 1 (학습 vs 규칙):** `scripts/problem_features.py` (맨판 특징 → `runs/analysis/problem_features.json`), `collect_results.py` 새 절 "학습 vs 규칙". 결과: 처음 보는 종류에서 MoTT가 modal_rule을 이기는 곳은 **ip뿐** (lo_ip_r2 seed 0·2: 성공 +0.06 [+0.00, +0.14], 개수 0.714 [0.653, 0.775]·0.746; seed 1: −0.28). pcb: −0.06~−0.16, 개수 1.10~1.13배; pkg: −0.08·−0.32 (s2 평가 중). 학습이 지는 것은 어려운 문제에 몰림 (pcb·pkg 맨판 위반·g+p 개수 상위 1/3 점수 −0.44~−0.63, 하위 1/3 −0.02~−0.24). 정책 시간 0.3~0.9 s/문제 < 규칙 0.5~2.2 s ≪ E0+ 9~25 s.
+- **할 일 2 (진단) 결과:**
+  - H3 **기각**: pcb에서 MoTT (seed 0·1·2) 해의 종류 비율 0.09/0.17/0.74 ≈ modal_rule 0.09/0.18/0.73, g+p (0.52/0.11/0.37)와 다름; 실패 해도 8~10개로 적음.
+  - H2 **지지**: 평가 실패는 근소 실패 (pcb MoTT 실패 해 최악 log10(Z/Zt) 중앙값 0.03~0.06, 모든 방법이 cutting-plane 4라운드 끝까지 감). RL 로그: 격자 상한에 닿은 iter 114~276 / ~350, 최선 샘플의 정확 검사 실패 pkg 7.5~13 / 16, pcb 2.7~7.2, ip 0~3 (RESULTS "진단: 학습 격자"). 모든 학습 방법의 pkg 성공률이 낮은 것 (0.56~0.90)과 맞음. MoTT만의 문제는 아님 (사다리 공통) — 그래서 고치면 사다리 전체에 해당하는 학습법 수정.
+  - H1 **지지 (pcb)**: last.pt − best.pt 성공률 (pcb 10, 50문제): seed 0 +0.04 [+0.00, +0.10], seed 1 **+0.14 [+0.02, +0.26]**, seed 2 **+0.12 [+0.04, +0.22]** (RESULTS "진단: last.pt vs best.pt"). pkg·ip의 last.pt는 백그라운드 평가 중 (`agent/logs/diag_last2.log`) — 다른 판에서 잃으면 "선택 잡음"이 아니라 "판 사이 교환"이다.
+  - H4 **부분 지지**: pkg의 decap 라이브러리 (1 nF/220 pF/47 pF)와 맨판 위반 수준이 pcb (10 nF/1 nF/100 pF)와 ip (100/20/5 pF) **사이** (W1/sd 맨판 최악 pcb-pkg 0.56 vs ip-pcb 1.44). pkg를 빼는 것은 내삽, ip·pcb는 외삽 → 좌표가 pkg에서 안 무너지는 것과 맞음. 다만 pkg의 최악 주파수는 셋 중 가장 높음 (외삽). `scripts/type_distance.py`.
+- **범용화 판정 (10/31 11:30 기준 그대로):** pcb 통과, ip 실패, **pkg 실패** ((b) seed 1 −0.28 → "seed 3개 모두 > 0" 불충족, s2와 무관).
+- **할 일 4 (기준선) — B-Manoharan 0.00 점검:** 버그 아님. 증류가 g+p 선생님 해를 고정 포트 순서로 다시 걸은 궤적을 따라 하는데, 선생님이 어디에 놓을지는 Manoharan 상태 (전역 ΔZ 8점 + 현재 포트 L, 좌표 없음)로 정해지지 않음 → 다수 클래스 "빈칸"으로 수렴 (라운드 51 진단과 같음), RL이 imit 1.0으로 그 궤적에 계속 묶임. 원 논문은 RL만 (모방 없음). 결정: **`bm_manoharan_rlonly` (RL만 2.0 h = 같은 총 예산, `--imit 0`, 무작위 초기화)** 를 GPU 큐에 lo_pcb_r3 뒤로; Park도 원 논문이 RL만이라 같은 규칙으로 **`bp_park_rlonly`**. 기존 bm/bp 결과는 지우지 않고 둘 다 보고. 코드: `run_rung.py --skip_distill` (init 없음), 드라이버 항목 `"rl_only": true`, `scripts/smoke_rlonly.py` (CPU 3 iter 두 모델 통과 → `runs/analysis/smoke_rlonly.ok`, 항목의 "after").
+  - 결정: 드라이버 재시작 (04:52) — 새 "rl_only" 키를 읽게. `scripts/driver_dryrun.py`로 두 줄 모두 ATTACH 확인 후 kill → `ensure_running` → `ATTACH train lo_pcb_r3`, `ATTACH eval10 lo_pkg_r2_s2_rl` 확인.
+  - 원 논문 설정 확인 (QUEUE 23:45: 원문에서 입력·상태·보상·예산·지표)은 **못 함**: 무인 라운드의 허용 목록에 WebSearch·alphaXiv가 없음 (둘 다 거부), 저장소에도 TSIPI 2026 전문 없음 (`reports/최종 모델 설계.md` "전문 미확인"). 사람에게: 원문 PDF를 `research_notes/`에 넣어 주거나 허용 목록에 웹 검색 추가 필요 (PROPOSALS에 적음).
+- 다음 라운드: diag_last2 (pkg·ip last.pt) 결과로 H1 판정; lo_pcb_r3 끝 (~06:25) → 평가 → 루프 vs 기본 판정; bm_manoharan_rlonly 시작 확인 (GPU, 초기 val). MoTT 개선 GPU run은 두 기준선 뒤 (QUEUE 23:45 순서) — 1순위 후보 H2 수정 (설계는 다음 라운드에 PROPOSALS에 2줄 + 코드).
 
 ## 루프 종료 요약 (2026-10-29 14:25 UTC, QUEUE 08:40 + 14:20)
 에이전트 루프는 이 라운드로 끝남 (`agent/STOP`). **드라이버 (`scripts/pipeline_day2.py`, GPU·CPU 큐)·side16_gp·지금 도는 학습/평가는 멈추지 않음.** 결과는 `scripts/report_watch.py`가 30분마다 RESULTS.md + 새 eval json을 commit·push ("results: auto (lo_*)", 로그 `agent/logs/report_watch.log`). 파드가 재시작되면 `.venv/bin/python scripts/ensure_running.py` 한 번이면 드라이버·side16_gp·report_watch가 다시 뜨고 학습은 resume.pt에서 이어짐.

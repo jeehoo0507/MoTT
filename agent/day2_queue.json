@@ -98,7 +98,10 @@
   {"name": "lo_pkg_r2_s1", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 1},
   {"name": "lo_pkg_r0_s2", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
   {"name": "lo_pkg_r1_s2", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pkg_r2_s2", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2}
+  {"name": "lo_pkg_r2_s2", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
+  {"name": "lo_pcb_r3", "arm": "--model loop --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0},
+  {"name": "bm_manoharan_rlonly", "arm": "--model manoharan --imit 0", "seed": 0, "rl_only": true, "after": "runs/analysis/smoke_rlonly.ok"},
+  {"name": "bp_park_rlonly", "arm": "--model park_am --baseline rollout --imit 0", "seed": 0, "rl_only": true, "after": "runs/analysis/smoke_rlonly.ok"}
  ],
  "cpu": [
   {
@@ -463,22 +466,6 @@
    "log": "agent/logs/e0plus16.log"
   },
   {
-   "name": "e0plus16 eval_pkg16_1 type1",
-   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pkg16_1 --type 1 --skip_existing --out runs/analysis/gp_one_type",
-   "done": [
-    "runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type1.json"
-   ],
-   "log": "agent/logs/e0plus16.log"
-  },
-  {
-   "name": "e0plus16 eval_pkg16_1 type2",
-   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pkg16_1 --type 2 --skip_existing --out runs/analysis/gp_one_type",
-   "done": [
-    "runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type2.json"
-   ],
-   "log": "agent/logs/e0plus16.log"
-  },
-  {
    "name": "eval16 eval_pkg16_1 r0_coord_rl",
    "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_1 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-28/r0_coord_rl",
    "done": [
@@ -509,6 +496,22 @@
     "runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_1__r3_loop_rl.json"
    ],
    "log": "runs/2026-10-28/r3_loop_rl/eval.log"
+  },
+  {
+   "name": "e0plus16 eval_pkg16_1 type1",
+   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pkg16_1 --type 1 --skip_existing --out runs/analysis/gp_one_type",
+   "done": [
+    "runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type1.json"
+   ],
+   "log": "agent/logs/e0plus16.log"
+  },
+  {
+   "name": "e0plus16 eval_pkg16_1 type2",
+   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pkg16_1 --type 2 --skip_existing --out runs/analysis/gp_one_type",
+   "done": [
+    "runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type2.json"
+   ],
+   "log": "agent/logs/e0plus16.log"
   },
   {
    "name": "e0plus16 eval_ip16_1 type0",

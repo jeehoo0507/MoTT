@@ -5,6 +5,7 @@
 - Park & Sengupta, "Neural Modal Decomposition", arXiv 2609.14402 — 학회 게재 여부 미확인 (설계서에는 NeurIPS 2026 포스터로 적혀 있음).
 - Fan et al., "Looped Transformers for Length Generalization", ICLR 2025 — 저자·학회 확인 필요.
 - `reports/최종 모델 설계.md`가 인용한 "Kuo 2026" (반복 횟수 랜덤 학습) — 출처 불명.
+- **(11/02) 실제 논문 기준선 확인 (QUEUE 11/01 할 일 4)에 원문이 필요:** 무인 라운드 허용 목록 (`agent/loop.sh` ALLOWED)에 WebSearch·WebFetch·alphaXiv가 없어 원 논문 설정 (입력·상태·보상·학습 예산·평가 지표)을 확인할 수 없음. 선택지: (i) Park TMTT 2022, Manoharan TSIPI 2026, DevFormer ICML 2023 PDF (또는 해당 절 발췌)를 `research_notes/papers/`에 넣기, (ii) ALLOWED에 `WebSearch,WebFetch` 추가. 그 전까지 재구현 차이 표는 저장소 안 기록 (`reports/`, 코드 docstring) 기준으로만 씀.
 
 ## 환경 파일 수정이 필요한 문제 (사람 결정)
 - `verify._probe_z_exact`의 배치 복소 solve가 이 서버(torch 2.14+cu130, MKL)에서 n ≥ 200 셀·스레드 ≥ 2이면 멈춘다 (`scripts/mkl_repro.py`). 지금은 `decap_loop/safe_verify.py`로 프로세스당 1스레드로 우회. 근본 수정은 `verify.py`에서 `torch.linalg.solve`를 주파수별 루프 또는 `scipy.linalg.lu_solve`로 바꾸는 것.

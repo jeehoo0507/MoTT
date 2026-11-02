@@ -493,6 +493,133 @@ def leave_out_seed_table(by):
     return lines + [""]
 
 
+FEAT = "runs/analysis/problem_features.json"   # scripts/problem_features.py (bare-board features, no method output)
+
+
+def learn_vs_rule_table(recs):
+    """QUEUE 2026-11-01 15:10 item 1: on the held-out type's 10×10 eval problems, the leave-out MoTT runs
+    (lo_<t>_r2, seeds 0-2) vs the untrained modal_rule and E0+: success, count, time, paired CIs; then where
+    learning wins. Per problem and seed, vs modal_rule: +1 if the policy solves and the rule fails or both solve
+    with fewer decaps, -1 for the reverse, 0 otherwise; averaged over the seeds present. Grouped by board shape,
+    target kind and terciles (within the type) of the bare-board worst level and of the greedy+prune count."""
+    if not os.path.exists(FEAT):
+        return []
+    feat = json.load(open(FEAT))
+    by = defaultdict(dict)
+    for r in recs:
+        if int(r["size"]) == 10:
+            by[r["method"]][r["set"]] = r
+    lines = ["## 학습 vs 규칙: 처음 보는 종류에서 MoTT (lo_*_r2) vs `modal_rule` vs 종류 인식 greedy", "",
+             "뺀 종류 t의 10×10 eval 50문제. lo_t_r2 = t를 학습·val에서 뺀 2단 MoTT (seed 0·1·2). 시간은 문제당 초 (방법 시간, 같은 CPU 1 thread). "
+             "CI는 짝지은 bootstrap 95% (같은 문제를 함께 다시 뽑음, 2000회, seed 0).", "",
+             "| 뺀 종류 | 방법 | 문제 수 | 성공률 | 개수 (성공 평균) | 문제당 시간 (s) | vs modal_rule: 성공률 차 [CI] | 개수 비 [CI] | vs 종류 인식 greedy: 성공률 차 [CI] | 개수 비 [CI] |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
+    grp_lines = []
+    for t in LO_TECHS:
+        sets = sorted(s for s in feat if s.startswith(f"eval_{t}10_"))
+
+        def get(m):
+            if m not in by or not all(s in by[m] for s in sets):
+                return None
+            cat = lambda k: np.concatenate([np.asarray(by[m][s][k], float) for s in sets])  # noqa: E731
+            sec = sum(by[m][s]["sec_per_inst"] * by[m][s]["n"] for s in sets) / sum(by[m][s]["n"] for s in sets)
+            return cat("ok").astype(bool), cat("count"), sec
+        rule, ta, gp = get("modal_rule"), get(TA), get("greedy+prune")
+        runs = [(seed_run(f"lo_{t}_r2", s), get(seed_run(f"lo_{t}_r2", s))) for s in LO_SEEDS]
+        runs = [(m, v) for m, v in runs if v is not None]
+        if rule is None or ta is None or not runs:
+            continue
+        for m, v in runs + [("modal_rule", rule), (TA, ta)]:
+            ok, cnt, sec = v
+            cells = []
+            for ref in (rule, ta):
+                if v is ref:
+                    cells.append("– | –")
+                else:
+                    c = ci_cells(ok, ref[0], cnt, ref[1]).split(" | ", 1)[1]
+                    cells.append(c)
+            lines.append(f"| {t} 10 | {m} | {len(ok)} | {ok.mean():.2f} | {fmt(cnt[ok].mean() if ok.any() else None)} | "
+                         f"{fmt(sec, 3)} | {cells[0]} | {cells[1]} |")
+        F = [row for s in sets for row in feat[s]]
+        score = np.zeros(len(F))
+        for _, (ok, cnt, _) in runs:
+            both = ok & rule[0]
+            win = (ok & ~rule[0]) | (both & (cnt < rule[1]))
+            loss = (~ok & rule[0]) | (both & (cnt > rule[1]))
+            score += win.astype(float) - loss.astype(float)
+        score /= len(runs)
+        groups = [(f"모양 {v}", np.array([r["shape"] == v for r in F])) for v in sorted({r["shape"] for r in F})]
+        groups += [(f"목표 {v}", np.array([r["target"] == v for r in F])) for v in sorted({r["target"] for r in F})]
+        for what, x in (("맨판 최악 log10(Z/Zt)",np.array([r["bare_worst"] for r in F])),
+                        ("greedy+prune 개수", gp[1] if gp is not None else None)):
+            if x is None:
+                continue
+            q = np.quantile(x, [1 / 3, 2 / 3])
+            for name, m in (("하", x <= q[0]), ("중", (x > q[0]) & (x <= q[1])), ("상", x > q[1])):
+                groups.append((f"{what} {name} ({x[m].min():.2f}~{x[m].max():.2f})", m))
+        for what, m in groups:
+            grp_lines.append(f"| {t} 10 | {what} | {int(m.sum())} | {score[m].mean():+.2f} | {rule[0][m].mean():.2f} | "
+                             f"{np.mean([v[0][m].mean() for _, v in runs]):.2f} | {len(runs)} |")
+        grp_lines.append(f"| {t} 10 | **전체** | {len(F)} | {score.mean():+.2f} | {rule[0].mean():.2f} | "
+                         f"{np.mean([v[0].mean() for _, v in runs]):.2f} | {len(runs)} |")
+    if not grp_lines:
+        return []
+    lines += ["", "어디서 학습이 이기나 (문제마다 vs modal_rule: 정책만 성공 또는 둘 다 성공·개수 적음 = +1, 반대 = −1, 그 외 0; seed 평균):", "",
+              "| 뺀 종류 | 문제 묶음 | 문제 수 | 평균 점수 (+ = 학습 우세) | modal_rule 성공률 | lo_r2 성공률 (seed 평균) | seed 수 |",
+              "|---|---|---|---|---|---|---|"] + grp_lines + [""]
+    return lines
+
+
+def ckpt_table(recs):
+    """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
+    that every table reports (chosen on 3 RL validations of 16 problems per type)."""
+    lasts = sorted({r["method"] for r in recs if r["method"].endswith("@last")})
+    rows = []
+    for m in lasts:
+        pr = paired(recs, m[:-5])
+        rows += [f"| {key[0]} {key[1]} | {m[:-5]} | " + ci_cells(*pr[key][m]) + " |" for key in sorted(pr) if m in pr[key]]
+    if not rows:
+        return []
+    return ["## 진단: 같은 run의 last.pt vs best.pt (`<run>@last`, 짝지은 bootstrap 95% CI, 2000회, seed 0)", "",
+            "best.pt = RL 중 val 3번 (판마다 16문제, score = 평균(개수비 + 2·fail))에서 가장 좋은 것 — 모든 표가 쓰는 체크포인트. 진단용, 보고 숫자 아님.", "",
+            "| 판 | run | 문제 수 | 성공률 차 (last − best) [95% CI] | 개수 비 last/best (둘 다 성공) [95% CI] |", "|---|---|---|---|---|"] + rows + [""]
+
+
+def grid_diag_table(recs):
+    """Diagnosis H2 (PROGRESS 11/02): RL rewards use the working grid; only each instance's best sample is exact-checked,
+    and a pool's grid stops growing at 1.5x its first size. From each RL log.txt (every 25 iterations): the number of
+    iterations at the grid cap by the end, mean exact-check failures of the best samples (of B=16) per board type, and
+    the run's 10×10 eval success per type."""
+    import re
+    pat = re.compile(r"it\s+\d+ \| train_([a-z]+)\d+_\d .*?cert-bad (\d+) .*?grid capped (\d+)")
+    by = merged(recs)
+    rows = []
+    for f in sorted(glob.glob("runs/2026-10-2*/*_rl/log.txt")):
+        name = os.path.basename(os.path.dirname(f))
+        cb, cap, n_it = defaultdict(list), 0, None
+        for line in open(f):
+            m = pat.search(line)
+            if m:
+                cb[m.group(1)].append(int(m.group(2)))
+                cap = int(m.group(3))
+            if line.startswith("done:"):
+                n_it = int(line.split()[1])
+        if not cb:
+            continue
+        cells = []
+        for t in LO_TECHS:
+            r = by.get((t, 10), {}).get(name)
+            cells.append(f"{np.mean(cb[t]):.1f}" if cb[t] else "–")
+            cells.append(f"{r['ok'].mean():.2f}" if r is not None else "–")
+        rows.append(f"| {name} | {cap} / {n_it if n_it else '–'} | " + " | ".join(cells) + " |")
+    if not rows:
+        return []
+    return ["## 진단: 학습 격자 (RL log.txt, 25 iter마다 기록)", "",
+            "cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확 검사 실패 수 (B=16 중). 격자 상한 = 풀마다 처음 F의 1.5배.", "",
+            "| run | 격자 상한에 닿은 iter / 전체 iter | ip cert-bad | ip 10 성공률 | pcb cert-bad | pcb 10 성공률 | pkg cert-bad | pkg 10 성공률 |",
+            "|---|---|---|---|---|---|---|---|"] + rows + [""]
+
+
 def train_table():
     lines = []
     files = sorted(glob.glob("runs/**/metrics.json", recursive=True))
@@ -553,6 +680,9 @@ def main():
     lines += type_aware_table()
     lines += prior_table(recs)
     lines += leave_out_table(recs)
+    lines += learn_vs_rule_table(recs)
+    lines += ckpt_table(recs)
+    lines += grid_diag_table(recs)
     lines += train_table()
     lines += teacher_table()
     open(a.out, "w").write("\n".join(lines) + "\n")

@@ -64,9 +64,10 @@ def main():
     if not a.skip_distill and fresh(dist):
         sh(f"{PY} train.py --stage distill {a.arm} {a.common} {pools} --hours {a.distill_hours} --out {dist}", log)
     if fresh(rl):
-        sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} --init {dist}/best.pt --out {rl}", log)
+        init = "" if a.skip_distill else f"--init {dist}/best.pt "   # --skip_distill: rl from random init
+        sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} {init}--out {rl}", log)
     if not a.skip_eval:
-        for tag, run in (("distill", dist), ("rl", rl)):
+        for tag, run in ((("distill", dist),) if not a.skip_distill else ()) + (("rl", rl),):
             sh(f"{PY} scripts/eval_policy.py --pool {a.pool} --sets {a.eval_sets} --policy {a.name}_{tag}={run}/best.pt "
                f"--workers {a.eval_workers} --out {run}", log)
     with open(log, "a") as f:
