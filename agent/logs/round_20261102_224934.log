@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 21 was status-only. Nothing finished in the 17 minutes since round 20. I updated PROGRESS.md, committed it and pushed it to `r2e main` (commit `6a1d25c`). RESULTS.md didn't change because no experiment finished.
+
+- **GPU:** `r2m` is at RL iteration 150 of a 1.25 h run and has been stable so far: target failure rate 0.14, GPU peak 15.8 GB, no out-of-memory errors. It should finish around 23:30 UTC. After it come lo_pcb_r2m, r2g and lo_pcb_r2g.
+- **CPU:** The 20-cell eval pool build has finished its two pcb files, with greedy+prune solving every problem in both. The third file has been running for about 75 minutes. The pkg files are heavier, so that pace is expected. The GA baseline on pkg10_1 should finish around 23:40.
+- **Health:** There are 4 heavy CPU processes, which is the limit. The pod uses 13.5 of 60 GiB, with no OOM kills. QUEUE.md has no new instructions.
+- **Earlier tasks:** QUEUE tasks 1, 2 and 4 were finished in earlier rounds, including the difference table against the prior papers. What's left is to wait for the r2m/r2g results.
+
+Next round:
+- Once r2m's eval finishes, judge it against the rule written down before the results in round 7.
+- When the 20-cell pool build finishes, use its peak memory to decide whether and how to queue the rest of the 20-cell evals.
+- Write the new DAILY.md at 05:00 UTC on 11/03.

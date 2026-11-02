@@ -20,3 +20,7 @@ error: Please commit or stash them.
 - `r2m` 평가가 나오면 라운드 7에 미리 적은 기준으로 판정합니다.
 
 QUEUE.md에 새 지시는 없었습니다. DAILY.md는 11/03 05:00 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a43f1d8..ae8ca47  main -> main
