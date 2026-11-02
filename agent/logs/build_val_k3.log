@@ -1,0 +1,4 @@
+9 pool files -> runs/pool_v1, 1 workers
+[     2s] val_pcb10_0      exists      0s 
+/usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-wvz0aal2', '/mp-3siejcs2', '/mp-bad46eln', '/mp-jzunnsh0', '/mp-hti0tu2r', '/mp-l1xnbgms'}
+  warnings.warn(

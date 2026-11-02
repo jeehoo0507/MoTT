@@ -26,3 +26,7 @@ error: Please commit or stash them.
 - CPU 큐에서 16칸 정책 평가 4개를 16칸 종류 인식 greedy 작업 앞으로 옮겼습니다. 서로 독립이고, 그래야 `lo_pcb_r3` 평가가 몇 시간짜리 작업 뒤에 막히지 않습니다.
 
 다음 라운드: `lo_pcb_r3` 평가로 루프 vs 기본 판정 → RL-only 기준선 결과 → MoTT 개선 후보 1순위인 H2 수정. H2 수정은 한 번에 하나만 바꾸고, 같은 종류 학습과 한 종류 빼고 학습 둘 다에서 짝지어 비교합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   aac08d6..7b7c410  main -> main
