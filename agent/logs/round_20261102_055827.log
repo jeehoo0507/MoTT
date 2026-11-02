@@ -20,3 +20,7 @@ error: Please commit or stash them.
 **막힌 것:** 원 논문의 설정 확인(할 일 4)이 웹 검색과 alphaXiv가 두 라운드 연속 거부되어 진행되지 않습니다. PROGRESS.md 첫 줄에 `STUCK`으로 적었습니다. 진행하려면 Park 2022, Manoharan TSIPI 2026, DevFormer 원문 PDF를 `research_notes/`에 넣어 주시거나 허용 목록에 alphaXiv를 추가해 주셔야 합니다.
 
 방금 시작한 bm_manoharan_rlonly(RL만, 무작위 초기화)는 아직 학습 초반이라 실패율이 높습니다. 빈칸만 고르는 쏠림이 RL만으로 풀리는지는 다음 라운드에 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   fe9926c..fae3e60  main -> main
