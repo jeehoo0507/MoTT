@@ -8,7 +8,9 @@
   - smoke (`scripts/smoke_feas_margin.py`, CPU 2 iter pkg8, r2_mott distill init): 통과, it 2에서 샘플 8개 중 4개가 margin-fail (작업 격자 성공 해 다수가 목표 5% 안에 붙어 있음 — H2와 같은 방향) → `runs/analysis/smoke_feas_margin.ok`.
   - 큐: `r2m` (r2_mott seed 0 distill best.pt에서 RL 1.25 h만), `lo_pcb_r2m` (lo_pcb_r2 distill에서 RL만) — `scripts/queue_feas_margin.py`, lo_pkg_r2a 뒤 (~22:10~00:50). r2c와 같은 짝 설계라 바뀐 것은 보상의 성공 여유 하나. RESULTS ABLATIONS 행 3개 (vs r2_mott_rl, vs `r2_mott_rl@last`, lo_pcb vs lo_pcb_r2_rl) 추가.
   - **미리 적는 판정 (라운드 2 규칙 + 라운드 5 보강 그대로):** seed 0, 판마다 50문제 짝지은 bootstrap. (i) 같은 종류 pcb·pkg 중 하나 이상에서 r2m − r2_mott_rl 성공률 CI 하한 > 0이 **day 1 기록과 `@last` 둘 다에서** 성립하거나, lo_pcb_r2m − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0, (ii) 그리고 다른 판에서 점추정이 −0.05 아래가 아니면 "이김" → seed 1·2 (`r2_mott_s1/s2` distill에서 같은 방식) 확장. 둘 기준이 갈리면 "평가 잡음 범위 — 판정 보류", 그 밖은 "효과 없음"/"해로움"으로 적고 확장하지 않음.
-- side_slot 재시작 (대상 lo_pcb_r2a lo_ip_r2a lo_pkg_r2a r2m lo_pcb_r2m, 로그 `agent/logs/side_slot2.log`); 돌던 LS filler는 그대로 살아 있음 (side_slot은 자기 작업이 살아 있으면 기다림).
+- side_slot 재시작 (대상 lo_pcb_r2a lo_ip_r2a lo_pkg_r2a r2m lo_pcb_r2m, 로그 `agent/logs/side_slot2.log`, `.gitignore`에 추가); 돌던 LS filler는 그대로 살아 있음 (side_slot은 자기 작업이 살아 있으면 기다림).
+- lo_pcb_r2a RL it 100 (17:19): fail 0.09, λ 1.22, val pkg fail 0.88 / ip 0.19 (16문제, 판정용 아님), OOM 0.
+- 다음 라운드: lo_pcb_r2a 끝 (~18:10) → side_slot 평가 (LS filler 끝난 뒤) → 라운드 5에 미리 적은 판정 (i)·(ii). lo_ip_r2a (~20:10), lo_pkg_r2a (~22:10), r2m (~23:30), lo_pcb_r2m (~00:50). lo_r2a가 (i) 충족이면 seed 1·2를 r2m 앞에 넣을지 그때 결정. CPU 줄은 그대로 (e0plus16 ip16_1 → eval16 ip16_1 → eval16 r2a → 그림 2). 남은 글 작업 후보: QUEUE 11/01 할 일 6 (설계 근거 절, pcb 범용화만 성립한 범위에서). DAILY는 11/03 05:00 UTC.
 
 ## 재개 라운드 6 (2026-11-02 14:25~ UTC)
 - 상태: r2v RL 끝 (14:52, 340 iter / 1.27 h, val 3번 (종류당 48문제) → best it 200), side_slot이 10칸 평가 중 (14:52~). GPU `lo_pcb_r2v` 14:52~ (~16:10) → lo_pcb_r2a → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type1` (13:17~). pod 11 GiB / 60, oom_kill 0.
