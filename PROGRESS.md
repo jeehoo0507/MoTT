@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-02 22:20 UTC, 재개 라운드 19)
+# PROGRESS (갱신 2026-11-02 22:40 UTC, 재개 라운드 20)
+
+## 재개 라운드 20 (2026-11-02 22:33~ UTC)
+- 상태: GPU `r2m` RL it 50 (813 s, fail 0.36, λ 1.94, gpu peak 13.6 GB, OOM 0; 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8` 3번째 파일 (21:36~, 1시간째 — pcb20 파일은 ~22 min이었고 pkg는 GA처럼 더 무거움, 이상 아님). side_slot: `eval10 lo_pkg_r2a_rl` 22:15~22:28 끝 (rc 0) → `ga10 eval_pkg10_1` 22:29~ (pkg10_0은 ~70 min 걸림) → 그다음 r2m 평가. CPU 무거운 프로세스 = pool20 1 + r2m certify 2 + GA 1 (한도 안). pod 13.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- `ensure_running`이 report_watch·resume_agent를 다시 띄움 — report_watch는 27개 lo_* rung이 모두 push된 상태라 시작하자마자 스스로 끝나는 것이 설계대로 (라운드 17과 같음). 문제 아님.
+- **lo_pkg_r2a_rl 평가 끝 (표만, 판정 없음 — 라운드 13 결정: fc_bias 범용화 seed 1·2 안 함):** pkg (뺀 종류) 성공 0.72 / 개수÷g+p 0.87 vs 편향 없는 `lo_pkg_r2_rl` 0.80 → **−0.08 [−0.24, +0.08]** (CI 0 포함); pcb −0.08 [−0.20, +0.02], ip +0.00. 전체 학습 r2a 대비 pkg −0.12 [−0.26, +0.02]. 즉 ip·pcb (+0.00 둘 다, 라운드 13)에 이어 pkg에서도 fc_bias는 처음 보는 종류에서 도움이 안 됨 (seed 0 하나, 세 종류 모두 CI 0 포함). RESULTS는 report_watch/collect가 자동으로 다시 만든 것 (`RESULTS.md` "pkg 빼고 학습 2단 + 주파수 궁합 편향" 절, 479+ 기록).
+- 다음 라운드: GA pkg10_1 진행 확인; pool20 끝 (~23:10 예상보다 늦을 수 있음) → smoke 기록 peak rss로 `queue_eval20.py` 결정; r2m (~23:30) → side_slot 평가 (GA 뒤) → 라운드 7 판정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 19 (2026-11-02 22:15~ UTC)
 - 상태: GPU `lo_pkg_r2a` 학습 끝 (RL 366 iter, 1.26 h, `runs/2026-10-29/lo_pkg_r2a_rl/metrics.json`) → **`r2m` RL 22:13~** (같은 distill에서 RL만, 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. side_slot이 `eval10 lo_pkg_r2a_rl` 22:15:32 시작 (worker 1). CPU 줄 `pool20 eval k8` 3번째 파일 그대로 (~23:10 끝 예상). CPU 프로세스 4개 (pool20 1 + r2m certify 2 + 평가 1) — 한도 안. pod 10.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
