@@ -1,4 +1,4 @@
-# PROGRESS (갱신 2026-11-02 12:25 UTC, 재개 라운드 5)
+# PROGRESS (갱신 2026-11-02 14:00 UTC, 재개 라운드 5)
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
 - 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.
@@ -12,6 +12,8 @@
 - **bp_park_rlonly 끝** (296 iter / 2.03 h, best it 100, `runs/2026-10-29/bp_park_rlonly_rl/`), 10칸 평가 (side_slot 11:04~12:17): **ip 0.12** (개수÷E0+ 9.99), **pcb 0.86** (÷E0+ 1.76, ÷g+p 8.14), **pkg 0.86** (÷E0+ 4.87). 해 모양: **세 판 종류 모두 종류 1만** (종류 비율 0/1/0). → RL만 (원 논문 방식)이 distill 판 (pcb 0.46, pkg 0.16)보다 pcb·pkg 성공률은 높지만 개수 폭증, ip는 무너짐. B-Manoharan l20 (판마다 한 종류)와 같은 결론: RL만 + 선행 구조는 판 종류에 맞는 종류 선택을 배우지 못함. RESULTS "선행 연구 재구현" B-Park 아래 설명 줄 추가 (`collect_results.py` PRIOR). 주의: 초기 λ 20은 우리 보상의 선택 (원 논문은 λ 없음) — 성공을 개수보다 크게 쳐서 "많이 놓기"를 부추길 수 있음; λ는 fail 0.16~0.48로 학습 중 22→26까지 올라감.
 - **r2c 끝** (105 iter / 1.29 h, val 1번 → best it 100, 선생님 교체 276), 평가 12:19~ (side_slot). GPU: lo_pcb_r2c 12:19~ (~13:40).
 - **STUCK 해제 (QUEUE 11/02 21:30 KST 사람 조치):** 사람이 `research_notes/선행 기준선 원문 설정 (Park 2022, Manoharan 2026).md`를 넣음 → 재구현 차이 표 완성 `research_notes/선행 기준선 재구현 차이 표.md` (B-Park·B-Manoharan, 항목마다 원 논문 / 우리 / 영향). RESULTS "선행 연구 재구현" 설명 줄 갱신 (`collect_results.py` PRIOR): (1) Park 원 문제 = 개수 고정 + 임피던스 감소 (목표 없음) → "구조·입력을 옮긴 재구현"으로만, (2) Manoharan 원 예산 ~24 h·5만 에피소드·critic + replay vs 우리 2 h → pcb 0.00은 "같은 2 h 예산에서"로만, (3) Manoharan 미확인 항목은 "우리 선택, 원문 미확인". 원 논문 경향 재현 sanity check는 하지 않음 — 결정: Park 설정은 목표·보상을 바꿔야 해서 규칙 밖, Manoharan 원 예산은 마감 안 불가; 비교에 caveat만. 웹 검색·alphaXiv는 다시 시도하지 않음 (QUEUE). 지운 STUCK 줄: "원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 세 라운드 거부됨 (11/02 04:xx, 06:10, 10:05 al…"
+- **r2c 평가 끝 (H2 수정, seed 0, 같은 종류 학습) — 판정 (라운드 2 규칙 + 라운드 5 보강, 미리 적은 그대로):** r2c − r2_mott_rl 성공률 ip +0.00, pcb +0.02 [−0.10, +0.14], pkg +0.08 [−0.06, +0.22]; 같은 설정 짝 (`@last`) pcb −0.02 [−0.14, +0.10], pkg +0.08 [−0.06, +0.22]. 개수비 0.99~1.06 (CI 1 포함). → **CI가 모두 0 포함 → 같은 종류 학습에서 "효과 없음".** 성공률 r2c ip 1.00 / pcb 0.90 / pkg 0.80. 주의 (라운드 5에 미리 적음): iter 1/3 (105 vs ~300) + best.pt 선택 사실상 없음과 함께 바뀐 비교.
+- lo_pcb_r2c (pcb 빼고) 평가 진행 중 — 지금까지 pcb10_0 25문제에서 lo_pcb_r2c − lo_pcb_r2 **−0.28 [−0.48, −0.08]** (CI 0 아래), pkg +0.02. 50문제 끝나면 판정. 해 모양: pcb 성공 해의 종류 비율 0.49/0.16/0.35 (lo_pcb_r2는 종류 2 위주였는지 표에서 확인 예정).
 
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)
