@@ -19,3 +19,7 @@ error: Please commit or stash them.
 **아직 막힌 것:** 원 논문 설정 확인은 여전히 STUCK입니다. 웹 검색·alphaXiv가 허용 목록에 없고 `research_notes/`에 원문 PDF도 없습니다.
 
 다음 라운드에서는 l20 평가 결과를 "선행 연구 재구현" 표에 넣고, Park가 iter 초반에 붕괴하지 않는지 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b578340..a6cb39e  main -> main
