@@ -151,9 +151,71 @@ def fig3(recs, methods, sizes, out):
     fig.savefig(out, dpi=200)
 
 
+def seed_names(m):
+    """r2_mott_rl -> [r2_mott_rl, r2_mott_s1_rl, r2_mott_s2_rl] (seed 0 has no suffix, as in agent/day2_queue.json)."""
+    stem = m[:-3] if m.endswith("_rl") else m
+    return [m, f"{stem}_s1_rl", f"{stem}_s2_rl"]
+
+
+def fig3_seeds(recs, methods, size, out, ref="gp_type_aware", lines=(("gp_type_aware", "E0+ type-aware greedy", "-"),
+                                                                     ("modal_rule", "modal rule (no learning)", "--"))):
+    """Fig 3 with seeds (QUEUE 10/29 item 3): one board size, x = rung. Bar = mean over the seeds that have records,
+    dots = each seed. Top: success rate; bottom: decap count / `ref` on problems both solved (per seed, paired).
+    Rungs are named (with their value) on the x axis, so identity is never colour alone; reference methods are
+    horizontal lines in the legend."""
+    techs = [t for t in ("pcb", "pkg", "ip") if any(k[0] == t and k[1] == size for k in recs)]
+    fig, axes = plt.subplots(2, len(techs), figsize=(3.6 * len(techs), 5.8), squeeze=False)
+    rng = np.random.default_rng(0)
+    for j, t in enumerate(techs):
+        ax_s, ax_c = axes[0, j], axes[1, j]
+        rf = recs.get((t, size, ref))
+        names = [f"rung {m[1]}" if m[0] == "r" and m[1].isdigit() else m for m in methods]
+        ticks = {ax_s: list(names), ax_c: list(names)}
+        for i, m in enumerate(methods):
+            succ, rel = [], []
+            for name in seed_names(m):
+                rec = recs.get((t, size, name))
+                if rec is None:
+                    continue
+                succ.append(np.mean(rec["ok"]))
+                rel.append(paired_ratio(rec, rf)[0] if rf else np.nan)
+            for ax, v in ((ax_s, succ), (ax_c, rel)):
+                v = [x for x in v if x == x]
+                if not v:
+                    continue
+                ax.bar(i, np.mean(v), 0.62, color=SERIES[i], alpha=0.85)
+                ax.scatter(i + rng.uniform(-0.12, 0.12, len(v)), v, s=14, color=INK, zorder=3, lw=0)
+                ticks[ax][i] += f"\n{np.mean(v):.2f} (n={len(v)})"
+        for m, label, ls in lines:
+            rec = recs.get((t, size, m))
+            if rec is None:
+                continue
+            for ax, y in ((ax_s, np.mean(rec["ok"])), (ax_c, paired_ratio(rec, rf)[0] if rf and m != ref else (1.0 if m == ref else np.nan))):
+                if y != y:
+                    continue
+                ax.axhline(y, color=INK, lw=0.9, ls=ls, label=label)
+        ax_s.set_ylim(0, 1.12)
+        ax_s.set_title(f"{KIND[t]} {size}x{size}", fontsize=10, color=INK, loc="left")
+        for ax in (ax_s, ax_c):
+            style(ax)
+            ax.set_xticks(range(len(methods)))
+            ax.set_xticklabels(ticks[ax], fontsize=7)
+        if j == 0:
+            ax_s.set_ylabel("success rate (exact check), seed mean", color=INK2, fontsize=9)
+            ax_c.set_ylabel("decap count / E0+ (both solved)", color=INK2, fontsize=9)
+    axes[0, 0].legend(fontsize=7, frameon=True, framealpha=0.9, edgecolor=GRID, loc="lower left")
+    fig.text(0.99, 0.005, "bar = seed mean (value under each rung), dots = seeds; lines = reference methods (legend)",
+             fontsize=7, color=INK2, ha="right")
+    fig.suptitle("Ladder ablation, 3 seeds: same data and training budget, one component added per rung",
+                 fontsize=11, color=INK, x=0.02, ha="left")
+    fig.tight_layout()
+    fig.savefig(out, dpi=200)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fig", type=int, choices=[2, 3], required=True)
+    ap.add_argument("--seeds", action="store_true", help="fig 3: seed mean + per-seed dots, one size (first of --sizes)")
     ap.add_argument("--records", required=True, help="glob of eval JSON records")
     ap.add_argument("--methods", required=True, help="comma list, in display order")
     ap.add_argument("--sizes", default="16,20")
@@ -164,7 +226,10 @@ def main():
     sizes = [int(s) for s in a.sizes.split(",")]
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     plt.rcParams["font.family"] = ["DejaVu Sans"]
-    (fig2 if a.fig == 2 else fig3)(recs, methods, sizes, a.out)
+    if a.fig == 3 and a.seeds:
+        fig3_seeds(recs, methods, sizes[0], a.out)
+    else:
+        (fig2 if a.fig == 2 else fig3)(recs, methods, sizes, a.out)
     print("wrote", a.out)
 
 

@@ -8,6 +8,7 @@ STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 
 - 원 논문 확인: alphaXiv `get_paper_content` (arXiv 2203.15722) 다시 시도 → 권한 거부 (세 번째). STUCK 줄 유지, 재시도하지 않음.
 - **r2c·r2v 짝 기준 점검 (결과 나오기 전):** ABLATIONS의 기준 `r2_mott_rl` 기록은 day 1 평가 (`--inst_chunk` 없음)이고 r2c·r2v는 드라이버의 `--inst_chunk 5`로 평가됨 → 배치 크기 잡음 (같은 가중치에서 pcb 3/50 다름, 라운드 1)이 짝 차이에 섞임. `r2_mott_rl` seed 0의 best.pt와 last.pt는 **가중치가 같음** (torch로 확인: iter 300 둘 다, max diff 0.0; 파일 sha만 다름) → `runs/analysis/ckpt_last/eval/*__r2_mott_rl@last.json` (inst_chunk 5)이 같은 가중치·같은 평가 설정 기록. `collect_results.py` ABLATIONS에 `r2c_rl vs r2_mott_rl@last`, `r2v_rl vs r2_mott_rl@last` 행 추가 (기존 행 유지). lo_pcb_r2_rl은 이미 inst_chunk 5라 그대로.
   - 결정 (판정 규칙 보강, 결과 보기 전): 같은 종류 학습 쪽 "이김"은 **두 기준 기록 (day 1 `r2_mott_rl`, 같은 설정 `@last`) 모두에서** 라운드 2의 CI 조건을 만족할 때만. 둘이 갈리면 "평가 잡음 범위 — 판정 보류"로 적고 seed 1·2로 확장하지 않음. 이유: 더 엄격한 쪽이 보수적이고, 기존 규칙의 기준선을 바꾸지 않음.
+- **그림 3 초안 (seed 3개):** `scripts/fig_results.py --fig 3 --seeds` (새 옵션; 막대 = seed 평균, 점 = seed, 기준선 E0+·modal_rule은 가로선) → `reports/fig3_ladder_seeds_draft.png` (10칸, r0~r3 `*_rl`/`*_s1_rl`/`*_s2_rl`). 읽기: pcb 성공 0.96/0.93/0.83/0.91 (modal_rule 1.00, E0+ 0.66), pkg 0.75/0.74/0.73/0.83 (규칙 0.88, E0+ 0.82), ip 0.99/0.95/1.00/0.99; ip 개수÷E0+ 1.41/1.24/1.01/1.01 (모드 토큰 2·3단만 E0+ 수준, seed 3개 모두). 주의: seed 0 기록은 day 1 평가 설정, s1·s2는 `--inst_chunk 5` (배치 잡음 ±0.04~0.06 가능). 팔레트 검증 스크립트 (node)는 무인 허용 목록 밖이라 못 돌림 — 기존 그림 팔레트 그대로, 단 이름·값은 x축에 글자로.
 
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)
