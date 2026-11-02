@@ -1,4 +1,11 @@
-# PROGRESS (갱신 2026-11-02 21:00 UTC, 재개 라운드 14)
+# PROGRESS (갱신 2026-11-02 21:30 UTC, 재개 라운드 15)
+
+## 재개 라운드 15 (2026-11-02 21:07~ UTC)
+- 상태: GPU `lo_pkg_r2a` RL 20:58~ (끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8` (20:51~, worker 1, 아직 파일 0개). 4번째 칸 `ga10 eval_pkg10_0` (20:58~). pod 11.8 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **GA pcb10 두 파일 끝 (50문제):** genetic pcb 성공 0.78 (pcb10_0 0.96 → pcb10_1에서 떨어짐), vs g+p **−0.12 [−0.24, −0.02]**, vs E0+ +0.12 [−0.06, +0.28], 개수÷g+p 0.96, 16.4 s/문제 (RESULTS 자동). 실패 11문제는 평균 30개. ip는 g+p 수준 (0.40), pcb는 g+p보다 낮음 — LS와 같은 쪽 (작업 격자에서 줄인 해가 정확 검사에서 떨어짐, 확인은 안 함).
+- side_slot을 대상 `lo_pkg_r2a r2m lo_pcb_r2m r2g lo_pcb_r2g`로 다시 띄움 (`agent/logs/side_slot4.log`, 라운드 14에 적은 할 일; 돌던 GA 작업은 그대로 살아 있고 새 side_slot은 그것이 끝나길 기다림). GA 작업이 이어 쓰는 추적 로그 `agent/logs/base10_ga.log`를 `.gitignore` + `git rm --cached` (report_watch autostash로 로그가 고아가 되는 같은 위험, 라운드 5·9).
+- **결정: 그림 2용 LS 16칸 — 먼저 시간 측정만** (`scripts/smoke_ls16.py`, 4번째 칸 filler `ls10 ls16-timing smoke`, GA pkg10_1 뒤). 이유: AGENT_PROMPT 그림 2는 "우리 모델 vs g+p vs LS (가능하면 GA)"인데 16칸 LS 기록이 없음 (10/28 라운드 5에 "단 평가가 기다리지 않을 때 16칸 LS"로 계획만 하고 큐에 안 넣음). LS = g+p + local_search (4×32)라 g+p 16칸 (62~131 s/문제, rss 19~34 GB)보다 무거움 → 종류마다 첫 문제 1개에서 local_search 시간·rss만 잼 (작업 격자, 정확 검사 없음). 이 숫자로 LS16 평가를 (파일 수·문제 수·드라이버 줄 vs 4번째 칸) 정한다; 보고서 숫자 아님. GA 16칸은 LS16 뒤에 같은 방식으로 판단.
+- 다음 라운드: lo_pkg_r2a (~22:15) 평가 → 표만; r2m (~23:35) 평가 → 라운드 7에 미리 적은 판정; smoke_ls16 결과 → LS16 큐 결정; pool20 첫 파일 시간·메모리 확인. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 14 (2026-11-02 20:41~ UTC)
 - 상태: GPU `lo_pkg_r2a` distill it 1050 / 1782 s (RL 끝 ~22:20) → r2m (~23:40) → lo_pcb_r2m (~01:00). CPU 줄 `eval16 eval_ip16_1 r2a_rl` (20:38~, r2a 16칸 마지막) → pool20. 4번째 칸 `ga10 eval_pcb10_1` (20:24~). pod 13.2 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.

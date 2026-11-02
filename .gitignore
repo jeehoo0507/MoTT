@@ -25,6 +25,9 @@ agent/logs/resume_agent.log
 agent/logs/side_slot.log
 agent/logs/side_slot2.log
 agent/logs/side_slot3.log
+agent/logs/side_slot4.log
+# 11/02 round 15: GA filler jobs append here from side_slot (same autostash risk)
+agent/logs/base10_ga.log
 agent/logs/side_slot_jobs.log
 agent/logs/build_pool20.log
 agent/logs/e0plus16.log

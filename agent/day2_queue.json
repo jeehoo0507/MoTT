@@ -959,6 +959,14 @@
     "runs/2026-10-28/baselines/eval/eval_pkg10_1__genetic.json"
    ],
    "log": "agent/logs/base10_ga.log"
+  },
+  {
+   "name": "ls10 ls16-timing smoke",
+   "cmd": ".venv/bin/python scripts/smoke_ls16.py",
+   "done": [
+    "runs/analysis/smoke_ls16.json"
+   ],
+   "log": "agent/logs/smoke_ls16.log"
   }
  ],
  "train_removed": [
