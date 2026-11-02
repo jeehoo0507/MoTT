@@ -1,5 +1,3 @@
-STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 세 라운드 거부됨 (11/02 04:xx, 06:10, 10:05 alphaXiv get_paper_content). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. (라운드 4: DevFormer와 그 AM-PG 기준선 설정은 공개 코드로 확인함 → `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`; Park TMTT 원문·Manoharan 원문은 아직 미확인.) 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
-
 # PROGRESS (갱신 2026-11-02 12:25 UTC, 재개 라운드 5)
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
@@ -13,6 +11,7 @@ STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 
 - **r2c 시작 (11:02, GPU) — 결과 전 주의점:** `--certify 2`는 iter가 느림 (it 75 / 3509 s, r2_mott_rl은 1.25 h에 ~300 iter) → 같은 1.25 h에서 ~95 iter, val (100 iter마다)은 0~1번. train.py는 val이 없으면 끝 가중치를 best.pt로 저장 (`train.py:499-506`) → r2c는 사실상 best.pt 선택 없음. 그래서 r2c vs r2_mott_rl은 "같은 시간 예산에서 정확 검사 보상 (iter 1/3) vs 격자 보상 (iter 전부 + val 선택)" 비교로 쓴다 — 보상만 바뀐 비교가 아님. 학습 신호: it 25 cert-bad 82 (격자 성공 샘플 중 정확 검사 실패 수, 이전 최선 샘플만 셀 때 0~16), replaced 118~229 (선생님 교체가 많음 — 코드 확인: `--certify 2`에서 남은 성공 샘플은 모두 정확 검사를 통과한 것이고 교체는 `cert_ok`일 때만, `train.py:375-389, 434` → 버그 아님).
 - **bp_park_rlonly 끝** (296 iter / 2.03 h, best it 100, `runs/2026-10-29/bp_park_rlonly_rl/`), 10칸 평가 (side_slot 11:04~12:17): **ip 0.12** (개수÷E0+ 9.99), **pcb 0.86** (÷E0+ 1.76, ÷g+p 8.14), **pkg 0.86** (÷E0+ 4.87). 해 모양: **세 판 종류 모두 종류 1만** (종류 비율 0/1/0). → RL만 (원 논문 방식)이 distill 판 (pcb 0.46, pkg 0.16)보다 pcb·pkg 성공률은 높지만 개수 폭증, ip는 무너짐. B-Manoharan l20 (판마다 한 종류)와 같은 결론: RL만 + 선행 구조는 판 종류에 맞는 종류 선택을 배우지 못함. RESULTS "선행 연구 재구현" B-Park 아래 설명 줄 추가 (`collect_results.py` PRIOR). 주의: 초기 λ 20은 우리 보상의 선택 (원 논문은 λ 없음) — 성공을 개수보다 크게 쳐서 "많이 놓기"를 부추길 수 있음; λ는 fail 0.16~0.48로 학습 중 22→26까지 올라감.
 - **r2c 끝** (105 iter / 1.29 h, val 1번 → best it 100, 선생님 교체 276), 평가 12:19~ (side_slot). GPU: lo_pcb_r2c 12:19~ (~13:40).
+- **STUCK 해제 (QUEUE 11/02 21:30 KST 사람 조치):** 사람이 `research_notes/선행 기준선 원문 설정 (Park 2022, Manoharan 2026).md`를 넣음 → 재구현 차이 표 완성 `research_notes/선행 기준선 재구현 차이 표.md` (B-Park·B-Manoharan, 항목마다 원 논문 / 우리 / 영향). RESULTS "선행 연구 재구현" 설명 줄 갱신 (`collect_results.py` PRIOR): (1) Park 원 문제 = 개수 고정 + 임피던스 감소 (목표 없음) → "구조·입력을 옮긴 재구현"으로만, (2) Manoharan 원 예산 ~24 h·5만 에피소드·critic + replay vs 우리 2 h → pcb 0.00은 "같은 2 h 예산에서"로만, (3) Manoharan 미확인 항목은 "우리 선택, 원문 미확인". 원 논문 경향 재현 sanity check는 하지 않음 — 결정: Park 설정은 목표·보상을 바꿔야 해서 규칙 밖, Manoharan 원 예산은 마감 안 불가; 비교에 caveat만. 웹 검색·alphaXiv는 다시 시도하지 않음 (QUEUE). 지운 STUCK 줄: "원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 세 라운드 거부됨 (11/02 04:xx, 06:10, 10:05 al…"
 
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)
