@@ -1,0 +1,21 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 23 is committed and pushed to `r2e main`. One experiment (r2m) was evaluated and one baseline (GA 10-cell) finished; r2m's final verdict waits on lo_pcb_r2m.
+
+**r2m (5% success margin in the RL reward, seed 0) — same-type part of the pre-registered rule is not met:**
+- Success vs plain `r2_mott_rl` on pcb: +0.08 [+0.00, +0.18] against the day 1 record and +0.04 [−0.04, +0.12] against `@last`. The CI lower bound is not above 0 in both, which the rule requires. pkg is +0.02 [−0.12, +0.16] and ip −0.02.
+- The cost is more decaps: 1.29× on pcb and 1.17× on pkg. It mostly trades decap count for success rather than improving overall.
+- The best checkpoint was at iteration 100: after that λ kept climbing to 6.7 and validation got worse.
+- One path to a win remains: lo_pcb_r2m (pcb held out of training) must beat lo_pcb_r2_rl with a CI above 0. Its training ends around 00:50 UTC.
+
+**GA 10-cell baseline (all 6 files, 150 problems):** success is ip 0.40, pcb 0.78, pkg 0.42. Against greedy+prune it is pkg −0.48 [−0.62, −0.32] and pcb −0.12 [−0.24, −0.02]. Like LS, it uses fewer decaps but fails the exact check more often.
+
+**Decision:** I kept the GPU queue order as is (lo_pcb_r2m → r2g → lo_pcb_r2g). The lo_pcb_r2m result will arrive after r2g has started. If r2m wins, its seed 1 and 2 runs go after lo_pcb_r2g instead of killing r2g; the reason is in PROGRESS.md.
+
+**Other jobs and housekeeping:**
+- The third pool20 file has been building for over 2 hours (pcb files took ~22 minutes each). The process is still at 100% CPU, so I'm treating it as heavy rather than stuck and will check again next round.
+- The LS 16-cell timing smoke started at 23:45. Its live log is now in `.gitignore`.
+- The r2m eval records weren't tracked by git, so I force-added them in a separate commit.
+- Memory is 13.3 / 60 GiB with no OOM kills, and there are no new instructions in QUEUE.md.
+
+Next round gives the final r2m verdict once lo_pcb_r2m is evaluated. DAILY.md is due at 05:00 UTC on 11/03.
