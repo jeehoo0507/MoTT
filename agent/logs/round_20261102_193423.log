@@ -19,3 +19,7 @@ Round 13 is finished and pushed to `r2e main` (commit `ad79188`).
 - Judge `r2m` by the rule fixed in round 7.
 - Pick the next GPU job before the queue empties around 01:00 UTC.
 - Write the new DAILY.md at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ad79188..70b92f4  main -> main
