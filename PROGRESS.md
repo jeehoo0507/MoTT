@@ -2,11 +2,11 @@
 
 ## 재개 라운드 14 (2026-11-02 20:41~ UTC)
 - 상태: GPU `lo_pkg_r2a` distill it 1050 / 1782 s (RL 끝 ~22:20) → r2m (~23:40) → lo_pcb_r2m (~01:00). CPU 줄 `eval16 eval_ip16_1 r2a_rl` (20:38~, r2a 16칸 마지막) → pool20. 4번째 칸 `ga10 eval_pcb10_1` (20:24~). pod 13.2 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
-- r2a 16칸 ip16_0 (25문제): 성공 1.00, 개수÷g+p 0.276, ÷E0+ 1.009 [0.995, 1.025] (RESULTS 자동).
+- **r2a 16칸 6파일 끝** (ip16_1 20:48) → 그림 2 다시 그림 (`reports/fig2_bigboard_draft.png`, 라운드 12 명령 + `r2a_rl`). r2a_rl 16칸 성공 pcb 0.88 / pkg **0.46** / ip 1.00, 문제당 1.6~3.7 s (g+p 62~131 s). 짝지은 CI (RESULTS 자동): vs r2_mott_rl pcb16 −0.02 [−0.14, +0.10], pkg16 −0.06 [−0.22, +0.12], ip16 +0.00 (개수비 0.99~1.01) → **10칸에서 보인 편향의 이득 (pcb +0.08, pkg +0.12, CI 0 밖)이 16칸에서는 안 보임** (점추정은 오히려 음수, CI 0 포함). vs modal_rule pcb16 −0.12 [−0.22, −0.04], pkg16 −0.14 [−0.30, +0.02]; vs g+p pkg16 −0.36 [−0.50, −0.22]; ip16 개수÷E0+ 1.015 [1.003, 1.029]. 보고서에는 "r2a 우위는 10칸 (학습 크기 8~12칸) 안에서만"으로 쓴다. pkg16은 모든 학습 단이 g+p (0.82)보다 낮음 (0.46~0.64).
 - **결정: GPU 큐가 ~01:00에 비지 않게 `r2g`·`lo_pcb_r2g`를 lo_pcb_r2m 뒤에 넣음** (`scripts/queue_grid_growth.py`). 바뀐 것: RL 작업 격자 상한 `--grid_growth` 0.5 → 1.0 하나 (기존 옵션, 새 코드 없음). 근거: 진단 H2 (라운드 1)가 이름 붙인 두 수정 중 "M개 샘플 전부 검사" (`--certify 2`, r2c)는 iter가 1/3로 줄어 흐려졌고 "격자 상한 완화"는 시험 안 함; r2_mott_rl 로그에서 격자 상한에 닿은 iter 145 / 354, gpu peak 16.8 GB / 24 (OOM이면 train.py가 chunk를 반으로 — 메모리 실패는 잡힘). 짝 설계는 r2c·r2m과 같음 (같은 distill best.pt에서 RL 1.25 h만, 같은 seed). 주의 (결과 전): F가 커지면 iter가 느려져 같은 1.25 h에서 iter 수가 줄 수 있음 — iter 수를 같이 보고.
   - r2m이 라운드 7 판정으로 "이김"이면 r2m seed 1·2를 r2g **앞**에 넣는다 (미리 적은 대로). r2g는 ~01:00 전에는 시작하지 않으므로 순서 바꿀 시간 있음.
   - **미리 적는 판정 (라운드 7 규칙 그대로, 결과 전):** seed 0, 판마다 50문제 짝지은 bootstrap. (i) 같은 종류 pcb·pkg 중 하나 이상에서 r2g − r2_mott_rl 성공률 CI 하한 > 0이 day 1 기록과 `r2_mott_rl@last` **둘 다에서** 성립하거나, lo_pcb_r2g − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0, (ii) 그리고 다른 판에서 점추정이 −0.05 아래가 아니면 "이김" → seed 1·2 확장. 두 기준이 갈리면 "평가 잡음 범위 — 판정 보류", 그 밖은 "효과 없음"/"해로움", 확장 안 함.
-- 다음 라운드: r2a 16칸 끝 → 그림 2에 `r2a_rl`; lo_pkg_r2a (~22:20) 평가 → 표만; r2m (~23:40) 평가 → 라운드 7 판정; side_slot을 r2m 끝난 뒤 `lo_pcb_r2m r2g lo_pcb_r2g` 대상으로 다시 띄우기 (지금 대상 목록에 r2g 없음); ABLATIONS에 r2g 행 (`collect_results.py`). DAILY 11/03 05:00 UTC.
+- 다음 라운드: pool20 (CPU 줄, 20:51~, 시작 때 pod 8.1 GiB) 진행·메모리 확인; lo_pkg_r2a (~22:20) 평가 → 표만; r2m (~23:40) 평가 → 라운드 7 판정; side_slot을 r2m 끝난 뒤 `lo_pcb_r2m r2g lo_pcb_r2g` 대상으로 다시 띄우기 (지금 대상 목록에 r2g 없음); ABLATIONS에 r2g 행 (`collect_results.py`). DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 13 (2026-11-02 19:34~ UTC)
 - 상태: GPU `lo_pkg_r2a` distill 20:12~ (RL 끝 ~22:20) → r2m (~23:40) → lo_pcb_r2m (~01:00). CPU 줄 eval16 r2a: pcb16_1·pkg16_1 끝 (20:24), 남은 16칸 → pool20. 4번째 칸: lo_ip_r2a 평가 끝 (20:23), 다음 ga10. pod 8~17 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
