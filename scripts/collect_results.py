@@ -368,11 +368,15 @@ PRIOR = {  # prior-work re-implementations (QUEUE 10/29 03:30 C): how each diffe
         "행동 공간: 원 논문은 포트 선택(종류 고정) — 여기서는 우리 행동 공간 (칸 × 종류 추가/제거 + 멈춤), 채널마다 포인터 query.",
         "보상: 원 논문은 임피던스 점수 — 여기서는 우리 보상 (−개수/N_ref − λ·(실패+위반), λ 라그랑주), 정확 검사 실패 반영.",
         "구조·학습: Kool식 encode-once 대신 매 수 다시 인코딩 (상태가 특징에 있음), BatchNorm 대신 LayerNorm, 기준선 교체는 "
-        "paired t-test 대신 val 최고 갱신 때, 기준선 rollout의 실패는 작업 격자 기준 (정확 검사 안 함), 모방 항·선생님 교체 없음 (`--imit 0`)."]),
+        "paired t-test 대신 val 최고 갱신 때, 기준선 rollout의 실패는 작업 격자 기준 (정확 검사 안 함), 모방 항·선생님 교체 없음 (`--imit 0`).",
+        "원 설정 (DevFormer 공개 코드의 AM-PG 기준선에서 확인, 원문 PDF는 미확인): 10×10 판 한 장, 한 종류 decap **K = 20개 고정**, "
+        "보상 = 201점 임피던스 감소 합 (목표 Zt 없음), 입력 (x, y, 탐침/keep-out), 5만 문제 × 10 epoch → 원 논문은 개수 최소화·목표 만족 문제가 아님. "
+        "표: `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`."]),
     "bm_manoharan": ("B-Manoharan: Manoharan 2026식 고정 포트 순서 + decap 토큰으로 종류/빈칸 선택 (`baselines_ml/manoharan.py`)", [
         "학습: 원 논문의 RL 세부 대신 우리 파이프라인 그대로 (distill 0.75 h: 선생님 해를 고정 순서로 다시 걸은 궤적, RL 1.25 h: 그룹 기준선 + 모방 + 선생님 교체).",
         "포트 순서: 최악 탐침에서 본 loop L (포트 i 단락, 한 주파수 f0) 오름차순 — f0는 맨판 최악 위반 주파수 (원 논문은 고정 설계 주파수).",
         "상태: 고정 특징 주파수 8점의 |Z|/Zt + 전역 블록 MLP와 현재 포트 L 임베딩; 원 논문의 Z 행렬 입력 전체는 아님. 갱신은 우리 env의 rank-1 (Schur/Woodbury).",
+        "원 설정은 `reports/최종 모델 설계.md`·코드 docstring의 설명 기준 — TSIPI 2026 원문 대조는 확인 필요 (무인 라운드에서 원문 접근 불가).",
         "행동: 현재 포트에 종류 또는 빈칸, 제거·종류 변경 없음; 에피소드 길이 = 놓을 수 있는 칸 수 + 1 (학습의 max_steps 64 대신).",
         "`*_rlonly_l20` (bp_park_rlonly 포함): 원 논문처럼 RL만 2.0 h (= distill + RL 예산), 무작위 초기화, 모방 없음, 초기 λ 20 "
         "(우리 run은 1). 초기 λ 1로 한 bm_manoharan_rlonly는 it 75부터 모든 샘플이 0개 놓고 실패 → advantage 0으로 붕괴해 34분에 멈춤 "

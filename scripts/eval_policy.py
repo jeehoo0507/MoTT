@@ -40,13 +40,13 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg = args
     import resource
     import numpy as np
     import torch
     torch.set_num_threads(1)
     from decap_loop.bank import load_bank
-    from decap_loop.baselines import greedy, local_search, modal_heuristic
+    from decap_loop.baselines import genetic, greedy, local_search, modal_heuristic
     from decap_loop.modal_env import make_env
     from decap_loop.rollout import rollout
     from decap_loop.sim import FEAS_TOL
@@ -75,6 +75,9 @@ def job(args):
         fn = lambda bb: greedy(bb, cfg, prune=False)  # noqa: E731
     elif method == "modal_rule":
         fn = lambda bb: modal_heuristic(bb, cfg)  # noqa: E731
+    elif method == "genetic":                     # 11/02: decap_loop.baselines.genetic, no seed solution
+        pop, gens = ga_cfg
+        fn = lambda bb: genetic(bb, cfg, pop=pop, gens=gens, seed=0)  # noqa: E731
     elif method == "local_search":
         passes, trials = ls_cfg
 
@@ -138,6 +141,7 @@ def main():
     ap.add_argument("--samples", type=int, default=1, help="policy: best-of-S sampling (1 = greedy decoding)")
     ap.add_argument("--rounds", type=int, default=4)
     ap.add_argument("--ls", default="4x32")
+    ap.add_argument("--ga", default="64x100", help="genetic: population x generations")
     ap.add_argument("--workers", type=int, default=14)
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--inst_chunk", type=int, default=0, help="policy greedy rollout: instances per rollout (0 = all)")
@@ -145,13 +149,15 @@ def main():
     a = ap.parse_args()
     files = sorted({f for s in a.sets.split(",") for f in glob.glob(os.path.join(a.pool, s + ".pkl"))})
     files.sort(key=lambda f: -os.path.getsize(f))
-    names = {"gp": "greedy+prune", "greedy": "greedy", "ls": "local_search", "modal_rule": "modal_rule"}
+    names = {"gp": "greedy+prune", "greedy": "greedy", "ls": "local_search", "modal_rule": "modal_rule", "ga": "genetic"}
     methods = [(names[m], "") for m in a.methods.split(",") if m]
     for p in a.policy:
         n, path = p.split("=")
         methods.append((n if a.samples <= 1 else f"{n}@{a.samples}", path))
     ls_cfg = tuple(map(int, a.ls.split("x")))
-    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk) for f in files for m, spec in methods]
+    ga_cfg = tuple(map(int, a.ga.split("x")))
+    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg)
+            for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()
     # one fresh process per job: a side-16 job's peak stayed resident in the worker into the next job

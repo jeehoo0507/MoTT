@@ -1,6 +1,14 @@
-STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 두 라운드 연속 거부됨 (11/02 04:xx, 06:10). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026·DevFormer 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
+STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 두 라운드 연속 거부됨 (11/02 04:xx, 06:10). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. (라운드 4: DevFormer와 그 AM-PG 기준선 설정은 공개 코드로 확인함 → `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`; Park TMTT 원문·Manoharan 원문은 아직 미확인.) 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
 
-# PROGRESS (갱신 2026-11-02 07:20 UTC, 재개 라운드 3)
+# PROGRESS (갱신 2026-11-02 08:05 UTC, 재개 라운드 4)
+
+## 재개 라운드 4 (2026-11-02 07:43~ UTC)
+- 상태: GPU `bm_manoharan_rlonly_l20` RL it 150+ (붕괴 없음, fail 0.16~0.52, 끝 ~08:58), CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~), pod 16 GiB / 60, oom_kill 0.
+- **선행 기준선 설정 (QUEUE 할 일 4, STUCK 일부 해결):** 10/29에 받아 둔 DevFormer 공개 저장소 (`/home/coder/ext_devformer/devformer`, 읽기만)에서 확인 — DevFormer 문제 = 10×10 판 **한 장**, 한 종류 decap **K = 20개 고정**, 보상 = 201점 임피던스 감소 합 (`model_5`, 목표 Zt 없음); AM-PG 기준선 (`--model attention`) = 입력 (x, y, 탐침/keep-out), rollout 기준선 REINFORCE (t-test α 0.05), 5만 문제 × 10 epoch; DevFormer = 전문가 해 2000개 모방 + 대칭 증강. → **선행 설정은 개수 최소화·목표 만족 문제가 아님**; 우리 B-Park 비교는 "같은 구조·입력을 우리 문제로 옮긴 것". 표: `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`, RESULTS B-Park·B-Manoharan 아래 줄 추가 (`collect_results.py` PRIOR).
+- **LS·GA 10칸 기준선 (QUEUE 할 일 4 "PI 논문의 GA·LS"):** LS 10칸은 day 1부터 CPU 줄 맨 끝에 있었고 GA는 `decap_loop/baselines.genetic`이 있지만 평가에 연결 안 됨.
+  - 결정: **4번째 CPU 칸 러너 `scripts/side_slot.py`** (side_eval_wait 대체) — 학습 끝난 run의 10칸 평가가 1순위, 없을 때만 `ls10 *`·`ga10 *` 큐 항목을 하나씩 (선점 없음 → 학습 평가는 최대 한 작업만큼 기다림). 이유: 이 칸은 학습 사이 ~1.5 h씩 비어 있었음; CPU 4개 유지 (검사 2 + 드라이버 1 + 이것 1). 재시작해도 자기 작업이 살아 있으면 기다림.
+  - LS 항목을 파일별 6개로 나눔 (`ls10 eval_*10_*`, 기존 "day1 base10 ls" 대체, 같은 명령·출력). **ip10_0: 성공 0.40 (= g+p, LS는 성공한 해만 다듬음), 16.4 s/문제.**
+  - GA: `eval_policy.py --methods ga --ga 64x100` (새 방법 `genetic`, 다른 방법 코드 그대로). 시간 smoke (`scripts/smoke_ga.py` → `runs/analysis/smoke_ga.json`): 100세대 추정 ip 26 / pcb 44 / pkg 49 s/문제 → 결정: repo 기본값 (pop 64 × 100세대, 무작위 초기화, g+p 시드 없음 — 시드를 넣으면 g+p+LS 변형이 됨) 그대로, `ga10 *` 6개를 LS 뒤에.
 
 ## 재개 라운드 3 (2026-11-02 06:55~ UTC)
 - 상태: CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~), pod 16~18 GiB / 60, oom_kill 0. `ensure_running`이 report_watch (27 rung 다 올림 → 바로 끝남)·resume_agent (STOP 없음 → 할 일 없음)를 다시 띄움 — 정상.
