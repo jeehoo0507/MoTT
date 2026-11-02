@@ -2,3 +2,4 @@
 [06:25:40] START eval10 lo_pcb_r3_rl | mem 13.5 GiB / 60.0 GiB, oom_kill 0
 [06:37:57] END eval10 lo_pcb_r3_rl rc=0 | mem 15.5 GiB / 60.0 GiB, oom_kill 0
 [06:38:48] wait bm_manoharan_rlonly_rl
+[06:58:36] wait bm_manoharan_rlonly_l20_rl

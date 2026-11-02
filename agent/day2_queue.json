@@ -16,7 +16,11 @@
    "arm": "--model park_am --baseline rollout --imit 0",
    "seed": 0
   },
-  {"name": "r2am", "arm": "--model mott --fc_bias --mode_head", "seed": 0},
+  {
+   "name": "r2am",
+   "arm": "--model mott --fc_bias --mode_head",
+   "seed": 0
+  },
   {
    "name": "bm_manoharan",
    "arm": "--model manoharan",
@@ -27,15 +31,51 @@
    "arm": "--feat coord",
    "seed": 1
   },
-  {"name": "lo_ip_r0",  "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 0},
-  {"name": "lo_ip_r1",  "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 0},
-  {"name": "lo_ip_r2",  "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 0},
-  {"name": "lo_pcb_r0", "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0},
-  {"name": "lo_pcb_r1", "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0},
-  {"name": "lo_pcb_r2", "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0},
-  {"name": "lo_pkg_r0", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 0},
-  {"name": "lo_pkg_r1", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 0},
-  {"name": "lo_pkg_r2", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 0},
+  {
+   "name": "lo_ip_r0",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_ip_r1",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_ip_r2",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pcb_r0",
+   "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pcb_r1",
+   "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pcb_r2",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r0",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r1",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r2",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
   {
    "name": "r1_modal_s1",
    "arm": "--feat modal",
@@ -81,31 +121,143 @@
    "arm": "--model mott --fc_bias",
    "seed": 2
   },
-  {"name": "lo_ip_r0_s1", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 1},
-  {"name": "lo_ip_r1_s1", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 1},
-  {"name": "lo_ip_r2_s1", "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 1},
-  {"name": "lo_pcb_r0_s1", "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_pcb_r1_s1", "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_pcb_r2_s1", "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_ip_r0_s2", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 2},
-  {"name": "lo_ip_r1_s2", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 2},
-  {"name": "lo_ip_r2_s2", "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0", "seed": 2},
-  {"name": "lo_pcb_r0_s2", "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pcb_r1_s2", "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pcb_r2_s2", "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pkg_r0_s1", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_pkg_r1_s1", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_pkg_r2_s1", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 1},
-  {"name": "lo_pkg_r0_s2", "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pkg_r1_s2", "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pkg_r2_s2", "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0", "seed": 2},
-  {"name": "lo_pcb_r3", "arm": "--model loop --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0},
-  {"name": "bm_manoharan_rlonly", "arm": "--model manoharan --imit 0", "seed": 0, "rl_only": true, "after": "runs/analysis/smoke_rlonly.ok"},
-  {"name": "bp_park_rlonly", "arm": "--model park_am --baseline rollout --imit 0", "seed": 0, "rl_only": true, "after": "runs/analysis/smoke_rlonly.ok"},
-  {"name": "r2c", "arm": "--model mott --certify 2", "seed": 0, "init": "runs/2026-10-28/r2_mott_distill/best.pt", "after": "runs/analysis/smoke_certall.ok"},
-  {"name": "lo_pcb_r2c", "arm": "--model mott --certify 2 --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0", "seed": 0, "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt", "after": "runs/analysis/smoke_certall.ok"},
-  {"name": "r2v", "arm": "--model mott --val_pools val_pcb10_0,val_pcb10_1,val_pcb10_2,val_pkg10_0,val_pkg10_1,val_pkg10_2,val_ip10_0,val_ip10_1,val_ip10_2", "seed": 0, "init": "runs/2026-10-28/r2_mott_distill/best.pt", "after": "runs/pool_v1/val_ip10_2.pkl"},
-  {"name": "lo_pcb_r2v", "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_pkg10_1,val_pkg10_2,val_ip10_0,val_ip10_1,val_ip10_2", "seed": 0, "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt", "after": "runs/pool_v1/val_ip10_2.pkl"}
+  {
+   "name": "lo_ip_r0_s1",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_ip_r1_s1",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_ip_r2_s1",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pcb_r0_s1",
+   "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pcb_r1_s1",
+   "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pcb_r2_s1",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_ip_r0_s2",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_ip_r1_s2",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_ip_r2_s2",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pcb_r0_s2",
+   "arm": "--feat coord --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pcb_r1_s2",
+   "arm": "--feat modal --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pcb_r2_s2",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pkg_r0_s1",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pkg_r1_s1",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pkg_r2_s1",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pkg_r0_s2",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pkg_r1_s2",
+   "arm": "--feat modal --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pkg_r2_s2",
+   "arm": "--model mott --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pcb_r3",
+   "arm": "--model loop --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "bm_manoharan_rlonly_l20",
+   "arm": "--model manoharan --imit 0 --lam 20",
+   "seed": 0,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "bp_park_rlonly",
+   "arm": "--model park_am --baseline rollout --imit 0 --lam 20",
+   "seed": 0,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "r2c",
+   "arm": "--model mott --certify 2",
+   "seed": 0,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt",
+   "after": "runs/analysis/smoke_certall.ok"
+  },
+  {
+   "name": "lo_pcb_r2c",
+   "arm": "--model mott --certify 2 --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
+   "after": "runs/analysis/smoke_certall.ok"
+  },
+  {
+   "name": "r2v",
+   "arm": "--model mott --val_pools val_pcb10_0,val_pcb10_1,val_pcb10_2,val_pkg10_0,val_pkg10_1,val_pkg10_2,val_ip10_0,val_ip10_1,val_ip10_2",
+   "seed": 0,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt",
+   "after": "runs/pool_v1/val_ip10_2.pkl"
+  },
+  {
+   "name": "lo_pcb_r2v",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_pkg10_1,val_pkg10_2,val_ip10_0,val_ip10_1,val_ip10_2",
+   "seed": 0,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
+   "after": "runs/pool_v1/val_ip10_2.pkl"
+  }
  ],
  "cpu": [
   {
@@ -509,7 +661,19 @@
    ],
    "log": "agent/logs/e0plus16.log"
   },
-  {"name": "val pools k3 (H1)", "cmd": ".venv/bin/python scripts/build_pools.py --only val --val_k 3 --workers 1", "log": "agent/logs/build_val_k3.log", "done": ["runs/pool_v1/val_pcb10_1.pkl", "runs/pool_v1/val_pcb10_2.pkl", "runs/pool_v1/val_pkg10_1.pkl", "runs/pool_v1/val_pkg10_2.pkl", "runs/pool_v1/val_ip10_1.pkl", "runs/pool_v1/val_ip10_2.pkl"]},
+  {
+   "name": "val pools k3 (H1)",
+   "cmd": ".venv/bin/python scripts/build_pools.py --only val --val_k 3 --workers 1",
+   "log": "agent/logs/build_val_k3.log",
+   "done": [
+    "runs/pool_v1/val_pcb10_1.pkl",
+    "runs/pool_v1/val_pcb10_2.pkl",
+    "runs/pool_v1/val_pkg10_1.pkl",
+    "runs/pool_v1/val_pkg10_2.pkl",
+    "runs/pool_v1/val_ip10_1.pkl",
+    "runs/pool_v1/val_ip10_2.pkl"
+   ]
+  },
   {
    "name": "e0plus16 eval_pkg16_1 type2",
    "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pkg16_1 --type 2 --skip_existing --out runs/analysis/gp_one_type",
@@ -586,6 +750,16 @@
     "runs/2026-10-28/baselines/eval/eval_ip10_1__local_search.json"
    ],
    "log": "agent/logs/base10.log"
+  }
+ ],
+ "train_removed": [
+  {
+   "name": "bm_manoharan_rlonly",
+   "arm": "--model manoharan --imit 0",
+   "seed": 0,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok",
+   "removed": "11/02 07:10: collapsed to all-skip (val fail 1.00 it 100/200, loss 0.000 from it 75 = zero advantage); lam0 1 makes 'place nothing and fail' beat a feasible start. Replaced by bm_manoharan_rlonly_l20."
   }
  ]
 }

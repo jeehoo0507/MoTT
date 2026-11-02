@@ -1,6 +1,15 @@
 STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 두 라운드 연속 거부됨 (11/02 04:xx, 06:10). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026·DevFormer 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
 
-# PROGRESS (갱신 2026-11-02 06:15 UTC, 재개 라운드 2)
+# PROGRESS (갱신 2026-11-02 07:20 UTC, 재개 라운드 3)
+
+## 재개 라운드 3 (2026-11-02 06:55~ UTC)
+- 상태: CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~), pod 16~18 GiB / 60, oom_kill 0. `ensure_running`이 report_watch (27 rung 다 올림 → 바로 끝남)·resume_agent (STOP 없음 → 할 일 없음)를 다시 띄움 — 정상.
+- **bm_manoharan_rlonly 붕괴 확인 → 멈춤 (06:58).** RL만 (무작위 초기화, λ0 1): it 25 fail 0.78·개수/ref 2.7 → it 50부터 fail 1.00, **it 75부터 loss 0.000**, val it 100·200 세 종류 fail 1.00. 원인: 보상 R = −개수/N_ref − λ(실패+V)에서 λ0 1이면 "0개 놓고 실패" (R ≈ −1.5)가 "많이 놓고 성공" (−2.7)보다 높음 → 모든 샘플이 빈칸만 고름 → 그룹 안 R이 모두 같아 advantage 0 → λ가 10까지 올라도 기울기가 없어 회복 불가. Park도 같은 위험: smoke (`/tmp/smoke_rlonly_park_am`) 무작위 초기화 val 개수/g+p 9.0, fail 0.81 → λ0 1이면 "바로 멈춤"이 최적.
+  - 결정: **RL만 기준선 두 개를 λ0 20으로** (`bm_manoharan_rlonly_l20` 새 항목, `bp_park_rlonly` arm에 `--lam 20`; `scripts/queue_rlonly_lam.py`). 이유: 붕괴는 원 논문 방법 탓이 아니라 우리 라그랑주 보상의 초기값 탓이고 (원 논문들은 λ가 없음), 기울기 0인 run에 1.3 h GPU를 더 쓰는 것은 낭비. 20 > 무작위 초기화 개수비 (2.7·9.0) → 성공이 늘 실패보다 높음; fail ≈ 0이면 λ는 iter당 0.001만 내려가 사실상 고정, 그룹 정규화 advantage라 성공 샘플끼리는 개수로 경쟁. 멈춘 run은 `train_removed`로 옮김 (드라이버 재시작 때 이어 돌지 않게), 로그는 남김, 평가 없음. RESULTS 재구현 차이 줄에 적음.
+  - GPU 큐: bm_manoharan_rlonly_l20 (06:58~ ~08:58) → bp_park_rlonly λ0 20 (~10:58) → r2c → lo_pcb_r2c → r2v·lo_pcb_r2v. side_eval_wait 다시 띄움 (`bm_manoharan_rlonly_l20 bp_park_rlonly`).
+- **H1 val 풀 (`val pools k3`)을 4번째 CPU 칸에서 만듦** (06:57~07:25, `agent/logs/build_val_k3.log`). 이유: CPU 줄에서는 E0+ 16칸 뒤 (몇 시간)라 r2v가 막힐 수 있었음; 칸이 비어 있었음 (학습 검사 2 + 드라이버 1 + 이것 1 = 4). 6파일 × 16문제, 다른 10칸 풀 42개 (train·eval·val_*_0)와 겹치는 문제 0 (`scripts/check_val_overlap.py`). → r2v·lo_pcb_r2v의 "after" 충족, 드라이버 CPU 작업은 건너뜀.
+- bm_manoharan_rlonly_l20 초기: it 25 fail 0.16 / 개수비 6.0 → it 50 0.03 / 1.49 (붕괴 없음, 샘플링). val it 100 (greedy, 16문제): ip fail 0.19 (개수÷g+p 0.94), pkg 0.94, pcb 1.00. 판정은 10칸 평가로 (side_eval_wait, ~09:00 뒤).
+- 다음 라운드: l20 best.pt 평가 → "선행 연구 재구현" 표; bp_park_rlonly (λ0 20) 초기 iter가 붕괴하지 않는지 (fail 1.00 + loss 0이 50 iter 넘게 이어지면 같은 원인으로 기록); r2c 시작 (~11:00).
 
 ## 재개 라운드 2 (2026-11-02 05:58~ UTC)
 - 상태: GPU `lo_pcb_r3` RL it 250 (끝 ~06:25), CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~, 4~7 h), pod 15 GiB / 60, oom_kill 0. H1 마지막 확인 (`agent/logs/diag_last2.log`: pkg·ip last.pt) 끝 — 라운드 1 판정 그대로 (H1 pcb에서 지지).
