@@ -27,3 +27,7 @@ Local search and the type-aware greedy baseline wait until greedy+prune's 20-cel
 - Redraw Figure 2 once the 16-cell `eval_ip16_1` evaluations finish.
 - Pick the next GPU job after `r2m`, since the queue runs out around 00:50.
 - Write a new DAILY.md at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d15f609..de9a270  main -> main

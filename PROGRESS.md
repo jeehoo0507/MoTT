@@ -1,4 +1,11 @@
-# PROGRESS (갱신 2026-11-02 19:10 UTC, 재개 라운드 11)
+# PROGRESS (갱신 2026-11-02 19:30 UTC, 재개 라운드 12)
+
+## 재개 라운드 12 (2026-11-02 19:17~ UTC)
+- 상태: GPU `lo_ip_r2a` RL (끝 ~20:12) → lo_pkg_r2a → r2m → lo_pcb_r2m (~00:50). CPU 줄 `eval16 eval_pcb16_0 r2a_rl` 19:18~ (r2a 16칸 6파일 → pool20). 4번째 칸 `ga10 eval_pcb10_0`. pod 9.4 GiB / 60, oom_kill 0. QUEUE 새 지시 없음 (11/02 21:30 KST 절은 라운드 5·10에서 처리).
+- **GA ip10 두 파일 끝 (50문제):** genetic ip 성공 0.40, vs g+p +0.00 [−0.08, +0.08], vs E0+ −0.60 [−0.72, −0.46], 개수÷E0+ 2.37 (RESULTS 자동). pcb10·pkg10은 4번째 칸에서 진행.
+- **16칸 기록 완성 (r0~r3, g+p, E0+, modal_rule 모두 6파일 50문제)** → 그림 2 다시 그림 `reports/fig2_bigboard_draft.png` (`fig_results.py --fig 2 --records 'runs/2026-10-2[89]/*/eval/*16_*.json' --methods greedy+prune,gp_type_aware,modal_rule,r0_coord_rl,r1_modal_rl,r2_mott_rl,r3_loop_rl --sizes 16`). 읽기: 성공 pcb16 g+p 0.92 / E0+ 0.46 / 규칙 1.00 / r0 1.00 / r1 0.92 / r2 0.90 / r3 0.86; pkg16 0.82 / 0.80 / 0.60 / 0.64 / 0.52 / 0.52 / 0.58; ip16 0.56 / 1.00 / 나머지 1.00. ip16 정책 − g+p +0.44 [+0.30, +0.58], 개수÷g+p ~0.30. 문제당 시간 r2·r3 1.7~4.1 s vs g+p 62~131 s (22~48배), E0+ 189~547 s.
+  - 주의 (시간 막대): 같은 방법도 파일 사이 `sec_per_inst`가 ~2배 차이 (r0 pcb16 19.1 / 37.5 s, pkg16 49.3 / 19.0 s) — 공유 CPU에서 다른 작업과 동시에 돈 기록. 그림의 시간은 "같은 기계, 부하 통제 안 함"으로만 쓴다. r0·r1이 r2·r3보다 느린 이유는 확인 안 함.
+- 다음 라운드: lo_ip_r2a 평가 (~20:12 뒤 side_slot) → 라운드 5 판정 (i)·(ii) 확정; r2a 16칸 6파일 끝나면 그림 2에 `r2a_rl` 추가; GA pcb10·pkg10 기록 확인. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 11 (2026-11-02 18:58~ UTC)
 - 상태: GPU `lo_ip_r2a` RL 18:56~ (끝 ~20:12) → lo_pkg_r2a → r2m → lo_pcb_r2m (~00:50). CPU 줄 `eval16 eval_ip16_1 r2_mott_rl` (r1 끝, r3 → r2a 16칸 6파일 → pool20 남음). 4번째 칸 `ga10 eval_ip10_1`. pod 13.8 GiB / 60, oom_kill 0.
