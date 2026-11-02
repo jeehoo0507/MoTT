@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-02 22:40 UTC, 재개 라운드 20)
+# PROGRESS (갱신 2026-11-02 22:55 UTC, 재개 라운드 21)
+
+## 재개 라운드 21 (2026-11-02 22:49~ UTC) — 상태만 (끝난 실험 없음)
+- GPU `r2m` RL it 150 (2108 s, fail 0.14, λ 3.61, best score 1.695 @ it 100, gpu peak 15.8 GB, oom 0; `runs/2026-10-29/r2m_rl/log.txt`; 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: pcb20_0·pcb20_1 built (1309 s·1358 s, g+p ok 1.00), 3번째 파일 21:36~ (~75 min째). side_slot `ga10 eval_pkg10_1` 22:29~ (pkg10_0 ~70 min 기준 ~23:40 끝). CPU 무거운 프로세스 4개 (한도 안), pod 13.5 GiB / 60, oom_kill 0. QUEUE 새 지시 없음. 할 일 1·2·4 (QUEUE 11/01)는 이전 라운드에서 끝남 — 지금은 r2m/r2g 판정 대기.
+- report_watch는 다시 떠서 "모든 lo_* push됨"으로 바로 끝남 (설계대로).
+- 다음 라운드: r2m 끝 → side_slot 평가 (GA 뒤) → 라운드 7 미리 적은 규칙으로 판정; pool20 끝나면 peak rss로 `queue_eval20.py` 결정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 20 (2026-11-02 22:33~ UTC)
 - 상태: GPU `r2m` RL it 50 (813 s, fail 0.36, λ 1.94, gpu peak 13.6 GB, OOM 0; 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8` 3번째 파일 (21:36~, 1시간째 — pcb20 파일은 ~22 min이었고 pkg는 GA처럼 더 무거움, 이상 아님). side_slot: `eval10 lo_pkg_r2a_rl` 22:15~22:28 끝 (rc 0) → `ga10 eval_pkg10_1` 22:29~ (pkg10_0은 ~70 min 걸림) → 그다음 r2m 평가. CPU 무거운 프로세스 = pool20 1 + r2m certify 2 + GA 1 (한도 안). pod 13.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
