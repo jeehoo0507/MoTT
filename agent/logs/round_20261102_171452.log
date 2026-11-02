@@ -19,3 +19,7 @@ They run after `lo_pkg_r2a` (about 22:10 to 00:50 UTC). I wrote the pass/fail ru
 - I added its new log (`side_slot2.log`) to `.gitignore`, so a future rebase can't cut off a log that is still being written.
 
 **Still running.** `lo_pcb_r2a` RL finishes around 18:10. The next round evaluates it and applies the round 5 judgement. The CPU queue is unchanged, and DAILY.md is due 11/03 05:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   060944c..14ddf6e  main -> main

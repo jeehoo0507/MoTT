@@ -1,0 +1,24 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I added the design-rationale section from the 11/01 queue (task 6) to RESULTS.md and pushed it to `r2e main` along with the round-8 entry in PROGRESS.md. All jobs are running normally: pod memory is 17.6 of 60 GiB and there have been no OOM kills.
+
+**Running now**
+- **GPU:** `lo_pcb_r2a` is in RL at iteration 200, where validation picked a new best. It should finish around 18:10 UTC, then `lo_ip_r2a`, `lo_pkg_r2a`, `r2m` and `lo_pcb_r2m` follow, the last ending around 00:50.
+- **CPU:** the type-aware greedy job on the 16-cell ip board, the LS baseline on pkg10_1 as filler, and `side_slot`, which waits to evaluate each run as its RL finishes.
+
+**The new section** ("설계 근거: 관찰 → 설계 → 결과") is built by `scripts/collect_results.py`, so it has no hand-written numbers:
+1. **Observation → design:** the analysis done without training shows coordinates and loop L flip direction across board types, while modal participation ratio and exact one-step effect carry over. That analysis only covers PCB and interposer, uses linear models and has no confidence intervals; the section says so. The table is read directly from `research_notes/토큰 데이터 분석/결과.md`. It also states that per-step exact Z updates and decap tokens come from Manoharan 2026 and are not our contribution.
+2. **Result:** the script recomputes the 10/31 criterion for training with one board type left out. The verdicts match the earlier ones:
+
+| Held-out type | Verdict | Why |
+|---|---|---|
+| pcb | pass | — |
+| ip | fail | stage 2 − stage 0 was −0.32 at seed 1; held-out − full mean is −0.11 |
+| pkg | fail | stage 2 − stage 0 was −0.28 at seeds 1 and 2; held-out − full mean is −0.11 |
+
+   So the "generalizes to an unseen board type" claim is written for pcb only.
+3. **What we do not claim:** loop beats plain, the three MoTT fixes (`--certify 2`, 48-problem validation, best-of-8 sampling), and learning beating `modal_rule` on unseen types.
+
+**Next round:** evaluate `lo_pcb_r2a` and apply the criteria (i)/(ii) written down in round 5. DAILY.md is due at 05:00 UTC on 11/03.
+
+I also fixed one of my memory notes: it still said to use `git stash` when a push is rejected, which contradicts the later rule not to stash while logs are being written.
