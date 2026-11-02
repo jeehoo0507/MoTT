@@ -1,4 +1,4 @@
-# PROGRESS (갱신 2026-11-02 14:00 UTC, 재개 라운드 5)
+# PROGRESS (갱신 2026-11-02 14:30 UTC, 재개 라운드 5)
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
 - 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.
@@ -18,6 +18,7 @@
   - **미리 적는 판정 (결과 전):** 뺀 종류 t의 eval 50문제에서 (i) lo_t_r2a − lo_t_r2 성공률 짝 CI가 0보다 크면 (pcb·ip 중 하나 이상) 그리고 다른 뺀 종류에서 점추정이 −0.05 아래가 아니면 "편향이 범용화를 돕는다 (seed 0)" → seed 1·2 추가. (ii) lo_t_r2a − r2a_rl (뺀 − 전체)도 보고. 10/31 범용화 기준 ((b)·(c))은 r2 run에 대해 이미 판정됐고 바꾸지 않음; r2a는 별도 행으로 보고.
   - RESULTS ABLATIONS에 `lo_<t>_r2a_rl` vs `lo_<t>_r2_rl`, vs `r2a_rl` 행 추가 (결과 오면 자동). side_slot 재시작 (14:2x): 대상 r2v lo_pcb_r2v lo_pcb_r2a lo_ip_r2a lo_pkg_r2a.
 - **로그 유실 (내 실수):** 12:20 push 거절 때 `git stash`/`stash pop`으로 rebase → 추적 중이던 `agent/logs/side_slot.log`·`e0plus16.log`가 새 파일로 바뀌어 살아 있는 writer가 지워진 파일에 씀 (12:20 뒤 side_slot 줄 없음; 평가 json은 정상). 두 로그를 `.gitignore` + `git rm --cached`. 결정: e0plus16 작업은 멈추지 않음 (결과는 json; 로그만 안 보임). 앞으로 push 거절 때는 커밋 후 깨끗한 트리에서 `pull --rebase`.
+- 다음 라운드: r2v 끝 (~14:50) → side_slot 평가 → H1 판정 (라운드 2 규칙 + 라운드 5 보강: day 1 기록·`@last` 둘 다); lo_pcb_r2v (~16:10); lo_pcb_r2a 시작 확인 (~16:10 뒤, 첫 distill이 도는지). CPU 줄: e0plus16 ip16_1 → 16칸 ip16_1 정책 평가 → 그림 2 다시 그리기 (`fig_results.py --fig 2`). LS pkg10·GA 10칸은 학습 사이 side_slot filler. DAILY는 11/03 05:00 UTC에 새로.
 
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)
