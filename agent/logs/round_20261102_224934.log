@@ -11,3 +11,7 @@ Next round:
 - Once r2m's eval finishes, judge it against the rule written down before the results in round 7.
 - When the 20-cell pool build finishes, use its peak memory to decide whether and how to queue the rest of the 20-cell evals.
 - Write the new DAILY.md at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6a1d25c..ecac741  main -> main

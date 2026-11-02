@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-02 22:55 UTC, 재개 라운드 21)
+# PROGRESS (갱신 2026-11-02 23:08 UTC, 재개 라운드 22)
+
+## 재개 라운드 22 (2026-11-02 23:05~ UTC) — 상태만 (끝난 실험 없음)
+- GPU `r2m` RL it 200 (2808 s, fail 0.56 — 이 iter는 pcb12 한 판이라 흔들림, λ 4.49, margin-fail 61, grid capped 35, gpu peak 16.4 GB, oom 0; val (16문제, 판정용 아님) pcb 1.146 / pkg 1.095 / ip 0.691 vs g+p; best.pt 22:39, 20분 체크포인트 it 171; 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. 로그의 "resume checkpoint at iter N"은 20분 저장 줄이고 프로세스는 22:13부터 끊김 없음 (재시작 아님).
+- CPU 줄 `pool20 eval k8`: 3번째 파일 21:36~ (~90 min째, pcb20 파일은 ~22 min — pkg/ip가 더 무거움, 라운드 20과 같은 판단). side_slot `ga10 eval_pkg10_1` 22:29~ (~23:40 끝 예상). CPU 무거운 프로세스 4개 (pool20 1 + r2m certify 2 + GA 1, 한도 안), pod 14.4 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- 다음 라운드: (라운드 21 계획 그대로) r2m 끝 → side_slot 평가 (GA 뒤) → 라운드 7 판정; pool20 끝나면 smoke peak rss로 `queue_eval20.py` 결정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 21 (2026-11-02 22:49~ UTC) — 상태만 (끝난 실험 없음)
 - GPU `r2m` RL it 150 (2108 s, fail 0.14, λ 3.61, best score 1.695 @ it 100, gpu peak 15.8 GB, oom 0; `runs/2026-10-29/r2m_rl/log.txt`; 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: pcb20_0·pcb20_1 built (1309 s·1358 s, g+p ok 1.00), 3번째 파일 21:36~ (~75 min째). side_slot `ga10 eval_pkg10_1` 22:29~ (pkg10_0 ~70 min 기준 ~23:40 끝). CPU 무거운 프로세스 4개 (한도 안), pod 13.5 GiB / 60, oom_kill 0. QUEUE 새 지시 없음. 할 일 1·2·4 (QUEUE 11/01)는 이전 라운드에서 끝남 — 지금은 r2m/r2g 판정 대기.
