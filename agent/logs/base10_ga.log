@@ -1,1 +1,4 @@
 1 sets x 1 methods = 1 jobs, 1 workers -> runs/2026-10-28/baselines/eval
+[  1335s] eval_ip10_0    genetic                      ok 0.40 count 12.00 10.872s/inst rounds 4
+done
+1 sets x 1 methods = 1 jobs, 1 workers -> runs/2026-10-28/baselines/eval

@@ -129,6 +129,10 @@ def ladder_table(recs):
         lines += ["", "local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 destroy-and-repair로 줄임 "
                   "(`decap_loop/baselines.py` `local_search`, 판정은 작업 격자). 줄인 해가 정확 검사에서 떨어지면 "
                   "성공률이 greedy+prune보다 낮아진다 — 짝지은 차이는 아래 판별 표."]
+    if any("genetic" in by[k] for k in keys):
+        lines += ["", "genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100세대, 무작위 초기화, "
+                  "g+p 시드 없음; 적합도 = 개수 + 목표 위반 벌점, 작업 격자 판정). 마지막 최선 해를 greedy로 "
+                  "(목표 미달이면) 채우고 가지치기 — 실패 해의 개수는 아래 종류 비율 표."]
     return lines + [""]
 
 

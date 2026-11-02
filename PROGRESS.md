@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-02 18:55 UTC, 재개 라운드 10)
+# PROGRESS (갱신 2026-11-02 19:10 UTC, 재개 라운드 11)
+
+## 재개 라운드 11 (2026-11-02 18:58~ UTC)
+- 상태: GPU `lo_ip_r2a` RL 18:56~ (끝 ~20:12) → lo_pkg_r2a → r2m → lo_pcb_r2m (~00:50). CPU 줄 `eval16 eval_ip16_1 r2_mott_rl` (r1 끝, r3 → r2a 16칸 6파일 → pool20 남음). 4번째 칸 `ga10 eval_ip10_1`. pod 13.8 GiB / 60, oom_kill 0.
+- **GA 10칸 첫 기록** (`ga10 eval_ip10_0`, 25문제): genetic ip 성공 0.40 (= g+p), 짝 차이 vs g+p +0.00 [−0.12, +0.12], vs E0+ −0.60 [−0.80, −0.40], 개수÷g+p 1.07, ÷E0+ 2.27, 실패 15문제는 평균 71개 (마지막 greedy 채움). RESULTS 요약표 아래 GA 정의 줄 (`collect_results.py`, 숫자 없음). 나머지 5파일은 4번째 칸에서 이어짐.
+- 결정: 20칸 평가 항목은 이번에도 큐에 넣지 않음 — 라운드 9 결정 (판이 생긴 뒤 메모리 보고 명령·inst_chunk 정함) 유지. 참고로 16칸 기록의 최대 rss: 정책·규칙 13~25 GB, g+p 19~34 GB (25문제); 20칸은 파일당 8문제. 판이 생기면 정책 5개 (r0~r3, r2a) → modal_rule → g+p 순으로 먼저, LS·E0+는 g+p 20칸 메모리를 본 뒤.
+- 다음 라운드: lo_ip_r2a 평가 (~20:12 뒤 side_slot) → 라운드 5 판정 (i)·(ii) 확정; eval16 ip16_1 r2·r3 끝나면 그림 2 다시 그리기; r2m (~23:30) 뒤 GPU 다음 항목 결정 (큐는 lo_pcb_r2m ~00:50에서 끝남). DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 10 (2026-11-02 18:40~ UTC)
 - 상태: GPU `lo_ip_r2a` distill it 1050 / 1809 s (0.75 h, val pcb fail 0.50 / pkg 0.81 — 16문제, 판정용 아님), RL 끝 ~20:10. CPU 줄 `eval16 eval_ip16_1 r1_modal_rl` (18:26~), 4번째 칸 `ga10 eval_ip10_0` (18:24~, 첫 GA 기록). pod 13.1 GiB / 60, oom_kill 0. `ensure_running`이 report_watch·resume_agent를 다시 띄움 (report_watch는 27 rung 다 올린 상태라 다음 사이클에 끝남, STOP 없음).

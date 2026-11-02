@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 18:42 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 19:00 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -17,6 +17,7 @@
 | bm_manoharan_rlonly_l20_rl | 0.96 / 1.23 / 1.73 [50] | – | 0.00 / – / – [50] | – | 0.88 / 6.59 / 4.63 [50] | – |
 | bp_park_rl | 0.72 / 0.97 / 1.38 [50] | – | 0.46 / 4.86 / 1.13 [50] | – | 0.16 / 3.39 / 3.04 [50] | – |
 | bp_park_rlonly_rl | 0.12 / 6.37 / 9.99 [50] | – | 0.86 / 8.14 / 1.76 [50] | – | 0.86 / 7.05 / 4.87 [50] | – |
+| genetic | 0.40 / 1.07 / 2.27 [25] | – | – | – | – | – |
 | lo_ip_r0_rl | 0.56 / 0.94 / 1.66 [50] | – | 1.00 / 0.82 / 0.20 [50] | – | 0.76 / 0.82 / 0.56 [50] | – |
 | lo_ip_r0_s1_rl | 0.98 / 1.00 / 1.45 [50] | – | 0.96 / 0.82 / 0.20 [50] | – | 0.70 / 0.81 / 0.55 [50] | – |
 | lo_ip_r0_s2_rl | 0.40 / 0.98 / 1.60 [50] | – | 1.00 / 0.79 / 0.19 [50] | – | 0.86 / 0.77 / 0.53 [50] | – |
@@ -54,7 +55,7 @@
 | r0_coord_s1_rl | 0.96 / 0.97 / 1.29 [50] | – | 0.94 / 0.91 / 0.22 [50] | – | 0.74 / 0.77 / 0.54 [50] | – |
 | r0_coord_s2_rl | 1.00 / 0.96 / 1.50 [50] | – | 0.98 / 0.84 / 0.21 [50] | – | 0.76 / 0.80 / 0.55 [50] | – |
 | r1_modal_distill | 1.00 / 0.91 / 1.59 [50] | – | 0.88 / 1.08 / 0.24 [50] | – | 0.90 / 1.13 / 0.82 [50] | – |
-| r1_modal_rl | 0.96 / 0.88 / 1.23 [50] | 1.00 / 0.33 / 1.25 [25] | 0.98 / 0.75 / 0.18 [50] | 0.92 / 0.80 / 0.24 [50] | 0.68 / 0.75 / 0.53 [50] | 0.52 / 0.72 / 0.42 [50] |
+| r1_modal_rl | 0.96 / 0.88 / 1.23 [50] | 1.00 / 0.36 / 1.29 [50] | 0.98 / 0.75 / 0.18 [50] | 0.92 / 0.80 / 0.24 [50] | 0.68 / 0.75 / 0.53 [50] | 0.52 / 0.72 / 0.42 [50] |
 | r1_modal_s1_rl | 0.92 / 0.87 / 1.31 [50] | – | 0.84 / 0.78 / 0.19 [50] | – | 0.74 / 0.82 / 0.56 [50] | – |
 | r1_modal_s2_rl | 0.98 / 0.82 / 1.19 [50] | – | 0.96 / 0.80 / 0.18 [50] | – | 0.80 / 0.77 / 0.52 [50] | – |
 | r2_mott_distill | 0.92 / 0.74 / 1.02 [50] | – | 0.78 / 0.94 / 0.23 [50] | – | 0.70 / 0.97 / 0.69 [50] | – |
@@ -84,6 +85,8 @@
 
 local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 destroy-and-repair로 줄임 (`decap_loop/baselines.py` `local_search`, 판정은 작업 격자). 줄인 해가 정확 검사에서 떨어지면 성공률이 greedy+prune보다 낮아진다 — 짝지은 차이는 아래 판별 표.
 
+genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100세대, 무작위 초기화, g+p 시드 없음; 적합도 = 개수 + 목표 위반 벌점, 작업 격자 판정). 마지막 최선 해를 greedy로 (목표 미달이면) 채우고 가지치기 — 실패 해의 개수는 아래 종류 비율 표.
+
 ## 종류 인식 greedy 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
 | 판 | 방법 | 문제 수 | 성공률 차 (방법 − 기준) [95% CI] | 개수 비 방법/기준 (둘 다 성공) [95% CI] |
@@ -94,6 +97,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.04 [-0.10, +0.00] | 1.731 [1.575, 1.889] |
 | ip 10 | bp_park_rl | 50 | -0.28 [-0.42, -0.16] | 1.383 [1.216, 1.567] |
 | ip 10 | bp_park_rlonly_rl | 50 | -0.88 [-0.96, -0.78] | 9.987 [7.446, 12.868] |
+| ip 10 | genetic | 25 | -0.60 [-0.80, -0.40] | 2.272 [1.292, 3.480] |
 | ip 10 | lo_ip_r0_rl | 50 | -0.44 [-0.58, -0.30] | 1.662 [1.403, 2.039] |
 | ip 10 | lo_ip_r0_s1_rl | 50 | -0.02 [-0.06, +0.00] | 1.452 [1.259, 1.777] |
 | ip 10 | lo_ip_r0_s2_rl | 50 | -0.60 [-0.72, -0.46] | 1.596 [1.228, 2.221] |
@@ -158,7 +162,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 16 | greedy+prune | 50 | -0.44 [-0.58, -0.30] | 8.168 [6.072, 10.386] |
 | ip 16 | modal_rule | 50 | +0.00 [+0.00, +0.00] | 1.590 [1.449, 1.745] |
 | ip 16 | r0_coord_rl | 50 | +0.00 [+0.00, +0.00] | 1.445 [1.284, 1.626] |
-| ip 16 | r1_modal_rl | 25 | +0.00 [+0.00, +0.00] | 1.253 [1.158, 1.352] |
+| ip 16 | r1_modal_rl | 50 | +0.00 [+0.00, +0.00] | 1.294 [1.217, 1.376] |
 | ip 16 | r2_mott_rl | 25 | +0.00 [+0.00, +0.00] | 1.021 [1.000, 1.052] |
 | ip 16 | r3_loop_rl | 25 | +0.00 [+0.00, +0.00] | 1.015 [1.000, 1.045] |
 | pcb 10 | greedy+prune | 50 | +0.24 [+0.08, +0.40] | 0.341 [0.247, 0.449] |
@@ -325,6 +329,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 10 | bm_manoharan_rlonly_l20_rl | 50 | +0.56 [+0.40, +0.70] | 1.225 [0.913, 1.535] |
 | ip 10 | bp_park_rl | 50 | +0.32 [+0.14, +0.48] | 0.975 [0.689, 1.266] |
 | ip 10 | bp_park_rlonly_rl | 50 | -0.28 [-0.40, -0.16] | 6.365 [4.015, 8.500] |
+| ip 10 | genetic | 25 | +0.00 [-0.12, +0.12] | 1.073 [0.970, 1.270] |
 | ip 10 | lo_ip_r0_rl | 50 | +0.16 [+0.00, +0.32] | 0.943 [0.729, 1.163] |
 | ip 10 | lo_ip_r0_s1_rl | 50 | +0.58 [+0.44, +0.72] | 1.004 [0.778, 1.272] |
 | ip 10 | lo_ip_r0_s2_rl | 50 | +0.00 [-0.10, +0.10] | 0.976 [0.778, 1.188] |
@@ -389,7 +394,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 16 | gp_type_aware | 50 | +0.44 [+0.30, +0.58] | 0.293 [0.188, 0.414] |
 | ip 16 | modal_rule | 50 | +0.44 [+0.30, +0.58] | 0.478 [0.300, 0.676] |
 | ip 16 | r0_coord_rl | 50 | +0.44 [+0.30, +0.58] | 0.341 [0.229, 0.467] |
-| ip 16 | r1_modal_rl | 25 | +0.36 [+0.16, +0.56] | 0.332 [0.174, 0.527] |
+| ip 16 | r1_modal_rl | 50 | +0.44 [+0.30, +0.58] | 0.359 [0.233, 0.501] |
 | ip 16 | r2_mott_rl | 25 | +0.36 [+0.16, +0.56] | 0.292 [0.145, 0.487] |
 | ip 16 | r3_loop_rl | 25 | +0.36 [+0.16, +0.56] | 0.300 [0.145, 0.509] |
 | pcb 10 | gp_type_aware | 50 | -0.24 [-0.40, -0.08] | 4.834 [3.848, 5.842] |
@@ -560,7 +565,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 10 | r3_loop_rl | 50 | +0.04 [-0.04, +0.12] | 0.710 [0.650, 0.771] |
 | ip 10 | r3a_rl | 50 | +0.06 [+0.00, +0.14] | 0.714 [0.656, 0.775] |
 | ip 16 | r0_coord_rl | 50 | +0.00 [+0.00, +0.00] | 1.031 [0.873, 1.214] |
-| ip 16 | r1_modal_rl | 25 | +0.00 [+0.00, +0.00] | 0.836 [0.706, 0.967] |
+| ip 16 | r1_modal_rl | 50 | +0.00 [+0.00, +0.00] | 0.919 [0.808, 1.030] |
 | ip 16 | r2_mott_rl | 25 | +0.00 [+0.00, +0.00] | 0.664 [0.598, 0.732] |
 | ip 16 | r3_loop_rl | 25 | +0.00 [+0.00, +0.00] | 0.658 [0.595, 0.722] |
 | pcb 10 | bm_manoharan_rl | 50 | -1.00 [-1.00, -1.00] | – [–, –] |
@@ -719,6 +724,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.96 | 14.21 | 1.225 | 1.731 | 0.133 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bp_park_rl | 50 (0, 1) | 0.72 | 9.78 | 0.975 | 1.383 | 2.314 | `runs/2026-10-29/bp_park_rl/eval/eval_ip10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_ip10_1__bp_park_rl.json` |
 | bp_park_rlonly_rl | 50 (0, 1) | 0.12 | 46.17 | 6.365 | 9.987 | 5.740 | `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_ip10_0__bp_park_rlonly_rl.json`, `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_ip10_1__bp_park_rlonly_rl.json` |
+| genetic | 25 (0) | 0.40 | 12.00 | 1.073 | 2.272 | 10.872 | `runs/2026-10-28/baselines/eval/eval_ip10_0__genetic.json` |
 | lo_ip_r0_rl | 50 (0, 1) | 0.56 | 13.39 | 0.943 | 1.662 | 7.944 | `runs/2026-10-29/lo_ip_r0_rl/eval/eval_ip10_0__lo_ip_r0_rl.json`, `runs/2026-10-29/lo_ip_r0_rl/eval/eval_ip10_1__lo_ip_r0_rl.json` |
 | lo_ip_r0_s1_rl | 50 (0, 1) | 0.98 | 11.22 | 1.004 | 1.452 | 2.127 | `runs/2026-10-29/lo_ip_r0_s1_rl/eval/eval_ip10_0__lo_ip_r0_s1_rl.json`, `runs/2026-10-29/lo_ip_r0_s1_rl/eval/eval_ip10_1__lo_ip_r0_s1_rl.json` |
 | lo_ip_r0_s2_rl | 50 (0, 1) | 0.40 | 7.30 | 0.976 | 1.596 | 7.176 | `runs/2026-10-29/lo_ip_r0_s2_rl/eval/eval_ip10_0__lo_ip_r0_s2_rl.json`, `runs/2026-10-29/lo_ip_r0_s2_rl/eval/eval_ip10_1__lo_ip_r0_s2_rl.json` |
@@ -789,7 +795,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | gp_type_aware | 50 (0, 1) | 1.00 | 13.54 | 0.293 | 1.000 | 188.568 | `runs/2026-10-29/baselines_e0plus/eval/eval_ip16_0__gp_type_aware.json`, `runs/2026-10-29/baselines_e0plus/eval/eval_ip16_1__gp_type_aware.json` |
 | modal_rule | 50 (0, 1) | 1.00 | 20.26 | 0.478 | 1.590 | 4.194 | `runs/2026-10-28/baselines/eval/eval_ip16_0__modal_rule.json`, `runs/2026-10-28/baselines/eval/eval_ip16_1__modal_rule.json` |
 | r0_coord_rl | 50 (0, 1) | 1.00 | 20.60 | 0.341 | 1.445 | 3.690 | `runs/2026-10-28/r0_coord_rl/eval/eval_ip16_0__r0_coord_rl.json`, `runs/2026-10-28/r0_coord_rl/eval/eval_ip16_1__r0_coord_rl.json` |
-| r1_modal_rl | 25 (0) | 1.00 | 15.20 | 0.332 | 1.253 | 7.165 | `runs/2026-10-28/r1_modal_rl/eval/eval_ip16_0__r1_modal_rl.json` |
+| r1_modal_rl | 50 (0, 1) | 1.00 | 17.92 | 0.359 | 1.294 | 8.745 | `runs/2026-10-28/r1_modal_rl/eval/eval_ip16_0__r1_modal_rl.json`, `runs/2026-10-28/r1_modal_rl/eval/eval_ip16_1__r1_modal_rl.json` |
 | r2_mott_rl | 25 (0) | 1.00 | 11.96 | 0.292 | 1.021 | 1.142 | `runs/2026-10-28/r2_mott_rl/eval/eval_ip16_0__r2_mott_rl.json` |
 | r3_loop_rl | 25 (0) | 1.00 | 11.64 | 0.300 | 1.015 | 1.280 | `runs/2026-10-28/r3_loop_rl/eval/eval_ip16_0__r3_loop_rl.json` |
 
@@ -983,6 +989,8 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 10 | bp_park_rl | 실패 | 14 | 67.6 | 0.26 | 0.00 | 0.74 |
 | ip 10 | bp_park_rlonly_rl | 성공 | 6 | 46.2 | 0.00 | 1.00 | 0.00 |
 | ip 10 | bp_park_rlonly_rl | 실패 | 44 | 73.5 | 0.00 | 1.00 | 0.00 |
+| ip 10 | genetic | 성공 | 10 | 12.0 | 0.45 | 0.02 | 0.53 |
+| ip 10 | genetic | 실패 | 15 | 71.4 | 0.07 | 0.02 | 0.91 |
 | ip 10 | gp_type_aware | 성공 | 50 | 8.3 | 1.00 | 0.00 | 0.00 |
 | ip 10 | lo_ip_r0_rl | 성공 | 28 | 13.4 | 0.81 | 0.00 | 0.19 |
 | ip 10 | lo_ip_r0_rl | 실패 | 22 | 73.5 | 0.14 | 0.01 | 0.85 |
@@ -1079,7 +1087,7 @@ local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 des
 | ip 16 | gp_type_aware | 성공 | 50 | 13.5 | 1.00 | 0.00 | 0.00 |
 | ip 16 | modal_rule | 성공 | 50 | 20.3 | 1.00 | 0.00 | 0.00 |
 | ip 16 | r0_coord_rl | 성공 | 50 | 20.6 | 0.99 | 0.01 | 0.00 |
-| ip 16 | r1_modal_rl | 성공 | 25 | 15.2 | 0.99 | 0.01 | 0.00 |
+| ip 16 | r1_modal_rl | 성공 | 50 | 17.9 | 0.99 | 0.01 | 0.00 |
 | ip 16 | r2_mott_rl | 성공 | 25 | 12.0 | 0.96 | 0.04 | 0.00 |
 | ip 16 | r3_loop_rl | 성공 | 25 | 11.6 | 1.00 | 0.00 | 0.00 |
 | pcb 10 | greedy+prune | 성공 | 45 | 12.0 | 0.40 | 0.13 | 0.47 |
@@ -1820,6 +1828,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_ip_r2_s1_rl | mott / mott | rl | 298 | 1.27 | val_pcb10_0: 0.97/0.62, val_pkg10_0: 0.97/0.69 | `runs/2026-10-29/lo_ip_r2_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r2_s2_distill | mott / mott | distill | 1627 | 0.77 | val_pcb10_0: 0.88/0.88, val_pkg10_0: 1.19/0.56 | `runs/2026-10-29/lo_ip_r2_s2_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r2_s2_rl | mott / mott | rl | 307 | 1.27 | val_pcb10_0: 1.16/0.75, val_pkg10_0: 0.96/0.81 | `runs/2026-10-29/lo_ip_r2_s2_rl/metrics.json` |
+| runs/2026-10-29/lo_ip_r2a_distill | mott / mott | distill | 1591 | 0.77 | val_pcb10_0: 1.00/0.75, val_pkg10_0: 0.95/0.50 | `runs/2026-10-29/lo_ip_r2a_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r0_distill | coord / grid | distill | 2458 | 0.76 | val_pkg10_0: 2.03/0.62, val_ip10_0: 0.92/0.44 | `runs/2026-10-29/lo_pcb_r0_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r0_rl | coord / grid | rl | 367 | 1.27 | val_pkg10_0: 1.00/0.88, val_ip10_0: 0.78/0.19 | `runs/2026-10-29/lo_pcb_r0_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r0_s1_distill | coord / grid | distill | 2366 | 0.76 | val_pkg10_0: 1.01/0.62, val_ip10_0: 0.82/0.19 | `runs/2026-10-29/lo_pcb_r0_s1_distill/metrics.json` |
