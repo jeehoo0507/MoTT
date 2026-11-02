@@ -286,6 +286,18 @@
    "seed": 0,
    "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
    "after": "runs/analysis/smoke_feas_margin.ok"
+  },
+  {
+   "name": "r2g",
+   "arm": "--model mott --grid_growth 1.0",
+   "seed": 0,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt"
+  },
+  {
+   "name": "lo_pcb_r2g",
+   "arm": "--model mott --grid_growth 1.0 --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"
   }
  ],
  "cpu": [

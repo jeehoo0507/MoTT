@@ -381,6 +381,10 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("r2m_rl", "r2_mott_rl", "2단 + 보상 성공에 5% 여유 (`--feas_margin`, 같은 distill에서 RL만)", "여유 없음"),
     ("r2m_rl", "r2_mott_rl@last", "2단 + `--feas_margin` (같은 평가 설정 짝)", "여유 없음, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
     ("lo_pcb_r2m_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--feas_margin` (같은 distill에서 RL만)", "여유 없음"),
+    # 11/02 round 14, diagnosis H2 other fix: working-grid growth cap 0.5 -> 1.0 of the initial F
+    ("r2g_rl", "r2_mott_rl", "2단 + 작업 격자 상한 완화 (`--grid_growth 1.0`, 같은 distill에서 RL만)", "상한 0.5"),
+    ("r2g_rl", "r2_mott_rl@last", "2단 + `--grid_growth 1.0` (같은 평가 설정 짝)", "상한 0.5, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    ("lo_pcb_r2g_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--grid_growth 1.0` (같은 distill에서 RL만)", "상한 0.5"),
 ]
 
 
