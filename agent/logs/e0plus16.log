@@ -1,0 +1,7 @@
+eval_pcb16_0 type 0 ok 0.08 count 73.50 rounds 3 18821s
+eval_pcb16_0 type 1 ok 0.36 count 40.33 rounds 4 20412s
+eval_pcb16_0 type 2 ok 0.16 count 63.00 rounds 4 13458s
+eval_pkg16_0 type 0 ok 0.72 count 36.22 rounds 4 20794s
+eval_pkg16_0 type 1 ok 0.44 count 36.73 rounds 4 17149s
+eval_pkg16_0 type 2 ok 0.08 count 120.50 rounds 4 11433s
+eval_ip16_0 type 0 ok 1.00 count 11.52 rounds 2 363s

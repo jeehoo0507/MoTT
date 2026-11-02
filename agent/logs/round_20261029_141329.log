@@ -17,3 +17,5 @@ I handled the new QUEUE instruction (14:20 UTC: leave-one-type-out runs, then sh
 - **Results not in yet:** the leave-one-type-out results, the B-Manoharan 10×10 table, the 3-seed confidence intervals, and the 16×16 tables.
 - **CPU lane:** these evaluations queue behind the 16×16 E0+ pcb16_0 type 0 job, which started at 11:38 and has no known end time.
 - **Not started:** the 20×20 eval boards haven't been built.
+To https://github.com/jeehoo0507/R2E.git
+   c3ecf0d..3e78e20  main -> main
