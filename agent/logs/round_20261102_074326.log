@@ -27,3 +27,7 @@ error: Please commit or stash them.
 - `bp_park_rlonly` 평가 (지금 학습 중, ~11:00 UTC 끝, 붕괴 없음).
 - 그다음 GPU 큐는 r2c → lo_pcb_r2c → r2v → lo_pcb_r2v (H2·H1 수정)입니다.
 - LS pkg와 GA 결과를 RESULTS에 반영합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   eabdd64..15a95bc  main -> main
