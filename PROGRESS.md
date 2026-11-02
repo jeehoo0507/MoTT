@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-02 18:35 UTC, 재개 라운드 9)
+# PROGRESS (갱신 2026-11-02 18:55 UTC, 재개 라운드 10)
+
+## 재개 라운드 10 (2026-11-02 18:40~ UTC)
+- 상태: GPU `lo_ip_r2a` distill it 1050 / 1809 s (0.75 h, val pcb fail 0.50 / pkg 0.81 — 16문제, 판정용 아님), RL 끝 ~20:10. CPU 줄 `eval16 eval_ip16_1 r1_modal_rl` (18:26~), 4번째 칸 `ga10 eval_ip10_0` (18:24~, 첫 GA 기록). pod 13.1 GiB / 60, oom_kill 0. `ensure_running`이 report_watch·resume_agent를 다시 띄움 (report_watch는 27 rung 다 올린 상태라 다음 사이클에 끝남, STOP 없음).
+- **QUEUE 11/01 할 일 4 마무리 — 학습 없는 기준선 차이 표:** `research_notes/선행 기준선 재구현 차이 표.md`에 GA (`genetic`)·LS (`local_search`)·공진 규칙 (`modal_rule`, US 6789241식)·DevFormer 행 추가 (선행 연구에서 확인된 것 / 우리 구현 / 차이). GA 개체 수·연산자, LS 이웃, 특허 세부는 저장소에 원문이 없어 "원문 미확인"; 원 논문 시간 숫자 (GA 3 h, 64분)는 다른 판·기계라 우리 시간과 나란히 쓰지 않는다고 적음. 숫자는 RESULTS (스크립트)만.
+- 다음 라운드: lo_ip_r2a 평가 (~20:10 뒤 side_slot) → 라운드 5 판정 (i)·(ii) 확정; GA 10칸 기록이 오면 RESULTS 요약표 행 확인; lo_pkg_r2a (~22:10); eval16 ip16_1 r1~r3 끝나면 그림 2. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 9 (2026-11-02 17:55~ UTC)
 - 상태: GPU `lo_ip_r2a` distill 18:09~ (RL 끝 ~20:10) → lo_pkg_r2a → r2m → lo_pcb_r2m (~00:50). CPU 줄 `eval16 eval_ip16_1 r0_coord_rl` 18:00~ (그다음 r1~r3, r2a 6파일). 4번째 칸 side_slot. pod 6.5~12 GiB / 60, oom_kill 0.
