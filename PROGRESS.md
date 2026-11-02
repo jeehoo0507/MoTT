@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-02 22:03 UTC, 재개 라운드 18)
+# PROGRESS (갱신 2026-11-02 22:20 UTC, 재개 라운드 19)
+
+## 재개 라운드 19 (2026-11-02 22:15~ UTC)
+- 상태: GPU `lo_pkg_r2a` 학습 끝 (RL 366 iter, 1.26 h, `runs/2026-10-29/lo_pkg_r2a_rl/metrics.json`) → **`r2m` RL 22:13~** (같은 distill에서 RL만, 끝 ~23:30) → lo_pcb_r2m → r2g → lo_pcb_r2g. side_slot이 `eval10 lo_pkg_r2a_rl` 22:15:32 시작 (worker 1). CPU 줄 `pool20 eval k8` 3번째 파일 그대로 (~23:10 끝 예상). CPU 프로세스 4개 (pool20 1 + r2m certify 2 + 평가 1) — 한도 안. pod 10.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **GA pkg10_0 끝 (25문제, 22:07):** genetic 성공 0.48, 개수 평균 5.75 (성공한 것), 39.2 s/문제 (pcb ~15 s보다 무거움), peak rss 3.4 GB. 짝지은 CI (RESULTS 자동, 파일 하나라 [25]): vs g+p **−0.44 [−0.68, −0.24]**, vs E0+ −0.36 [−0.60, −0.16]; 개수÷g+p 0.81 (둘 다 성공한 문제). pcb와 같은 쪽 (GA는 개수는 줄지만 정확 검사 성공이 떨어짐). pkg10_1은 4번째 칸이 비면 (lo_pkg_r2a 평가 뒤) 시작. pkg 판정은 두 파일 50문제가 다 나온 뒤에만.
+- RESULTS 다시 생성 (`collect_results.py`, 479 기록): GA pkg10 행, lo_pkg_r2a_rl 학습 기록 행 추가.
+- 다음 라운드: lo_pkg_r2a 평가 → 표만 (판정 없음, 라운드 13); GA pkg10_1 시작 확인; pool20 끝 (~23:10) → smoke 기록 peak rss로 `queue_eval20.py` 결정; r2m (~23:30) 평가 → 라운드 7 판정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 18 (2026-11-02 21:59~ UTC)
 - 상태: GPU `lo_pkg_r2a` RL it 275 (3414 s, fail 0.00~0.03, λ 1.09, gpu peak 11.5 GB, OOM 0; 20분 체크포인트 it 293; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: 6파일 중 2개 (pcb20_0·pcb20_1) 그대로, 지금 3번째 파일 (~23:10 끝 예상). 4번째 칸 `ga10 eval_pkg10_0` 3640 s째 (pcb 파일은 ~2000 s였음 — pkg가 더 무거움, 이상 아님) → 끝나면 side_slot이 lo_pkg_r2a 평가. pod 10.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
