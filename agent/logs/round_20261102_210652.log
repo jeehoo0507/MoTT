@@ -24,3 +24,7 @@ error: Please commit or stash them.
 - LS16 시간 측정 결과를 보고 LS16 평가를 큐에 넣을지 정합니다.
 - `pool20` 첫 파일의 시간과 메모리를 확인합니다.
 - DAILY.md는 11/03 05:00 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a651527..4b8f97f  main -> main
