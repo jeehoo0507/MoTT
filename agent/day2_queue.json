@@ -257,6 +257,21 @@
    "seed": 0,
    "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
    "after": "runs/pool_v1/val_ip10_2.pkl"
+  },
+  {
+   "name": "lo_pcb_r2a",
+   "arm": "--model mott --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_ip_r2a",
+   "arm": "--model mott --fc_bias --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r2a",
+   "arm": "--model mott --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
   }
  ],
  "cpu": [

@@ -362,6 +362,11 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     # 11/02 diagnosis H1: best.pt chosen on 3 val files per kind (48 problems) instead of 1 (16); same distilled init
     ("r2v_rl", "r2_mott_rl", "2단 + best.pt 선택 val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
     ("r2v_rl", "r2_mott_rl@last", "2단 + val 종류당 48문제 (같은 평가 설정 짝)", "val 종류당 16문제, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    # 11/02 round 5: r2a (beats r2_mott on 3 seeds, same kind) on a held-out kind; vs lo_<t>_r2 and vs r2a trained on all
+    *[(f"lo_{t}_r2a_rl", f"lo_{t}_r2_rl", f"{t} 빼고 학습 2단 + 주파수 궁합 편향 (`--fc_bias`)", "편향 없는 같은 단 (같은 종류 빼고)")
+      for t in ("pcb", "ip", "pkg")],
+    *[(f"lo_{t}_r2a_rl", "r2a_rl", f"{t} 빼고 학습 r2a (처음 보는 종류에서 얼마나 떨어지나)", "세 종류 모두 학습한 r2a")
+      for t in ("pcb", "ip", "pkg")],
     ("lo_pcb_r2v_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
 ]
 
