@@ -1,6 +1,6 @@
 STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 세 라운드 거부됨 (11/02 04:xx, 06:10, 10:05 alphaXiv get_paper_content). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. (라운드 4: DevFormer와 그 AM-PG 기준선 설정은 공개 코드로 확인함 → `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`; Park TMTT 원문·Manoharan 원문은 아직 미확인.) 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
 
-# PROGRESS (갱신 2026-11-02 10:20 UTC, 재개 라운드 5)
+# PROGRESS (갱신 2026-11-02 12:25 UTC, 재개 라운드 5)
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
 - 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.
@@ -10,6 +10,9 @@ STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 
   - 결정 (판정 규칙 보강, 결과 보기 전): 같은 종류 학습 쪽 "이김"은 **두 기준 기록 (day 1 `r2_mott_rl`, 같은 설정 `@last`) 모두에서** 라운드 2의 CI 조건을 만족할 때만. 둘이 갈리면 "평가 잡음 범위 — 판정 보류"로 적고 seed 1·2로 확장하지 않음. 이유: 더 엄격한 쪽이 보수적이고, 기존 규칙의 기준선을 바꾸지 않음.
 - **그림 3 초안 (seed 3개):** `scripts/fig_results.py --fig 3 --seeds` (새 옵션; 막대 = seed 평균, 점 = seed, 기준선 E0+·modal_rule은 가로선) → `reports/fig3_ladder_seeds_draft.png` (10칸, r0~r3 `*_rl`/`*_s1_rl`/`*_s2_rl`). 읽기: pcb 성공 0.96/0.93/0.83/0.91 (modal_rule 1.00, E0+ 0.66), pkg 0.75/0.74/0.73/0.83 (규칙 0.88, E0+ 0.82), ip 0.99/0.95/1.00/0.99; ip 개수÷E0+ 1.41/1.24/1.01/1.01 (모드 토큰 2·3단만 E0+ 수준, seed 3개 모두). 주의: seed 0 기록은 day 1 평가 설정, s1·s2는 `--inst_chunk 5` (배치 잡음 ±0.04~0.06 가능). 팔레트 검증 스크립트 (node)는 무인 허용 목록 밖이라 못 돌림 — 기존 그림 팔레트 그대로, 단 이름·값은 x축에 글자로.
 - **그림 2 초안 (16칸, 지금 있는 기록):** `fig_results.py --fig 2`에 성공률 행 추가 (개수비는 둘 다 성공한 문제만이라 실패를 가림) → `reports/fig2_bigboard_draft.png`. 읽기 (seed 0): 문제당 시간 g+p 62/131/82 s vs r2_mott_rl 2.4/4.1/1.1 s (pcb/pkg/ip, **26~75배**, "수백 배"는 아님), modal_rule 4.2~8.5 s. 성공 pcb16 g+p 0.92·규칙 1.00·r0 1.00·r2 0.90; pkg16 g+p 0.82·정책 0.52~0.64·규칙 0.60; ip16 g+p 0.56·나머지 1.00. **E0+는 pcb16에서 성공 0.46, 개수 g+p의 5.1배** (한 종류만 쓰면 큰 pcb에서 무너짐). 주의: ip16_1 정책·E0+, pkg16_1 E0+ 아직 없음 (n=25인 막대), CPU 줄에서 진행 중.
+- **r2c 시작 (11:02, GPU) — 결과 전 주의점:** `--certify 2`는 iter가 느림 (it 75 / 3509 s, r2_mott_rl은 1.25 h에 ~300 iter) → 같은 1.25 h에서 ~95 iter, val (100 iter마다)은 0~1번. train.py는 val이 없으면 끝 가중치를 best.pt로 저장 (`train.py:499-506`) → r2c는 사실상 best.pt 선택 없음. 그래서 r2c vs r2_mott_rl은 "같은 시간 예산에서 정확 검사 보상 (iter 1/3) vs 격자 보상 (iter 전부 + val 선택)" 비교로 쓴다 — 보상만 바뀐 비교가 아님. 학습 신호: it 25 cert-bad 82 (격자 성공 샘플 중 정확 검사 실패 수, 이전 최선 샘플만 셀 때 0~16), replaced 118~229 (선생님 교체가 많음 — 코드 확인: `--certify 2`에서 남은 성공 샘플은 모두 정확 검사를 통과한 것이고 교체는 `cert_ok`일 때만, `train.py:375-389, 434` → 버그 아님).
+- **bp_park_rlonly 끝** (296 iter / 2.03 h, best it 100, `runs/2026-10-29/bp_park_rlonly_rl/`), 10칸 평가 (side_slot 11:04~12:17): **ip 0.12** (개수÷E0+ 9.99), **pcb 0.86** (÷E0+ 1.76, ÷g+p 8.14), **pkg 0.86** (÷E0+ 4.87). 해 모양: **세 판 종류 모두 종류 1만** (종류 비율 0/1/0). → RL만 (원 논문 방식)이 distill 판 (pcb 0.46, pkg 0.16)보다 pcb·pkg 성공률은 높지만 개수 폭증, ip는 무너짐. B-Manoharan l20 (판마다 한 종류)와 같은 결론: RL만 + 선행 구조는 판 종류에 맞는 종류 선택을 배우지 못함. RESULTS "선행 연구 재구현" B-Park 아래 설명 줄 추가 (`collect_results.py` PRIOR). 주의: 초기 λ 20은 우리 보상의 선택 (원 논문은 λ 없음) — 성공을 개수보다 크게 쳐서 "많이 놓기"를 부추길 수 있음; λ는 fail 0.16~0.48로 학습 중 22→26까지 올라감.
+- **r2c 끝** (105 iter / 1.29 h, val 1번 → best it 100, 선생님 교체 276), 평가 12:19~ (side_slot). GPU: lo_pcb_r2c 12:19~ (~13:40).
 
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)

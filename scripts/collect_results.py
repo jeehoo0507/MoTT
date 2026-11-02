@@ -375,7 +375,10 @@ PRIOR = {  # prior-work re-implementations (QUEUE 10/29 03:30 C): how each diffe
         "paired t-test 대신 val 최고 갱신 때, 기준선 rollout의 실패는 작업 격자 기준 (정확 검사 안 함), 모방 항·선생님 교체 없음 (`--imit 0`).",
         "원 설정 (DevFormer 공개 코드의 AM-PG 기준선에서 확인, 원문 PDF는 미확인): 10×10 판 한 장, 한 종류 decap **K = 20개 고정**, "
         "보상 = 201점 임피던스 감소 합 (목표 Zt 없음), 입력 (x, y, 탐침/keep-out), 5만 문제 × 10 epoch → 원 논문은 개수 최소화·목표 만족 문제가 아님. "
-        "표: `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`."]),
+        "표: `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`.",
+        "`bp_park_rlonly_rl` (원 논문처럼 RL만 2.0 h, 무작위 초기화, 초기 λ 20 — 아래 B-Manoharan 줄과 같은 규칙): 해 모양 (위 \"decap 종류 비율\" 표)은 "
+        "**세 판 종류 모두 종류 1 하나만** 쓰고 많이 놓음 → pcb·pkg는 성공률이 distill 판보다 높지만 개수가 E0+의 몇 배, ip는 대부분 실패. "
+        "좌표 입력 + 포인터 정책은 RL만으로 판 종류에 맞는 종류 선택을 배우지 못함. best.pt는 it 100 (2 h 중 앞쪽)."]),
     "bm_manoharan": ("B-Manoharan: Manoharan 2026식 고정 포트 순서 + decap 토큰으로 종류/빈칸 선택 (`baselines_ml/manoharan.py`)", [
         "학습: 원 논문의 RL 세부 대신 우리 파이프라인 그대로 (distill 0.75 h: 선생님 해를 고정 순서로 다시 걸은 궤적, RL 1.25 h: 그룹 기준선 + 모방 + 선생님 교체).",
         "포트 순서: 최악 탐침에서 본 loop L (포트 i 단락, 한 주파수 f0) 오름차순 — f0는 맨판 최악 위반 주파수 (원 논문은 고정 설계 주파수).",
