@@ -1,4 +1,12 @@
-# PROGRESS (갱신 2026-11-02 14:10 UTC, 재개 라운드 5)
+# PROGRESS (갱신 2026-11-02 15:15 UTC, 재개 라운드 6)
+
+## 재개 라운드 6 (2026-11-02 14:25~ UTC)
+- 상태: r2v RL 끝 (14:52, 340 iter / 1.27 h, val 3번 (종류당 48문제) → best it 200), side_slot이 10칸 평가 중 (14:52~). GPU `lo_pcb_r2v` 14:52~ (~16:10) → lo_pcb_r2a → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type1` (13:17~). pod 11 GiB / 60, oom_kill 0.
+- 그림 1 초안 점검: PCB 패널 곡선이 20 GHz 끝에서 1.0에 닿아 보이지만 `fig_board.py`가 verify와 같은 `check_freqs()` 격자로 그리고 최대값 0.985를 글자로 찍음 → 선 굵기 탓, 문제 없음.
+- **추론 샘플링 (best-of-8) — 학습 vs 규칙 약점 (QUEUE 11/01 약점 1)에 대한 CPU 실험, 결과 전 기록:**
+  - 근거: 진단 H2 — 학습이 지는 것은 어려운 문제의 근소 실패 (최악 7~15% 초과). `eval_policy.py --samples S`는 이미 있음 (같은 판을 S번 샘플링, 작업 격자에서 성공한 것 중 개수 최소 → cutting-plane 정확 검사) — 학습·환경·평가 세트 그대로, 추론만 S배 계산. 10칸 기록에서는 쓴 적 없음. POMO식 다중 샘플 추론이라 노벨티 아님 (기여로 쓰지 않음).
+  - 결정: **S = 8 (학습 G와 같음), 작은 것 먼저**: `r2a_rl@8` (지금 최선 후보, 같은 종류 학습, seed 0) 10칸 6파일 + `lo_pcb_r2_rl@8` (범용화 통과한 pcb, 뺀 종류) pcb10 2파일. 4번째 칸 filler로 (`side_slot.py` 접두어 `samp10 ` 추가, `ls10 eval_pkg10_1` 앞) — 학습 평가가 늘 먼저. 출력 `runs/analysis/sampling/`.
+  - **미리 적는 판정 (seed 0, 판마다 50문제, 짝지은 bootstrap):** 판 t에서 `X@8` vs `modal_rule`이 (i) 성공률 차 CI 하한 > 0, 또는 (ii) 성공률 차 점추정 ≥ 0 이고 개수 비 (둘 다 성공) CI 상한 < 1 이면 "샘플링한 정책이 규칙을 이김"; 성공률 CI가 0을 포함하고 개수 비 CI가 1을 포함하면 "규칙과 같은 수준"; 그 밖은 "규칙이 이김". 시간은 문제당 초를 그대로 보고하고 규칙보다 짧을 때만 "빠르다". pcb·pkg 중 하나라도 "이김"이면 seed 1·2 (`r2a_s1_rl`, `r2a_s2_rl`)와 `lo_*_r2` seed 0~2로 확장; 아니면 확장하지 않고 그대로 기록.
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
 - 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.

@@ -2,8 +2,8 @@
 
 Priority 1: the driver's exact 10-cell eval of each named training as soon as its rl stage ends (same as
 side_eval_wait.py). Priority 2, only while no named training has a pending eval: the first unfinished CPU-queue
-entry whose name starts with one of the --fill prefixes (default "ls10 ", the per-set 10-cell local search
-baseline). One job at a time, never preempted, so a training eval waits at most one filler job.
+entry whose name starts with one of the FILL prefixes ("ls10 "/"ga10 ": per-set 10-cell LS/GA baselines,
+"samp10 ": best-of-8 policy sampling). One job at a time, never preempted, so a training eval waits at most one filler job.
 Slots: 2 exact-check workers (training) + driver lane 1 + this 1 = 4. The driver attaches to a live identical job
 and skips a job once its records exist.
 Run: .venv/bin/python scripts/bg.py agent/logs/side_slot.log '.venv/bin/python scripts/side_slot.py r2c lo_pcb_r2c'
@@ -20,7 +20,7 @@ from mem import mem_line, wait_mem  # noqa: E402
 from pipeline_day1 import alive  # noqa: E402
 from pipeline_day2 import DAY, ROOT, PY, eval_jobs, exists, queue, rl_done  # noqa: E402
 
-FILL = ("ls10 ", "ga10 ")
+FILL = ("ls10 ", "ga10 ", "samp10 ")   # samp10: best-of-8 policy sampling (PROGRESS 11/02 round 6)
 FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this left (11/02: ls pcb10_1 took the
                     # slot 1 min before bm_manoharan_rlonly_l20 ended)
 

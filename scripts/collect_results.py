@@ -12,6 +12,7 @@ import argparse
 import glob
 import json
 import os
+import re
 import sys
 import time
 from collections import OrderedDict, defaultdict
@@ -607,6 +608,31 @@ def learn_vs_rule_table(recs):
     return lines
 
 
+def sampling_table(recs):
+    """PROGRESS 11/02 round 6: best-of-S policy sampling at inference (`<run>@S`, runs/analysis/sampling) vs the same
+    checkpoint's greedy decoding, the untrained modal_rule and E0+; success, count, time per problem, paired CIs."""
+    samp = sorted({r["method"] for r in recs if re.fullmatch(r".+_rl@\d+", r["method"])})
+    rows = []
+    for m in samp:
+        base = m.rsplit("@", 1)[0]
+        for ref in (base, "modal_rule", TA):
+            pr = paired(recs, ref)
+            for key in sorted(pr):
+                if m in pr[key]:
+                    om, orf, cm, cr = pr[key][m]
+                    sec = lambda meth: np.mean([r["sec_per_inst"] for r in recs if r["method"] == meth and  # noqa: E731
+                                                r["tech"] == key[0] and int(r["size"]) == key[1]])
+                    rows.append(f"| {key[0]} {key[1]} | {m} | {ref} | {om.mean():.2f} / {orf.mean():.2f} | "
+                                f"{fmt(sec(m), 2)} / {fmt(sec(ref), 2)} | " + ci_cells(om, orf, cm, cr) + " |")
+    if not rows:
+        return []
+    return ["## 추론 샘플링 (best-of-S): 같은 체크포인트를 S번 샘플링, 작업 격자 성공 중 개수 최소 → cutting-plane 정확 검사", "",
+            "학습·평가 문제는 그대로, 추론 계산만 S배. 판정 규칙은 PROGRESS 11/02 라운드 6에 결과 전에 적음. "
+            "CI는 짝지은 bootstrap 95% (2000회, seed 0). 시간은 파일별 문제당 초의 평균 (같은 CPU 1 thread).", "",
+            "| 판 | 샘플링 | 기준 | 성공률 (샘플링 / 기준) | 문제당 시간 s (샘플링 / 기준) | 문제 수 | 성공률 차 [95% CI] | 개수 비 (둘 다 성공) [95% CI] |",
+            "|---|---|---|---|---|---|---|---|"] + rows + [""]
+
+
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
@@ -737,6 +763,7 @@ def main():
     lines += prior_table(recs)
     lines += leave_out_table(recs)
     lines += learn_vs_rule_table(recs)
+    lines += sampling_table(recs)
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
     lines += train_table()
