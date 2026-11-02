@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-02 21:50 UTC, 재개 라운드 17)
+# PROGRESS (갱신 2026-11-02 22:03 UTC, 재개 라운드 18)
+
+## 재개 라운드 18 (2026-11-02 21:59~ UTC)
+- 상태: GPU `lo_pkg_r2a` RL it 275 (3414 s, fail 0.00~0.03, λ 1.09, gpu peak 11.5 GB, OOM 0; 20분 체크포인트 it 293; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: 6파일 중 2개 (pcb20_0·pcb20_1) 그대로, 지금 3번째 파일 (~23:10 끝 예상). 4번째 칸 `ga10 eval_pkg10_0` 3640 s째 (pcb 파일은 ~2000 s였음 — pkg가 더 무거움, 이상 아님) → 끝나면 side_slot이 lo_pkg_r2a 평가. pod 10.7 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- `agent/logs/side_slot4.log` 0바이트는 정상 — side_slot.py는 작업 START/END 때만 찍고 (`scripts/side_slot.py:51,54`), 21:07 이후 아직 시작한 작업이 없음 (GA 작업 기다리는 중). 라운드 9의 side_slot2 0바이트 (지워진 파일에 쓰기)와 다른 경우.
+- 이번 라운드에 끝난 실험 없음 → RESULTS 바뀐 것 없음.
+- 다음 라운드: (라운드 17 계획 그대로) GA pkg10_0 기록 확인; lo_pkg_r2a 평가 → 표만; pool20 끝 → smoke peak rss로 `queue_eval20.py` 결정; r2m (~23:35) 평가 → 라운드 7 판정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 17 (2026-11-02 21:43~ UTC)
 - 상태: GPU `lo_pkg_r2a` RL it 200 (21:36 무렵, 2537 s, val pcb fail 0.69 / ip 0.12 — 16문제, 판정용 아님; gpu peak 11.4 GB, OOM 0; it 189에서 체크포인트로 이어 감; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: 6파일 중 2개 끝 — 고침: 라운드 16에 "지금 pkg20_0"이라 적었지만 실제 순서는 pcb20_0 (1309 s) → **pcb20_1** (1358 s, F 226, 10 rounds, g+p 8문제 성공 1.00, 개수 평균 6.9) → 남은 4파일, 끝 ~23:10 예상 → 그 뒤 `eval20 eval_pcb20_0 r2a_rl` smoke. 4번째 칸 `ga10 eval_pkg10_0` (20:58~) → ga10 pkg10_1 → `ls10 ls16-timing smoke`. pod 9.8 GiB / 60, oom_kill 0. `ensure_running`이 report_watch·resume_agent를 다시 띄움. QUEUE 새 지시 없음.

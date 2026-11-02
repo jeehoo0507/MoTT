@@ -15,3 +15,7 @@ error: Please commit or stash them.
 3. r2m은 23:35쯤 끝납니다. 평가가 나오면 라운드 7에 미리 적은 기준으로 판정합니다.
 
 DAILY.md는 11/03 05:00 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6cbd5da..8a2a420  main -> main
