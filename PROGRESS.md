@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-02 21:30 UTC, 재개 라운드 15)
+# PROGRESS (갱신 2026-11-02 21:40 UTC, 재개 라운드 16)
+
+## 재개 라운드 16 (2026-11-02 21:25~ UTC)
+- 상태: GPU `lo_pkg_r2a` RL it 100 (21:2x, val 새 best it 100, gpu peak 10.7 GB, OOM 0; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: **eval_pcb20_0 끝** (21:13, 1309 s, F 176, cutting-plane 9 rounds, 8문제 g+p 성공 1.00, 개수 평균 6.4) → 지금 pkg20_0; 남은 5파일이면 ~23:00 끝. 4번째 칸 `ga10 eval_pkg10_0` (20:58~). pod 12.8 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **결정: 20칸 평가는 한 항목만 먼저 (메모리·시간 측정)** — `eval20 eval_pcb20_0 r2a_rl` (`scripts/queue_eval20_smoke.py`, eval16과 같은 명령 `--workers 1 --inst_chunk 5`, CPU 줄 pool20 바로 뒤). 이유: 20칸 판은 10/28 OOM 의심 원인이고 (QUEUE 10/28), 16칸 기록의 peak rss는 같은 파일이면 방법과 무관하게 같음 (pcb16_0: 정책·규칙 22.1 GB, g+p 31.1 GB) → 메모리는 정책이 아니라 판 불러오기·정확 검사 쪽. 20칸은 포트가 더 많아 같은 비율을 가정할 수 없으므로 기록 1개로 잰 뒤 나머지를 넣는다. 이 기록은 버리는 smoke가 아니라 정식 평가 기록.
+  - 나머지 (정책 5개 r2a·r0~r3 → modal_rule → g+p, 6파일; 라운드 11 순서 그대로)는 `scripts/queue_eval20.py`로 준비만 함 (smoke 기록이 없으면 거부, 있으면 peak rss·시간을 찍음). LS·E0+ 20칸은 g+p 20칸 메모리를 본 뒤. `agent/logs/base20.log` 미리 `.gitignore`.
+- 다음 라운드: lo_pkg_r2a (~22:15) 평가 → 표만; smoke_ls16 결과 → LS16 큐 결정; pool20 끝 (~23:00) 뒤 smoke 기록 peak rss가 45 GiB 규칙에 여유 있으면 (pod 사용량 + peak < 45 GiB) `queue_eval20.py` 실행; r2m (~23:35) 평가 → 라운드 7 판정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 15 (2026-11-02 21:07~ UTC)
 - 상태: GPU `lo_pkg_r2a` RL 20:58~ (끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8` (20:51~, worker 1, 아직 파일 0개). 4번째 칸 `ga10 eval_pkg10_0` (20:58~). pod 11.8 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.

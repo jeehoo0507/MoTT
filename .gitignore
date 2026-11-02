@@ -31,3 +31,5 @@ agent/logs/base10_ga.log
 agent/logs/side_slot_jobs.log
 agent/logs/build_pool20.log
 agent/logs/e0plus16.log
+# 11/02 round 16: 20-cell baseline evals (scripts/queue_eval20.py) will append here
+agent/logs/base20.log
