@@ -17,3 +17,7 @@ error: Please commit or stash them.
 - lo_ip_r2a는 학습이 ~20:10에 끝난다. 그 평가가 나오면 판정 (i)·(ii)를 확정한다.
 - 16칸 ip16_1 정책 평가가 끝나면 그림 2를 다시 그린다.
 - DAILY.md는 11/03 05:00 UTC에 새로 쓴다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a086fb3..3f8f4db  main -> main
