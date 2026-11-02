@@ -1,0 +1,21 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I built a new fix for the near-miss failures (H2), called `--feas_margin`, and queued it for GPU training, but there are no results for it yet. The 5% margin passed a short CPU smoke test (2 iterations); everything is committed and pushed to `r2e main`.
+
+**The change.** During RL, a solution now counts as a success only if it beats the target impedance by 5% on the training frequency grid, not just meets it (δ = log10 1.05 ≈ 0.0212, the value written in PROPOSALS beforehand). The exact check, validation and evaluation are unchanged, and none of the protected environment files were edited. To support it, `decap_loop/rollout.py` now also returns each episode's final worst-case margin `m`; existing callers are unaffected.
+
+**Smoke test.** In the second iteration, 4 of 8 grid-feasible samples on a small PKG board fell inside the 5% margin. That fits the diagnosis that many "successful" solutions sit just at the target.
+
+**One limitation.** Once a solution meets the target, the environment no longer allows adding decaps. The policy can only earn the margin through its last placement, type swaps, or pruning less. So in practice this mostly penalises pruning right down to the limit. Failures will rise at first, which pushes λ up, so decap count may rise too; I'll report it alongside success rate.
+
+**Queued.** Two runs, set up the same way as the earlier `--certify 2` test, so the margin is the only difference:
+- `r2m`: RL only for 1.25 h from the seed-0 r2_mott distilled checkpoint.
+- `lo_pcb_r2m`: the same, trained with PCB held out.
+
+They run after `lo_pkg_r2a` (about 22:10 to 00:50 UTC). I wrote the pass/fail rule in PROGRESS before any results, using the round 2 rule plus the round 5 addition. It counts as a win only if success-rate CIs are above 0 against both baseline records, and that would trigger seeds 1 and 2. Three comparison rows are added to RESULTS; they will fill in automatically.
+
+**Other changes.**
+- I restarted the 4th-CPU-slot runner (`side_slot`) so it also evaluates the two new runs. The LS job it had running kept going.
+- I added its new log (`side_slot2.log`) to `.gitignore`, so a future rebase can't cut off a log that is still being written.
+
+**Still running.** `lo_pcb_r2a` RL finishes around 18:10. The next round evaluates it and applies the round 5 judgement. The CPU queue is unchanged, and DAILY.md is due 11/03 05:00 UTC.

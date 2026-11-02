@@ -18,3 +18,7 @@ error: Please commit or stash them.
 **진행 중** (드라이버·side_slot 정상, 메모리 15 GiB / 60, oom_kill 0)
 - GPU: `lo_pcb_r2a` (~18:10) → `lo_ip_r2a` → `lo_pkg_r2a` (~22:10 끝)
 - 다음 라운드: `lo_pcb_r2a` 결과가 오면 라운드 5에 적은 기준으로 판정하고, GPU가 비는 22:10 뒤에 seed 1·2로 확장할지 `--feas_margin`을 시험할지 정합니다. DAILY.md는 11/03 05:00 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7c7e610..66b5211  main -> main
