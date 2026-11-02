@@ -1,4 +1,4 @@
-# PROGRESS (갱신 2026-11-02 15:15 UTC, 재개 라운드 6)
+# PROGRESS (갱신 2026-11-02 17:00 UTC, 재개 라운드 6)
 
 ## 재개 라운드 6 (2026-11-02 14:25~ UTC)
 - 상태: r2v RL 끝 (14:52, 340 iter / 1.27 h, val 3번 (종류당 48문제) → best it 200), side_slot이 10칸 평가 중 (14:52~). GPU `lo_pcb_r2v` 14:52~ (~16:10) → lo_pcb_r2a → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type1` (13:17~). pod 11 GiB / 60, oom_kill 0.
@@ -15,6 +15,8 @@
 - **lo_pcb_r2v 평가 끝 — 판정:** lo_pcb_r2v − lo_pcb_r2 세 판 모두 **+0.00 [+0.00, +0.00], 개수비 1.000** — 해가 문제마다 똑같음. 이유 (로그로 확인): 같은 distill init·같은 seed에서 RL 궤적이 iter 단위로 같고 (it 100·300 줄이 글자까지 같음 — val은 가중치·난수에 영향 없음), 두 run 모두 best iter 300을 골라 **같은 가중치**. → **H1 수정 (val 48문제): 같은 종류·뺀 pcb 모두 "효과 없음" → seed 1·2로 확장하지 않음 (미리 적은 규칙).** 같은 이유로 r2v vs r2_mott_rl은 한 궤적의 iter 200 vs iter 300 비교였음. 한계 (판정 바꾸지 않음): H1 증상이 컸던 seed 1·2 (best it 100·200, last가 pcb +0.12~0.14)는 시험하지 않았음 — seed 0은 원래 선택 손실이 작아 검출력이 낮은 설계였다. 보고서에는 "val 종류당 48문제로 바꿔도 seed 0에서 고른 체크포인트가 같거나 (pcb 빼고) 차이 없음"까지만.
 - 결정: **r2a_rl (seed 0) 16칸 평가 6파일을 CPU 줄에 추가** (`scripts/queue_eval16_r2a.py`, 사다리 eval16 바로 뒤, 같은 명령 `--inst_chunk 5`). 이유: QUEUE 10/29 03:10 할 일 4 (16칸: g+p, E0+, 사다리 rl, **최종 후보**) — r2a는 같은 종류 학습에서 seed 3개 모두 r2_mott보다 높은 지금 최선 후보인데 16칸 기록이 없음. 비용: 파일당 ~15 min, 최대 ~22 GB (r2_mott 16칸 기록 기준), 드라이버 줄 한 칸이라 CPU 4개 유지. 그림 2는 기록이 오면 `fig_results.py --fig 2 --methods ...,r2a_rl`로.
 - 방법 메모: RL이 init·seed가 같으면 결정적이므로, 앞으로 "같은 distill에서 RL만" 짝 비교의 차이는 순수하게 바꾼 것 (보상·선택) 때문이다 — 잡음은 평가 배치 (`--inst_chunk`) 쪽만 남음.
+- 오늘까지 MoTT 개선 시도 정리 (seed 0, 미리 적은 규칙): H2 `--certify 2` 효과 없음 / 뺀 pcb에서 해로움, H1 val 48문제 효과 없음, 추론 샘플링 규칙에 짐. 남은 진행: `lo_*_r2a` (편향의 범용화). 다음 후보 (구현 안 함): H2 싼 수정 `--feas_margin` (PROPOSALS 라운드 6).
+- 다음 라운드: lo_pcb_r2a 끝 (RL ~16:55~18:10) → 평가 (side_slot) → 라운드 5에 미리 적은 판정 (i)·(ii); lo_ip_r2a (~20:10), lo_pkg_r2a (~22:10). GPU가 22:10 뒤 빔 → lo_r2a 판정이 (i) 충족이면 seed 1·2 (미리 적은 대로), 아니면 `--feas_margin` 검토. CPU 줄: e0plus16 ip16_1 type2 (16:25~) → eval16 ip16_1 r0~r3 → eval16 r2a 6파일 → 그림 2 다시 그리기 (`--methods` 에 r2a_rl). 4번째 칸: ls10 pkg10_1 → ga10 6개 (학습 평가 사이). DAILY는 11/03 05:00 UTC.
 
 ## 재개 라운드 5 (2026-11-02 10:02~ UTC)
 - 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.
