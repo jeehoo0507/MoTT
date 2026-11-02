@@ -1,4 +1,13 @@
-# PROGRESS (갱신 2026-11-02 17:50 UTC, 재개 라운드 8)
+# PROGRESS (갱신 2026-11-02 18:35 UTC, 재개 라운드 9)
+
+## 재개 라운드 9 (2026-11-02 17:55~ UTC)
+- 상태: GPU `lo_ip_r2a` distill 18:09~ (RL 끝 ~20:10) → lo_pkg_r2a → r2m → lo_pcb_r2m (~00:50). CPU 줄 `eval16 eval_ip16_1 r0_coord_rl` 18:00~ (그다음 r1~r3, r2a 6파일). 4번째 칸 side_slot. pod 6.5~12 GiB / 60, oom_kill 0.
+- side_slot2.log가 0바이트 (살아 있는 writer가 지워진 파일에 쓰던 것으로 보임 — 라운드 시작 `git pull --rebase` 때 바뀐 듯, 원인 확인 못 함). side_slot은 쉬는 중이어서 멈추고 같은 대상으로 `agent/logs/side_slot3.log`에 다시 띄움; side_slot3·side_slot_jobs·build_pool20 로그를 `.gitignore`에.
+- **LS 10칸 6파일 끝** (`ls10 eval_pkg10_1` 17.6 s/문제): local_search 성공 ip 0.40 / pcb 0.78 / pkg 0.42, 개수÷g+p 0.75 / 0.75 / 0.80 (RESULTS 요약표, 짝 차이는 판별 표 — g+p 대비 pcb −0.12 [−0.22, −0.02], pkg −0.48 [−0.62, −0.34]: 작업 격자로 줄인 해가 정확 검사에서 떨어짐). 요약표 아래에 LS 정의·이 현상 한 줄 (`collect_results.py`, 숫자 없음).
+- **E0+ 16칸 6파일 모두 끝** (`e0plus16 eval_ip16_1 type2` 18:00): gp_type_aware ip16 1.00 / pcb16 0.46 / pkg16 0.80 (50문제씩).
+- **lo_pcb_r2a 끝** (351 iter / 1.26 h, best it 200), 10칸 평가 18:10~18:23: 처음 보는 pcb 0.92 (lo_pcb_r2 0.92), lo_pcb_r2a − lo_pcb_r2 pcb **+0.00 [−0.10, +0.10]**, 개수비 1.007 [0.926, 1.091]; ip +0.00, pkg +0.00. 뺀 − 전체 (vs r2a_rl) pcb −0.04 [−0.12, +0.04], 개수비 1.113 [1.049, 1.176]. → 라운드 5 판정 (i)의 pcb 쪽은 불충족; **최종 판정은 lo_ip_r2a 평가 뒤** (ip가 CI > 0이고 pcb·pkg 점추정이 −0.05 아래가 아니어야 "이김").
+- **20칸 평가 판 (QUEUE 10/29 03:10 할 일 5, 파일당 8문제 = PROPOSALS (c) 채택분):** 아직 안 만들어져 있었음. `build_pools.py --eval_n` (기본 25 그대로) 추가, CPU 줄에 `pool20 eval k8` 한 항목 (`--only eval --eval_sizes 20 --eval_n 8 --workers 1`, `scripts/queue_pool20.py`)을 마지막 eval16 (r2a ip16_1) 바로 뒤에. 결정: worker 1개 — 드라이버 줄 한 칸 안에서 CPU 4개 유지, 메모리 (20칸 판 = OOM 의심 원인, QUEUE 10/28) 보수적. 이미 있는 파일은 건너뜀 → 재시작해도 진행 중 파일만 잃음. 20칸 정책·기준선 평가는 판이 생긴 뒤 큐에 넣음 (명령·inst_chunk는 그때 메모리 보고 결정).
+- 다음 라운드: lo_ip_r2a 평가 (~20:10 뒤 side_slot) → 라운드 5 판정 (i)·(ii) 확정; lo_pkg_r2a (~22:10); eval16 ip16_1 r0~r3 끝나면 그림 2 다시 그리기 (`fig_results.py --fig 2`). DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 8 (2026-11-02 17:35~ UTC)
 - 상태: GPU `lo_pcb_r2a` RL it 200 (val 새 best it 200, 끝 ~18:10), CPU 줄 `e0plus16 eval_ip16_1 type2`, 4번째 칸 `ls10 eval_pkg10_1`, side_slot 대기 (대상 lo_pcb_r2a … lo_pcb_r2m). pod 17.6 GiB / 60, oom_kill 0. report_watch는 27 rung 다 올린 상태라 바로 끝남 (정상).
