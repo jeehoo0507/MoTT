@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-02 21:40 UTC, 재개 라운드 16)
+# PROGRESS (갱신 2026-11-02 21:50 UTC, 재개 라운드 17)
+
+## 재개 라운드 17 (2026-11-02 21:43~ UTC)
+- 상태: GPU `lo_pkg_r2a` RL it 200 (21:36 무렵, 2537 s, val pcb fail 0.69 / ip 0.12 — 16문제, 판정용 아님; gpu peak 11.4 GB, OOM 0; it 189에서 체크포인트로 이어 감; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: 6파일 중 2개 끝 — 고침: 라운드 16에 "지금 pkg20_0"이라 적었지만 실제 순서는 pcb20_0 (1309 s) → **pcb20_1** (1358 s, F 226, 10 rounds, g+p 8문제 성공 1.00, 개수 평균 6.9) → 남은 4파일, 끝 ~23:10 예상 → 그 뒤 `eval20 eval_pcb20_0 r2a_rl` smoke. 4번째 칸 `ga10 eval_pkg10_0` (20:58~) → ga10 pkg10_1 → `ls10 ls16-timing smoke`. pod 9.8 GiB / 60, oom_kill 0. `ensure_running`이 report_watch·resume_agent를 다시 띄움. QUEUE 새 지시 없음.
+- 이번 라운드에 끝난 실험 없음 → RESULTS 바뀐 것 없음 (report_watch가 새 eval json이 오면 자동으로 다시 만듦).
+- 다음 라운드: lo_pkg_r2a (~22:15) 평가 (side_slot) → 표만 (판정 없음, 라운드 13); GA pkg10_0 기록 확인; pool20 끝 (~23:10) → smoke 기록의 peak rss로 `queue_eval20.py` 실행 여부 결정 (pod 사용량 + peak < 45 GiB); r2m (~23:35) 평가 → 라운드 7 판정. DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 16 (2026-11-02 21:25~ UTC)
 - 상태: GPU `lo_pkg_r2a` RL it 100 (21:2x, val 새 best it 100, gpu peak 10.7 GB, OOM 0; 끝 ~22:15) → r2m → lo_pcb_r2m → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8`: **eval_pcb20_0 끝** (21:13, 1309 s, F 176, cutting-plane 9 rounds, 8문제 g+p 성공 1.00, 개수 평균 6.4) → 지금 pkg20_0; 남은 5파일이면 ~23:00 끝. 4번째 칸 `ga10 eval_pkg10_0` (20:58~). pod 12.8 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.

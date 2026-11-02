@@ -20,3 +20,7 @@ error: Please commit or stash them.
 - 20칸 측정 기록이 나오면 그 최대 메모리를 지금 사용량에 더해 45 GiB 아래인지 확인한 뒤 나머지 20칸 평가를 넣습니다.
 - r2m(23:35쯤 끝) 평가는 라운드 7에 미리 적어 둔 기준으로 판정합니다.
 - DAILY.md는 11/03 05:00 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   5c5bff4..8ca7b58  main -> main
