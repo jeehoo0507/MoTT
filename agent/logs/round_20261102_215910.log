@@ -10,3 +10,7 @@ Round 18 was a status-only round. No experiment finished, so RESULTS.md is uncha
 - **Empty `side_slot4.log`:** this is expected. The script only writes a line when it starts or ends a job, and it hasn't started one yet. This is not a repeat of the round 9 problem where a log was being written to a deleted file.
 
 The round 18 entry is in PROGRESS.md, committed (`b63a90b`) and pushed to `r2e main`. Next round: check the GA pkg10_0 result, evaluate `lo_pkg_r2a` (table only), and use the memory peak from the first 20-cell evaluation to decide whether to queue the rest. Also evaluate r2m (around 23:35) and apply the pass/fail rule written down in round 7.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b63a90b..39262c3  main -> main
