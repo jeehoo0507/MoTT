@@ -535,6 +535,76 @@ def leave_out_seed_table(by):
     return lines + [""]
 
 
+TOKEN_NOTE = "research_notes/토큰 데이터 분석/결과.md"   # training-free token analysis (token_analysis2.py, run2_10x20.log)
+
+
+def token_transfer_rows():
+    """Rows of the v2 single-feature table in TOKEN_NOTE (20×20, LS teacher): feature, KS, teacher-label AUC PCB → IP."""
+    if not os.path.exists(TOKEN_NOTE):
+        return []
+    rows, on = [], False
+    for line in open(TOKEN_NOTE):
+        if line.startswith("## 단일 특징"):
+            on = True
+        elif on and line.startswith("|") and not line.startswith("|---") and "KS" not in line:
+            rows.append([c.replace("*", "").strip() for c in re.split(r"(?<!\\)\|", line.strip().strip("|"))])
+        elif on and rows and not line.startswith("|"):
+            break
+    return rows
+
+
+def design_rationale(recs):
+    """QUEUE 2026-11-01 15:10 item 6: which observation led to which design choice, and what the leave-one-type-out
+    ladder then showed. Only the parts whose pre-registered claim holds are written as claims; the verdict per held-out
+    type is recomputed here from the 10/31 11:30 rule ((b) 2단 − 0단 > 0 at all three seeds, (c) mean of 2단 뺀 −
+    전체 ≥ −0.05)."""
+    by = merged(recs)
+
+    def rate(t, m):
+        r = by.get((t, 10), {}).get(m)
+        return r["ok"].mean() if r is not None else None
+
+    def seeds(t, f):
+        v = [f(s) for s in LO_SEEDS]
+        return None if any(x is None for x in v) else v
+    verdict, drop = {}, {}
+    for t in LO_TECHS:
+        b = seeds(t, lambda s: None if rate(t, seed_run(f"lo_{t}_r2", s)) is None or rate(t, seed_run(f"lo_{t}_r0", s)) is None
+                  else rate(t, seed_run(f"lo_{t}_r2", s)) - rate(t, seed_run(f"lo_{t}_r0", s)))
+        for r, full, _ in LO_RUNGS:
+            d = seeds(t, lambda s: None if rate(t, seed_run(f"lo_{t}_{r}", s)) is None or rate(t, seed_run(full[:-3], s)) is None
+                      else rate(t, seed_run(f"lo_{t}_{r}", s)) - rate(t, seed_run(full[:-3], s)))
+            drop[t, r] = None if d is None else float(np.mean(d))
+        c = drop[t, "r2"]
+        verdict[t] = ("–" if b is None or c is None else
+                      "통과" if all(x > 0 for x in b) and c >= -0.05 else
+                      f"실패 ((b) seed별 {' / '.join(f'{x:+.2f}' for x in b)}, (c) 평균 {c:+.2f})")
+    if not any(v != "–" for v in verdict.values()):
+        return []
+    tok = token_transfer_rows()
+    lines = ["## 설계 근거: 관찰 → 설계 → 결과 (QUEUE 11/01 할 일 6; 미리 적은 기준이 선 부분만 주장)", "",
+             "1. **선행 표현 (좌표, 주파수 한 점의 loop L)은 판 종류를 넘으면 뒤집힌다; 모달 참여비와 정확한 1수 효과는 옮겨간다** — 학습 없는 분석 "
+             f"(`{TOKEN_NOTE}` v2, 20×20, PCB형·인터포저형만 (pkg 없음), 종류마다 판 10개, LS 선생님 해 예측 AUC, 방향은 PCB에서 정함, "
+             "신뢰구간 없음, 선형 모델 기준):", ""]
+    if tok:
+        lines += ["| 특징 | KS (PCB vs IP 분포) | AUC PCB → IP |", "|---|---|---|"] + [f"| {' | '.join(r)} |" for r in tok] + [""]
+    lines += ["   → 설계: 포트 특징에 **모달 참여비 + 정확한 1수 효과** (1단 `--feat modal`), 모드 토큰과 포트↔모드 cross-attention (2단), "
+              "세 종류를 **섞어** 학습. 매 수 정확 Z 갱신과 decap 토큰은 Manoharan 2026에 이미 있음 (기여 아님); Park 2022는 Z를 단계마다 갱신하지 않고 "
+              "좌표만 입력 (`research_notes/선행 기준선 재구현 차이 표.md`).", "",
+              "2. **학습으로 확인 (한 종류 빼고 학습, 10×10, seed 0·1·2 평균, 뺀 종류의 eval 50문제 성공률):** 뺀 학습 − 전체 학습 (같은 seed)", "",
+              "| 뺀 종류 | 0단 좌표 | 1단 모달 | 2단 MoTT | 10/31 기준 판정 (2단) |", "|---|---|---|---|---|"]
+    for t in LO_TECHS:
+        lines.append(f"| {t} | " + " | ".join("–" if drop[t, r] is None else f"{drop[t, r]:+.2f}" for r, _, _ in LO_RUNGS)
+                     + f" | {verdict[t]} |")
+    ok_t = [t for t in LO_TECHS if verdict[t] == "통과"]
+    lines += ["", f"   → 주장할 수 있는 범위: **{', '.join(ok_t) if ok_t else '없음'}** 에서만 \"처음 보는 종류로의 범용화\" (seed 3개). "
+              "그 밖의 종류는 위 판정 그대로 주장에서 뺀다. 좌표 (0단)가 무너지는 것은 1번 관찰 (좌표가 종류를 넘으면 뒤집힘)과 같은 방향; "
+              "pkg는 학습한 두 종류 사이 (decap 라이브러리·맨판 위반이 pcb와 ip 사이, `scripts/type_distance.py`)라 내삽에 가깝다.", "",
+              "3. 주장하지 않는 것 (미리 적은 기준 불충족): 루프 > 기본 (\"루프 트랜스포머 vs 기본\" 표), MoTT 개선 시도 `--certify 2`·val 48문제·best-of-8 샘플링 "
+              "(위 ABLATIONS·\"추론 샘플링\" 표), 학습이 처음 보는 종류에서 `modal_rule`을 이긴다는 것 (\"학습 vs 규칙\" 표에서 판마다 확인).", ""]
+    return lines
+
+
 FEAT = "runs/analysis/problem_features.json"   # scripts/problem_features.py (bare-board features, no method output)
 
 
@@ -767,6 +837,7 @@ def main():
     lines += prior_table(recs)
     lines += leave_out_table(recs)
     lines += learn_vs_rule_table(recs)
+    lines += design_rationale(recs)
     lines += sampling_table(recs)
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)

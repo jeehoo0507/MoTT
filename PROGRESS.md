@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-02 17:25 UTC, 재개 라운드 7)
+# PROGRESS (갱신 2026-11-02 17:50 UTC, 재개 라운드 8)
+
+## 재개 라운드 8 (2026-11-02 17:35~ UTC)
+- 상태: GPU `lo_pcb_r2a` RL it 200 (val 새 best it 200, 끝 ~18:10), CPU 줄 `e0plus16 eval_ip16_1 type2`, 4번째 칸 `ls10 eval_pkg10_1`, side_slot 대기 (대상 lo_pcb_r2a … lo_pcb_r2m). pod 17.6 GiB / 60, oom_kill 0. report_watch는 27 rung 다 올린 상태라 바로 끝남 (정상).
+- **QUEUE 11/01 할 일 6 (설계 근거 절) — `collect_results.py` `design_rationale()`**, RESULTS "설계 근거: 관찰 → 설계 → 결과". 손 숫자 없음: (1) 학습 없는 토큰 분석 표는 `research_notes/토큰 데이터 분석/결과.md` v2 표를 그대로 읽어 옮김 (PCB↔IP만, 선형 모델, CI 없음이라고 적음), (2) 뺀 − 전체 seed 평균과 **10/31 기준 판정을 스크립트가 다시 계산** → pcb 통과, ip 실패 ((b) seed 1 −0.32, (c) −0.11), pkg 실패 ((b) −0.28·−0.28, (c) −0.11) — PROGRESS 라운드 1 판정과 같음. (3) 주장하지 않는 것 (루프 > 기본, MoTT 개선 시도 3개, 학습 > 규칙) 목록. 결정: 범용화 주장은 pcb 범위로만 쓰고, 매 수 Z 갱신·decap 토큰은 Manoharan에 있다고 명시 (QUEUE 10/29 03:45 노벨티 안내).
+- 다음 라운드: lo_pcb_r2a 끝 (~18:10) → side_slot 평가 → 라운드 5 판정 (i)·(ii); lo_ip_r2a (~20:10), lo_pkg_r2a (~22:10), r2m (~23:30), lo_pcb_r2m (~00:50). DAILY 11/03 05:00 UTC.
 
 ## 재개 라운드 7 (2026-11-02 17:15~ UTC)
 - 상태: GPU `lo_pcb_r2a` RL (16:54~, 끝 ~18:10) → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type2` (16:25~), 4번째 칸 filler `ls10 eval_pkg10_1` (16:57~). pod 14 GiB / 60, oom_kill 0.
