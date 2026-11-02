@@ -353,6 +353,12 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("r2a_rl", "r2_mott_rl", "2단 + 주파수 궁합 편향 (dec_from_mode)", "같은 단 편향 없는"),
     ("r2am_rl", "r2a_rl", "r2a + 모드 경유 add 점수 (--mode_head)", "모드 경유 점수 없는 부모"),
     ("r3_loop_rl", "r2_mott_rl", "루프 트랜스포머 (MoTT 블록 1개를 가중치 공유로 R회 반복)", "기본 트랜스포머 (블록 6개)"),
+    # 11/02 diagnosis H2: rl reward exact-checks every distinct grid-feasible sample; same distilled init, rl 1.25 h
+    ("r2c_rl", "r2_mott_rl", "2단 + 보상 정확 검사를 모든 샘플에 (`--certify 2`, 같은 distill에서 RL만)", "최선 샘플만 검사"),
+    ("lo_pcb_r2c_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--certify 2` (같은 distill에서 RL만)", "최선 샘플만 검사"),
+    # 11/02 diagnosis H1: best.pt chosen on 3 val files per kind (48 problems) instead of 1 (16); same distilled init
+    ("r2v_rl", "r2_mott_rl", "2단 + best.pt 선택 val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
+    ("lo_pcb_r2v_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
 ]
 
 

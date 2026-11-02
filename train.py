@@ -95,7 +95,7 @@ def parse():
     p.add_argument("--val_pools", default="val_pcb10_0,val_pkg10_0,val_ip10_0")
     p.add_argument("--teacher_dir", default="data/teacher", help="stage-1 teacher solutions (<pool name>.npz)")
     p.add_argument("--hours", type=float, default=0, help="stop after this wall time (0 = off)")
-    p.add_argument("--certify", type=int, default=1, help="exact-check the best sample of each instance every iteration")
+    p.add_argument("--certify", type=int, default=1, help="exact-check the best sample of each instance every iteration; 2: every distinct grid-feasible sample")
     p.add_argument("--prior", action="store_true", help="grid model: add the physics prior (as in MoTT)")
     p.add_argument("--no_prune", action="store_true", help="ablation: no remove / change-type actions")
     p.add_argument("--layers", type=int, default=6)
@@ -372,7 +372,22 @@ def main():
                     cnt, fail = out["count"].float().view(nb, args.M), (~out["feasible"]).view(nb, args.M).clone()
                     j = (cnt + fail * 1e6).argmin(1)                      # best sample per instance
                     cert_ok = torch.zeros(nb, dtype=torch.bool, device=dev)
-                    if pool and args.certify:
+                    if pool and args.certify >= 2:
+                        # every distinct working-grid-feasible sample (11/02, diagnosis H2): with the best one only,
+                        # the other samples of the group still earn the success reward through grid gaps
+                        flat = torch.nonzero(~fail.view(-1)).squeeze(-1)
+                        if flat.numel():
+                            rows = torch.cat([(flat // args.M)[:, None], out["occ"][flat].view(flat.numel(), -1).long()], 1)
+                            uniq, inv = torch.unique(rows, dim=0, return_inverse=True)
+                            rep_e = torch.zeros(uniq.shape[0], dtype=torch.long, device=dev).scatter_(0, inv, flat)
+                            wv, _, add = certify_parallel(batch, ibc[rep_e // args.M], out["occ"][rep_e], cfg)
+                            bad_u = torch.from_numpy(wv > 1e-3).to(dev)
+                            fail.view(-1)[flat[bad_u[inv]]] = True
+                            n_bad += int(bad_u.sum())
+                            for b, fs in enumerate(add):
+                                adds[b] += fs
+                        cert_ok = ~fail.all(1)     # every sample left feasible is certified
+                    elif pool and args.certify:
                         # the reward is computed on the working grid; without this the policy learns to prune into
                         # resonance peaks that fall between grid points
                         sel = torch.nonzero(~fail[torch.arange(nb, device=dev), j]).squeeze(-1)
@@ -456,7 +471,7 @@ def main():
         torch.nn.utils.clip_grad_norm_(policy.parameters(), args.clip)
         opt.step()
 
-        if it % 25 == 0:
+        if it % 25 == 0 or it == args.iters:
             pname = pool_names[pi] if pool else f"{H}x{W}"
             log(f"it {it:6d} | {pname} P={batch.P} F={batch.freqs.shape[1]} cert-bad {n_bad} | count/ref {ratio:.3f} "
                 f"best-of-M {best_ratio:.3f} fail {fail_rate:.2f} lam {lam:.2f} | teach ok {teach['feasible'].float().mean():.2f} "

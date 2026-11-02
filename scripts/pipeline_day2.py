@@ -7,6 +7,7 @@ restarting this process:
             COMMON args) into runs/<DAY>/<name>_{distill,rl}; one at a time on the GPU, CERTIFY_WORKERS=2.
             "after": a path that must exist first (e.g. code smoke record); missing -> entry skipped for now.
             "rl_only": true -> no distill stage, rl from random init for distill + rl hours (B-Manoharan, 11/02).
+            "init": path -> no distill stage, rl (rl hours) from that best.pt: a one-change rl re-run of a rung (11/02).
   "cpu":   [{"name", "cmd", "done": [paths]}]      -> run in order when every "done" path is missing.
 CPU lane (1 worker): first the side-10 certified eval of every finished training in "train" (rl best.pt,
 eval_*10_*, --inst_chunk 5), then the "cpu" entries in order. It waits while an external job named in
@@ -91,6 +92,7 @@ def gpu_lane():
             os.makedirs(os.path.join(ROOT, f"runs/{DAY}/{name}"), exist_ok=True)
             # "rl_only": no distillation, rl from random init for the whole budget (same total hours)
             hours = (f"--distill_hours 0 --rl_hours {DISTILL_H + RL_H} --skip_distill" if t.get("rl_only")
+                     else f"--distill_hours 0 --rl_hours {RL_H} --init_from {t['init']}" if t.get("init")
                      else f"--distill_hours {DISTILL_H} --rl_hours {RL_H}")
             rc = run(f"{PY} scripts/run_rung.py --name {name} --arm '{t['arm']}' --day {DAY} --pool {POOL} "
                      f"--seed {t.get('seed', 0)} {hours} --skip_eval",

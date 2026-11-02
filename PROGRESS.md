@@ -1,4 +1,18 @@
-# PROGRESS (갱신 2026-11-02 05:00 UTC, 재개 라운드 1)
+STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 두 라운드 연속 거부됨 (11/02 04:xx, 06:10). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026·DevFormer 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
+
+# PROGRESS (갱신 2026-11-02 06:15 UTC, 재개 라운드 2)
+
+## 재개 라운드 2 (2026-11-02 05:58~ UTC)
+- 상태: GPU `lo_pcb_r3` RL it 250 (끝 ~06:25), CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~, 4~7 h), pod 15 GiB / 60, oom_kill 0. H1 마지막 확인 (`agent/logs/diag_last2.log`: pkg·ip last.pt) 끝 — 라운드 1 판정 그대로 (H1 pcb에서 지지).
+- 결정: **`scripts/side_eval_wait.py` (4번째 CPU 칸, bg)** — lo_pcb_r3 → bm_manoharan_rlonly → bp_park_rlonly의 RL이 끝나는 대로 드라이버와 같은 10칸 평가 명령을 바로 돌림. 이유: 드라이버 CPU 줄은 16칸 E0+ (4~7 h)에 묶여 있어 루프 vs 기본 판정이 몇 시간 밀림. 칸 수: 학습 검사 2 + 드라이버 1 + 이것 1 = 4 (side16_gp 없음).
+- **MoTT 개선 준비 (QUEUE 할 일 3, 기준선 두 개 뒤 GPU 순서 그대로):**
+  - **H2 수정 `--certify 2`** (`train.py`): RL 보상에서 작업 격자로 성공한 **서로 다른 샘플 모두** 정확 검사 (지금은 인스턴스마다 최선 하나만). smoke (`scripts/smoke_certall.py`, CPU 2 iter, pkg8 B2 M4) 통과 — 샘플 8개 중 6개가 정확 검사 실패 (H2와 맞음) → `runs/analysis/smoke_certall.ok`.
+  - 짝 설계: 같은 distill best.pt에서 **RL 1.25 h만** 다시 (`run_rung.py --init_from`, 큐 키 `"init"`) → `r2c` vs `r2_mott_rl` (seed 0, 같은 종류), `lo_pcb_r2c` vs `lo_pcb_r2_rl` (pcb 빼고). 결정: distill 재사용 — distill은 certify와 무관하므로 바뀐 것은 RL 보상 하나뿐이고 init 잡음이 빠짐. RESULTS ABLATIONS 행 추가 (결과 오면 자동).
+  - **H1 수정 (그다음):** val을 종류당 16 → 48문제 (같은 생성 규칙, 새 파일 `val_*10_1`·`_2`, seed +5001·+5002, eval·train과 겹치지 않음 확인). `build_pools.py --val_k`. CPU 큐 `val pools k3 (H1)`는 지금 도는 E0+ 뒤; GPU `r2v`·`lo_pcb_r2v` (같은 distill에서 RL만)는 그 파일이 생기면 시작. val 시간이 3배라 같은 1.25 h 안 RL iter가 줄어듦 — 그것까지 포함한 비교.
+  - 미리 적는 판정 (결과 보기 전): 각 수정은 seed 0에서 짝지은 성공률 차의 CI가 0 밖이고 (같은 종류 pcb·pkg 중 하나 이상 또는 뺀 pcb) 다른 판에서 −0.05 아래로 떨어지지 않으면 "이김" → seed 1·2로 확장. 아니면 "효과 없음"으로 적고 확장하지 않음.
+- 드라이버 재시작 (06:03, 새 "init" 키) → `ATTACH train lo_pcb_r3`. 결정: 재시작 직후 CPU 줄이 맨 앞에 넣은 val 풀 작업을 E0+와 **동시에** 시작 → 06:25부터 CPU 5개가 될 뻔해서 즉시 멈추고 (rc −15) 이름을 바꿔 E0+ 뒤로 옮김 (메모리 메모 갱신). 잃은 것 40 s.
+- GPU 큐 순서: lo_pcb_r3 (~06:25) → bm_manoharan_rlonly (~08:25) → bp_park_rlonly (~10:25) → r2c (~11:45) → lo_pcb_r2c (~13:05) → r2v·lo_pcb_r2v (val 파일 뒤).
+- 다음 라운드: lo_pcb_r3 평가 (side_eval_wait) → 루프 vs 기본 판정 (QUEUE 10/31 11:40 기준) + RESULTS; bm_manoharan_rlonly 초기 val (빈칸 쏠림이 RL만으로 사라지는지).
 
 ## 재개 라운드 1 (2026-11-02 04:21~ UTC) — 진단 가설 (확인 전에 적음, QUEUE 11/01 15:10 할 일 2 + 23:45)
 MoTT pcb 이상 (pcb를 보고 학습한 2단 0.83 < 뺀 2단 0.90 < 0단 0.96)과 pkg·ip seed 불안정 (lo_pkg_r2_s1 0.56, lo_ip_r2_s1 0.66):

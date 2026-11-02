@@ -55,16 +55,21 @@ def main():
     ap.add_argument("--eval_workers", type=int, default=6)
     ap.add_argument("--skip_eval", action="store_true")
     ap.add_argument("--skip_distill", action="store_true")
+    ap.add_argument("--init_from", default="", help="no distill stage; rl starts from this best.pt (an existing distill)")
     a = ap.parse_args()
     base = f"runs/{a.day}/{a.name}"
     os.makedirs(base, exist_ok=True)
     log = os.path.join(base, "driver.log")
     pools = f"--pool {a.pool} --teacher_dir {a.teacher_dir} --seed {a.seed}"
     dist, rl = f"{base}_distill", f"{base}_rl"
+    if a.init_from:   # 11/02: a one-change rl re-run paired with an existing rung shares its distilled init
+        a.skip_distill = True
     if not a.skip_distill and fresh(dist):
         sh(f"{PY} train.py --stage distill {a.arm} {a.common} {pools} --hours {a.distill_hours} --out {dist}", log)
     if fresh(rl):
         init = "" if a.skip_distill else f"--init {dist}/best.pt "   # --skip_distill: rl from random init
+        if a.init_from:
+            init = f"--init {a.init_from} "
         sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} {init}--out {rl}", log)
     if not a.skip_eval:
         for tag, run in ((("distill", dist),) if not a.skip_distill else ()) + (("rl", rl),):

@@ -27,7 +27,7 @@ VAL_N = 16
 SEED = {"pcb": 0, "pkg": 100000, "ip": 200000}
 
 
-def jobs(out, only, eval_sizes=EVAL_SIZES):
+def jobs(out, only, eval_sizes=EVAL_SIZES, val_k=1):
     from decap_loop.techs import TECHS
     js = []
     for t in TECHS:
@@ -36,7 +36,8 @@ def jobs(out, only, eval_sizes=EVAL_SIZES):
                 for k in range(EVAL_K):
                     js.append((out, f"eval_{t}{s}_{k}", t, s, EVAL_N, SEED[t] + 9000 + 10 * s + k))
         if "val" in only:
-            js.append((out, f"val_{t}10_0", t, 10, VAL_N, SEED[t] + 5000))
+            for k in range(val_k):   # 11/02 (diagnosis H1): extra val files _1, _2 for less noisy best.pt selection
+                js.append((out, f"val_{t}10_{k}", t, 10, VAL_N, SEED[t] + 5000 + k))
         if "train" in only:
             for s in TRAIN_SIZES:
                 for k in range(TRAIN_K):
@@ -84,9 +85,10 @@ def main():
     ap.add_argument("--only", default="eval,val,train")
     ap.add_argument("--eval_sizes", default=",".join(map(str, EVAL_SIZES)),
                     help="subset of eval board sides (20 last, 2 workers: QUEUE 2026-10-28 memory rule)")
+    ap.add_argument("--val_k", type=int, default=1, help="val files per kind (val_{tech}10_0 .. _{k-1})")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))))
+    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))), a.val_k)
     print(f"{len(js)} pool files -> {a.out}, {a.workers} workers", flush=True)
     t0 = time.time()
     with Pool(a.workers) as pool:
