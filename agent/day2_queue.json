@@ -754,6 +754,54 @@
    "log": "runs/2026-10-28/r3_loop_rl/eval.log"
   },
   {
+   "name": "eval16 eval_pcb16_0 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_pcb16_0__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
+   "name": "eval16 eval_pcb16_1 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_1 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_pcb16_1__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
+   "name": "eval16 eval_pkg16_0 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_pkg16_0__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
+   "name": "eval16 eval_pkg16_1 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_1 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_pkg16_1__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
+   "name": "eval16 eval_ip16_0 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_0 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_ip16_0__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
+   "name": "eval16 eval_ip16_1 r2a_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_1 --policy r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2a_rl",
+   "done": [
+    "runs/2026-10-29/r2a_rl/eval/eval_ip16_1__r2a_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2a_rl/eval.log"
+  },
+  {
    "name": "ls10 eval_ip10_0",
    "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip10_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
    "done": [
