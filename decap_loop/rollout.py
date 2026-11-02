@@ -22,7 +22,8 @@ def _logits(policy, x, valid, H, W, mask, amp):
 @torch.no_grad()
 def rollout(policy, env: Env, greedy=False, forced=None, store=False, amp=True, gen=None):
     """Sample (or argmax, or replay `forced` [E,steps]) actions until every episode is done.
-    Returns dict(count, feasible, V, actions, traj); traj = list of per-step dicts if store."""
+    Returns dict(count, feasible, V, m, actions, traj); m = final worst margin log10(|Z|/Zt) on the working grid,
+    traj = list of per-step dicts if store."""
     E, dev = env.E, env.occ.device
     acts, traj, t = [], [], 0
     while True:
@@ -53,7 +54,7 @@ def rollout(policy, env: Env, greedy=False, forced=None, store=False, amp=True, 
         t += 1
     actions = torch.stack(acts, 1) if acts else torch.full((E, 0), -1, dtype=torch.long, device=dev)
     return dict(count=env.count(), feasible=env.feas.clone(), V=env.V.clone(), occ=env.occ.clone(),
-                actions=actions, traj=traj)
+                m=obs["m"].clone(), actions=actions, traj=traj)
 
 
 def backward_logp(policy, traj, weight, H, W, amp=True, chunk_cells=1 << 16, scale=1.0):

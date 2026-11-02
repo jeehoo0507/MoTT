@@ -1,4 +1,14 @@
-# PROGRESS (갱신 2026-11-02 17:00 UTC, 재개 라운드 6)
+# PROGRESS (갱신 2026-11-02 17:25 UTC, 재개 라운드 7)
+
+## 재개 라운드 7 (2026-11-02 17:15~ UTC)
+- 상태: GPU `lo_pcb_r2a` RL (16:54~, 끝 ~18:10) → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type2` (16:25~), 4번째 칸 filler `ls10 eval_pkg10_1` (16:57~). pod 14 GiB / 60, oom_kill 0.
+- **H2 싼 수정 `--feas_margin` 구현 (PROPOSALS 라운드 6 후보, 노벨티 2줄은 이미 적음):** `train.py` RL 보상에서 작업 격자 성공 샘플도 최악 log10(|Z|/Zt) > −δ이면 실패로 침 (λ·best 샘플·expert iteration 교체 판정에 같이 들어감; 정확 검사 (`--certify 1`)·val·평가는 그대로). `rollout.py`는 마지막 관측의 최악 여유 `m`을 반환값에 더함 (키 하나 추가, 다른 호출자 영향 없음; 환경 파일 4개는 안 건드림). 로그에 `margin-fail` (여유 때문에 실패로 바뀐 샘플 수).
+  - 결정: **δ = log10 1.05 (0.021189)** — PROPOSALS에 미리 적은 예시 값 그대로, 평가 실패의 최악 초과 (7~15%)보다 작아서 보수적. 결과 보고 바꾸지 않음.
+  - 알아 둘 점 (결과 전): 환경은 작업 격자 성공 뒤 add를 막으므로 (`sim.py` 224줄) 여유는 마지막 add의 선택·종류 바꾸기·덜 가지치기로만 얻을 수 있음 → 이 수정은 주로 "격자 끝까지 가지치기"를 벌줌. fail이 늘어 λ가 올라가므로 개수도 늘 수 있음 — 개수비를 같이 보고.
+  - smoke (`scripts/smoke_feas_margin.py`, CPU 2 iter pkg8, r2_mott distill init): 통과, it 2에서 샘플 8개 중 4개가 margin-fail (작업 격자 성공 해 다수가 목표 5% 안에 붙어 있음 — H2와 같은 방향) → `runs/analysis/smoke_feas_margin.ok`.
+  - 큐: `r2m` (r2_mott seed 0 distill best.pt에서 RL 1.25 h만), `lo_pcb_r2m` (lo_pcb_r2 distill에서 RL만) — `scripts/queue_feas_margin.py`, lo_pkg_r2a 뒤 (~22:10~00:50). r2c와 같은 짝 설계라 바뀐 것은 보상의 성공 여유 하나. RESULTS ABLATIONS 행 3개 (vs r2_mott_rl, vs `r2_mott_rl@last`, lo_pcb vs lo_pcb_r2_rl) 추가.
+  - **미리 적는 판정 (라운드 2 규칙 + 라운드 5 보강 그대로):** seed 0, 판마다 50문제 짝지은 bootstrap. (i) 같은 종류 pcb·pkg 중 하나 이상에서 r2m − r2_mott_rl 성공률 CI 하한 > 0이 **day 1 기록과 `@last` 둘 다에서** 성립하거나, lo_pcb_r2m − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0, (ii) 그리고 다른 판에서 점추정이 −0.05 아래가 아니면 "이김" → seed 1·2 (`r2_mott_s1/s2` distill에서 같은 방식) 확장. 둘 기준이 갈리면 "평가 잡음 범위 — 판정 보류", 그 밖은 "효과 없음"/"해로움"으로 적고 확장하지 않음.
+- side_slot 재시작 (대상 lo_pcb_r2a lo_ip_r2a lo_pkg_r2a r2m lo_pcb_r2m, 로그 `agent/logs/side_slot2.log`); 돌던 LS filler는 그대로 살아 있음 (side_slot은 자기 작업이 살아 있으면 기다림).
 
 ## 재개 라운드 6 (2026-11-02 14:25~ UTC)
 - 상태: r2v RL 끝 (14:52, 340 iter / 1.27 h, val 3번 (종류당 48문제) → best it 200), side_slot이 10칸 평가 중 (14:52~). GPU `lo_pcb_r2v` 14:52~ (~16:10) → lo_pcb_r2a → lo_ip_r2a → lo_pkg_r2a (~22:10). CPU 줄 `e0plus16 eval_ip16_1 type1` (13:17~). pod 11 GiB / 60, oom_kill 0.

@@ -369,6 +369,10 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     *[(f"lo_{t}_r2a_rl", "r2a_rl", f"{t} 빼고 학습 r2a (처음 보는 종류에서 얼마나 떨어지나)", "세 종류 모두 학습한 r2a")
       for t in ("pcb", "ip", "pkg")],
     ("lo_pcb_r2v_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
+    # 11/02 round 7, diagnosis H2 cheap fix: rl success needs worst working-grid log10(|Z|/Zt) <= -log10(1.05)
+    ("r2m_rl", "r2_mott_rl", "2단 + 보상 성공에 5% 여유 (`--feas_margin`, 같은 distill에서 RL만)", "여유 없음"),
+    ("r2m_rl", "r2_mott_rl@last", "2단 + `--feas_margin` (같은 평가 설정 짝)", "여유 없음, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    ("lo_pcb_r2m_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--feas_margin` (같은 distill에서 RL만)", "여유 없음"),
 ]
 
 

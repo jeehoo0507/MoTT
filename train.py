@@ -96,6 +96,8 @@ def parse():
     p.add_argument("--teacher_dir", default="data/teacher", help="stage-1 teacher solutions (<pool name>.npz)")
     p.add_argument("--hours", type=float, default=0, help="stop after this wall time (0 = off)")
     p.add_argument("--certify", type=int, default=1, help="exact-check the best sample of each instance every iteration; 2: every distinct grid-feasible sample")
+    p.add_argument("--feas_margin", type=float, default=0.0, help="rl reward: a sample counts as feasible only if its "
+                   "worst working-grid log10(|Z|/Zt) <= -this (0 = the env's feasibility); certify / val unchanged")
     p.add_argument("--prior", action="store_true", help="grid model: add the physics prior (as in MoTT)")
     p.add_argument("--no_prune", action="store_true", help="ablation: no remove / change-type actions")
     p.add_argument("--layers", type=int, default=6)
@@ -349,7 +351,7 @@ def main():
         opt.zero_grad(set_to_none=True)
         if args.stage == "distill":
             tb = torch.nonzero(teach["feasible"]).squeeze(-1)
-            loss, ratio, best_ratio, fail_rate, n_bad = 0.0, float("nan"), float("nan"), float("nan"), 0
+            loss, ratio, best_ratio, fail_rate, n_bad, n_margin = 0.0, float("nan"), float("nan"), float("nan"), 0, 0
             if tb.numel():
                 tenv = make_env(batch, ib[tb], cfg, args.feat, max_steps=args.max_steps, allow_prune=not args.no_prune)
                 rep = rollout(policy, tenv, forced=teach["actions"][tb], store=True, amp=amp)
@@ -361,6 +363,7 @@ def main():
             # one step. Advantages are normalised within each instance's M samples and the loss scales are the
             # full-batch ones (1/(B*M), 1/B), so this is the same update as one B*M pass with less GPU memory.
             E, loss, n_bad, cnts, fails = args.B * args.M, 0.0, 0, [], []
+            n_margin = 0   # grid-feasible samples turned into failures by --feas_margin
             adds = [[] for _ in range(batch.B)]   # new grid points of this step, added once after all chunks
             try:
                 for c0 in range(0, args.B, args.chunk or args.B):
@@ -370,6 +373,11 @@ def main():
                                    allow_prune=not args.no_prune)
                     out = rollout(policy, env, store=True, amp=amp)
                     cnt, fail = out["count"].float().view(nb, args.M), (~out["feasible"]).view(nb, args.M).clone()
+                    if args.feas_margin > 0:
+                        # 11/02 round 7, diagnosis H2: exact-check failures are near misses through grid gaps, so
+                        # a grid-feasible sample must also clear the target by this margin to earn the success reward
+                        n_margin += int((~fail & (out["m"].view(nb, args.M) > -args.feas_margin)).sum())
+                        fail |= out["m"].view(nb, args.M) > -args.feas_margin
                     j = (cnt + fail * 1e6).argmin(1)                      # best sample per instance
                     cert_ok = torch.zeros(nb, dtype=torch.bool, device=dev)
                     if pool and args.certify >= 2:
@@ -410,7 +418,8 @@ def main():
                                 base_policy.set_eval_R(args.loop_eval)
                             benv = make_env(batch, ibc, cfg, args.feat, max_steps=args.max_steps, allow_prune=not args.no_prune)
                             bo = rollout(base_policy, benv, greedy=True, amp=amp)
-                            Rb = -bo["count"].float() / n_ref[cb] - lam * ((~bo["feasible"]).float() + bo["V"].float())
+                            bfail = ~bo["feasible"] | (bo["m"] > -args.feas_margin) if args.feas_margin > 0 else ~bo["feasible"]
+                            Rb = -bo["count"].float() / n_ref[cb] - lam * (bfail.float() + bo["V"].float())
                             benv = bo = None
                         adv = (R - Rb[:, None]).view(-1)
                     loss += backward_logp(policy, out["traj"], adv, H, W, amp, scale=1.0 / E)
@@ -473,7 +482,8 @@ def main():
 
         if it % 25 == 0 or it == args.iters:
             pname = pool_names[pi] if pool else f"{H}x{W}"
-            log(f"it {it:6d} | {pname} P={batch.P} F={batch.freqs.shape[1]} cert-bad {n_bad} | count/ref {ratio:.3f} "
+            log(f"it {it:6d} | {pname} P={batch.P} F={batch.freqs.shape[1]} cert-bad {n_bad}"
+                f"{f' margin-fail {n_margin}' if args.feas_margin > 0 else ''} | count/ref {ratio:.3f} "
                 f"best-of-M {best_ratio:.3f} fail {fail_rate:.2f} lam {lam:.2f} | teach ok {teach['feasible'].float().mean():.2f} "
                 f"| loss {loss:.3f} | replaced {n_replaced} | grid capped {n_capped} oom {n_oom} | {time.time()-t0:.0f}s{gpu_peak()}")
         if it % args.val_every == 0 or it == args.iters:

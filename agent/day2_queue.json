@@ -272,6 +272,20 @@
    "name": "lo_pkg_r2a",
    "arm": "--model mott --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
    "seed": 0
+  },
+  {
+   "name": "r2m",
+   "arm": "--model mott --feas_margin 0.021189",
+   "seed": 0,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt",
+   "after": "runs/analysis/smoke_feas_margin.ok"
+  },
+  {
+   "name": "lo_pcb_r2m",
+   "arm": "--model mott --feas_margin 0.021189 --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
+   "after": "runs/analysis/smoke_feas_margin.ok"
   }
  ],
  "cpu": [
