@@ -22,3 +22,7 @@ I added the design-rationale section from the 11/01 queue (task 6) to RESULTS.md
 **Next round:** evaluate `lo_pcb_r2a` and apply the criteria (i)/(ii) written down in round 5. DAILY.md is due at 05:00 UTC on 11/03.
 
 I also fixed one of my memory notes: it still said to use `git stash` when a push is rejected, which contradicts the later rule not to stash while logs are being written.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b67e658..4b62916  main -> main
