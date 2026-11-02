@@ -66,12 +66,13 @@ def style(ax):
 
 def fig2(recs, methods, sizes, out):
     techs = [t for t in ("pcb", "pkg", "ip") if any(k[0] == t for k in recs)]
-    fig, axes = plt.subplots(2, len(techs), figsize=(3.4 * len(techs), 5.6), squeeze=False)
+    # rows: time, success (so the count ratio, taken on problems both solved, never hides failures), count ratio
+    fig, axes = plt.subplots(3, len(techs), figsize=(3.4 * len(techs), 8.0), squeeze=False)
     width = 0.8 / len(methods)
     for j, t in enumerate(techs):
-        ax_t, ax_c = axes[0, j], axes[1, j]
+        ax_t, ax_s, ax_c = axes[0, j], axes[1, j], axes[2, j]
         for i, m in enumerate(methods):
-            xs, secs, rels, los, his = [], [], [], [], []
+            xs, secs, succ, ns, rels, los, his = [], [], [], [], [], [], []
             for s_i, s in enumerate(sizes):
                 rec = recs.get((t, s, m))
                 ref = recs.get((t, s, "greedy+prune"))
@@ -79,6 +80,8 @@ def fig2(recs, methods, sizes, out):
                     continue
                 xs.append(s_i + (i - (len(methods) - 1) / 2) * width)
                 secs.append(np.mean(rec["sec"]))
+                succ.append(np.mean(rec["ok"]))
+                ns.append(len(rec["ok"]))
                 mean, ci = paired_ratio(rec, ref)
                 rels.append(mean)
                 los.append(mean - ci[0] if ci == ci else 0)
@@ -86,19 +89,24 @@ def fig2(recs, methods, sizes, out):
             if not xs:
                 continue
             ax_t.bar(xs, secs, width * 0.92, color=SERIES[i], label=m)
+            ax_s.bar(xs, succ, width * 0.92, color=SERIES[i], label=m)
+            for x, v, n in zip(xs, succ, ns):
+                ax_s.text(x, v, f"{v:.2f}\nn={n}", ha="center", va="bottom", fontsize=5, color=INK2)
             ax_c.bar(xs, rels, width * 0.92, color=SERIES[i], yerr=[los, his], error_kw=dict(lw=0.8, color=INK2), label=m)
             for x, v in zip(xs, secs):
-                ax_t.text(x, v, f"{v:.2g}", ha="center", va="bottom", fontsize=6, color=INK2)
+                ax_t.text(x, v, f"{v:.0f}" if v >= 10 else f"{v:.1f}", ha="center", va="bottom", fontsize=6, color=INK2)
         ax_t.set_yscale("log")
         ax_t.set_title(KIND[t], fontsize=10, color=INK, loc="left")
         ax_c.axhline(1.0, color=INK, lw=0.8)
-        for ax in (ax_t, ax_c):
+        ax_s.set_ylim(0, 1.2)
+        for ax in (ax_t, ax_s, ax_c):
             style(ax)
             ax.set_xticks(range(len(sizes)))
             ax.set_xticklabels([f"{s}x{s} ({s*s} cells)" for s in sizes])
         if j == 0:
             ax_t.set_ylabel("seconds per board (1 CPU core)", color=INK2, fontsize=9)
-            ax_c.set_ylabel("decap count / greedy+prune (paired, 95% CI)", color=INK2, fontsize=9)
+            ax_s.set_ylabel("success rate (exact check)", color=INK2, fontsize=9)
+            ax_c.set_ylabel("count / greedy+prune (both solved, 95% CI)", color=INK2, fontsize=9)
     axes[0, 0].legend(fontsize=7, frameon=False)
     fig.suptitle("Big boards: time and decap count, same calculator for every method", fontsize=11, color=INK, x=0.02, ha="left")
     fig.tight_layout()
