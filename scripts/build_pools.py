@@ -3,7 +3,8 @@
 Files (runs/pool_v1/):
   train_{tech}{size}_{k}.pkl   sizes 8/10/12, k = 0..2, 16 instances each       (training mixture)
   val_{tech}10_0.pkl           16 instances, size 10                             (checkpoint selection)
-  eval_{tech}{size}_{k}.pkl    sizes 10/16/20, k = 0..1, 25 instances each      (held-out evaluation)
+  eval_{tech}{size}_{k}.pkl    sizes 10/16/20, k = 0..1, 25 instances each      (held-out evaluation;
+                               20-cell files: 8 instances, --eval_n 8, QUEUE 10/29 03:10 item 5)
 
 Every file: sample_batch -> cutting_plane(greedy+prune, <= 10 rounds) so that the working grid
 is certified for the greedy+prune solution; the greedy+prune result (certified) is stored.
@@ -27,14 +28,14 @@ VAL_N = 16
 SEED = {"pcb": 0, "pkg": 100000, "ip": 200000}
 
 
-def jobs(out, only, eval_sizes=EVAL_SIZES, val_k=1):
+def jobs(out, only, eval_sizes=EVAL_SIZES, val_k=1, eval_n=EVAL_N):
     from decap_loop.techs import TECHS
     js = []
     for t in TECHS:
         if "eval" in only:
             for s in eval_sizes:
                 for k in range(EVAL_K):
-                    js.append((out, f"eval_{t}{s}_{k}", t, s, EVAL_N, SEED[t] + 9000 + 10 * s + k))
+                    js.append((out, f"eval_{t}{s}_{k}", t, s, eval_n, SEED[t] + 9000 + 10 * s + k))
         if "val" in only:
             for k in range(val_k):   # 11/02 (diagnosis H1): extra val files _1, _2 for less noisy best.pt selection
                 js.append((out, f"val_{t}10_{k}", t, 10, VAL_N, SEED[t] + 5000 + k))
@@ -86,9 +87,11 @@ def main():
     ap.add_argument("--eval_sizes", default=",".join(map(str, EVAL_SIZES)),
                     help="subset of eval board sides (20 last, 2 workers: QUEUE 2026-10-28 memory rule)")
     ap.add_argument("--val_k", type=int, default=1, help="val files per kind (val_{tech}10_0 .. _{k-1})")
+    ap.add_argument("--eval_n", type=int, default=EVAL_N,
+                    help="instances per eval file (20-cell: 8, QUEUE 2026-10-29 03:10 item 5 = PROPOSALS (c))")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))), a.val_k)
+    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))), a.val_k, a.eval_n)
     print(f"{len(js)} pool files -> {a.out}, {a.workers} workers", flush=True)
     t0 = time.time()
     with Pool(a.workers) as pool:

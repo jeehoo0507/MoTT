@@ -125,6 +125,10 @@ def ladder_table(recs):
             r = by[k].get(m)
             cells.append("–" if r is None else f"{r['ok'].mean():.2f} / {fmt(r['rel'])} / {fmt(r['rel_ta'])} [{len(r['ok'])}]")
         lines.append(f"| {m} | " + " | ".join(cells) + " |")
+    if any("local_search" in by[k] for k in keys):
+        lines += ["", "local_search = greedy+prune 해 (작업 격자에서 성공한 문제만)를 destroy-and-repair로 줄임 "
+                  "(`decap_loop/baselines.py` `local_search`, 판정은 작업 격자). 줄인 해가 정확 검사에서 떨어지면 "
+                  "성공률이 greedy+prune보다 낮아진다 — 짝지은 차이는 아래 판별 표."]
     return lines + [""]
 
 

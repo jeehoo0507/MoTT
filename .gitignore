@@ -24,4 +24,7 @@ agent/logs/resume_agent.log
 # 11/02 round 5: same failure after a manual git stash / stash pop (side_slot.log, e0plus16.log lost lines after 12:20)
 agent/logs/side_slot.log
 agent/logs/side_slot2.log
+agent/logs/side_slot3.log
+agent/logs/side_slot_jobs.log
+agent/logs/build_pool20.log
 agent/logs/e0plus16.log
