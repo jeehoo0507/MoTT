@@ -16,3 +16,4 @@ done
 1 sets x 1 methods = 1 jobs, 1 workers -> runs/2026-10-28/baselines/eval
 [  2030s] eval_pkg10_0   local_search                 ok 0.48 count 5.75 14.462s/inst rounds 4
 done
+1 sets x 1 methods = 1 jobs, 1 workers -> runs/2026-10-28/baselines/eval
