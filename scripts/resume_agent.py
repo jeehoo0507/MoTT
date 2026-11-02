@@ -1,8 +1,9 @@
 """Restart the agent loop by itself once the GPU queue is done (QUEUE 2026-10-31 11:40 UTC).
 
 Every 10 min: when every `train` entry of agent/day2_queue.json has finished RL (runs/<DAY>/<name>_rl/metrics.json,
-the driver's own test), remove agent/STOP (commit, push to r2e main) and start `bash agent/loop.sh` in tmux session
-"agent", then exit. If STOP is already gone but the loop is not running (a workspace restart killed it), it starts the
+the driver's own test), remove agent/STOP (commit, push to r2e main) and start `bash agent/loop.sh` detached via scripts/bg.py
+(log agent/logs/loop_bg.log), then exit. This workspace has no tmux: 2026-11-02 the tmux start failed every 10 min for
+hours after STOP was removed, so the loop never ran. If STOP is already gone but the loop is not running (a workspace restart killed it), it starts the
 loop right away. Started by scripts/ensure_running.py, so a restart brings it back.
 Run: .venv/bin/python scripts/bg.py agent/logs/resume_agent.log '.venv/bin/python scripts/resume_agent.py'
 """
@@ -40,12 +41,12 @@ def queue_left():
 
 
 def loop_running():
-    return sh("tmux", "has-session", "-t", "agent", check=False).returncode == 0
+    return sh("pgrep", "-f", "bash agent/loop.sh", check=False).returncode == 0
 
 
 def start_loop():
-    sh("tmux", "new", "-d", "-s", "agent", "bash agent/loop.sh")
-    log("agent loop started (tmux session agent, log agent/logs/loop.log)")
+    pid = sh(os.path.join(ROOT, ".venv/bin/python"), "scripts/bg.py", "agent/logs/loop_bg.log", "bash agent/loop.sh").stdout.strip()
+    log(f"agent loop started (pid {pid}, logs agent/logs/loop.log and loop_bg.log)")
 
 
 def main():
