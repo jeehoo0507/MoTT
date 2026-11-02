@@ -9,6 +9,11 @@ STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 
   - 결정: **4번째 CPU 칸 러너 `scripts/side_slot.py`** (side_eval_wait 대체) — 학습 끝난 run의 10칸 평가가 1순위, 없을 때만 `ls10 *`·`ga10 *` 큐 항목을 하나씩 (선점 없음 → 학습 평가는 최대 한 작업만큼 기다림). 이유: 이 칸은 학습 사이 ~1.5 h씩 비어 있었음; CPU 4개 유지 (검사 2 + 드라이버 1 + 이것 1). 재시작해도 자기 작업이 살아 있으면 기다림.
   - LS 항목을 파일별 6개로 나눔 (`ls10 eval_*10_*`, 기존 "day1 base10 ls" 대체, 같은 명령·출력). **ip10_0: 성공 0.40 (= g+p, LS는 성공한 해만 다듬음), 16.4 s/문제.**
   - GA: `eval_policy.py --methods ga --ga 64x100` (새 방법 `genetic`, 다른 방법 코드 그대로). 시간 smoke (`scripts/smoke_ga.py` → `runs/analysis/smoke_ga.json`): 100세대 추정 ip 26 / pcb 44 / pkg 49 s/문제 → 결정: repo 기본값 (pop 64 × 100세대, 무작위 초기화, g+p 시드 없음 — 시드를 넣으면 g+p+LS 변형이 됨) 그대로, `ga10 *` 6개를 LS 뒤에.
+  - LS 지금까지 (`runs/2026-10-28/baselines/eval/*__local_search.json`): ip10 0·1 성공 0.40 (= g+p), 개수 g+p의 0.75배, 10.8 s/문제; pcb10_0 성공 0.80 vs g+p 짝 **−0.20 [−0.36, −0.08]** (작업 격자에서 줄인 해가 정확 검사에서 떨어짐 — 선생님 LS의 정확 성공이 낮은 것과 같은 현상), 개수 0.75배, 27 s/문제. pcb10_1 진행 중 (09:41~), 그다음 pkg·GA.
+  - 결정 (09:22): LS pcb10_1 (23분 진행)을 멈추고 l20 평가를 먼저 — LS가 학습 끝 1분 전에 칸을 잡아 기준선 판정이 ~50분 밀릴 상황. `side_slot.py`에 가드 추가: 대상 학습의 RL이 1 h 안에 끝나면 filler를 시작하지 않음 (`FILL_GAP_S`).
+- **bm_manoharan_rlonly_l20 끝** (504 iter / 2.03 h, best it 100, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/`), 10칸 평가: **ip 0.96** (개수÷E0+ 1.73), **pcb 0.00**, **pkg 0.88** (개수÷g+p 6.59 — 순서의 거의 모든 칸에 놓음). 해 모양: 판 종류마다 한 종류만 (ip 0, pkg 1, pcb 2). → λ0 20으로 붕괴는 피했지만 RL만으로도 Manoharan식 고정 순서 정책은 pcb에서 실패, pkg에서 개수 폭증. RESULTS "선행 연구 재구현" B-Manoharan에 행·설명 줄 추가. distill 판 (0.00 전부)보다는 낫지만 E0+·사다리 어느 단보다도 낮음.
+- GPU: **bp_park_rlonly** (λ0 20) 09:00~ (~11:00), it 25 fail 0.23·it 100 val fail pcb 0.56 / pkg 0.69 / ip 0.94 — 붕괴 없음 (loss ≠ 0). 그다음 r2c → lo_pcb_r2c → r2v → lo_pcb_r2v (H2·H1 수정, 기준선 두 개 뒤 — QUEUE 23:45 순서).
+- 다음 라운드: bp_park_rlonly 평가 (~11:00 뒤 side_slot) → B-Park 표; r2c 시작 확인; LS pkg·GA 10칸 결과 → RESULTS 요약표 행 (local_search, genetic) 해석 한 줄.
 
 ## 재개 라운드 3 (2026-11-02 06:55~ UTC)
 - 상태: CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~), pod 16~18 GiB / 60, oom_kill 0. `ensure_running`이 report_watch (27 rung 다 올림 → 바로 끝남)·resume_agent (STOP 없음 → 할 일 없음)를 다시 띄움 — 정상.

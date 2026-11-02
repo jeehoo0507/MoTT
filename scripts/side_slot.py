@@ -8,7 +8,9 @@ Slots: 2 exact-check workers (training) + driver lane 1 + this 1 = 4. The driver
 and skips a job once its records exist.
 Run: .venv/bin/python scripts/bg.py agent/logs/side_slot.log '.venv/bin/python scripts/side_slot.py r2c lo_pcb_r2c'
 """
+import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -16,13 +18,28 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mem import mem_line, wait_mem  # noqa: E402
 from pipeline_day1 import alive  # noqa: E402
-from pipeline_day2 import ROOT, PY, eval_jobs, exists, queue, rl_done  # noqa: E402
+from pipeline_day2 import DAY, ROOT, PY, eval_jobs, exists, queue, rl_done  # noqa: E402
 
 FILL = ("ls10 ", "ga10 ")
+FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this left (11/02: ls pcb10_1 took the
+                    # slot 1 min before bm_manoharan_rlonly_l20 ended)
 
 
 def log(msg):
     print(f"[{time.strftime('%H:%M:%S', time.gmtime())}] {msg}", flush=True)
+
+
+def rl_left_s(name):
+    """seconds the named training's live rl stage has left (time budget minus the last logged elapsed), else None"""
+    d = os.path.join(ROOT, f"runs/{DAY}/{name}_rl")
+    if rl_done(name) or not os.path.exists(os.path.join(d, "log.txt")):
+        return None
+    try:
+        hours = json.load(open(os.path.join(d, "config.json")))["args"]["hours"]
+        el = [int(m) for m in re.findall(r"\| (\d+)s \|", open(os.path.join(d, "log.txt")).read())]
+    except (OSError, ValueError, KeyError):
+        return None
+    return hours * 3600 - (el[-1] if el else 0)
 
 
 def pending(j):
@@ -51,7 +68,8 @@ while True:
         continue
     todo = [evals[f"eval10 {n}_rl"] for n in targets if rl_done(n) and f"eval10 {n}_rl" in evals]
     todo = [j for j in todo if pending(j) and j["name"] not in failed]
-    if not todo:
+    left = [s for s in (rl_left_s(n) for n in targets) if s is not None]
+    if not todo and not any(s < FILL_GAP_S for s in left):   # a filler (<= ~50 min) must not hold a training's eval
         todo = [j for j in queue().get("cpu", []) if j["name"].startswith(FILL) and pending(j)
                 and j["name"] not in failed]
     if todo:

@@ -380,7 +380,10 @@ PRIOR = {  # prior-work re-implementations (QUEUE 10/29 03:30 C): how each diffe
         "행동: 현재 포트에 종류 또는 빈칸, 제거·종류 변경 없음; 에피소드 길이 = 놓을 수 있는 칸 수 + 1 (학습의 max_steps 64 대신).",
         "`*_rlonly_l20` (bp_park_rlonly 포함): 원 논문처럼 RL만 2.0 h (= distill + RL 예산), 무작위 초기화, 모방 없음, 초기 λ 20 "
         "(우리 run은 1). 초기 λ 1로 한 bm_manoharan_rlonly는 it 75부터 모든 샘플이 0개 놓고 실패 → advantage 0으로 붕괴해 34분에 멈춤 "
-        "(평가 없음, `runs/2026-10-29/bm_manoharan_rlonly_rl/log.txt`)."]),
+        "(평가 없음, `runs/2026-10-29/bm_manoharan_rlonly_rl/log.txt`).",
+        "`bm_manoharan_rlonly_l20_rl` 해 모양 (위 \"decap 종류 비율\" 표): 판 종류마다 **한 종류만** 씀 (ip 종류 0, pkg 종류 1, pcb 종류 2). "
+        "pkg에서는 고정 순서의 거의 모든 칸에 놓아 성공하지만 개수가 g+p의 몇 배, pcb에서는 몇 개만 놓고 순서 끝에 닿아 전부 실패. "
+        "best.pt는 it 100 (val 16문제 × 3, 2 h 중 앞쪽) — RL만으로는 고정 순서 + 종류/빈칸 행동에서 '어디서 멈출지·어느 종류'를 판마다 배우지 못함."]),
 }
 
 
