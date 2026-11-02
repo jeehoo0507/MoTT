@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 04:57 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 05:41 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -47,16 +47,18 @@
 | r0_coord_s1_rl | 0.96 / 0.97 / 1.29 [50] | – | 0.94 / 0.91 / 0.22 [50] | – | 0.74 / 0.77 / 0.54 [50] | – |
 | r0_coord_s2_rl | 1.00 / 0.96 / 1.50 [50] | – | 0.98 / 0.84 / 0.21 [50] | – | 0.76 / 0.80 / 0.55 [50] | – |
 | r1_modal_distill | 1.00 / 0.91 / 1.59 [50] | – | 0.88 / 1.08 / 0.24 [50] | – | 0.90 / 1.13 / 0.82 [50] | – |
-| r1_modal_rl | 0.96 / 0.88 / 1.23 [50] | 1.00 / 0.33 / 1.25 [25] | 0.98 / 0.75 / 0.18 [50] | 0.92 / 0.80 / 0.24 [50] | 0.68 / 0.75 / 0.53 [50] | 0.44 / 0.74 / 0.45 [25] |
+| r1_modal_rl | 0.96 / 0.88 / 1.23 [50] | 1.00 / 0.33 / 1.25 [25] | 0.98 / 0.75 / 0.18 [50] | 0.92 / 0.80 / 0.24 [50] | 0.68 / 0.75 / 0.53 [50] | 0.52 / 0.72 / 0.45 [50] |
 | r1_modal_s1_rl | 0.92 / 0.87 / 1.31 [50] | – | 0.84 / 0.78 / 0.19 [50] | – | 0.74 / 0.82 / 0.56 [50] | – |
 | r1_modal_s2_rl | 0.98 / 0.82 / 1.19 [50] | – | 0.96 / 0.80 / 0.18 [50] | – | 0.80 / 0.77 / 0.52 [50] | – |
 | r2_mott_distill | 0.92 / 0.74 / 1.02 [50] | – | 0.78 / 0.94 / 0.23 [50] | – | 0.70 / 0.97 / 0.69 [50] | – |
-| r2_mott_rl | 1.00 / 0.74 / 1.02 [50] | 1.00 / 0.29 / 1.02 [25] | 0.88 / 0.88 / 0.21 [50] | 0.90 / 0.86 / 0.24 [50] | 0.72 / 0.88 / 0.59 [50] | 0.44 / 0.83 / 0.45 [25] |
-| r2_mott_rl@last | – | – | 0.92 / 0.86 / 0.20 [50] | – | 0.60 / 0.88 / 0.63 [25] | – |
+| r2_mott_rl | 1.00 / 0.74 / 1.02 [50] | 1.00 / 0.29 / 1.02 [25] | 0.88 / 0.88 / 0.21 [50] | 0.90 / 0.86 / 0.24 [50] | 0.72 / 0.88 / 0.59 [50] | 0.52 / 0.75 / 0.45 [50] |
+| r2_mott_rl@last | 1.00 / 0.74 / 1.02 [50] | – | 0.92 / 0.86 / 0.20 [50] | – | 0.72 / 0.88 / 0.59 [50] | – |
 | r2_mott_s1_rl | 1.00 / 0.74 / 1.01 [50] | – | 0.78 / 0.89 / 0.19 [50] | – | 0.84 / 0.84 / 0.57 [50] | – |
-| r2_mott_s1_rl@last | – | – | 0.92 / 0.85 / 0.20 [50] | – | – | – |
+| r2_mott_s1_rl@best | – | – | 0.78 / 0.89 / 0.19 [50] | – | 0.84 / 0.84 / 0.57 [50] | – |
+| r2_mott_s1_rl@last | 1.00 / 0.74 / 1.01 [50] | – | 0.92 / 0.85 / 0.20 [50] | – | 0.86 / 0.86 / 0.59 [50] | – |
 | r2_mott_s2_rl | 1.00 / 0.74 / 1.02 [50] | – | 0.84 / 0.81 / 0.19 [50] | – | 0.62 / 0.86 / 0.63 [50] | – |
-| r2_mott_s2_rl@last | – | – | 0.96 / 0.82 / 0.20 [50] | – | – | – |
+| r2_mott_s2_rl@best | – | – | 0.84 / 0.81 / 0.19 [50] | – | 0.62 / 0.86 / 0.63 [50] | – |
+| r2_mott_s2_rl@last | 1.00 / 0.74 / 1.01 [50] | – | 0.96 / 0.82 / 0.20 [50] | – | 0.74 / 0.86 / 0.60 [50] | – |
 | r2a_rl | 1.00 / 0.74 / 1.03 [50] | – | 0.96 / 0.82 / 0.20 [50] | – | 0.84 / 0.87 / 0.58 [50] | – |
 | r2a_s1_rl | 1.00 / 0.74 / 1.01 [50] | – | 0.96 / 0.84 / 0.20 [50] | – | 0.84 / 0.87 / 0.61 [50] | – |
 | r2a_s2_rl | 0.98 / 0.74 / 1.01 [50] | – | 0.92 / 0.83 / 0.21 [50] | – | 0.80 / 0.91 / 0.62 [50] | – |
@@ -115,8 +117,11 @@
 | ip 10 | r1_modal_s2_rl | 50 | -0.02 [-0.06, +0.00] | 1.191 [1.114, 1.282] |
 | ip 10 | r2_mott_distill | 50 | -0.08 [-0.16, -0.02] | 1.023 [1.004, 1.051] |
 | ip 10 | r2_mott_rl | 50 | +0.00 [+0.00, +0.00] | 1.017 [0.995, 1.046] |
+| ip 10 | r2_mott_rl@last | 50 | +0.00 [+0.00, +0.00] | 1.017 [0.995, 1.046] |
 | ip 10 | r2_mott_s1_rl | 50 | +0.00 [+0.00, +0.00] | 1.009 [0.994, 1.032] |
+| ip 10 | r2_mott_s1_rl@last | 50 | +0.00 [+0.00, +0.00] | 1.009 [0.993, 1.034] |
 | ip 10 | r2_mott_s2_rl | 50 | +0.00 [+0.00, +0.00] | 1.018 [1.000, 1.044] |
+| ip 10 | r2_mott_s2_rl@last | 50 | +0.00 [+0.00, +0.00] | 1.008 [0.994, 1.031] |
 | ip 10 | r2a_rl | 50 | +0.00 [+0.00, +0.00] | 1.029 [1.000, 1.067] |
 | ip 10 | r2a_s1_rl | 50 | +0.00 [+0.00, +0.00] | 1.008 [0.993, 1.031] |
 | ip 10 | r2a_s2_rl | 50 | -0.02 [-0.06, +0.00] | 1.014 [0.999, 1.039] |
@@ -178,8 +183,10 @@
 | pcb 10 | r2_mott_rl | 50 | +0.22 [+0.04, +0.40] | 0.206 [0.164, 0.256] |
 | pcb 10 | r2_mott_rl@last | 50 | +0.26 [+0.10, +0.42] | 0.204 [0.164, 0.251] |
 | pcb 10 | r2_mott_s1_rl | 50 | +0.12 [-0.06, +0.30] | 0.191 [0.152, 0.238] |
+| pcb 10 | r2_mott_s1_rl@best | 50 | +0.12 [-0.06, +0.30] | 0.191 [0.152, 0.238] |
 | pcb 10 | r2_mott_s1_rl@last | 50 | +0.26 [+0.10, +0.42] | 0.203 [0.159, 0.252] |
 | pcb 10 | r2_mott_s2_rl | 50 | +0.18 [+0.02, +0.34] | 0.193 [0.152, 0.245] |
+| pcb 10 | r2_mott_s2_rl@best | 50 | +0.18 [+0.02, +0.34] | 0.193 [0.152, 0.245] |
 | pcb 10 | r2_mott_s2_rl@last | 50 | +0.30 [+0.16, +0.44] | 0.198 [0.159, 0.241] |
 | pcb 10 | r2a_rl | 50 | +0.30 [+0.16, +0.44] | 0.203 [0.161, 0.252] |
 | pcb 10 | r2a_s1_rl | 50 | +0.30 [+0.16, +0.44] | 0.199 [0.156, 0.250] |
@@ -241,9 +248,13 @@
 | pkg 10 | r1_modal_s2_rl | 50 | -0.02 [-0.16, +0.14] | 0.523 [0.459, 0.591] |
 | pkg 10 | r2_mott_distill | 50 | -0.12 [-0.24, +0.00] | 0.688 [0.618, 0.763] |
 | pkg 10 | r2_mott_rl | 50 | -0.10 [-0.24, +0.06] | 0.587 [0.509, 0.671] |
-| pkg 10 | r2_mott_rl@last | 25 | -0.20 [-0.44, +0.04] | 0.635 [0.525, 0.729] |
+| pkg 10 | r2_mott_rl@last | 50 | -0.10 [-0.24, +0.06] | 0.587 [0.509, 0.671] |
 | pkg 10 | r2_mott_s1_rl | 50 | +0.02 [-0.12, +0.16] | 0.570 [0.506, 0.639] |
+| pkg 10 | r2_mott_s1_rl@best | 50 | +0.02 [-0.12, +0.16] | 0.570 [0.506, 0.639] |
+| pkg 10 | r2_mott_s1_rl@last | 50 | +0.04 [-0.10, +0.18] | 0.595 [0.533, 0.665] |
 | pkg 10 | r2_mott_s2_rl | 50 | -0.20 [-0.34, -0.06] | 0.629 [0.548, 0.709] |
+| pkg 10 | r2_mott_s2_rl@best | 50 | -0.20 [-0.34, -0.06] | 0.629 [0.548, 0.709] |
+| pkg 10 | r2_mott_s2_rl@last | 50 | -0.08 [-0.24, +0.10] | 0.597 [0.528, 0.674] |
 | pkg 10 | r2a_rl | 50 | +0.02 [-0.10, +0.16] | 0.583 [0.520, 0.652] |
 | pkg 10 | r2a_s1_rl | 50 | +0.02 [-0.10, +0.14] | 0.606 [0.541, 0.681] |
 | pkg 10 | r2a_s2_rl | 50 | -0.02 [-0.16, +0.12] | 0.619 [0.542, 0.698] |
@@ -308,8 +319,11 @@
 | ip 10 | r1_modal_s2_rl | 50 | +0.58 [+0.44, +0.72] | 0.817 [0.659, 0.974] |
 | ip 10 | r2_mott_distill | 50 | +0.52 [+0.38, +0.66] | 0.736 [0.578, 0.887] |
 | ip 10 | r2_mott_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
+| ip 10 | r2_mott_rl@last | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | r2_mott_s1_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
+| ip 10 | r2_mott_s1_rl@last | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | r2_mott_s2_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
+| ip 10 | r2_mott_s2_rl@last | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | r2a_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | r2a_s1_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | r2a_s2_rl | 50 | +0.58 [+0.44, +0.70] | 0.736 [0.578, 0.887] |
@@ -371,8 +385,10 @@
 | pcb 10 | r2_mott_rl | 50 | -0.02 [-0.12, +0.10] | 0.877 [0.772, 0.982] |
 | pcb 10 | r2_mott_rl@last | 50 | +0.02 [-0.10, +0.14] | 0.859 [0.747, 0.966] |
 | pcb 10 | r2_mott_s1_rl | 50 | -0.12 [-0.26, +0.02] | 0.888 [0.763, 1.012] |
+| pcb 10 | r2_mott_s1_rl@best | 50 | -0.12 [-0.26, +0.02] | 0.888 [0.763, 1.012] |
 | pcb 10 | r2_mott_s1_rl@last | 50 | +0.02 [-0.08, +0.12] | 0.850 [0.759, 0.942] |
 | pcb 10 | r2_mott_s2_rl | 50 | -0.06 [-0.20, +0.08] | 0.809 [0.697, 0.929] |
+| pcb 10 | r2_mott_s2_rl@best | 50 | -0.06 [-0.20, +0.08] | 0.809 [0.697, 0.929] |
 | pcb 10 | r2_mott_s2_rl@last | 50 | +0.06 [-0.04, +0.16] | 0.817 [0.717, 0.917] |
 | pcb 10 | r2a_rl | 50 | +0.06 [-0.04, +0.16] | 0.819 [0.731, 0.901] |
 | pcb 10 | r2a_s1_rl | 50 | +0.06 [-0.02, +0.14] | 0.844 [0.750, 0.935] |
@@ -434,9 +450,13 @@
 | pkg 10 | r1_modal_s2_rl | 50 | -0.10 [-0.24, +0.04] | 0.768 [0.719, 0.816] |
 | pkg 10 | r2_mott_distill | 50 | -0.20 [-0.32, -0.08] | 0.966 [0.871, 1.077] |
 | pkg 10 | r2_mott_rl | 50 | -0.18 [-0.34, -0.02] | 0.877 [0.813, 0.945] |
-| pkg 10 | r2_mott_rl@last | 25 | -0.28 [-0.52, -0.04] | 0.877 [0.799, 0.954] |
+| pkg 10 | r2_mott_rl@last | 50 | -0.18 [-0.34, -0.02] | 0.877 [0.813, 0.945] |
 | pkg 10 | r2_mott_s1_rl | 50 | -0.06 [-0.20, +0.06] | 0.842 [0.778, 0.907] |
+| pkg 10 | r2_mott_s1_rl@best | 50 | -0.06 [-0.20, +0.06] | 0.842 [0.778, 0.907] |
+| pkg 10 | r2_mott_s1_rl@last | 50 | -0.04 [-0.14, +0.06] | 0.858 [0.794, 0.922] |
 | pkg 10 | r2_mott_s2_rl | 50 | -0.28 [-0.44, -0.12] | 0.856 [0.782, 0.926] |
+| pkg 10 | r2_mott_s2_rl@best | 50 | -0.28 [-0.44, -0.12] | 0.856 [0.782, 0.926] |
+| pkg 10 | r2_mott_s2_rl@last | 50 | -0.16 [-0.30, -0.02] | 0.858 [0.789, 0.922] |
 | pkg 10 | r2a_rl | 50 | -0.06 [-0.18, +0.06] | 0.872 [0.807, 0.943] |
 | pkg 10 | r2a_s1_rl | 50 | -0.06 [-0.20, +0.06] | 0.874 [0.812, 0.934] |
 | pkg 10 | r2a_s2_rl | 50 | -0.10 [-0.22, +0.02] | 0.907 [0.846, 0.969] |
@@ -453,8 +473,8 @@
 | pkg 16 | modal_rule | 50 | -0.22 [-0.36, -0.08] | 0.778 [0.649, 0.911] |
 | pkg 16 | r0_coord_distill | 25 | -0.04 [-0.24, +0.16] | 2.669 [1.086, 4.562] |
 | pkg 16 | r0_coord_rl | 50 | -0.18 [-0.36, -0.02] | 0.633 [0.533, 0.735] |
-| pkg 16 | r1_modal_rl | 25 | -0.36 [-0.56, -0.12] | 0.742 [0.618, 0.874] |
-| pkg 16 | r2_mott_rl | 25 | -0.36 [-0.60, -0.12] | 0.830 [0.659, 1.019] |
+| pkg 16 | r1_modal_rl | 50 | -0.30 [-0.46, -0.14] | 0.721 [0.623, 0.814] |
+| pkg 16 | r2_mott_rl | 50 | -0.30 [-0.46, -0.14] | 0.754 [0.624, 0.891] |
 | pkg 16 | r3_loop_rl | 25 | -0.24 [-0.48, +0.00] | 0.709 [0.524, 0.890] |
 
 ## 비학습 모달 규칙 `modal_rule` (US 6789241식, 공진 피크에 SRF 맞는 decap) 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
@@ -497,8 +517,8 @@
 | pkg 10 | r3_loop_rl | 50 | +0.00 [-0.10, +0.10] | 0.982 [0.932, 1.031] |
 | pkg 10 | r3a_rl | 50 | -0.02 [-0.14, +0.10] | 1.001 [0.951, 1.049] |
 | pkg 16 | r0_coord_rl | 50 | +0.04 [-0.12, +0.20] | 0.820 [0.766, 0.872] |
-| pkg 16 | r1_modal_rl | 25 | -0.24 [-0.48, +0.00] | 0.819 [0.770, 0.863] |
-| pkg 16 | r2_mott_rl | 25 | -0.24 [-0.48, +0.00] | 0.845 [0.745, 0.981] |
+| pkg 16 | r1_modal_rl | 50 | -0.08 [-0.24, +0.10] | 0.794 [0.738, 0.847] |
+| pkg 16 | r2_mott_rl | 50 | -0.08 [-0.26, +0.10] | 0.845 [0.776, 0.921] |
 | pkg 16 | r3_loop_rl | 25 | -0.12 [-0.40, +0.12] | 0.952 [0.872, 1.063] |
 
 ## 3단 + 주파수 궁합 편향 (dec_from_mode): `r3a_rl` vs 같은 단 편향 없는 `r3_loop_rl` 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
@@ -601,8 +621,11 @@
 | r1_modal_s2_rl | 50 (0, 1) | 0.98 | 9.90 | 0.817 | 1.191 | 0.448 | `runs/2026-10-29/r1_modal_s2_rl/eval/eval_ip10_0__r1_modal_s2_rl.json`, `runs/2026-10-29/r1_modal_s2_rl/eval/eval_ip10_1__r1_modal_s2_rl.json` |
 | r2_mott_distill | 50 (0, 1) | 0.92 | 7.98 | 0.736 | 1.023 | 0.586 | `runs/2026-10-28/r2_mott_distill/eval/eval_ip10_0__r2_mott_distill.json`, `runs/2026-10-28/r2_mott_distill/eval/eval_ip10_1__r2_mott_distill.json` |
 | r2_mott_rl | 50 (0, 1) | 1.00 | 8.54 | 0.736 | 1.017 | 0.524 | `runs/2026-10-28/r2_mott_rl/eval/eval_ip10_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_ip10_1__r2_mott_rl.json` |
+| r2_mott_rl@last | 50 (0, 1) | 1.00 | 8.54 | 0.736 | 1.017 | 0.364 | `runs/analysis/ckpt_last/eval/eval_ip10_0__r2_mott_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_ip10_1__r2_mott_rl@last.json` |
 | r2_mott_s1_rl | 50 (0, 1) | 1.00 | 8.44 | 0.736 | 1.009 | 0.312 | `runs/2026-10-29/r2_mott_s1_rl/eval/eval_ip10_0__r2_mott_s1_rl.json`, `runs/2026-10-29/r2_mott_s1_rl/eval/eval_ip10_1__r2_mott_s1_rl.json` |
+| r2_mott_s1_rl@last | 50 (0, 1) | 1.00 | 8.44 | 0.736 | 1.009 | 0.307 | `runs/analysis/ckpt_last/eval/eval_ip10_0__r2_mott_s1_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_ip10_1__r2_mott_s1_rl@last.json` |
 | r2_mott_s2_rl | 50 (0, 1) | 1.00 | 8.54 | 0.736 | 1.018 | 0.307 | `runs/2026-10-29/r2_mott_s2_rl/eval/eval_ip10_0__r2_mott_s2_rl.json`, `runs/2026-10-29/r2_mott_s2_rl/eval/eval_ip10_1__r2_mott_s2_rl.json` |
+| r2_mott_s2_rl@last | 50 (0, 1) | 1.00 | 8.42 | 0.736 | 1.008 | 0.315 | `runs/analysis/ckpt_last/eval/eval_ip10_0__r2_mott_s2_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_ip10_1__r2_mott_s2_rl@last.json` |
 | r2a_rl | 50 (0, 1) | 1.00 | 8.70 | 0.736 | 1.029 | 0.353 | `runs/2026-10-29/r2a_rl/eval/eval_ip10_0__r2a_rl.json`, `runs/2026-10-29/r2a_rl/eval/eval_ip10_1__r2a_rl.json` |
 | r2a_s1_rl | 50 (0, 1) | 1.00 | 8.44 | 0.736 | 1.008 | 0.305 | `runs/2026-10-29/r2a_s1_rl/eval/eval_ip10_0__r2a_s1_rl.json`, `runs/2026-10-29/r2a_s1_rl/eval/eval_ip10_1__r2a_s1_rl.json` |
 | r2a_s2_rl | 50 (0, 1) | 0.98 | 8.41 | 0.736 | 1.014 | 0.314 | `runs/2026-10-29/r2a_s2_rl/eval/eval_ip10_0__r2a_s2_rl.json`, `runs/2026-10-29/r2a_s2_rl/eval/eval_ip10_1__r2a_s2_rl.json` |
@@ -676,8 +699,10 @@
 | r2_mott_rl | 50 (0, 1) | 0.88 | 6.77 | 0.877 | 0.206 | 0.683 | `runs/2026-10-28/r2_mott_rl/eval/eval_pcb10_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_pcb10_1__r2_mott_rl.json` |
 | r2_mott_rl@last | 50 (0, 1) | 0.92 | 6.91 | 0.859 | 0.204 | 0.499 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_rl@last.json` |
 | r2_mott_s1_rl | 50 (0, 1) | 0.78 | 7.18 | 0.888 | 0.191 | 0.663 | `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pcb10_0__r2_mott_s1_rl.json`, `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pcb10_1__r2_mott_s1_rl.json` |
+| r2_mott_s1_rl@best | 50 (0, 1) | 0.78 | 7.18 | 0.888 | 0.191 | 0.684 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_s1_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_s1_rl@best.json` |
 | r2_mott_s1_rl@last | 50 (0, 1) | 0.92 | 7.04 | 0.850 | 0.203 | 0.761 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_s1_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_s1_rl@last.json` |
 | r2_mott_s2_rl | 50 (0, 1) | 0.84 | 6.62 | 0.809 | 0.193 | 0.468 | `runs/2026-10-29/r2_mott_s2_rl/eval/eval_pcb10_0__r2_mott_s2_rl.json`, `runs/2026-10-29/r2_mott_s2_rl/eval/eval_pcb10_1__r2_mott_s2_rl.json` |
+| r2_mott_s2_rl@best | 50 (0, 1) | 0.84 | 6.62 | 0.809 | 0.193 | 0.490 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_s2_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_s2_rl@best.json` |
 | r2_mott_s2_rl@last | 50 (0, 1) | 0.96 | 7.17 | 0.817 | 0.198 | 0.523 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_s2_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_s2_rl@last.json` |
 | r2a_rl | 50 (0, 1) | 0.96 | 6.88 | 0.819 | 0.203 | 0.391 | `runs/2026-10-29/r2a_rl/eval/eval_pcb10_0__r2a_rl.json`, `runs/2026-10-29/r2a_rl/eval/eval_pcb10_1__r2a_rl.json` |
 | r2a_s1_rl | 50 (0, 1) | 0.96 | 7.00 | 0.844 | 0.199 | 0.400 | `runs/2026-10-29/r2a_s1_rl/eval/eval_pcb10_0__r2a_s1_rl.json`, `runs/2026-10-29/r2a_s1_rl/eval/eval_pcb10_1__r2a_s1_rl.json` |
@@ -751,9 +776,13 @@
 | r1_modal_s2_rl | 50 (0, 1) | 0.80 | 5.58 | 0.768 | 0.523 | 0.848 | `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pkg10_0__r1_modal_s2_rl.json`, `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pkg10_1__r1_modal_s2_rl.json` |
 | r2_mott_distill | 50 (0, 1) | 0.70 | 7.29 | 0.966 | 0.688 | 1.509 | `runs/2026-10-28/r2_mott_distill/eval/eval_pkg10_0__r2_mott_distill.json`, `runs/2026-10-28/r2_mott_distill/eval/eval_pkg10_1__r2_mott_distill.json` |
 | r2_mott_rl | 50 (0, 1) | 0.72 | 6.22 | 0.877 | 0.587 | 1.594 | `runs/2026-10-28/r2_mott_rl/eval/eval_pkg10_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_pkg10_1__r2_mott_rl.json` |
-| r2_mott_rl@last | 25 (1) | 0.60 | 6.67 | 0.877 | 0.635 | 0.997 | `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_rl@last.json` |
+| r2_mott_rl@last | 50 (0, 1) | 0.72 | 6.22 | 0.877 | 0.587 | 0.690 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_rl@last.json` |
 | r2_mott_s1_rl | 50 (0, 1) | 0.84 | 6.26 | 0.842 | 0.570 | 0.755 | `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pkg10_0__r2_mott_s1_rl.json`, `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pkg10_1__r2_mott_s1_rl.json` |
+| r2_mott_s1_rl@best | 50 (0, 1) | 0.84 | 6.26 | 0.842 | 0.570 | 0.760 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_s1_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_s1_rl@best.json` |
+| r2_mott_s1_rl@last | 50 (0, 1) | 0.86 | 6.30 | 0.858 | 0.595 | 0.678 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_s1_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_s1_rl@last.json` |
 | r2_mott_s2_rl | 50 (0, 1) | 0.62 | 6.61 | 0.856 | 0.629 | 0.848 | `runs/2026-10-29/r2_mott_s2_rl/eval/eval_pkg10_0__r2_mott_s2_rl.json`, `runs/2026-10-29/r2_mott_s2_rl/eval/eval_pkg10_1__r2_mott_s2_rl.json` |
+| r2_mott_s2_rl@best | 50 (0, 1) | 0.62 | 6.61 | 0.856 | 0.629 | 0.892 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_s2_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_s2_rl@best.json` |
+| r2_mott_s2_rl@last | 50 (0, 1) | 0.74 | 6.27 | 0.858 | 0.597 | 0.688 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_s2_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_s2_rl@last.json` |
 | r2a_rl | 50 (0, 1) | 0.84 | 6.31 | 0.872 | 0.583 | 0.718 | `runs/2026-10-29/r2a_rl/eval/eval_pkg10_0__r2a_rl.json`, `runs/2026-10-29/r2a_rl/eval/eval_pkg10_1__r2a_rl.json` |
 | r2a_s1_rl | 50 (0, 1) | 0.84 | 6.50 | 0.874 | 0.606 | 0.662 | `runs/2026-10-29/r2a_s1_rl/eval/eval_pkg10_0__r2a_s1_rl.json`, `runs/2026-10-29/r2a_s1_rl/eval/eval_pkg10_1__r2a_s1_rl.json` |
 | r2a_s2_rl | 50 (0, 1) | 0.80 | 6.65 | 0.907 | 0.619 | 0.754 | `runs/2026-10-29/r2a_s2_rl/eval/eval_pkg10_0__r2a_s2_rl.json`, `runs/2026-10-29/r2a_s2_rl/eval/eval_pkg10_1__r2a_s2_rl.json` |
@@ -776,8 +805,8 @@
 | modal_rule | 50 (0, 1) | 0.60 | 10.57 | 0.778 | 0.493 | 8.513 | `runs/2026-10-28/baselines/eval/eval_pkg16_0__modal_rule.json`, `runs/2026-10-28/baselines/eval/eval_pkg16_1__modal_rule.json` |
 | r0_coord_distill | 25 (1) | 0.80 | 31.15 | 2.669 | – | 49.804 | `runs/2026-10-28/r0_coord_distill/eval/eval_pkg16_1__r0_coord_distill.json` |
 | r0_coord_rl | 50 (0, 1) | 0.64 | 8.66 | 0.633 | 0.471 | 34.125 | `runs/2026-10-28/r0_coord_rl/eval/eval_pkg16_0__r0_coord_rl.json`, `runs/2026-10-28/r0_coord_rl/eval/eval_pkg16_1__r0_coord_rl.json` |
-| r1_modal_rl | 25 (0) | 0.44 | 7.09 | 0.742 | 0.447 | 5.414 | `runs/2026-10-28/r1_modal_rl/eval/eval_pkg16_0__r1_modal_rl.json` |
-| r2_mott_rl | 25 (0) | 0.44 | 7.73 | 0.830 | 0.445 | 4.992 | `runs/2026-10-28/r2_mott_rl/eval/eval_pkg16_0__r2_mott_rl.json` |
+| r1_modal_rl | 50 (0, 1) | 0.52 | 7.12 | 0.721 | 0.447 | 4.762 | `runs/2026-10-28/r1_modal_rl/eval/eval_pkg16_0__r1_modal_rl.json`, `runs/2026-10-28/r1_modal_rl/eval/eval_pkg16_1__r1_modal_rl.json` |
+| r2_mott_rl | 50 (0, 1) | 0.52 | 8.96 | 0.754 | 0.445 | 4.149 | `runs/2026-10-28/r2_mott_rl/eval/eval_pkg16_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_pkg16_1__r2_mott_rl.json` |
 | r3_loop_rl | 25 (0) | 0.56 | 10.43 | 0.709 | 0.469 | 4.344 | `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_0__r3_loop_rl.json` |
 
 ## decap 종류 비율 (놓인 decap 중, 정확 검사 성공/실패 문제별; 종류 0 = C가 가장 큰 것, `decap_loop/techs.py`)
@@ -851,8 +880,11 @@
 | ip 10 | r2_mott_distill | 성공 | 46 | 8.0 | 0.98 | 0.00 | 0.02 |
 | ip 10 | r2_mott_distill | 실패 | 4 | 43.2 | 0.17 | 0.01 | 0.82 |
 | ip 10 | r2_mott_rl | 성공 | 50 | 8.5 | 0.97 | 0.00 | 0.03 |
+| ip 10 | r2_mott_rl@last | 성공 | 50 | 8.5 | 0.97 | 0.00 | 0.03 |
 | ip 10 | r2_mott_s1_rl | 성공 | 50 | 8.4 | 0.99 | 0.01 | 0.00 |
+| ip 10 | r2_mott_s1_rl@last | 성공 | 50 | 8.4 | 1.00 | 0.00 | 0.00 |
 | ip 10 | r2_mott_s2_rl | 성공 | 50 | 8.5 | 0.99 | 0.00 | 0.01 |
+| ip 10 | r2_mott_s2_rl@last | 성공 | 50 | 8.4 | 1.00 | 0.00 | 0.00 |
 | ip 10 | r2a_rl | 성공 | 50 | 8.7 | 0.97 | 0.00 | 0.03 |
 | ip 10 | r2a_s1_rl | 성공 | 50 | 8.4 | 1.00 | 0.00 | 0.00 |
 | ip 10 | r2a_s2_rl | 성공 | 49 | 8.4 | 1.00 | 0.00 | 0.00 |
@@ -960,10 +992,14 @@
 | pcb 10 | r2_mott_rl@last | 실패 | 4 | 8.5 | 0.15 | 0.21 | 0.65 |
 | pcb 10 | r2_mott_s1_rl | 성공 | 39 | 7.2 | 0.07 | 0.17 | 0.76 |
 | pcb 10 | r2_mott_s1_rl | 실패 | 11 | 8.3 | 0.13 | 0.19 | 0.68 |
+| pcb 10 | r2_mott_s1_rl@best | 성공 | 39 | 7.2 | 0.07 | 0.17 | 0.76 |
+| pcb 10 | r2_mott_s1_rl@best | 실패 | 11 | 8.3 | 0.13 | 0.19 | 0.68 |
 | pcb 10 | r2_mott_s1_rl@last | 성공 | 46 | 7.0 | 0.09 | 0.19 | 0.73 |
 | pcb 10 | r2_mott_s1_rl@last | 실패 | 4 | 9.0 | 0.14 | 0.08 | 0.78 |
 | pcb 10 | r2_mott_s2_rl | 성공 | 42 | 6.6 | 0.06 | 0.21 | 0.72 |
 | pcb 10 | r2_mott_s2_rl | 실패 | 8 | 8.2 | 0.12 | 0.17 | 0.71 |
+| pcb 10 | r2_mott_s2_rl@best | 성공 | 42 | 6.6 | 0.06 | 0.21 | 0.72 |
+| pcb 10 | r2_mott_s2_rl@best | 실패 | 8 | 8.2 | 0.12 | 0.17 | 0.71 |
 | pcb 10 | r2_mott_s2_rl@last | 성공 | 48 | 7.2 | 0.10 | 0.19 | 0.72 |
 | pcb 10 | r2_mott_s2_rl@last | 실패 | 2 | 7.5 | 0.20 | 0.20 | 0.60 |
 | pcb 10 | r2a_rl | 성공 | 48 | 6.9 | 0.09 | 0.17 | 0.74 |
@@ -1087,12 +1123,20 @@
 | pkg 10 | r2_mott_distill | 실패 | 15 | 25.7 | 0.46 | 0.02 | 0.52 |
 | pkg 10 | r2_mott_rl | 성공 | 36 | 6.2 | 0.14 | 0.17 | 0.70 |
 | pkg 10 | r2_mott_rl | 실패 | 14 | 12.1 | 0.51 | 0.11 | 0.38 |
-| pkg 10 | r2_mott_rl@last | 성공 | 15 | 6.7 | 0.15 | 0.16 | 0.69 |
-| pkg 10 | r2_mott_rl@last | 실패 | 10 | 14.4 | 0.58 | 0.09 | 0.33 |
+| pkg 10 | r2_mott_rl@last | 성공 | 36 | 6.2 | 0.14 | 0.17 | 0.70 |
+| pkg 10 | r2_mott_rl@last | 실패 | 14 | 12.1 | 0.51 | 0.11 | 0.38 |
 | pkg 10 | r2_mott_s1_rl | 성공 | 42 | 6.3 | 0.19 | 0.16 | 0.65 |
 | pkg 10 | r2_mott_s1_rl | 실패 | 8 | 18.4 | 0.34 | 0.03 | 0.63 |
+| pkg 10 | r2_mott_s1_rl@best | 성공 | 42 | 6.3 | 0.19 | 0.16 | 0.65 |
+| pkg 10 | r2_mott_s1_rl@best | 실패 | 8 | 18.4 | 0.34 | 0.03 | 0.63 |
+| pkg 10 | r2_mott_s1_rl@last | 성공 | 43 | 6.3 | 0.15 | 0.21 | 0.64 |
+| pkg 10 | r2_mott_s1_rl@last | 실패 | 7 | 16.4 | 0.71 | 0.05 | 0.23 |
 | pkg 10 | r2_mott_s2_rl | 성공 | 31 | 6.6 | 0.13 | 0.17 | 0.70 |
 | pkg 10 | r2_mott_s2_rl | 실패 | 19 | 11.6 | 0.36 | 0.12 | 0.51 |
+| pkg 10 | r2_mott_s2_rl@best | 성공 | 31 | 6.6 | 0.13 | 0.17 | 0.70 |
+| pkg 10 | r2_mott_s2_rl@best | 실패 | 19 | 11.6 | 0.36 | 0.12 | 0.51 |
+| pkg 10 | r2_mott_s2_rl@last | 성공 | 37 | 6.3 | 0.18 | 0.14 | 0.68 |
+| pkg 10 | r2_mott_s2_rl@last | 실패 | 13 | 12.0 | 0.52 | 0.11 | 0.37 |
 | pkg 10 | r2a_rl | 성공 | 42 | 6.3 | 0.17 | 0.17 | 0.66 |
 | pkg 10 | r2a_rl | 실패 | 8 | 15.2 | 0.66 | 0.07 | 0.27 |
 | pkg 10 | r2a_s1_rl | 성공 | 42 | 6.5 | 0.19 | 0.17 | 0.64 |
@@ -1127,10 +1171,10 @@
 | pkg 16 | r0_coord_distill | 실패 | 5 | 37.4 | 0.21 | 0.06 | 0.73 |
 | pkg 16 | r0_coord_rl | 성공 | 32 | 8.7 | 0.35 | 0.22 | 0.44 |
 | pkg 16 | r0_coord_rl | 실패 | 18 | 14.0 | 0.56 | 0.13 | 0.32 |
-| pkg 16 | r1_modal_rl | 성공 | 11 | 7.1 | 0.13 | 0.24 | 0.63 |
-| pkg 16 | r1_modal_rl | 실패 | 14 | 14.1 | 0.56 | 0.14 | 0.31 |
-| pkg 16 | r2_mott_rl | 성공 | 11 | 7.7 | 0.22 | 0.14 | 0.64 |
-| pkg 16 | r2_mott_rl | 실패 | 14 | 14.7 | 0.42 | 0.09 | 0.50 |
+| pkg 16 | r1_modal_rl | 성공 | 26 | 7.1 | 0.17 | 0.23 | 0.60 |
+| pkg 16 | r1_modal_rl | 실패 | 24 | 13.6 | 0.56 | 0.14 | 0.30 |
+| pkg 16 | r2_mott_rl | 성공 | 26 | 9.0 | 0.26 | 0.12 | 0.62 |
+| pkg 16 | r2_mott_rl | 실패 | 24 | 12.2 | 0.34 | 0.09 | 0.57 |
 | pkg 16 | r3_loop_rl | 성공 | 14 | 10.4 | 0.30 | 0.12 | 0.58 |
 | pkg 16 | r3_loop_rl | 실패 | 11 | 13.5 | 0.59 | 0.09 | 0.32 |
 
@@ -1386,12 +1430,28 @@
 
 best.pt = RL 중 val 3번 (판마다 16문제, score = 평균(개수비 + 2·fail))에서 가장 좋은 것 — 모든 표가 쓰는 체크포인트. 진단용, 보고 숫자 아님.
 
-| 판 | run | 문제 수 | 성공률 차 (last − best) [95% CI] | 개수 비 last/best (둘 다 성공) [95% CI] |
-|---|---|---|---|---|
-| pcb 10 | r2_mott_rl | 50 | +0.04 [+0.00, +0.10] | 1.003 [1.000, 1.008] |
-| pkg 10 | r2_mott_rl | 25 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
-| pcb 10 | r2_mott_s1_rl | 50 | +0.14 [+0.02, +0.26] | 0.958 [0.892, 1.031] |
-| pcb 10 | r2_mott_s2_rl | 50 | +0.12 [+0.04, +0.22] | 1.061 [1.001, 1.122] |
+| 판 | run | 기준 (best.pt 기록) | 문제 수 | 성공률 차 (last − best) [95% CI] | 개수 비 last/best (둘 다 성공) [95% CI] |
+|---|---|---|---|---|---|
+| ip 10 | r2_mott_rl | r2_mott_rl | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
+| pcb 10 | r2_mott_rl | r2_mott_rl | 50 | +0.04 [+0.00, +0.10] | 1.003 [1.000, 1.008] |
+| pkg 10 | r2_mott_rl | r2_mott_rl | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
+| ip 10 | r2_mott_s1_rl | r2_mott_s1_rl | 50 | +0.00 [+0.00, +0.00] | 0.999 [0.996, 1.002] |
+| pcb 10 | r2_mott_s1_rl | r2_mott_s1_rl@best | 50 | +0.14 [+0.02, +0.26] | 0.958 [0.892, 1.031] |
+| pkg 10 | r2_mott_s1_rl | r2_mott_s1_rl@best | 50 | +0.02 [-0.12, +0.16] | 1.027 [0.980, 1.081] |
+| ip 10 | r2_mott_s2_rl | r2_mott_s2_rl | 50 | +0.00 [+0.00, +0.00] | 0.992 [0.982, 0.999] |
+| pcb 10 | r2_mott_s2_rl | r2_mott_s2_rl@best | 50 | +0.12 [+0.04, +0.22] | 1.061 [1.001, 1.122] |
+| pkg 10 | r2_mott_s2_rl | r2_mott_s2_rl@best | 50 | +0.12 [-0.08, +0.32] | 1.015 [0.945, 1.094] |
+
+같은 best.pt를 지금 평가 코드로 다시 평가 (`<run>@best`) vs 보고된 기록: 성공 여부가 다른 문제 수 (평가 재현성; day 1 기록은 25문제를 한 번에 rollout, 이후는 `--inst_chunk 5` — 배치 크기에 따른 부동소수 차이로 동점 근처 argmax가 바뀔 수 있음):
+
+| 판 | run | 성공 여부가 다른 문제 | 성공률 차 (다시 − 기록) |
+|---|---|---|---|
+| pcb 10 | r2_mott_s1_rl | 0 / 50 | +0.00 |
+| pkg 10 | r2_mott_s1_rl | 0 / 50 | +0.00 |
+| pcb 10 | r2_mott_s2_rl | 0 / 50 | +0.00 |
+| pkg 10 | r2_mott_s2_rl | 0 / 50 | +0.00 |
+
+r2_mott_rl (seed 0)은 best.pt = last.pt (같은 가중치, iter 300)인데 기록은 day 1 (한 번에 rollout), last는 `--inst_chunk 5`라 위 표의 seed 0 행이 곧 배치 크기에 따른 평가 차이다 (pcb 3/50 문제 해가 다름). day 1 run (seed 0 사다리)과 나중 run의 차이 ±0.04~0.06은 이 잡음 안일 수 있다.
 
 ## 진단: 학습 격자 (RL log.txt, 25 iter마다 기록)
 
@@ -1423,6 +1483,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2_rl | 182 / 378 | 0.8 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r2_s1_rl | 169 / 359 | 0.6 | 1.00 | – | 0.84 | 9.8 | 0.82 |
 | lo_pcb_r2_s2_rl | 161 / 366 | 0.6 | 1.00 | – | 0.94 | 7.8 | 0.82 |
+| lo_pcb_r3_rl | 21 / – | 0.0 | – | – | – | 10.0 | – |
 | lo_pkg_r0_rl | 213 / 371 | 2.5 | 0.98 | 2.7 | 0.94 | – | 0.78 |
 | lo_pkg_r0_s1_rl | 212 / 351 | 1.2 | 0.98 | 5.4 | 0.96 | – | 0.84 |
 | lo_pkg_r0_s2_rl | 223 / 361 | 1.5 | 0.96 | 4.2 | 0.90 | – | 0.78 |
@@ -1498,6 +1559,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pcb_r2_s1_rl | mott / mott | rl | 359 | 1.26 | val_pkg10_0: 1.00/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2_s2_distill | mott / mott | distill | 1747 | 0.76 | val_pkg10_0: 1.07/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2_s2_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2_s2_rl | mott / mott | rl | 366 | 1.27 | val_pkg10_0: 0.94/0.50, val_ip10_0: 0.60/0.25 | `runs/2026-10-29/lo_pcb_r2_s2_rl/metrics.json` |
+| runs/2026-10-29/lo_pcb_r3_distill | mott / loop | distill | 1673 | 0.76 | val_pkg10_0: 0.98/0.75, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pcb_r3_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_r0_distill | coord / grid | distill | 2361 | 0.76 | val_pcb10_0: 1.78/0.38, val_ip10_0: 0.81/0.25 | `runs/2026-10-29/lo_pkg_r0_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_r0_rl | coord / grid | rl | 371 | 1.26 | val_pcb10_0: 1.01/0.62, val_ip10_0: 0.67/0.31 | `runs/2026-10-29/lo_pkg_r0_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_r0_s1_distill | coord / grid | distill | 2297 | 0.76 | val_pcb10_0: 2.30/0.50, val_ip10_0: 0.80/0.31 | `runs/2026-10-29/lo_pkg_r0_s1_distill/metrics.json` |

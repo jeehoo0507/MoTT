@@ -573,16 +573,35 @@ def learn_vs_rule_table(recs):
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
-    lasts = sorted({r["method"] for r in recs if r["method"].endswith("@last")})
+    names = {r["method"] for r in recs}
+    lasts = sorted(m for m in names if m.endswith("@last"))
     rows = []
     for m in lasts:
+        # best.pt re-evaluated with the same eval code as last.pt (`<run>@best`) when it exists, else the reported record
+        pb, pr = paired(recs, m[:-5] + "@best"), paired(recs, m[:-5])
+        for key in sorted(set(pb) | set(pr)):
+            ref, src = (m[:-5] + "@best", pb) if m in pb.get(key, {}) else (m[:-5], pr)
+            if m in src.get(key, {}):
+                rows.append(f"| {key[0]} {key[1]} | {m[:-5]} | {ref} | " + ci_cells(*src[key][m]) + " |")
+    same = []
+    for m in sorted(n for n in names if n.endswith("@best")):
         pr = paired(recs, m[:-5])
-        rows += [f"| {key[0]} {key[1]} | {m[:-5]} | " + ci_cells(*pr[key][m]) + " |" for key in sorted(pr) if m in pr[key]]
+        for key in sorted(pr):
+            if m in pr[key]:
+                om, orf = pr[key][m][0], pr[key][m][1]
+                same.append(f"| {key[0]} {key[1]} | {m[:-5]} | {int((om != orf).sum())} / {len(om)} | {om.mean() - orf.mean():+.2f} |")
     if not rows:
         return []
     return ["## 진단: 같은 run의 last.pt vs best.pt (`<run>@last`, 짝지은 bootstrap 95% CI, 2000회, seed 0)", "",
             "best.pt = RL 중 val 3번 (판마다 16문제, score = 평균(개수비 + 2·fail))에서 가장 좋은 것 — 모든 표가 쓰는 체크포인트. 진단용, 보고 숫자 아님.", "",
-            "| 판 | run | 문제 수 | 성공률 차 (last − best) [95% CI] | 개수 비 last/best (둘 다 성공) [95% CI] |", "|---|---|---|---|---|"] + rows + [""]
+            "| 판 | run | 기준 (best.pt 기록) | 문제 수 | 성공률 차 (last − best) [95% CI] | 개수 비 last/best (둘 다 성공) [95% CI] |",
+            "|---|---|---|---|---|---|"] + rows + [""] + ([
+            "같은 best.pt를 지금 평가 코드로 다시 평가 (`<run>@best`) vs 보고된 기록: 성공 여부가 다른 문제 수 (평가 재현성; "
+            "day 1 기록은 25문제를 한 번에 rollout, 이후는 `--inst_chunk 5` — 배치 크기에 따른 부동소수 차이로 동점 근처 argmax가 바뀔 수 있음):", "",
+            "| 판 | run | 성공 여부가 다른 문제 | 성공률 차 (다시 − 기록) |", "|---|---|---|---|"] + same + [
+            "", "r2_mott_rl (seed 0)은 best.pt = last.pt (같은 가중치, iter 300)인데 기록은 day 1 (한 번에 rollout), last는 `--inst_chunk 5`라 "
+            "위 표의 seed 0 행이 곧 배치 크기에 따른 평가 차이다 (pcb 3/50 문제 해가 다름). day 1 run (seed 0 사다리)과 나중 run의 차이 ±0.04~0.06은 이 잡음 안일 수 있다.", ""]
+            if same else [])
 
 
 def grid_diag_table(recs):
