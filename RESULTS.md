@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 09:45 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 10:04 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -1267,6 +1267,7 @@
 | eval_pkg16_0 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.44 | 36.73 | 1.415 | 2.217 | 0.80 | 0.56 | 162.212 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type1.json` |
 | eval_pkg16_0 | 2 (47 pF, 8 pH, 0.1 Ω) | 0.08 | 120.50 | 7.333 | 13.667 | 0.80 | 0.56 | 113.645 | `runs/analysis/gp_one_type/eval_pkg16_0__greedy+prune@type2.json` |
 | eval_pkg16_1 | 0 (1000 pF, 40 pH, 0.03 Ω) | 0.64 | 38.12 | 2.893 | 5.216 | 0.84 | 0.60 | 233.803 | `runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type0.json` |
+| eval_pkg16_1 | 1 (220 pF, 15 pH, 0.05 Ω) | 0.36 | 29.67 | 1.755 | 1.802 | 0.84 | 0.60 | 130.266 | `runs/analysis/gp_one_type/eval_pkg16_1__greedy+prune@type1.json` |
 
 ## 종류 인식 greedy: 판 종류마다 맞는 decap 종류 (`scripts/analyze_gp_one_type.py`, `scripts/make_type_aware.py`)
 
@@ -1515,7 +1516,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | bm_manoharan_rlonly_l20_rl | 213 / 504 | 1.2 | 0.96 | 1.4 | 0.00 | 5.1 | 0.88 |
 | bm_manoharan_rlonly_rl | 0 / – | 0.0 | – | 0.0 | – | 1.2 | – |
 | bp_park_rl | 44 / 199 | 6.0 | 0.72 | 3.0 | 0.46 | 11.8 | 0.16 |
-| bp_park_rlonly_rl | 4 / – | 8.0 | – | 1.0 | – | 7.5 | – |
+| bp_park_rlonly_rl | 20 / – | 8.0 | – | 1.0 | – | 9.0 | – |
 | lo_ip_r0_rl | 187 / 300 | – | 0.56 | 6.8 | 1.00 | 9.9 | 0.76 |
 | lo_ip_r0_s1_rl | 163 / 289 | – | 0.98 | 5.7 | 0.96 | 10.2 | 0.70 |
 | lo_ip_r0_s2_rl | 186 / 306 | – | 0.40 | 4.0 | 1.00 | 10.2 | 0.86 |

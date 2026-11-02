@@ -355,9 +355,13 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("r3_loop_rl", "r2_mott_rl", "루프 트랜스포머 (MoTT 블록 1개를 가중치 공유로 R회 반복)", "기본 트랜스포머 (블록 6개)"),
     # 11/02 diagnosis H2: rl reward exact-checks every distinct grid-feasible sample; same distilled init, rl 1.25 h
     ("r2c_rl", "r2_mott_rl", "2단 + 보상 정확 검사를 모든 샘플에 (`--certify 2`, 같은 distill에서 RL만)", "최선 샘플만 검사"),
+    # r2_mott_rl's own record is from day 1 (no --inst_chunk); @last = the same weights (best.pt == last.pt, max diff 0)
+    # re-evaluated with --inst_chunk 5 like r2c/r2v, so the pair is free of eval-batching noise (PROGRESS 11/02 round 5)
+    ("r2c_rl", "r2_mott_rl@last", "2단 + `--certify 2` (같은 평가 설정 짝)", "최선 샘플만 검사, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
     ("lo_pcb_r2c_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--certify 2` (같은 distill에서 RL만)", "최선 샘플만 검사"),
     # 11/02 diagnosis H1: best.pt chosen on 3 val files per kind (48 problems) instead of 1 (16); same distilled init
     ("r2v_rl", "r2_mott_rl", "2단 + best.pt 선택 val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
+    ("r2v_rl", "r2_mott_rl@last", "2단 + val 종류당 48문제 (같은 평가 설정 짝)", "val 종류당 16문제, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
     ("lo_pcb_r2v_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + val 종류당 48문제 (같은 distill에서 RL만)", "val 종류당 16문제"),
 ]
 

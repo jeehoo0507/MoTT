@@ -1,6 +1,14 @@
-STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 두 라운드 연속 거부됨 (11/02 04:xx, 06:10). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. (라운드 4: DevFormer와 그 AM-PG 기준선 설정은 공개 코드로 확인함 → `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`; Park TMTT 원문·Manoharan 원문은 아직 미확인.) 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
+STUCK: 원 논문 설정 확인 (QUEUE 11/01 15:10 할 일 4·23:45) — 무인 라운드에서 WebSearch·alphaXiv가 세 라운드 거부됨 (11/02 04:xx, 06:10, 10:05 alphaXiv get_paper_content). 사람: Park 2022 (arXiv 2203.15722)·Manoharan TSIPI 2026 원문 PDF를 `research_notes/`에 넣거나 허용 목록에 alphaXiv 추가. (라운드 4: DevFormer와 그 AM-PG 기준선 설정은 공개 코드로 확인함 → `research_notes/선행 기준선 설정 확인 (DevFormer 공개 코드).md`; Park TMTT 원문·Manoharan 원문은 아직 미확인.) 그동안 재구현 차이는 저장소 자료 기준 + RL만 재학습으로 진행.
 
-# PROGRESS (갱신 2026-11-02 08:05 UTC, 재개 라운드 4)
+# PROGRESS (갱신 2026-11-02 10:20 UTC, 재개 라운드 5)
+
+## 재개 라운드 5 (2026-11-02 10:02~ UTC)
+- 상태: GPU `bp_park_rlonly` RL it 150 (fail 0.16~0.26, λ 22.8, 붕괴 없음, 끝 ~11:00), CPU 줄 `e0plus16 eval_pkg16_1 type2` (rss 23 GB), side_slot `ls10 eval_pcb10_1` (09:41~), pod 30 GiB / 60, oom_kill 0. 큐 다음 항목 r2c·lo_pcb_r2c·r2v·lo_pcb_r2v의 init·after 경로 모두 있음.
+- E0+ 16칸 pkg16_1 종류 1 끝: 성공 0.36, 개수 29.67, 14827 s (RESULTS 종류별 g+p 표에 자동 반영).
+- 원 논문 확인: alphaXiv `get_paper_content` (arXiv 2203.15722) 다시 시도 → 권한 거부 (세 번째). STUCK 줄 유지, 재시도하지 않음.
+- **r2c·r2v 짝 기준 점검 (결과 나오기 전):** ABLATIONS의 기준 `r2_mott_rl` 기록은 day 1 평가 (`--inst_chunk` 없음)이고 r2c·r2v는 드라이버의 `--inst_chunk 5`로 평가됨 → 배치 크기 잡음 (같은 가중치에서 pcb 3/50 다름, 라운드 1)이 짝 차이에 섞임. `r2_mott_rl` seed 0의 best.pt와 last.pt는 **가중치가 같음** (torch로 확인: iter 300 둘 다, max diff 0.0; 파일 sha만 다름) → `runs/analysis/ckpt_last/eval/*__r2_mott_rl@last.json` (inst_chunk 5)이 같은 가중치·같은 평가 설정 기록. `collect_results.py` ABLATIONS에 `r2c_rl vs r2_mott_rl@last`, `r2v_rl vs r2_mott_rl@last` 행 추가 (기존 행 유지). lo_pcb_r2_rl은 이미 inst_chunk 5라 그대로.
+  - 결정 (판정 규칙 보강, 결과 보기 전): 같은 종류 학습 쪽 "이김"은 **두 기준 기록 (day 1 `r2_mott_rl`, 같은 설정 `@last`) 모두에서** 라운드 2의 CI 조건을 만족할 때만. 둘이 갈리면 "평가 잡음 범위 — 판정 보류"로 적고 seed 1·2로 확장하지 않음. 이유: 더 엄격한 쪽이 보수적이고, 기존 규칙의 기준선을 바꾸지 않음.
+
 
 ## 재개 라운드 4 (2026-11-02 07:43~ UTC)
 - 상태: GPU `bm_manoharan_rlonly_l20` RL it 150+ (붕괴 없음, fail 0.16~0.52, 끝 ~08:58), CPU 줄 `e0plus16 eval_pkg16_1 type1` (05:50~), pod 16 GiB / 60, oom_kill 0.
