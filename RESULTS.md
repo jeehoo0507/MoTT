@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 17:38 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-02 17:57 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -12,7 +12,7 @@
 |---|---|---|---|---|---|---|
 | greedy+prune | 0.40 / 1.00 / 2.03 [50] | 0.56 / 1.00 / 9.22 [50] | 0.90 / 1.00 / 0.34 [50] | 0.92 / 1.00 / 0.32 [50] | 0.90 / 1.00 / 0.75 [50] | 0.82 / 1.00 / 0.92 [50] |
 | gp_type_aware | 1.00 / 0.74 / 1.00 [50] | 1.00 / 0.28 / 1.00 [25] | 0.66 / 4.83 / 1.00 [50] | 0.46 / 5.11 / 1.00 [50] | 0.82 / 1.59 / 1.00 [50] | 0.80 / 1.89 / 1.00 [50] |
-| local_search | 0.40 / 0.75 / 1.04 [50] | – | 0.78 / 0.75 / 0.24 [50] | – | 0.48 / 0.80 / 0.50 [25] | – |
+| local_search | 0.40 / 0.75 / 1.04 [50] | – | 0.78 / 0.75 / 0.24 [50] | – | 0.42 / 0.80 / 0.56 [50] | – |
 | bm_manoharan_rl | 0.00 / – / – [50] | – | 0.00 / – / – [50] | – | 0.00 / – / – [50] | – |
 | bm_manoharan_rlonly_l20_rl | 0.96 / 1.23 / 1.73 [50] | – | 0.00 / – / – [50] | – | 0.88 / 6.59 / 4.63 [50] | – |
 | bp_park_rl | 0.72 / 0.97 / 1.38 [50] | – | 0.46 / 4.86 / 1.13 [50] | – | 0.16 / 3.39 / 3.04 [50] | – |
@@ -234,7 +234,7 @@
 | pcb 16 | r2_mott_rl | 50 | +0.44 [+0.26, +0.60] | 0.237 [0.171, 0.321] |
 | pcb 16 | r3_loop_rl | 50 | +0.40 [+0.22, +0.56] | 0.262 [0.172, 0.374] |
 | pkg 10 | greedy+prune | 50 | +0.08 [-0.04, +0.20] | 0.745 [0.661, 0.834] |
-| pkg 10 | local_search | 25 | -0.36 [-0.56, -0.16] | 0.498 [0.388, 0.614] |
+| pkg 10 | local_search | 50 | -0.40 [-0.56, -0.24] | 0.561 [0.467, 0.656] |
 | pkg 10 | bm_manoharan_rl | 50 | -0.82 [-0.92, -0.70] | – [–, –] |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 50 | +0.06 [-0.04, +0.16] | 4.627 [3.915, 5.532] |
 | pkg 10 | bp_park_rl | 50 | -0.66 [-0.78, -0.52] | 3.040 [1.252, 6.016] |
@@ -462,7 +462,7 @@
 | pcb 16 | r2_mott_rl | 50 | -0.02 [-0.12, +0.08] | 0.855 [0.763, 0.936] |
 | pcb 16 | r3_loop_rl | 50 | -0.06 [-0.20, +0.06] | 0.909 [0.797, 1.013] |
 | pkg 10 | gp_type_aware | 50 | -0.08 [-0.20, +0.04] | 1.586 [1.372, 1.836] |
-| pkg 10 | local_search | 25 | -0.44 [-0.64, -0.24] | 0.803 [0.693, 0.906] |
+| pkg 10 | local_search | 50 | -0.48 [-0.62, -0.34] | 0.797 [0.722, 0.867] |
 | pkg 10 | bm_manoharan_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.02 [-0.10, +0.06] | 6.589 [5.871, 7.396] |
 | pkg 10 | bp_park_rl | 50 | -0.74 [-0.84, -0.62] | 3.392 [2.206, 4.938] |
@@ -861,7 +861,7 @@
 |---|---|---|---|---|---|---|---|
 | greedy+prune | 50 (0, 1) | 0.90 | 8.07 | 1.000 | 0.745 | 3.786 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__greedy+prune.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__greedy+prune.json` |
 | gp_type_aware | 50 (0, 1) | 0.82 | 12.44 | 1.586 | 1.000 | 9.172 | `runs/2026-10-29/baselines_e0plus/eval/eval_pkg10_0__gp_type_aware.json`, `runs/2026-10-29/baselines_e0plus/eval/eval_pkg10_1__gp_type_aware.json` |
-| local_search | 25 (0) | 0.48 | 5.75 | 0.803 | 0.498 | 14.462 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__local_search.json` |
+| local_search | 50 (0, 1) | 0.42 | 6.10 | 0.797 | 0.561 | 16.007 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__local_search.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__local_search.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.296 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.88 | 49.86 | 6.589 | 4.627 | 3.566 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bp_park_rl | 50 (0, 1) | 0.16 | 26.38 | 3.392 | 3.040 | 5.519 | `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_1__bp_park_rl.json` |
@@ -1273,8 +1273,8 @@
 | pkg 10 | lo_pkg_r2_s1_rl | 실패 | 22 | 11.0 | 0.19 | 0.14 | 0.67 |
 | pkg 10 | lo_pkg_r2_s2_rl | 성공 | 25 | 6.3 | 0.14 | 0.16 | 0.70 |
 | pkg 10 | lo_pkg_r2_s2_rl | 실패 | 25 | 10.9 | 0.27 | 0.22 | 0.51 |
-| pkg 10 | local_search | 성공 | 12 | 5.8 | 0.14 | 0.17 | 0.68 |
-| pkg 10 | local_search | 실패 | 13 | 10.1 | 0.06 | 0.18 | 0.76 |
+| pkg 10 | local_search | 성공 | 21 | 6.1 | 0.16 | 0.16 | 0.69 |
+| pkg 10 | local_search | 실패 | 29 | 12.7 | 0.09 | 0.13 | 0.78 |
 | pkg 10 | modal_rule | 성공 | 44 | 6.5 | 0.16 | 0.15 | 0.70 |
 | pkg 10 | modal_rule | 실패 | 6 | 19.0 | 0.75 | 0.10 | 0.15 |
 | pkg 10 | r0_coord_distill | 성공 | 45 | 12.3 | 0.33 | 0.16 | 0.51 |
@@ -1384,6 +1384,7 @@
 | eval_ip16_0 | 2 (5 pF, 1 pH, 0.2 Ω) | 0.04 | 143.00 | 23.833 | 47.667 | 0.64 | 1.00 | 117.974 | `runs/analysis/gp_one_type/eval_ip16_0__greedy+prune@type2.json` |
 | eval_ip16_1 | 0 (100 pF, 5 pH, 0.05 Ω) | 1.00 | 15.56 | 0.315 | – | 0.48 | – | 2.981 | `runs/analysis/gp_one_type/eval_ip16_1__greedy+prune@type0.json` |
 | eval_ip16_1 | 1 (20 pF, 2 pH, 0.1 Ω) | 0.52 | 99.23 | 2.486 | – | 0.48 | – | 89.609 | `runs/analysis/gp_one_type/eval_ip16_1__greedy+prune@type1.json` |
+| eval_ip16_1 | 2 (5 pF, 1 pH, 0.2 Ω) | 0.04 | 95.00 | 23.750 | – | 0.48 | – | 115.976 | `runs/analysis/gp_one_type/eval_ip16_1__greedy+prune@type2.json` |
 | eval_pcb10_0 | 0 (10000 pF, 100 pH, 0.02 Ω) | 0.04 | 32.00 | 4.571 | 4.571 | 1.00 | 0.84 | 9.110 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type0.json` |
 | eval_pcb10_0 | 1 (1000 pF, 30 pH, 0.05 Ω) | 0.72 | 48.39 | 5.002 | 6.485 | 1.00 | 0.84 | 9.077 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type1.json` |
 | eval_pcb10_0 | 2 (100 pF, 10 pH, 0.1 Ω) | 0.00 | – | – | – | 1.00 | 0.84 | 6.620 | `runs/analysis/gp_one_type/eval_pcb10_0__greedy+prune@type2.json` |
@@ -1414,7 +1415,7 @@
 | 판 | 문제 수 | 종류 0만: 성공률 | 종류 1만: 성공률 | 종류 2만: 성공률 | 종류 인식 greedy가 고른 종류 비율 (성공 문제, 0/1/2) |
 |---|---|---|---|---|---|
 | ip 10 | 50 | 1.00 | 0.18 | 0.00 | 1.00 / 0.00 / 0.00 |
-| ip 16 | 25 | 1.00 | 0.72 | 0.04 | 1.00 / 0.00 / 0.00 |
+| ip 16 | 50 | 1.00 | 0.62 | 0.04 | 1.00 / 0.00 / 0.00 |
 | pcb 10 | 50 | 0.02 | 0.64 | 0.04 | 0.00 / 0.94 / 0.06 |
 | pcb 16 | 50 | 0.04 | 0.34 | 0.16 | 0.00 / 0.74 / 0.26 |
 | pkg 10 | 50 | 0.74 | 0.48 | 0.04 | 0.41 / 0.54 / 0.05 |
@@ -1721,7 +1722,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2_rl | 182 / 378 | 0.8 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r2_s1_rl | 169 / 359 | 0.6 | 1.00 | – | 0.84 | 9.8 | 0.82 |
 | lo_pcb_r2_s2_rl | 161 / 366 | 0.6 | 1.00 | – | 0.94 | 7.8 | 0.82 |
-| lo_pcb_r2a_rl | 77 / – | 1.5 | – | – | – | 9.0 | – |
+| lo_pcb_r2a_rl | 125 / – | 1.0 | – | – | – | 9.4 | – |
 | lo_pcb_r2c_rl | 87 / 112 | 4.0 | 1.00 | – | 0.62 | 57.3 | 0.84 |
 | lo_pcb_r2v_rl | 166 / 361 | 1.0 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r3_rl | 153 / 361 | 0.1 | 1.00 | – | 0.90 | 8.4 | 0.86 |
