@@ -402,6 +402,9 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("r2h_rl", "r2_mott_rl", "2단 + 어려운 문제 가중 RL (`--hard_weight 2`, 같은 distill에서 RL만)", "가중 없음"),
     ("r2h_rl", "r2_mott_rl@last", "2단 + `--hard_weight 2` (같은 평가 설정 짝)", "가중 없음, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
     ("lo_pcb_r2h_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--hard_weight 2` (같은 distill에서 RL만)", "가중 없음"),
+    # 11/03 round 32 (PROPOSALS T5): no change, rl only again from the same distill with seed 1 -> rl training noise
+    ("r2s1_rl", "r2_mott_rl", "재현 잡음: 2단 같은 distill에서 RL만 seed 1 (수정 없음)", "RL seed 0"),
+    ("lo_pcb_r2s1_rl", "lo_pcb_r2_rl", "재현 잡음: pcb 빼고 학습 2단 같은 distill에서 RL만 seed 1 (수정 없음)", "RL seed 0"),
 ]
 
 
@@ -691,7 +694,9 @@ def design_rationale(recs):
               "pkg는 학습한 두 종류 사이 (decap 라이브러리·맨판 위반이 pcb와 ip 사이, `scripts/type_distance.py`)라 내삽에 가깝다.", "",
               "3. 주장하지 않는 것 (미리 적은 기준 불충족): 루프 > 기본 (\"루프 트랜스포머 vs 기본\" 표), MoTT 개선 시도 `--certify 2`·val 48문제·best-of-8 샘플링·"
               "보상 성공 5% 여유 `--feas_margin` (r2m·lo_pcb_r2m: 성공률 CI 하한이 0 위인 판정 갈래 없음, 개수는 늘어남)·"
-              "작업 격자 상한 완화 `--grid_growth 1.0` (r2g·lo_pcb_r2g: 격자 상한에 닿은 step은 줄었지만 성공률 CI 하한이 0 위인 갈래 없음) "
+              "작업 격자 상한 완화 `--grid_growth 1.0` (r2g·lo_pcb_r2g: 격자 상한에 닿은 step은 줄었지만 성공률 CI 하한이 0 위인 갈래 없음)·"
+              "규칙으로 보강한 선생님 RL만 (r2t·lo_pcb_r2t)·증류+RL 전체 (r2tf·lo_pcb_r2tf) (둘 다 성공률 CI 하한이 0 위인 갈래 없음, "
+              "뺀 pcb run의 pkg는 내려감)·규칙 해에서 출발해 정책이 다듬기 (평가만: r2는 규칙 배치를 거의 안 바꾸고, 0단은 pkg를 해침) "
               "(위 ABLATIONS·\"추론 샘플링\" 표), 주파수 궁합 편향 (`--fc_bias`)이 처음 보는 pcb·ip로의 범용화를 돕는다는 것 "
               "(`lo_<t>_r2a_rl` vs `lo_<t>_r2_rl`, seed 0, ABLATIONS), 학습이 처음 보는 종류에서 `modal_rule`을 이긴다는 것 (\"학습 vs 규칙\" 표에서 판마다 확인).", ""]
     return lines
@@ -865,6 +870,56 @@ def rulestart_table(recs):
     return lines
 
 
+def count_gap_table():
+    """PROGRESS 11/03 round 32 diagnosis: decaps per kind per method under the same repair
+    (scripts/diag_count_gap.py), per ladder rung and seed without repair (scripts/diag_kind_mix.py), and how many
+    decaps of a certified solution are still removable on the exact check (scripts/diag_prune_headroom.py)."""
+    lines = []
+    f = "runs/analysis/diag_count_gap.json"
+    if os.path.exists(f):
+        d = json.load(open(f))
+        lines += ["## 진단: 같은 고치기에서 개수 차이는 어느 종류에서 오나 (`scripts/diag_count_gap.py`, 네 방법 모두 "
+                  "정확 검사 성공한 문제, seed 0; 종류 0 = C가 가장 큰 것)", "",
+                  "| 판 | 방법 | 문제 수 | 평균 개수 | 종류 0 / 1 / 2 평균 개수 | 개수 비 vs r0_coord_rl+rep4 [95% CI] | "
+                  "규칙 배치와 Jaccard |", "|---|---|---|---|---|---|---|"]
+        for tech, row in d.items():
+            for m, v in row.items():
+                if not isinstance(v, dict):
+                    continue
+                ratio = v.get("ratio_vs_r0")
+                rs = f"{ratio[0]:.3f} [{ratio[1]:.3f}, {ratio[2]:.3f}]" if ratio else "–"
+                jac = f"{v['jaccard_vs_rule']:.3f}" if "jaccard_vs_rule" in v else "–"
+                lines.append(f"| {tech} 10 | {m} | {row['n_all_ok']} | {v['mean_count']:.2f} | "
+                             f"{' / '.join(f'{x:.2f}' for x in v['mean_per_kind'])} | {rs} | {jac} |")
+        lines.append("")
+    f = "runs/analysis/diag_kind_mix.json"
+    if os.path.exists(f):
+        d = json.load(open(f))
+        lines += ["## 진단: 사다리 단·seed별 종류 사용 (고치기 없음, 같은 seed의 네 단 모두 성공한 문제; "
+                  "`scripts/diag_kind_mix.py`) — 평균 개수 (종류 0 / 1 / 2), 성공률은 50문제 전체", "",
+                  "| 판 | seed | 문제 수 | r0_coord | r1_modal | r2_mott | r3_loop | modal_rule | 성공률 r0 / r1 / r2 / r3 / 규칙 |",
+                  "|---|---|---|---|---|---|---|---|---|"]
+        for key, row in d.items():
+            tech, s = key.rsplit("_s", 1)
+            cells = [f"{row[r]['mean_count']:.2f} ({' / '.join(f'{x:.2f}' for x in row[r]['per_kind'])})"
+                     for r in ("r0", "r1", "r2", "r3", "rule")]
+            sc = " / ".join(f"{row['success'][r]:.2f}" for r in ("r0", "r1", "r2", "r3", "rule"))
+            lines.append(f"| {tech} 10 | {s} | {row['n_all_ok']} | " + " | ".join(cells) + f" | {sc} |")
+        lines.append("")
+    fs = sorted(glob.glob("runs/analysis/prune_headroom_*.json"))
+    if fs:
+        lines += ["## 진단: 성공한 해에서 정확 검사를 지키며 더 뺄 수 있는 decap (`scripts/diag_prune_headroom.py`, "
+                  "하나씩 빼 보고 통과하면 뺌, seed 0 기록)", "",
+                  "| 방법 | 판 | 성공 문제 | 평균 개수 | 뺄 수 있는 평균 개수 | 뺄 것이 있는 문제 비율 |", "|---|---|---|---|---|---|"]
+        for f in fs:
+            m = os.path.basename(f)[len("prune_headroom_"):-5]
+            for s, v in json.load(open(f)).items():
+                lines.append(f"| {m} | {s} | {v['n_solved']} | {v['mean_count']:.2f} | {v['mean_removable']:.2f} | "
+                             f"{v['frac_with_removable']:.2f} |")
+        lines.append("")
+    return lines
+
+
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
@@ -1000,6 +1055,7 @@ def main():
     lines += sampling_table(recs)
     lines += repair_table(recs)
     lines += rulestart_table(recs)
+    lines += count_gap_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
     lines += train_table()

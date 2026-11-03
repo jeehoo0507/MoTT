@@ -338,6 +338,18 @@
    "seed": 0,
    "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
    "after": "runs/analysis/smoke_hard_weight.ok"
+  },
+  {
+   "name": "r2s1",
+   "arm": "--model mott",
+   "seed": 1,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt"
+  },
+  {
+   "name": "lo_pcb_r2s1",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"
   }
  ],
  "cpu": [
@@ -1603,6 +1615,22 @@
     "runs/rulestart10/eval/eval_pkg10_1__modal_rule>r0_coord_rl.json"
    ],
    "log": "agent/logs/rulestart10.log"
+  },
+  {
+   "name": "ls10 prune-headroom r2_mott_rl",
+   "cmd": ".venv/bin/python scripts/diag_prune_headroom.py runs/2026-10-28/r2_mott_rl/eval r2_mott_rl 'eval_p*10_*'",
+   "done": [
+    "runs/analysis/prune_headroom_r2_mott_rl.json"
+   ],
+   "log": "agent/logs/prune_headroom.log"
+  },
+  {
+   "name": "ls10 prune-headroom r0_coord_rl",
+   "cmd": ".venv/bin/python scripts/diag_prune_headroom.py runs/2026-10-28/r0_coord_rl/eval r0_coord_rl 'eval_p*10_*'",
+   "done": [
+    "runs/analysis/prune_headroom_r0_coord_rl.json"
+   ],
+   "log": "agent/logs/prune_headroom.log"
   },
   {
    "name": "ls10 repair r2_mott_s1_rl",

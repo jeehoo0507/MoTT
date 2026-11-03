@@ -1,4 +1,17 @@
-# PROGRESS (갱신 2026-11-03 10:35 UTC, 재개 라운드 31)
+# PROGRESS (갱신 2026-11-03 12:15 UTC, 재개 라운드 32)
+
+## 재개 라운드 32 (2026-11-03 11:04~ UTC)
+- 상태 (12:15): GPU **`r2h`** RL 11:50~ (T3, 끝 ~13:05) → lo_pcb_r2h (~14:20) → **r2s1 → lo_pcb_r2s1 (T5, 새로 넣음, ~16:50)**. CPU: 드라이버 줄 repair16 (r0_coord_rl, 그다음 g+p) + 학습 정확 검사 2 + 4번째 칸 `ls10 repair r2_mott_s1_rl` (12:05~) = 4. pod ~19 GiB / 60, oom_kill 1 (라운드 27 그것). side_slot6 → **side_slot7** (`r2h lo_pcb_r2h r2s1 lo_pcb_r2s1`, 부모만 바꿈 — 돌던 repair 작업은 그대로). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **T1' 최종 판정 (PROPOSALS T1 규칙 그대로): "효과 없음", pkg는 해로운 방향 → 확장 안 함.** lo_pcb_r2tf 끝 (RL 360 iter / 1.26 h, best it 100, replaced 189, OOM 0), 10칸 평가 11:50~12:04: 뺀 pcb 0.84, ip 1.00, pkg 0.60. (i) 뺀 pcb lo_pcb_r2tf − lo_pcb_r2_rl **−0.08 [−0.20, +0.04]**, 같은 종류 갈래는 라운드 31에서 불충족 → 불충족. (ii) 뺀 run의 pkg **−0.22 [−0.36, −0.08]** (< −0.05). T1 (RL만)과 같은 그림: 규칙으로 보강한 선생님은 증류부터 써도 성공률을 올리지 않고 pkg를 내림.
+- **T4 S2 (`modal_rule>r0_coord_rl`, 10:48~11:09):** 0단은 규칙 배치를 바꿈 (pcb 37/50, pkg 50/50 — r2는 0/50·2/50). vs modal_rule: pcb 성공 −0.06 [−0.14, +0.00]·개수 0.969 [0.936, 1.005] → "효과 없음"; pkg 성공 **−0.18 [−0.30, −0.06]** (상한 < 0) → **"해로움"** (개수 0.923). ip는 RESULTS 표. → S1 (r2 효과 없음)·S2 (0단 효과 없음/해로움) → 미리 적은 대로 "규칙+정책 다듬기"는 평가 파이프라인으로 효과 없음.
+- **진단 (새, 기존 기록만 + 정확 검사 재계산):**
+  - `scripts/diag_count_gap.py` (같은 고치기, 네 방법 모두 성공한 문제): r2/r0 개수비 pcb 1.071 [1.000, 1.147], pkg **1.088 [1.037, 1.140]**, 차이는 종류 2 (C 가장 작음): pcb 4.93 vs 4.37, pkg 4.43 vs 3.50. r2 종류 비율은 규칙과 비슷하지만 배치는 다름 (규칙과 Jaccard 0.19·0.17, 같은 해 0개).
+  - `scripts/diag_kind_mix.py` (고치기 없음, seed 0·1·2): pkg에서 r2가 r0보다 종류 2를 많이 씀 **seed 3개 모두** (4.27/3.90/4.54 vs 3.32/3.33/3.58), 1단 r1은 아님 (2.91/3.67/3.04; r1 개수는 pcb에서 seed 3개 모두 네 단 중 가장 적음, pkg는 seed 0·2만) → 1수 효과 특징 때문이라는 가설은 기각, 모드 토큰 경로의 성질. 그리고 r2의 pcb 성공률이 seed 3개 모두 네 단 중 가장 낮음 (0.88/0.78/0.84; r3 0.84/0.94/0.96, r0 0.96/0.94/0.98) — QUEUE 약점 2가 seed 3개에서 재현, 고치기를 주면 사라짐 (라운드 29: r2+rep4 pcb 1.00).
+  - `scripts/diag_prune_headroom.py` (성공 해에서 정확 검사를 지키며 하나씩 빼기): r2 pcb·pkg 80문제 뺄 수 있는 decap 평균 0.00~0.18 (문제 2/80), r0 0.00~0.21 (1/86) → 두 정책의 해는 이미 1-최소. **T4에서 r2가 규칙 해에서 빼지 않는 것은 자기 해에서는 손해가 아님** → "만족 상태에서 출발하는 RL (빼기 학습)"은 pcb·pkg 여지가 없어 후보에서 버림.
+  - RESULTS에 절 3개 (`count_gap_table`).
+- **T5 (PROPOSALS 11/03 T5, 결과 전에 고정): RL 재현 잡음 `r2s1`·`lo_pcb_r2s1`** — 수정 없이 같은 distill에서 RL만 `--seed 1`. 근거: RL만 다시 돈 수정 6개 + T1'이 모두 "효과 없음" (점추정 −0.08~+0.06)인데, 학습 잡음 (평가 CI에 안 들어감)을 잰 적이 없음. 사용법 (N1) 재현 잡음 d* 안의 점추정은 ABLATIONS에 "잡음 안" 표기, (N2) 재현 쌍 CI가 0을 빼면 이후 seed 0 단독 "이김"은 RL seed 1 재현을 먼저 요구. `scripts/queue_replicate.py`, RESULTS ABLATIONS 행 2개.
+  - 결정: 근거 있는 "수정" 후보가 지금 없음 (빼기 학습 여지 0, 종류 2 과다는 한 줄 수정 없음, 규칙성 제약 금지) → GPU를 비우지 않되 (QUEUE 11/03) 수정 대신 판정 설계를 점검하는 진단 run을 먼저 (보수적: 코드 변경 없음, seed만).
+- 다음: r2h (~13:05)·lo_pcb_r2h (~14:20) → T3 판정; repair16 r0·g+p → 관찰 4 판정 (지금 r2+rep4 pkg16 0.88/1.00, rule+rep4 0.92/0.88); r2s1·lo_pcb_r2s1 (~16:50) → T5; 4번째 칸 seed 1·2 고치기. 16:50 뒤 GPU 후보는 T3·T5 결과로 정함. 새 시도 시작은 11/6 12:00 UTC까지. DAILY 다음은 11/04 00:xx UTC.
 
 ## 재개 라운드 31 (2026-11-03 09:16~ UTC)
 - 상태 (10:35): GPU **`lo_pcb_r2tf`** 증류 09:47~ (RL 끝 ~11:50) → r2h → lo_pcb_r2h (~14:20). CPU: 드라이버 줄 pool20 끝 (ip20 09:39) → **repair16** (pkg16 × r2_mott_rl·modal_rule·r0_coord_rl·g+p, 09:42~) + 학습 정확 검사 2 + side_slot6 (다음 filler T4 `ls10 rulestart …`) = 4. pod 15 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
