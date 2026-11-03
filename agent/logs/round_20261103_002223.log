@@ -25,3 +25,7 @@ error: Please commit or stash them.
 - GPU: r2g (작업 격자 상한 1.0, 끝 ~02:15) → lo_pcb_r2g (~03:35). 둘 다 라운드 14에 미리 적은 규칙으로 판정합니다.
 - CPU: 20칸 평가 판의 3번째 파일이 21:36부터 ~3.5시간째 돌고 있습니다. CPU 100%로 일하고 있어 멈춘 것으로 보지는 않습니다.
 - 메모리는 60 GiB 중 15 GiB, OOM 0회입니다. QUEUE에 새 지시는 없고, 막힌 것(STUCK)도 없습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   5ac4f70..a8a9a04  main -> main
