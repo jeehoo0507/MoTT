@@ -13,3 +13,7 @@ error: Please commit or stash them.
 - **고치기 확장:** 적어 둔 규칙대로 seed 1·2 고치기(10칸, 공정성을 위해 0단 포함)를 4번째 CPU 칸에 넣었습니다. 16칸 pkg 고치기는 프로세스 메모리가 ~22 GB(g+p는 ~34 GB)라서, 한 번에 하나만 도는 드라이버 줄에 넣었습니다 (20칸 판 생성 바로 뒤).
 
 **지금 돌고 있는 것:** GPU에서 r2tf 학습, CPU 드라이버 줄에서 20칸 ip 판 생성, 4번째 칸에서 g+p 고치기. pod 메모리는 8.7 GiB / 60이고, 새 OOM은 없습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   97e4ff1..5d750e5  main -> main
