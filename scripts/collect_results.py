@@ -405,6 +405,9 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     # 11/03 round 32 (PROPOSALS T5): no change, rl only again from the same distill with seed 1 -> rl training noise
     ("r2s1_rl", "r2_mott_rl", "재현 잡음: 2단 같은 distill에서 RL만 seed 1 (수정 없음)", "RL seed 0"),
     ("lo_pcb_r2s1_rl", "lo_pcb_r2_rl", "재현 잡음: pcb 빼고 학습 2단 같은 distill에서 RL만 seed 1 (수정 없음)", "RL seed 0"),
+    # 11/03 round 33 (PROPOSALS T5b): the same with rl seed 2
+    ("r2s2_rl", "r2_mott_rl", "재현 잡음: 2단 같은 distill에서 RL만 seed 2 (수정 없음)", "RL seed 0"),
+    ("lo_pcb_r2s2_rl", "lo_pcb_r2_rl", "재현 잡음: pcb 빼고 학습 2단 같은 distill에서 RL만 seed 2 (수정 없음)", "RL seed 0"),
 ]
 
 
