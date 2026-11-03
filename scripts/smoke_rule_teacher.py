@@ -26,7 +26,7 @@ def main():
     src = open(os.path.join(ROOT, "scripts/run_rung.py")).read()
     assert 'tdir = "" if "--teacher_dir" in a.arm.split()' in src
     env = dict(os.environ, CERTIFY_WORKERS="1", OMP_NUM_THREADS="1")
-    out = "/tmp/smoke_rule_teacher"     # outside runs/: not a result
+    out = f"/tmp/smoke_rule_teacher_{os.getpid()}"     # outside runs/: not a result; fresh (no resume.pt)
     cmd = [sys.executable, "train.py", "--stage", "rl", "--model", "mott", "--teacher_dir", TD,
            "--device", "cpu", "--init", "runs/2026-10-28/r2_mott_distill/best.pt", "--pool", "runs/pool_v1",
            "--pool_glob", "train_pcb10_1.pkl", "--val_pools", "val_pcb10_0", "--B", "2", "--M", "4", "--chunk", "2",
@@ -37,9 +37,9 @@ def main():
     if r.returncode != 0:
         raise SystemExit(f"smoke failed rc={r.returncode}")
     txt = open(os.path.join(out, "log.txt")).read()
-    m = re.search(r"teacher train_pcb10_1: teacher file, ok ([0-9.]+)", txt)
+    m = re.search(r"teacher train_pcb10_1\.npz: teacher file, ok ([0-9.]+)", txt)
     rows = open(os.path.join(out, "log.csv")).read().strip().splitlines()
-    if not m or float(m.group(1)) != 1.0 or len(rows) < 3:
+    if not m or float(m.group(1)) != 1.0 or not rows[-1].startswith("2,"):   # log.csv: logged iterations only
         print(txt[-2000:])
         raise SystemExit("smoke: teacher line or iteration 2 missing")
     os.makedirs(os.path.dirname(OK), exist_ok=True)
