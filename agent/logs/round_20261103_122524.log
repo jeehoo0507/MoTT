@@ -16,3 +16,7 @@ error: Please commit or stash them.
 - 13:28에 side_slot이 이미 돌리던 고치기 평가를 제가 한 번 더 띄워, 약 13분 동안 CPU 프로세스가 5개였습니다. 제 것만 껐고, 다음부터는 띄우기 전에 `ps.py`로 먼저 확인하도록 메모를 고쳤습니다.
 
 새 수정 시도는 11/6 12:00 UTC까지만 시작할 수 있습니다. 지금까지 RL만 다시 돈 수정 6개와 T1'(규칙 보강 선생님으로 증류부터 다시 학습)은 하나도 이기지 못했습니다. 그래서 다음 후보는 T5 결과와 D1(증류 단계 약점)을 근거로 정할 예정입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3174dbe..0ed1fab  main -> main
