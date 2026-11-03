@@ -52,12 +52,11 @@ def main():
     torch.set_num_threads(1)
     from train import make_policy
     from decap_loop.bank import load_bank
-    res = {}
-    for name, ck_path in CKPTS.items():
-        ck = torch.load(os.path.join(ROOT, ck_path), map_location="cpu", weights_only=False)
-        a = ck["args"]
-        res[name] = {}
-        for tech in ("pkg", "pcb"):
+    res = {name: {} for name in CKPTS}
+    for tech in ("pkg", "pcb"):              # pkg (the rule) for every checkpoint first
+        for name, ck_path in CKPTS.items():
+            ck = torch.load(os.path.join(ROOT, ck_path), map_location="cpu", weights_only=False)
+            a = ck["args"]
             acc = {k: [] for k in ("feas_p", "ok_p", "cnt_p", "feas_n", "ok_n", "cnt_n")}
             for p in sorted(glob.glob(os.path.join(ROOT, f"runs/pool_v1/eval_{tech}10_*.pkl"))):
                 b, _ = load_bank(p)
