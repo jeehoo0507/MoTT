@@ -1,3 +1,8 @@
 [13:06:14] START eval10 r2h_rl | mem 4.5 GiB / 60.0 GiB, oom_kill 1
 [13:19:09] END eval10 r2h_rl rc=0 | mem 13.4 GiB / 60.0 GiB, oom_kill 1
 [13:20:38] START ls10 repair r0_coord_s1_rl | mem 12.5 GiB / 60.0 GiB, oom_kill 1
+[14:04:11] END ls10 repair r0_coord_s1_rl rc=0 | mem 14.8 GiB / 60.0 GiB, oom_kill 1
+[14:21:47] START eval10 lo_pcb_r2h_rl | mem 13.1 GiB / 60.0 GiB, oom_kill 1
+[14:37:09] END eval10 lo_pcb_r2h_rl rc=0 | mem 15.2 GiB / 60.0 GiB, oom_kill 1
+[14:38:40] START ls10 repair r0_coord_s2_rl | mem 16.0 GiB / 60.0 GiB, oom_kill 1
+[15:09:08] END ls10 repair r0_coord_s2_rl rc=0 | mem 15.4 GiB / 60.0 GiB, oom_kill 1

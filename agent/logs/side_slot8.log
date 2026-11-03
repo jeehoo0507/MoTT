@@ -1,0 +1,2 @@
+[15:56:41] START eval10 r2s1_rl | mem 4.6 GiB / 60.0 GiB, oom_kill 1
+[16:07:55] END eval10 r2s1_rl rc=0 | mem 4.7 GiB / 60.0 GiB, oom_kill 1
