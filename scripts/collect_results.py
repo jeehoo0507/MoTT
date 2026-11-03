@@ -968,6 +968,78 @@ def distill_seed_table():
             "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"] + rows + verdict + [""]
 
 
+def _log_rows(path, key):
+    """{name: {tech: dict}} from the '<name> <tech> {...}' lines a diag script prints (for runs stopped before json)."""
+    import ast
+    out = {}
+    if os.path.exists(path):
+        for line in open(path):
+            p = line.split(" ", 2)
+            if len(p) == 3 and p[1] in key and p[2].startswith("{"):
+                out.setdefault(p[0], {})[p[1]] = ast.literal_eval(p[2])
+    return out
+
+
+def distill_mech_table():
+    """PROPOSALS 11/03 D3-D6 (round 35): mechanism of the D1 gap, rules written before each run."""
+    L = ["## 진단 D3~D6: D1 (MoTT 증류 pkg 약함)의 기제 (PROPOSALS 11/03 D3~D6, 규칙은 실행 전에 적음)", ""]
+    d3 = _log_rows("runs/analysis/diag_imit_heldout.log", ("pkg", "pcb", "ip"))
+    if d3:
+        L += ["D3 학습 밖 모방 (eval 10칸 판, 선생님 규칙과 같은 해: LS 통과면 LS, 아니면 g+p): nll 학습 안 → 학습 밖 (격차)", "",
+              "| 체크포인트 | pkg | pcb | ip |", "|---|---|---|---|"]
+        for n, r in d3.items():
+            L.append(f"| {n} | " + " | ".join(f"{r[t]['train_nll']:.2f} → {r[t]['nll']:.2f} ({r[t]['gap']:+.2f})" if t in r else "–"
+                                         for t in ("pkg", "pcb", "ip")) + " |")
+        s0 = [d3.get(n, {}).get("pkg") for n in ("r0_coord", "r1_modal", "r2_mott")]
+        if all(s0):
+            ok0 = s0[2]["nll"] > max(s0[0]["nll"], s0[1]["nll"]) and s0[2]["gap"] > max(s0[0]["gap"], s0[1]["gap"])
+            L += ["", "D3 규칙 (seed 3개 모두 r2의 학습 밖 pkg nll과 격차가 r0·r1보다 큼): "
+                  + ("seed 0 성립, seed 1·2 필요" if ok0 else "**seed 0에서 불성립 → 기각** (규제 후보 버림; seed 1·2는 멈춤)")]
+        L.append("")
+    if os.path.exists("runs/analysis/diag_prune_feasible.json"):
+        d4 = json.load(open("runs/analysis/diag_prune_feasible.json"))
+    else:
+        d4 = _log_rows("runs/analysis/diag_prune_feasible.log", ("pkg", "pcb"))
+    if d4:
+        L += ["D4 기본 격자 greedy 한 번 (cutting-plane 없음, eval 10칸 50문제): 정확 통과 빼기 허용 / 금지, 개수 허용 / 금지, cost = 금지 − 허용", "",
+              "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"]
+        for tech in ("pkg", "pcb"):
+            for s, sfx in enumerate(("", "_s1", "_s2")):
+                cells = []
+                for m in ("r0_coord", "r1_modal", "r2_mott"):
+                    r = d4.get(m + sfx, {}).get(tech)
+                    cells.append(f"{r['ok_p']:.2f} / {r['ok_n']:.2f}, {r['cnt_p']:.1f} / {r['cnt_n']:.1f}, cost {r['cost']:+.2f}" if r else "–")
+                L.append(f"| {tech} 10 | {s} | " + " | ".join(cells) + " |")
+        hp = []
+        for sfx in ("", "_s1", "_s2"):
+            c = [d4.get(m + sfx, {}).get("pkg") for m in ("r0_coord", "r1_modal", "r2_mott")]
+            if all(c):
+                hp.append(c[2]["cost"] > 0.04 and c[2]["cost"] > max(c[0]["cost"], c[1]["cost"]))
+        if hp:
+            L += ["", f"D4 규칙 (seed 3개 모두 r2 pkg cost > 0.04 이고 r0·r1보다 큼): seed별 {hp} → "
+                  + ("성립" if len(hp) == 3 and all(hp) else "**기각**" if not all(hp) else "대기")]
+        L.append("")
+    if os.path.exists("runs/analysis/diag_rm_prior.json"):
+        d5 = json.load(open("runs/analysis/diag_rm_prior.json"))
+        L += ["D5 r2 증류의 제거 채널 prior를 추론 때만 0 (진단용 수술): drop (D4 → 수술), 정확 통과 차", "",
+              "| seed | drop | 정확 통과 (D4 허용 → 수술) |", "|---|---|---|"]
+        for s, n in enumerate(("r2_mott", "r2_mott_s1", "r2_mott_s2")):
+            r = d5[n]
+            L.append(f"| {s} | {r['drop_d4']:.2f} → {r['drop_s']:.2f} | {r['ok_p']:.2f} → {r['ok_s']:.2f} ({r['d_ok']:+.2f}) |")
+        L += ["", "D5 규칙 (seed 3개 모두 drop ≤ D4의 절반 이고 정확 통과 ≥ +0.04): "
+              + ("성립" if d5["H_rmprior"] else "**기각** (빼기는 prior가 아니라 학습된 잔차에서 옴)"), ""]
+    if os.path.exists("runs/analysis/diag_replay_exact.json"):
+        d6 = json.load(open("runs/analysis/diag_replay_exact.json"))
+        L += ["D6 증류 목표 (기본 격자에서 다시 걸은 선생님 궤적의 끝 배치)의 정확 통과 (학습 풀: pkg 8~12 전부, pcb·ip 10칸)", "",
+              "| 판 | 문제 | 재생 끝 정확 통과 | 저장된 선생님 정확 통과 | 개수 재생 / 선생님 |", "|---|---|---|---|---|"]
+        for t in ("pkg", "pcb", "ip"):
+            r = d6[t]
+            L.append(f"| {t} | {r['n']} | {r['rep_ok']:.2f} | {r['tch_ok']:.2f} | {r['rep_cnt']:.2f} / {r['tch_cnt']:.2f} |")
+        L += ["", "D6 규칙 (pkg 재생 끝 정확 통과 ≤ 0.80이면 증류 단계 cutting-plane 후보): "
+              + ("성립" if d6["C_cp"] else "**기각** (증류 목표는 정확 검사를 통과함)"), ""]
+    return L
+
+
 RL_REPLICATES = [("r2s1_rl", "r2_mott_rl", False), ("r2s2_rl", "r2_mott_rl", False),
                  ("lo_pcb_r2s1_rl", "lo_pcb_r2_rl", True), ("lo_pcb_r2s2_rl", "lo_pcb_r2_rl", True)]
 RL_ONLY_MODS = [(f"{p}{m}_rl", f"{p}r2{'_mott' if not p else ''}_rl") for m in ("r2c", "r2v", "r2m", "r2g", "r2t", "r2h")
@@ -1171,6 +1243,7 @@ def main():
     lines += rulestart_table(recs)
     lines += count_gap_table()
     lines += distill_seed_table()
+    lines += distill_mech_table()
     lines += rl_noise_table(recs)
     lines += repair_ladder_table()
     lines += ckpt_table(recs)
