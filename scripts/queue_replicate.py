@@ -10,6 +10,9 @@ LO_PCB = " --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_
 NEW = [
     {"name": "r2s1", "arm": ARM, "seed": 1, "init": "runs/2026-10-28/r2_mott_distill/best.pt"},
     {"name": "lo_pcb_r2s1", "arm": ARM + LO_PCB, "seed": 1, "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"},
+    # T5b (PROPOSALS 11/03, round 33): second replicate, fallback at the queue end
+    {"name": "r2s2", "arm": ARM, "seed": 2, "init": "runs/2026-10-28/r2_mott_distill/best.pt"},
+    {"name": "lo_pcb_r2s2", "arm": ARM + LO_PCB, "seed": 2, "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"},
 ]
 
 q = json.load(open(P))

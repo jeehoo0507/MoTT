@@ -350,6 +350,18 @@
    "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
    "seed": 1,
    "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"
+  },
+  {
+   "name": "r2s2",
+   "arm": "--model mott",
+   "seed": 2,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt"
+  },
+  {
+   "name": "lo_pcb_r2s2",
+   "arm": "--model mott --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt"
   }
  ],
  "cpu": [
