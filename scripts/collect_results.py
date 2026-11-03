@@ -939,7 +939,7 @@ def count_gap_table():
 def distill_seed_table():
     """PROPOSALS 11/03 D1: 10-cell exact success of the distill-only checkpoints (best.pt of `<rung>[_sK]_distill`)
     per seed, r0_coord / r1_modal / r2_mott; '–' while a seed's eval is missing."""
-    rows = []
+    rows, pkg = [], {}
     for tech in ("pcb", "pkg", "ip"):
         for s in (0, 1, 2):
             cells = []
@@ -950,11 +950,19 @@ def distill_seed_table():
                 if all(os.path.exists(f) for f in fs):
                     ok = np.concatenate([np.asarray(json.load(open(f))["ok"], bool) for f in fs])
                     cells.append(f"{ok.mean():.2f}")
+                    if tech == "pkg":
+                        pkg[(r, s)] = ok.mean()
                 else:
                     cells.append("–")
             rows.append(f"| {tech} 10 | {s} | " + " | ".join(cells) + " |")
+    verdict = []
+    if len(pkg) == 9:   # the D1 rule, as written in PROPOSALS before the seed 1/2 results
+        held = all(pkg[("r2_mott", s)] < min(pkg[("r0_coord", s)], pkg[("r1_modal", s)]) for s in (0, 1, 2))
+        verdict = ["", "D1 규칙 (미리 적음: r2 pkg가 seed 3개 모두 r0·r1 둘 다보다 낮은가): "
+                   + ("**성립** → \"MoTT는 pkg에서 선생님을 덜 따라 한다 (증류 단계)\"; 다음 MoTT 후보의 표적은 증류 단계."
+                      if held else "불성립 → seed 0 차이는 seed 하나로만 적음.")]
     return ["## 진단 D1: 증류만 한 체크포인트의 seed별 정확 검사 성공률 (PROPOSALS 11/03 D1, 10칸 50문제)", "",
-            "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"] + rows + [""]
+            "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"] + rows + verdict + [""]
 
 
 def repair_ladder_table():
