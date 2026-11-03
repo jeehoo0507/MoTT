@@ -1,4 +1,4 @@
-# PROGRESS (갱신 2026-11-03 07:15 UTC, 재개 라운드 29)
+# PROGRESS (갱신 2026-11-03 08:25 UTC, 재개 라운드 29)
 
 ## 재개 라운드 29 (2026-11-03 06:59~ UTC)
 - 상태 (07:05): GPU `lo_pcb_r2t` RL 06:28~ (끝 ~07:45) → r2tf → lo_pcb_r2tf (~11:45). CPU: 드라이버 줄 pool20 pkg20_1 (02:12~, ~4.9 h째; pkg20_0은 4.6 h) + 학습 정확 검사 2 + side_slot5 `ls10 repair r2_mott_rl` (06:43~) = 4. pod 12.0 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
@@ -11,6 +11,9 @@
 - **lo_pcb_r2t 끝** (RL 367 iter / 1.26 h, best it 300, replaced 181, OOM 0; `runs/2026-10-29/lo_pcb_r2t_rl/metrics.json`), 10칸 평가 07:46~07:59: 처음 보는 pcb 0.90 / 개수÷g+p 0.87, ip 1.00, pkg 0.66.
 - **T1 최종 판정 (PROPOSALS 11/03 T1 규칙 그대로): "효과 없음", pkg에서는 해로운 방향 → 확장 안 함.** (i) 같은 종류 갈래 불충족 (라운드 28: pcb −0.04 [−0.16, +0.08], pkg −0.06 [−0.20, +0.08]); 뺀 pcb 갈래 lo_pcb_r2t − lo_pcb_r2_rl **−0.02 [−0.14, +0.10]** → 불충족. (ii) 다른 판 점추정: 같은 종류 pkg −0.06, 뺀 run의 pkg **−0.16 [−0.30, −0.02]** → −0.05 아래. 선생님 범위를 넓혀도 (pkg 0.69 → 0.85) RL만으로는 성공률이 오르지 않고 pkg는 내려감. T1' (r2tf·lo_pcb_r2tf, 증류부터 같은 선생님) 판정은 그대로 남음 (~11:45).
 - side_slot6 (`r2t lo_pcb_r2t r2tf lo_pcb_r2tf r2h lo_pcb_r2h`)로 교체 (side_slot5 부모만 끝냄 — 돌던 repair 작업은 끝나 있었음).
+- **T2 R2 일부 (modal_rule+rep4, 08:00~08:17):** 규칙도 고치기로 오름 (ip 0.94 → 1.00, pkg 0.88 → 0.98, pcb 1.00 그대로). 같은 고치기에서 `r2_mott_rl+rep4` vs `modal_rule+rep4` 성공률 차 ip / pcb / pkg 모두 **+0.00 [+0.00, +0.00]** → R2 문장 "차이 없음"; 개수비 ip **0.689 [0.630, 0.749]** (정책이 31% 적음), pcb 1.014 [0.947, 1.094], pkg 1.011 [0.974, 1.046]. → 고치기를 모두에 주면 성공률은 규칙과 같고, 정책이 이기는 곳은 ip 개수뿐 (QUEUE 11/01 약점 1과 같은 그림). g+p+rep4 (08:17~)·r0_coord_rl+rep4 (R3) 대기.
+- CPU 줄: pool20 pkg20_1 끝 (~08:00), ip20 시작. 그 뒤 repair16 4개 (드라이버 줄) → 20칸 평가.
+- 다음: g+p·0단 고치기 기록 → R2 (g+p)·R3 판정 문장 + seed 1·2 고치기 → RESULTS ABLATIONS/설계 근거에 "고치기" 행. r2tf (RL ~09:45 끝) → lo_pcb_r2tf (~11:45) → T1' 판정. r2h → lo_pcb_r2h (~14:15) → T3 판정. 그 뒤 GPU 후보는 판정 결과와 진단으로 (QUEUE 관찰 4: 16칸 pkg 고치기 결과가 근거가 될 수 있음). 새 시도 시작은 11/6 12:00 UTC까지. DAILY 다음은 11/04 00:xx UTC.
 
 ## 재개 라운드 28 (2026-11-03 05:32~ UTC)
 - 상태: GPU `r2t` RL it 75+ (05:12~, 끝 ~06:30, fail 0.01~0.11, λ 1.25, teach ok 0.69~1.00, gpu peak 14.2 GB, OOM 0; `runs/2026-10-29/r2t_rl/log.txt`) → lo_pcb_r2t → r2tf → lo_pcb_r2tf (~11:45). CPU: 드라이버 줄 pool20 pkg20_1 (02:12~) + 학습 정확 검사 2 + side_slot5 (r2t 평가 대기) = 4. pod 9.7 GiB / 60, oom_kill 1 (라운드 27의 그것, 새것 없음). `ensure_running`: report_watch·resume_agent가 죽어 있어 다시 띄움 (report_watch는 05:34에 결과 22개 push 뒤 "모든 lo_* 끝"으로 스스로 끝남 — 정상). QUEUE 새 지시 없음.
