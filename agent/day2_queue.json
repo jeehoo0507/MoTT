@@ -1773,6 +1773,14 @@
     "runs/2026-10-29/r1_modal_s2_distill/eval/eval_pkg10_1__r1_modal_s2_distill.json"
    ],
    "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 diag-imit distill ckpts",
+   "cmd": ".venv/bin/python scripts/diag_imit.py",
+   "done": [
+    "runs/analysis/diag_imit.json"
+   ],
+   "log": "agent/logs/diag_imit.log"
   }
  ],
  "train_removed": [
