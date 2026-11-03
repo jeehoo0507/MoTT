@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-03 01:05 UTC, 재개 라운드 25)
+# PROGRESS (갱신 2026-11-03 01:50 UTC, 재개 라운드 26)
+
+## 재개 라운드 26 (2026-11-03 01:22~ UTC)
+- 상태: GPU `r2g` RL it 250 (3367 s / 4500, fail 0.05, λ 1.43, grid capped 0~2 per iter, gpu peak 18.6 GB, OOM 0; val best it 200; 끝 ~02:05) → lo_pcb_r2g (~03:25). CPU 줄 `pool20 eval k8` 3번째 파일 21:36~ (~4 h 10 min째, worker CPU 100%·rss 6.0 GB, 로그에 새 줄 없음 — pcb20은 ~22 min/파일; 이 파일은 pkg20 또는 ip20, 다음 라운드에도 안 끝나면 build_pools의 cutting-plane 진행을 따로 봄). side_slot4: `ls10 zs-chip pool` 01:02~01:04, `ls10 zs-chip gp,modal_rule` 01:05~01:07 끝 (rc 0) → 사다리 filler는 r2g RL 남은 시간 < 1 h (FILL_GAP_S)이라 대기, r2g 평가 뒤 시작. pod 12.2 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **chip 기준선 (50문제, `runs/zs_chip/baselines/eval/`):** g+p 성공 0.94 / 개수 4.55, modal_rule **1.00** / 개수 6.16 (개수÷g+p 1.17), 문제당 0.16 / 0.09 s. 판 생성 2파일 70·79 s (cutting-plane 1 round).
+- **r2g 끝** (RL 348 iter / 1.27 h — r2_mott_rl 354와 비슷, 격자 상한에 닿은 step 23 (r2_mott_rl 145), best it 300, λ 1.45, gpu peak 20.2 GB, OOM 0; `runs/2026-10-29/r2g_rl/metrics.json`), 10칸 평가 02:02~02:15. 성공 / 개수÷g+p: RESULTS ABLATIONS. **라운드 14 규칙 (i) 같은 종류 갈래 불충족:** r2g − r2_mott_rl (day 1) ip −0.02 [−0.06, +0.00], pcb **+0.00 [−0.10, +0.10]**, pkg +0.04 [−0.12, +0.22]; `@last` 대비 pcb −0.04 [−0.14, +0.06], pkg +0.04. 개수비 pcb 1.068 [0.980, 1.158]. (ii) 다른 판 점추정 −0.05 아래 없음. → 남은 갈래 lo_pcb_r2g − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0 하나뿐, lo_pcb_r2g RL 02:02~ (끝 ~03:20, 평가 ~03:35).
+- `collect_results.py`에 "보너스: chip zero-shot" 절 추가 (PROPOSALS 11/03 규칙 그대로): 사다리 0~3단·r2a의 seed 0/1/2 성공률 / 개수÷g+p, (a)(b) 단 차이 seed별·0보다 큰 seed 수, (b) 판정 문장 자동 (seed 3개 다 있을 때만), seed 0 짝지은 CI vs g+p·modal_rule·E0+. 지금은 기준선 행만.
 
 ## 재개 라운드 25 (2026-11-03 00:22~ UTC)
 - 상태: GPU `lo_pcb_r2m` RL it 250 (3350 s, fail 0.23, λ 5.54, margin-fail 24, gpu peak 11.4 GB, OOM 0; 끝 ~00:48) → r2g → lo_pcb_r2g (~03:35). CPU 줄 `pool20 eval k8` 3번째 파일 21:36~ (~2 h 50 min째, worker CPU 100%·rss 7.3 GB). side_slot4 대기 (다음: lo_pcb_r2m 평가). pod 13.6 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
