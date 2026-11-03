@@ -17,3 +17,7 @@ error: Please commit or stash them.
 - GPU는 라운드 24 결정을 그대로 따릅니다. r2g가 이기면 seed 1·2를 돌리고, 아니면 진단 근거가 있는 후보가 생길 때까지 비워 둡니다.
 - chip seed 1·2와 종류 인식 greedy 평가는 4번째 CPU 칸에서 학습 평가 사이에 돕니다.
 - 20칸 평가 판 생성의 세 번째 파일이 21:36부터 4시간 넘게 돌고 있습니다. 프로세스는 살아 있고 CPU를 계속 쓰지만, 로그에 아직 새 줄이 없습니다. 다음 라운드에도 끝나지 않았으면 판 생성 진행 상황을 따로 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b339a7e..b8d6af6  main -> main
