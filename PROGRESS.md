@@ -18,7 +18,8 @@
 - **T5 같은 종류 절반 (PROPOSALS T5·T5b 규칙 그대로):** r2s1 − r2_mott_rl pcb +0.04 [−0.06, +0.14], **pkg +0.08 [−0.06, +0.24]**, ip +0.00; 개수비 pcb 1.066, pkg 0.939. CI는 모두 0 포함 → 지금까지 N2 미발동. 잠정 d* = 0.08 (lo_pcb_r2s1·T5b 뒤 다시 정함). 관찰 (판정 아님): 수정 없는 재현이 pkg에서 지금까지의 어느 수정보다 큰 점추정 (+0.08)을 냄 → N1을 적용하면 r2c·r2m·r2g·r2v·r2t·r2h의 같은 종류 점추정 (|·| ≤ 0.08)은 모두 "RL 재현 잡음 안". 뺀 pcb의 해로움 (r2c −0.30, r2h −0.40)은 잡음보다 큼 (lo_pcb_r2s1로 확인).
 - **D1 일부:** seed 1 증류 pkg r2 0.68 / r0 0.74 (pcb 0.82 / 0.88, ip 0.92 / 0.90); r1 s1과 seed 2는 대기 (판정은 셋 다 나온 뒤).
 - **repair16 0단 끝** (`r0_coord_rl+rep4` pkg16 0.80 / 0.80, 15.3 ks, 드라이버 줄): 같은 고치기에서 pkg16 r2 1.00 / 0.88, 규칙 0.92 / 0.88, 0단 0.80 / 0.80; g+p+rep4 (드라이버 줄 다음, 몇 시간) 뒤 관찰 4 판정.
-- 다음: lo_pcb_r2s1 (~17:00 끝, ~17:15 평가) → T5 뺀 pcb 절반; repair16 r0·g+p → 관찰 4 판정; 4번째 칸 0단 s2 고치기. 16:55 뒤 GPU 후보는 T3·T5 결과로 다음 라운드가 PROPOSALS에 먼저 적고 큐에. 새 시도 시작은 11/6 12:00 UTC까지. DAILY 다음은 11/04 00:xx UTC.
+- 상태 (16:15): GPU `lo_pcb_r2s1` RL 15:38~ (끝 ~16:55) → T5b r2s2 → lo_pcb_r2s2. CPU: 드라이버 줄 `repair16 pkg greedy+prune` (16:12~, 무거움) + 학습 정확 검사 2 + 4번째 칸 D1 `r1_modal_s1_distill` (16:12~, bg로 직접, ps로 빈 칸 확인 뒤) = 4. pod ~5 GiB / 60.
+- 다음: lo_pcb_r2s1 (~16:55 끝, ~17:10 평가) → T5 뺀 pcb 절반; repair16 r0·g+p → 관찰 4 판정; 4번째 칸 0단 s2 고치기. 16:55 뒤 GPU 후보는 T3·T5 결과로 다음 라운드가 PROPOSALS에 먼저 적고 큐에. 새 시도 시작은 11/6 12:00 UTC까지. DAILY 다음은 11/04 00:xx UTC.
 
 ## 재개 라운드 32 (2026-11-03 11:04~ UTC)
 - 상태 (12:15): GPU **`r2h`** RL 11:50~ (T3, 끝 ~13:05) → lo_pcb_r2h (~14:20) → **r2s1 → lo_pcb_r2s1 (T5, 새로 넣음, ~16:50)**. CPU: 드라이버 줄 repair16 (r0_coord_rl, 그다음 g+p) + 학습 정확 검사 2 + 4번째 칸 `ls10 repair r2_mott_s1_rl` (12:05~) = 4. pod ~19 GiB / 60, oom_kill 1 (라운드 27 그것). side_slot6 → **side_slot7** (`r2h lo_pcb_r2h r2s1 lo_pcb_r2s1`, 부모만 바꿈 — 돌던 repair 작업은 그대로). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
