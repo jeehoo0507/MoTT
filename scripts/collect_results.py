@@ -795,6 +795,39 @@ def sampling_table(recs):
             "|---|---|---|---|---|---|---|---|"] + rows + [""]
 
 
+def repair_table(recs):
+    """PROPOSALS 11/03 T2: the repair stage (`<method>+repK`, eval_policy.py --repair). (R1/R3) after vs before the
+    repair inside the same record (ok_pre/count_pre: same run, no eval-batch noise); (R2) the policy with repair vs
+    modal_rule / greedy+prune with the same repair, paired on the same problems."""
+    reps = [r for r in recs if "ok_pre" in r]
+    if not reps:
+        return []
+    by = defaultdict(lambda: defaultdict(list))
+    for r in reps:
+        by[(r["tech"], int(r["size"]))][r["method"]].append(r)
+    rows = []
+    for key in sorted(by):
+        for m in sorted(by[key], key=order):
+            rs = sorted(by[key][m], key=lambda r: r["set"])
+            om, orf = (np.concatenate([np.asarray(r[k], bool) for r in rs]) for k in ("ok", "ok_pre"))
+            cm, cr = (np.concatenate([np.asarray(r[k], float) for r in rs]) for k in ("count", "count_pre"))
+            fixed = om & ~orf
+            add = fmt((cm[fixed] - cr[fixed]).mean() if fixed.any() else None)
+            sec = sum(r["sec_repair_total"] for r in rs) / max(1, sum(r["n"] for r in rs))
+            rows.append(f"| {key[0]} {key[1]} | {m} | {orf.mean():.2f} → {om.mean():.2f} | {int(fixed.sum())} | {add} | "
+                        f"{fmt(sec, 2)} | " + ci_cells(om, orf, cm, cr) + " |")
+    lines = ["## 끝에서 고치기 (repair, PROPOSALS 11/03 T2): cutting-plane 뒤 정확 검사 실패 문제만, 실패 주파수를 격자에 더하고 "
+             "같은 방법이 자기 배치에서 이어서 놓음 (최대 K번)", "",
+             "판정 규칙은 결과 전에 PROPOSALS 11/03 T2에 적음. 본 표 (위)의 숫자는 고치기 없는 평가 그대로. "
+             "전후는 같은 기록 안 (`ok_pre`)이라 평가 배치 잡음 없음. CI는 짝지은 bootstrap 95% (2000회, seed 0).", "",
+             "| 판 | 방법 | 성공률 (전 → 후) | 고친 문제 수 | 고친 문제의 개수 변화 (평균) | 고치기 시간 s/문제 | 문제 수 | "
+             "성공률 차 후 − 전 [95% CI] | 개수 비 후/전 (둘 다 성공) [95% CI] |", "|---|---|---|---|---|---|---|---|---|"] + rows + [""]
+    pol = sorted({r["method"] for r in reps if r.get("base_method") not in ("modal_rule", "greedy+prune")})
+    for ref in sorted({r["method"] for r in reps if r.get("base_method") in ("modal_rule", "greedy+prune")}):
+        lines += ci_table(reps, ref=ref, title=f"같은 고치기를 준 `{ref}`", only=set(pol))
+    return lines
+
+
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
@@ -928,6 +961,7 @@ def main():
     lines += learn_vs_rule_table(recs)
     lines += design_rationale(recs)
     lines += sampling_table(recs)
+    lines += repair_table(recs)
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
     lines += train_table()

@@ -170,15 +170,16 @@ def genetic(batch, cfg, pop=64, gens=100, p_mut=None, elite=0.1, pool_max=400, i
 
 
 @torch.no_grad()
-def modal_heuristic(batch, cfg, inst=None, max_steps=None):
+def modal_heuristic(batch, cfg, inst=None, max_steps=None, occ0=None):
     """Physics rule, no learning and no look-ahead over all actions (the classical resonance rule,
     cf. US 6789241): while the target is not met, take the worst violation (f*, probe p*), add the
     decap whose SRF is closest to f* at the cell with the strongest coupling to p* at f*,
         g_i = |Z_ip(f*)| / sqrt(|Z_pp(f*)| |Z_ii(f*)|)
-    (single-mode residue coherence). Then prune like greedy+prune."""
+    (single-mode residue coherence). Then prune like greedy+prune.
+    occ0: start from this placement (11/03 repair stage, scripts/eval_policy.py --repair)."""
     dev = batch.valid.device
     inst = torch.arange(batch.B, device=dev) if inst is None else inst
-    env = Env(batch, inst, cfg, max_steps=max_steps)
+    env = Env(batch, inst, cfg, occ0=occ0, max_steps=max_steps)
     E, n, T = env.E, env.n, env.T
     srf = torch.tensor([1.0 / (2 * np.pi * np.sqrt(esl * c)) for c, esl, _ in cfg.decaps],
                        dtype=torch.float64, device=dev)

@@ -49,3 +49,5 @@ agent/logs/make_rule_teacher_cp.log
 # 11/03 round 27: rule-augmented teacher stores (scripts/make_rule_teacher.py); only summary.json is tracked
 data/teacher_rbest/train_*
 data/teacher_rcp/train_*
+# 11/03 round 28: repair-stage eval jobs (side_slot filler), appended while running
+agent/logs/repair10.log

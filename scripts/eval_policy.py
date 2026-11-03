@@ -40,7 +40,7 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair = args
     import resource
     import numpy as np
     import torch
@@ -50,11 +50,12 @@ def job(args):
     from decap_loop.modal_env import make_env
     from decap_loop.rollout import rollout
     from decap_loop.sim import FEAS_TOL
-    from decap_loop.verify import cutting_plane, grid_worst
+    from decap_loop.verify import certify, cutting_plane, grid_worst
     from train import make_policy
     name = os.path.splitext(os.path.basename(path))[0]
     tech, size = parse_set(name)
-    dst = os.path.join(out, "eval", f"{name}__{method}.json")
+    rec_method = f"{method}+rep{repair}" if repair else method
+    dst = os.path.join(out, "eval", f"{name}__{rec_method}.json")
     if os.path.exists(dst):
         return name, method, "exists", None
     b, _ = load_bank(path)                       # fresh copy of the grid for this method
@@ -69,12 +70,15 @@ def job(args):
             return r
         return run
 
+    cont = None                                   # repair stage: continue the method from a placement
     if method == "greedy+prune":
         fn = lambda bb: greedy(bb, cfg)  # noqa: E731
+        cont = lambda bb, inst, occ0: greedy(bb, cfg, inst=inst, occ0=occ0)  # noqa: E731
     elif method == "greedy":
         fn = lambda bb: greedy(bb, cfg, prune=False)  # noqa: E731
     elif method == "modal_rule":
         fn = lambda bb: modal_heuristic(bb, cfg)  # noqa: E731
+        cont = lambda bb, inst, occ0: modal_heuristic(bb, cfg, inst=inst, occ0=occ0)  # noqa: E731
     elif method == "genetic":                     # 11/02: decap_loop.baselines.genetic, no seed solution
         pop, gens = ga_cfg
         fn = lambda bb: genetic(bb, cfg, pop=pop, gens=gens, seed=0)  # noqa: E731
@@ -116,20 +120,55 @@ def job(args):
             key = (o["count"] + (~o["feasible"]) * 10 ** 6).view(bb.B, S)
             j = key.argmin(1) + torch.arange(bb.B) * S
             return dict(occ=o["occ"][j], feasible=o["feasible"][j])
+
+        if S <= 1:
+            @torch.no_grad()
+            def cont(bb, inst, occ0):
+                step = inst_chunk if inst_chunk > 0 else len(inst)
+                occ = []
+                for i in range(0, len(inst), step):
+                    env = make_env(bb, inst[i:i + step], cfg, a["feat"], occ0=occ0[i:i + step])
+                    occ.append(rollout(pol, env, greedy=True, amp=False)["occ"])
+                return dict(occ=torch.cat(occ))
     t0 = time.time()
     r, info = cutting_plane(timed(fn), b, cfg, max_rounds=rounds)
     ok = info["worst"] <= np.log10(1.01)
     cnt = (r["occ"] >= 0).sum(1).cpu().numpy()
-    rec = dict(set=name, tech=tech, size=size, n=int(b.B), method=method, ok=ok.tolist(), count=cnt.tolist(),
+    extra = {}
+    if repair:
+        # 11/03 repair stage (QUEUE 11/03 obs. 1, PROPOSALS T2): after the cutting-plane, each instance that still
+        # fails the exact check gets its exact-check failure frequencies added to the grid and the SAME method
+        # continues from its own final placement (adds, and prunes once the grid is met); then the exact check
+        # again, up to `repair` times. Instances that already pass are not touched. Same rule for every method.
+        assert cont is not None, f"--repair not supported for {method}"
+        occ, worst = r["occ"].clone(), info["worst"].copy()
+        t1, used = time.time(), 0
+        for _ in range(repair):
+            fail = np.flatnonzero(worst > np.log10(1.01))
+            if not len(fail):
+                break
+            used += 1
+            fi = torch.as_tensor(fail, device=b.valid.device)
+            _, _, add = certify(b, fi, occ[fi], cfg)
+            b.add_freqs(add)
+            occ[fi] = cont(b, fi, occ[fi])["occ"]
+            worst[fail] = certify(b, fi, occ[fi], cfg)[0]
+        extra = dict(ok_pre=ok.tolist(), count_pre=cnt.tolist(), worst_pre=[float(x) for x in info["worst"]],
+                     repair=repair, repair_used=used, sec_repair_total=time.time() - t1, base_method=method)
+        r = dict(occ=occ)
+        info = dict(info, worst=worst)
+        ok = worst <= np.log10(1.01)
+        cnt = (occ >= 0).sum(1).cpu().numpy()
+    rec = dict(set=name, tech=tech, size=size, n=int(b.B), method=rec_method, ok=ok.tolist(), count=cnt.tolist(),
                worst=[float(x) for x in info["worst"]], sec_per_inst=box.get("last", float("nan")) / b.B,
                sec_total=time.time() - t0, rounds=int(info["rounds"]), F_final=int(b.freqs.shape[1]),
                ckpt=spec, samples=samples if spec else None, inst_chunk=inst_chunk if spec else None,
                peak_rss_mb=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
                git=git_hash(), time=time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
-               occ=r["occ"].cpu().numpy().tolist())
+               occ=r["occ"].cpu().numpy().tolist(), **extra)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     json.dump(rec, open(dst, "w"))
-    return name, method, f"ok {ok.mean():.2f} count {cnt[ok].mean() if ok.any() else float('nan'):.2f} {rec['sec_per_inst']:.3f}s/inst rounds {info['rounds']}", rec
+    return name, rec_method, f"ok {ok.mean():.2f} count {cnt[ok].mean() if ok.any() else float('nan'):.2f} {rec['sec_per_inst']:.3f}s/inst rounds {info['rounds']}", rec
 
 
 def main():
@@ -145,6 +184,8 @@ def main():
     ap.add_argument("--workers", type=int, default=14)
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--inst_chunk", type=int, default=0, help="policy greedy rollout: instances per rollout (0 = all)")
+    ap.add_argument("--repair", type=int, default=0, help="after the cutting-plane: up to K repair rounds (method "
+                    "continues from its placement on the grid + its exact-check failures); records '<method>+repK'")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     files = sorted({f for s in a.sets.split(",") for f in glob.glob(os.path.join(a.pool, s + ".pkl"))})
@@ -156,7 +197,7 @@ def main():
         methods.append((n if a.samples <= 1 else f"{n}@{a.samples}", path))
     ls_cfg = tuple(map(int, a.ls.split("x")))
     ga_cfg = tuple(map(int, a.ga.split("x")))
-    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg)
+    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair)
             for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()
