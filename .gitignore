@@ -39,3 +39,6 @@ agent/logs/smoke_ls16.log
 agent/logs/base16_ls.log
 # 11/03 round 25: chip zero-shot filler jobs (scripts/queue_zs_chip.py) append here
 agent/logs/zs_chip.log
+# 11/03 round 27: heavy-job side lane (scripts/side_lane16.py) appends here
+agent/logs/side_lane16.log
+agent/logs/side_lane16_jobs.log
