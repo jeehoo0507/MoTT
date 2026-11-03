@@ -48,6 +48,9 @@ def feat_dim_any(cfg: PDNConfig, mode: str):
 def make_env(batch, inst, cfg, feat_mode, **kw):
     if feat_mode in ("modal", "modal_only"):
         return ModalEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
+    if feat_mode == "mott_pk":   # MoTT + parabolic peak refinement per mode token (decap_loop/peak_env.py)
+        from .peak_env import PkEnv
+        return PkEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
     if feat_mode == "manoharan":
         from baselines_ml.manoharan import ManoharanEnv
         return ManoharanEnv(batch, inst, cfg, **kw)

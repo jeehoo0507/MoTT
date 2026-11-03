@@ -113,6 +113,9 @@ def parse():
                    "frequency-match bias -|log f_k - log SRF_t| / tau_h (tau learned per head) to dec_from_mode")
     p.add_argument("--mode_head", action="store_true", help="mott/loop (day-2 arch c', PROPOSALS 10/29 08:00): add "
                    "a mode-routed add logit sum_k alpha_ik phi(m_k, c_t), zero-init")
+    p.add_argument("--peak_refine", action="store_true", help="mott/loop (PROPOSALS 11/03 D7 -> P1): append to each "
+                   "mode token the parabolic-vertex excess of its peak level over the working grid and its violating "
+                   "flag (--feat mott_pk, decap_loop/peak_env.py)")
     p.add_argument("--lr", type=float, default=1e-4)
     p.add_argument("--imit", type=float, default=1.0, help="weight of imitating the best-known solution (0=off)")
     p.add_argument("--teacher", choices=["gp", "ls"], default="gp", help="(no pool) greedy+prune, or + local search")
@@ -131,6 +134,10 @@ def parse():
 
 
 def make_policy(cfg, a):
+    if a.get("peak_refine"):
+        from decap_loop.peak_env import mott_pk_dims as mott_dims  # noqa: F811 (mode descriptor 4 -> 6)
+    else:
+        from decap_loop.sim import mott_dims
     if a.get("model") == "mott":
         return MoTT(cfg.n_types, K_MODES, mott_dims(cfg.n_types), d=a["d"], layers=a["layers"], heads=a["heads"],
                     fc=a.get("fc_bias", False), mode_head=a.get("mode_head", False))
@@ -211,7 +218,7 @@ def load_teacher(path, batch, dev, log):
 def main():
     args = parse()
     if args.model in ("mott", "loop"):
-        args.feat = "mott"
+        args.feat = "mott_pk" if args.peak_refine else "mott"
     elif args.model == "park_am":
         args.feat = "coord"
     elif args.model == "manoharan":

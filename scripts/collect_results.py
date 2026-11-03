@@ -408,6 +408,13 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     # 11/03 round 33 (PROPOSALS T5b): the same with rl seed 2
     ("r2s2_rl", "r2_mott_rl", "재현 잡음: 2단 같은 distill에서 RL만 seed 2 (수정 없음)", "RL seed 0"),
     ("lo_pcb_r2s2_rl", "lo_pcb_r2_rl", "재현 잡음: pcb 빼고 학습 2단 같은 distill에서 RL만 seed 2 (수정 없음)", "RL seed 0"),
+    # 11/03 round 36 (PROPOSALS P1, D7 H-underres): mode-token parabolic peak refinement input, full distill + rl, seeds 0/1
+    ("r2pk_rl", "r2_mott_rl", "2단 + 모드 토큰 피크 보정 입력 (`--peak_refine`, 증류+RL 전체, seed 0)", "보정 없음"),
+    ("r2pk_s1_rl", "r2_mott_s1_rl", "2단 + `--peak_refine` (seed 1)", "보정 없음"),
+    ("lo_pcb_r2pk_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--peak_refine` (seed 0)", "보정 없음"),
+    ("lo_pcb_r2pk_s1_rl", "lo_pcb_r2_s1_rl", "pcb 빼고 학습 2단 + `--peak_refine` (seed 1)", "보정 없음"),
+    ("r2pk_distill", "r2_mott_distill", "증류만: 2단 + `--peak_refine` (seed 0, D1 표적)", "보정 없음"),
+    ("r2pk_s1_distill", "r2_mott_s1_distill", "증류만: 2단 + `--peak_refine` (seed 1, D1 표적)", "보정 없음"),
 ]
 
 
@@ -1037,6 +1044,30 @@ def distill_mech_table():
             L.append(f"| {t} | {r['n']} | {r['rep_ok']:.2f} | {r['tch_ok']:.2f} | {r['rep_cnt']:.2f} / {r['tch_cnt']:.2f} |")
         L += ["", "D6 규칙 (pkg 재생 끝 정확 통과 ≤ 0.80이면 증류 단계 cutting-plane 후보): "
               + ("성립" if d6["C_cp"] else "**기각** (증류 목표는 정확 검사를 통과함)"), ""]
+    if os.path.exists("runs/analysis/diag_fail_freq.json"):
+        d7 = json.load(open("runs/analysis/diag_fail_freq.json"))
+        L += ["D7 격자 만족·정확 실패 해의 최악 주파수 (기본 격자 greedy 한 번, eval 10칸 50판; 덮임 = 모드 토큰 8개 중 가장 "
+              "가까운 것이 격자 간격 안; 덜 풀림 = 정확 worst − 가장 가까운 격자점의 격자 값, decade)", "",
+              "| 판 | 단 | seed | 격자 만족 | 정확 통과 | 실패 수 | 덮임 | 토큰 거리 중앙값 | 격자 간격 중앙값 | 덜 풀림 중앙값 |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
+        for t in ("pkg", "pcb"):
+            for r in ("r1_modal", "r2_mott"):
+                for s, sfx in ((0, ""), (1, "_s1"), (2, "_s2")):
+                    x = d7.get(f"{r}{sfx}", {}).get(t, {}).get("summary")
+                    if not x:
+                        continue
+                    if x["n_fail"] == 0:
+                        L.append(f"| {t} | {r} | {s} | {x['grid_feasible']:.2f} | {x['exact_pass']:.2f} | 0 | – | – | – | – |")
+                        continue
+                    L.append(f"| {t} | {r} | {s} | {x['grid_feasible']:.2f} | {x['exact_pass']:.2f} | {x['n_fail']} | "
+                             f"{x['covered']:.2f} | {x['d_tok_med']:.3f} | {x['s_med']:.3f} | {x['underres_med']:.2f} |")
+        L += ["", "D7 규칙 (pkg, seed 3개 모두): H-uncov (r2 안 덮임 ≥ 0.5 이고 r1보다 큼) "
+              + ("성립" if d7["H_uncov"] else "**기각**") + "; H-underres (r2 덮임 ≥ 0.5 이고 덜 풀림 중앙값 ≥ 0.02) "
+              + ("**성립** → 후보 P1 `--peak_refine` (PROPOSALS 11/03 P1)" if d7["H_underres"] else "**기각**"), ""]
+        if os.path.exists("runs/analysis/diag_fail_freq_refine.json"):
+            c = json.load(open("runs/analysis/diag_fail_freq_refine.json"))["P1_check"]
+            L += [f"P1 큐 전 점검 (r2 seed 0~2 pkg 덮임 실패 {c['n_covered']}개에서 덮는 토큰의 세 점 포물선 보정 초과량): "
+                  f"> 0.02 비율 {c['frac_gt_002']:.2f}, 중앙값 {c['median']:.3f} (규칙: ≥ 0.20이면 큐)", ""]
     return L
 
 
