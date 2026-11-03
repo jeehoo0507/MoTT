@@ -547,6 +547,63 @@ def leave_out_seed_table(by):
     return lines + [""]
 
 
+ZS_RUNGS = (("r0_coord", "0단 좌표"), ("r1_modal", "1단 modal"), ("r2_mott", "2단 MoTT"), ("r3_loop", "3단 루프"),
+            ("r2a", "최종 후보 r2a (2단 + fc_bias)"))
+
+
+def zs_chip_table(recs):
+    """PROPOSALS 11/03 (fixed before any result): zero-shot to the unseen fourth kind `chip` (AGENT_PROMPT bonus).
+    The ladder runs trained on pcb+pkg+ip at seeds 0-2, no training on chip; 50 problems (eval_chip10_0/1).
+    Verdict rule: (b) 2단 − 0단 success > 0 at all three seeds -> "모달 표현이 chip으로 0단보다 잘 옮겨 감"."""
+    ms = merged(recs).get(("chip", 10), {})
+    if not ms:
+        return []
+
+    def cell(m):
+        r = ms.get(m)
+        return "–" if r is None else f"{r['ok'].mean():.2f} / {fmt(r['rel'], 2)}"
+
+    def rate(m):
+        r = ms.get(m)
+        return None if r is None else r["ok"].mean()
+    lines = ["## 보너스: 학습에 없던 네 번째 종류 `chip` zero-shot (PROPOSALS 11/03, 판정 규칙은 결과 전에 고정)", "",
+             "세 종류 (pcb·pkg·ip) 전체 학습 run을 학습 없이 chip 10×10 eval 50문제 (`runs/pool_zs/eval_chip10_{0,1}`)에 평가. "
+             "칸 = 정확 검사 성공률 / 개수÷g+p (둘 다 성공, 같은 파일끼리).", "",
+             "| 방법 | seed 0 | seed 1 | seed 2 | 성공률 평균 (seed 3개) |", "|---|---|---|---|---|"]
+    for m in ("greedy+prune", TA, "modal_rule"):
+        if m in ms:
+            lines.append(f"| {m} | {cell(m)} | | | |")
+    for r, desc in ZS_RUNGS:
+        v = [rate(seed_run(r, s)) for s in LO_SEEDS]
+        mean = f"{np.mean(v):.2f}" if all(x is not None for x in v) else "–"
+        lines.append(f"| {desc} `{r}` | " + " | ".join(cell(seed_run(r, s)) for s in LO_SEEDS) + f" | {mean} |")
+    lines += ["", "| 비교 | seed 0 / 1 / 2 | 평균 | 0보다 큰 seed 수 |", "|---|---|---|---|"]
+    verdict = None
+    for what, a, b in (("(a) 1단 − 0단", "r1_modal", "r0_coord"), ("(b) 2단 − 0단", "r2_mott", "r0_coord"),
+                       ("3단 − 0단", "r3_loop", "r0_coord"), ("r2a − 0단", "r2a", "r0_coord")):
+        d = [None if x is None or y is None else x - y
+             for x, y in ((rate(seed_run(a, s)), rate(seed_run(b, s))) for s in LO_SEEDS)]
+        have = [x for x in d if x is not None]
+        mean = f"{np.mean(have):+.2f}" if len(have) == len(d) else "–"
+        lines.append(f"| {what} | " + " / ".join("–" if x is None else f"{x:+.2f}" for x in d) +
+                     f" | {mean} | {sum(x > 0 for x in have)}/{len(have)} |")
+        if a == "r2_mott" and len(have) == len(d):
+            verdict = all(x > 0 for x in have)
+    lines += ["", "판정 (미리 적은 규칙: (b) 2단 − 0단이 seed 3개 모두 > 0): " +
+              ("seed 3개가 다 나온 뒤." if verdict is None else
+               "**충족** — 모달 표현이 처음 보는 종류 chip으로 0단보다 잘 옮겨 감 (고찰용, 보너스 — 주장 아님)." if verdict else
+               "**불충족** — \"모달 표현이 chip으로 0단보다 잘 옮겨 감\"이라고 쓰지 않는다."), "",
+              "seed 0 짝지은 bootstrap 95% CI (같은 50문제):", "",
+              "| 방법 | 기준 | 문제 수 | 성공률 차 (방법 − 기준) [95% CI] | 개수 비 방법/기준 (둘 다 성공) [95% CI] |",
+              "|---|---|---|---|---|"]
+    for ref in ("greedy+prune", "modal_rule", TA):
+        pr = paired(recs, ref).get(("chip", 10), {})
+        for r, _ in ZS_RUNGS:
+            if f"{r}_rl" in pr:
+                lines.append(f"| {r}_rl | {ref} | " + ci_cells(*pr[f"{r}_rl"]) + " |")
+    return lines + [""]
+
+
 TOKEN_NOTE = "research_notes/토큰 데이터 분석/결과.md"   # training-free token analysis (token_analysis2.py, run2_10x20.log)
 
 
@@ -850,6 +907,7 @@ def main():
     lines += type_aware_table()
     lines += prior_table(recs)
     lines += leave_out_table(recs)
+    lines += zs_chip_table(recs)
     lines += learn_vs_rule_table(recs)
     lines += design_rationale(recs)
     lines += sampling_table(recs)
