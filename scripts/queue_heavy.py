@@ -7,10 +7,24 @@ base20 g+p entries get "solo": the lane waits until no other eval_policy / build
 starting one (20-cell g+p memory is not measured yet)."""
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Q = os.path.join(ROOT, "agent/day2_queue.json")
 q = json.load(open(Q))
+
+if sys.argv[1:] == ["--back"]:
+    # 11/03 round 27, QUEUE 11/03 11:40 KST (GPU stays busy): the 2 exact-check slots belong to training again, so
+    # the heavy entries go back to the driver's CPU lane, right after the last 20-cell entry (pool20 -> eval20 -> here)
+    back = q.pop("heavy", [])
+    for e in back:
+        e.pop("solo", None)
+    names = [e["name"] for e in q["cpu"]]
+    at = max(i for i, n in enumerate(names) if n.startswith(("eval20 ", "base20 "))) + 1
+    q["cpu"][at:at] = [e for e in back if e["name"] not in names]
+    json.dump(q, open(Q, "w"), indent=1, ensure_ascii=False)
+    print("back into cpu at", at, ":", [e["name"] for e in back])
+    sys.exit()
 
 
 def is_heavy(e):

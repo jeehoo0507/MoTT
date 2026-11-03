@@ -1,4 +1,6 @@
-"""Heavy-job CPU lane while the GPU is idle (11/03 round 27).
+"""Heavy-job CPU lane while the GPU is idle (11/03 round 27). RETIRED the same round: QUEUE 11/03 11:40 KST keeps
+the GPU busy (the 2 exact-check slots belong to training), and its first LS16 job was OOM-killed at 50.5 GiB next to
+pool20 + a GPU diagnostic (oom_kill 1) -> heavy entries went back to the driver lane (`queue_heavy.py --back`).
 
 Runs the `heavy` list of agent/day2_queue.json (6 `ls16 *` LS 16-cell files, 6 `base20 * greedy+prune` 20-cell g+p
 files; moved out of the driver's `cpu` list by scripts/queue_heavy.py so the two lanes never pick the same job), one

@@ -385,6 +385,19 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("r2g_rl", "r2_mott_rl", "2단 + 작업 격자 상한 완화 (`--grid_growth 1.0`, 같은 distill에서 RL만)", "상한 0.5"),
     ("r2g_rl", "r2_mott_rl@last", "2단 + `--grid_growth 1.0` (같은 평가 설정 짝)", "상한 0.5, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
     ("lo_pcb_r2g_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--grid_growth 1.0` (같은 distill에서 RL만)", "상한 0.5"),
+    # 11/03 round 27 (QUEUE 11/03 11:40 KST obs. 3, PROPOSALS T1): teacher store = per instance the certified solution with
+    # fewer decaps among {stored LS/g+p teacher, modal_rule in 4-round cutting-plane}; same distilled init, rl 1.25 h
+    ("r2t_rl", "r2_mott_rl", "2단 + 규칙으로 보강한 선생님 (`--teacher_dir data/teacher_rcp`, 같은 distill에서 RL만)", "지금 선생님"),
+    ("r2t_rl", "r2_mott_rl@last", "2단 + 규칙 보강 선생님 (같은 평가 설정 짝)", "지금 선생님, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    ("lo_pcb_r2t_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + 규칙 보강 선생님 (같은 distill에서 RL만)", "지금 선생님"),
+    ("r2t_rl", "modal_rule", "2단 + 규칙 보강 선생님 vs 선생님에 쓴 규칙 자체 (판정 아님, QUEUE 11/03 관찰 3)", "비학습 규칙"),
+    ("lo_pcb_r2t_rl", "modal_rule", "pcb 빼고 학습 2단 + 규칙 보강 선생님 vs 규칙 자체 (판정 아님)", "비학습 규칙"),
+    # PROPOSALS T1': the same teacher in distill + rl (full 0.75 h + 1.25 h run), vs the full r2_mott runs
+    ("r2tf_rl", "r2_mott_rl", "2단 + 규칙 보강 선생님, 증류+RL 전체 (`--teacher_dir data/teacher_rcp`)", "지금 선생님"),
+    ("r2tf_rl", "r2_mott_rl@last", "2단 + 규칙 보강 선생님 증류+RL 전체 (같은 평가 설정 짝)", "지금 선생님, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    ("lo_pcb_r2tf_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + 규칙 보강 선생님, 증류+RL 전체", "지금 선생님"),
+    ("r2tf_rl", "modal_rule", "2단 + 규칙 보강 선생님 증류+RL 전체 vs 규칙 자체 (판정 아님)", "비학습 규칙"),
+    ("lo_pcb_r2tf_rl", "modal_rule", "pcb 빼고 학습 2단 + 규칙 보강 선생님 증류+RL 전체 vs 규칙 자체 (판정 아님)", "비학습 규칙"),
 ]
 
 

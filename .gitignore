@@ -42,3 +42,7 @@ agent/logs/zs_chip.log
 # 11/03 round 27: heavy-job side lane (scripts/side_lane16.py) appends here
 agent/logs/side_lane16.log
 agent/logs/side_lane16_jobs.log
+agent/logs/side_slot5.log
+agent/logs/diag_allfail.log
+agent/logs/make_rule_teacher.log
+agent/logs/make_rule_teacher_cp.log

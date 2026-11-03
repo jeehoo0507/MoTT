@@ -60,7 +60,10 @@ def main():
     base = f"runs/{a.day}/{a.name}"
     os.makedirs(base, exist_ok=True)
     log = os.path.join(base, "driver.log")
-    pools = f"--pool {a.pool} --teacher_dir {a.teacher_dir} --seed {a.seed}"
+    # 11/03 round 27: an arm may carry its own --teacher_dir (teacher-store change); argparse keeps the last value,
+    # so the default must not follow it
+    tdir = "" if "--teacher_dir" in a.arm.split() else f"--teacher_dir {a.teacher_dir} "
+    pools = f"--pool {a.pool} {tdir}--seed {a.seed}"
     dist, rl = f"{base}_distill", f"{base}_rl"
     if a.init_from:   # 11/02: a one-change rl re-run paired with an existing rung shares its distilled init
         a.skip_distill = True
