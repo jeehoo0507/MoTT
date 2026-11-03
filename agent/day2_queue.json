@@ -1786,6 +1786,15 @@
     "runs/analysis/diag_imit.json"
    ],
    "log": "agent/logs/diag_imit.log"
+  },
+  {
+   "name": "ls10 distill-last r2it_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_*' --policy r2it_distill@last=runs/2026-10-29/r2it_distill/last.pt --workers 1 --inst_chunk 5 --out runs/analysis/ckpt_last",
+   "done": [
+    "runs/analysis/ckpt_last/eval/eval_pkg10_0__r2it_distill@last.json",
+    "runs/analysis/ckpt_last/eval/eval_pkg10_1__r2it_distill@last.json"
+   ],
+   "log": "agent/logs/distill_last.log"
   }
  ],
  "train_removed": [

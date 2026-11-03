@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-03 19:45 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-03 20:33 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -3118,6 +3118,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/r2c_rl | mott / mott | rl | 105 | 1.29 | val_pcb10_0: 1.11/0.50, val_pkg10_0: 0.93/0.62, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2c_rl/metrics.json` |
 | runs/2026-10-29/r2g_rl | mott / mott | rl | 348 | 1.27 | val_pcb10_0: 1.45/0.62, val_pkg10_0: 1.03/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2g_rl/metrics.json` |
 | runs/2026-10-29/r2h_rl | mott / mott | rl | 346 | 1.27 | val_pcb10_0: 1.03/0.50, val_pkg10_0: 0.97/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2h_rl/metrics.json` |
+| runs/2026-10-29/r2it_distill | mott / mott | distill | 2192 | 1.06 | val_pcb10_0: 1.11/0.50, val_pkg10_0: 1.10/0.69, val_ip10_0: 0.69/0.25 | `runs/2026-10-29/r2it_distill/metrics.json` |
 | runs/2026-10-29/r2m_rl | mott / mott | rl | 335 | 1.28 | val_pcb10_0: 0.99/0.69, val_pkg10_0: 1.03/0.44, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2m_rl/metrics.json` |
 | runs/2026-10-29/r2s1_rl | mott / mott | rl | 335 | 1.28 | val_pcb10_0: 1.06/0.44, val_pkg10_0: 0.96/0.56, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2s1_rl/metrics.json` |
 | runs/2026-10-29/r2s2_rl | mott / mott | rl | 345 | 1.27 | val_pcb10_0: 0.84/0.62, val_pkg10_0: 1.06/0.75, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2s2_rl/metrics.json` |
