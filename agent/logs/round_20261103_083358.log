@@ -30,3 +30,7 @@ error: Please commit or stash them.
 - T1' 판정: `r2tf` 평가(~10:00)로 같은 종류 쪽을 보고, `lo_pcb_r2tf`(~12:05)로 최종 판정합니다.
 - T3 판정: `r2h`·`lo_pcb_r2h` 평가(~14:35) 뒤에 합니다.
 - GPU가 14:20 뒤에 비지 않게 다음 후보를 준비합니다. T1'이나 T3가 이기면 미리 적은 대로 seed 1·2와 0단 짝을 돌립니다. 둘 다 지면 T4 결과와 16칸 pkg 고치기 결과를 근거로 새 후보를 PROPOSALS.md에 적고 큐에 넣습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   aa8933a..66fb235  main -> main
