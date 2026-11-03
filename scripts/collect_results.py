@@ -936,6 +936,47 @@ def count_gap_table():
     return lines
 
 
+def distill_seed_table():
+    """PROPOSALS 11/03 D1: 10-cell exact success of the distill-only checkpoints (best.pt of `<rung>[_sK]_distill`)
+    per seed, r0_coord / r1_modal / r2_mott; '–' while a seed's eval is missing."""
+    rows = []
+    for tech in ("pcb", "pkg", "ip"):
+        for s in (0, 1, 2):
+            cells = []
+            for r in ("r0_coord", "r1_modal", "r2_mott"):
+                n = f"{r}_distill" if s == 0 else f"{r}_s{s}_distill"
+                d = f"runs/2026-10-28/{n}" if s == 0 else f"runs/2026-10-29/{n}"
+                fs = [f"{d}/eval/eval_{tech}10_{k}__{n}.json" for k in (0, 1)]
+                if all(os.path.exists(f) for f in fs):
+                    ok = np.concatenate([np.asarray(json.load(open(f))["ok"], bool) for f in fs])
+                    cells.append(f"{ok.mean():.2f}")
+                else:
+                    cells.append("–")
+            rows.append(f"| {tech} 10 | {s} | " + " | ".join(cells) + " |")
+    return ["## 진단 D1: 증류만 한 체크포인트의 seed별 정확 검사 성공률 (PROPOSALS 11/03 D1, 10칸 50문제)", "",
+            "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"] + rows + [""]
+
+
+def repair_ladder_table():
+    """PROPOSALS 11/03 R4 (scripts/diag_repair_ladder.py): r2_mott+rep4 vs r0_coord+rep4 per seed and pooled."""
+    f = "runs/analysis/diag_repair_ladder.json"
+    if not os.path.exists(f):
+        return []
+    d = json.load(open(f))
+    rows = []
+    for tech, v in d.items():
+        for s, p in v["per_seed"].items():
+            rows.append(f"| {tech} 10 | {s} | {p['r2']:.2f} | {p['r0']:.2f} | {p['diff']:+.2f} [{p['ci'][0]:+.2f}, "
+                        f"{p['ci'][1]:+.2f}] | {p['count_ratio']:.3f} ({p['n_both']}) | |")
+        p = v["pooled"]
+        rows.append(f"| {tech} 10 | 묶음 (150 짝) | – | – | {p['diff']:+.3f} [{p['ci'][0]:+.3f}, {p['ci'][1]:+.3f}] | "
+                    f"{p['count_ratio']:.3f} [{p['count_ratio_ci'][0]:.3f}, {p['count_ratio_ci'][1]:.3f}] | → {v['verdict']} |")
+    return ["## 같은 고치기에서 2단 vs 0단, seed 3개 (PROPOSALS 11/03 R4; seed 0·1과 r2 seed 2는 규칙 전에 봤음, "
+            "r0 seed 2만 결과 전)", "",
+            "| 판 | seed | r2_mott+rep4 | r0_coord+rep4 | 성공률 차 [95% CI] | 개수비 r2/r0 (둘 다 성공, 문제 수) | 판정 |",
+            "|---|---|---|---|---|---|---|"] + rows + [""]
+
+
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
@@ -1072,6 +1113,8 @@ def main():
     lines += repair_table(recs)
     lines += rulestart_table(recs)
     lines += count_gap_table()
+    lines += distill_seed_table()
+    lines += repair_ladder_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
     lines += train_table()
