@@ -1,4 +1,11 @@
-# PROGRESS (갱신 2026-11-03 00:20 UTC, 재개 라운드 24)
+# PROGRESS (갱신 2026-11-03 00:30 UTC, 재개 라운드 25)
+
+## 재개 라운드 25 (2026-11-03 00:22~ UTC)
+- 상태: GPU `lo_pcb_r2m` RL it 250 (3350 s, fail 0.23, λ 5.54, margin-fail 24, gpu peak 11.4 GB, OOM 0; 끝 ~00:48) → r2g → lo_pcb_r2g (~03:35). CPU 줄 `pool20 eval k8` 3번째 파일 21:36~ (~2 h 50 min째, worker CPU 100%·rss 7.3 GB). side_slot4 대기 (다음: lo_pcb_r2m 평가). pod 13.6 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **보너스 준비: 학습에 없던 네 번째 종류 `chip` zero-shot (DAILY 11/03 추천 5, AGENT_PROMPT 보너스).** 판 정의·평가 목록·판정 규칙을 결과 전에 PROPOSALS 11/03 절에 고정. `decap_loop/techs.py`에 `CHIP` (셀 100 µm, 유전체 0.2 µm, 금속 0.5 µm — R_edge 69 mΩ로 가장 손실 큼, 전원 경로 2 mΩ+30 pH, decap 1 nF/3 pH/50 mΩ · 300 pF/1.5 pH/0.1 Ω · 50 pF/0.5 pH/0.3 Ω, SRF 2.9/7.5/31.8 GHz)를 `ZS_TECHS`로 따로 둠 (`TECHS`는 그대로 → 학습·val·드라이버 glob·smoke 불변). 목표 범위 HARD: `scripts/probe_chip.py` (작업 격자 4문제, 계획용) HARD g+p 4/4·개수 3~14·종류 0·1 섞음, EASY 1~2개 (`agent/logs/probe_chip.log`).
+  - `build_pools.py --techs` (기본 = 기존 세 종류, 바뀐 것 없음; `jobs()` 48개 그대로 확인). smoke (`scripts/smoke_zs_chip.py`, 8칸 2문제, cutting-plane → 사다리 0~3단 + modal_rule `eval_policy.py`): 다섯 방법 모두 오류 없이 돎 → `runs/analysis/smoke_zs_chip.ok` (smoke 기록은 `smoke_records/`로 옮겨 RESULTS glob 밖).
+  - 큐 (`scripts/queue_zs_chip.py`, CPU 큐 맨 끝, 이름 `ls10 zs-chip …` → side_slot 4번째 칸 filler, 한 번에 하나): 판 2파일 (`runs/pool_zs/eval_chip10_{0,1}`, 25문제씩, pool_v1 밖) → g+p·modal_rule → 사다리 seed 0·1·2 (전체 학습 run 그대로) → E0+ 종류 0·1·2. 기록 `runs/zs_chip/`. 로그 `agent/logs/zs_chip.log` → `.gitignore`.
+  - 결정: 4번째 칸 filler로만 돌림 — CPU 한도 4 (지금 pool20 1 + 학습 정확 검사 2 + 4번째 칸 1), 10칸이라 가벼움; 학습 평가가 우선 (side_slot 규칙 그대로).
 
 ## 재개 라운드 24 (2026-11-03 00:02~ UTC) — 날 첫 라운드: DAILY 11/03 작성
 - 상태: GPU `lo_pcb_r2m` RL it 125 (1758 s, fail 0.29, λ 3.31, margin-fail 27, gpu peak 11.2 GB, OOM 0; 끝 ~00:55) → r2g → lo_pcb_r2g (~03:35). CPU 줄 `pool20 eval k8` 3번째 파일 (pkg20 차례, 21:36~, ~2.5 h째, worker rss 6.3 GB·CPU 100% — 10/28 pkg16 판도 파일당 ~2 h였으므로 멈춘 것으로 보지 않음). side_slot: `ls10 ls16-timing smoke` 23:45~23:58 끝 (rc 0), 지금 대기 (남은 filler 없음, 다음은 lo_pcb_r2m 평가). pod 11.9 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.

@@ -25,13 +25,14 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TRAIN_SIZES, TRAIN_K, TRAIN_N = (8, 10, 12), 3, 16
 EVAL_SIZES, EVAL_K, EVAL_N = (10, 16, 20), 2, 25
 VAL_N = 16
-SEED = {"pcb": 0, "pkg": 100000, "ip": 200000}
+SEED = {"pcb": 0, "pkg": 100000, "ip": 200000, "chip": 300000}   # chip: zero-shot kind, eval only (techs.ZS_TECHS)
+ZS_DIFFICULTY = {"chip": (0.02, 0.2)}   # = techs.HARD; probe 11/03 (scripts/probe_chip.py): g+p 4/4 working grid, 3~14 decaps
 
 
-def jobs(out, only, eval_sizes=EVAL_SIZES, val_k=1, eval_n=EVAL_N):
+def jobs(out, only, eval_sizes=EVAL_SIZES, val_k=1, eval_n=EVAL_N, techs=None):
     from decap_loop.techs import TECHS
     js = []
-    for t in TECHS:
+    for t in techs or TECHS:
         if "eval" in only:
             for s in eval_sizes:
                 for k in range(EVAL_K):
@@ -56,12 +57,13 @@ def build(job):
     from decap_loop.bank import save_bank
     from decap_loop.baselines import greedy
     from decap_loop.pdn import sample_batch
-    from decap_loop.techs import DIFFICULTY, TECHS
+    from decap_loop.techs import ALL_TECHS, DIFFICULTY
     from decap_loop.verify import cutting_plane
+    DIFFICULTY = {**DIFFICULTY, **ZS_DIFFICULTY}
     path = os.path.join(out, name + ".pkl")
     if os.path.exists(path):
         return name, "exists", 0.0, None
-    cfg = TECHS[tech]
+    cfg = ALL_TECHS[tech]
     t = time.time()
     torch.manual_seed(seed)
     batch = sample_batch(n, size, size, cfg, np.random.default_rng(seed), difficulty=DIFFICULTY[tech])
@@ -89,9 +91,12 @@ def main():
     ap.add_argument("--val_k", type=int, default=1, help="val files per kind (val_{tech}10_0 .. _{k-1})")
     ap.add_argument("--eval_n", type=int, default=EVAL_N,
                     help="instances per eval file (20-cell: 8, QUEUE 2026-10-29 03:10 item 5 = PROPOSALS (c))")
+    ap.add_argument("--techs", default="", help="kinds to build (default: techs.TECHS); 'chip' = zero-shot kind, use "
+                    "--only eval and a separate --out (runs/pool_zs) so the driver's eval globs never see it")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))), a.val_k, a.eval_n)
+    js = jobs(a.out, a.only.split(","), tuple(map(int, a.eval_sizes.split(","))), a.val_k, a.eval_n,
+              [t for t in a.techs.split(",") if t] or None)
     print(f"{len(js)} pool files -> {a.out}, {a.workers} workers", flush=True)
     t0 = time.time()
     with Pool(a.workers) as pool:

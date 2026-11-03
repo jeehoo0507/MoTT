@@ -1023,6 +1023,98 @@
     "runs/2026-10-28/baselines/eval/eval_pkg16_1__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls10 zs-chip pool",
+   "cmd": ".venv/bin/python scripts/build_pools.py --only eval --eval_sizes 10 --techs chip --out runs/pool_zs --workers 1",
+   "done": [
+    "runs/pool_zs/eval_chip10_0.pkl",
+    "runs/pool_zs/eval_chip10_1.pkl"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip gp,modal_rule",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --methods gp,modal_rule --workers 1 --out runs/zs_chip/baselines",
+   "done": [
+    "runs/zs_chip/baselines/eval/eval_chip10_0__greedy+prune.json",
+    "runs/zs_chip/baselines/eval/eval_chip10_0__modal_rule.json",
+    "runs/zs_chip/baselines/eval/eval_chip10_1__greedy+prune.json",
+    "runs/zs_chip/baselines/eval/eval_chip10_1__modal_rule.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip ladder s0",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt r1_modal_rl=runs/2026-10-28/r1_modal_rl/best.pt r2_mott_rl=runs/2026-10-28/r2_mott_rl/best.pt r3_loop_rl=runs/2026-10-28/r3_loop_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s0",
+   "done": [
+    "runs/zs_chip/s0/eval/eval_chip10_0__r0_coord_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_0__r1_modal_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_0__r2_mott_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_0__r3_loop_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_1__r0_coord_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_1__r1_modal_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_1__r2_mott_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_1__r3_loop_rl.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip ladder s1",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt r1_modal_s1_rl=runs/2026-10-29/r1_modal_s1_rl/best.pt r2_mott_s1_rl=runs/2026-10-29/r2_mott_s1_rl/best.pt r3_loop_s1_rl=runs/2026-10-29/r3_loop_s1_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s1",
+   "done": [
+    "runs/zs_chip/s1/eval/eval_chip10_0__r0_coord_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_0__r1_modal_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_0__r2_mott_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_0__r3_loop_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_1__r0_coord_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_1__r1_modal_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_1__r2_mott_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_1__r3_loop_s1_rl.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip ladder s2",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt r1_modal_s2_rl=runs/2026-10-29/r1_modal_s2_rl/best.pt r2_mott_s2_rl=runs/2026-10-29/r2_mott_s2_rl/best.pt r3_loop_s2_rl=runs/2026-10-29/r3_loop_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s2",
+   "done": [
+    "runs/zs_chip/s2/eval/eval_chip10_0__r0_coord_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_0__r1_modal_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_0__r2_mott_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_0__r3_loop_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_1__r0_coord_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_1__r1_modal_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_1__r2_mott_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_1__r3_loop_s2_rl.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip e0plus type0",
+   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --pool runs/pool_zs --sets eval_chip10_0,eval_chip10_1 --type 0 --skip_existing --out runs/analysis/gp_one_type",
+   "done": [
+    "runs/analysis/gp_one_type/eval_chip10_0__greedy+prune@type0.json",
+    "runs/analysis/gp_one_type/eval_chip10_1__greedy+prune@type0.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip e0plus type1",
+   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --pool runs/pool_zs --sets eval_chip10_0,eval_chip10_1 --type 1 --skip_existing --out runs/analysis/gp_one_type",
+   "done": [
+    "runs/analysis/gp_one_type/eval_chip10_0__greedy+prune@type1.json",
+    "runs/analysis/gp_one_type/eval_chip10_1__greedy+prune@type1.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
+  },
+  {
+   "name": "ls10 zs-chip e0plus type2",
+   "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --pool runs/pool_zs --sets eval_chip10_0,eval_chip10_1 --type 2 --skip_existing --out runs/analysis/gp_one_type",
+   "done": [
+    "runs/analysis/gp_one_type/eval_chip10_0__greedy+prune@type2.json",
+    "runs/analysis/gp_one_type/eval_chip10_1__greedy+prune@type2.json"
+   ],
+   "log": "agent/logs/zs_chip.log"
   }
  ],
  "train_removed": [

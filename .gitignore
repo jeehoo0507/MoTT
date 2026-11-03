@@ -37,3 +37,5 @@ agent/logs/base20.log
 agent/logs/smoke_ls16.log
 # 11/03 round 24: LS 16-cell evals (scripts/queue_ls16.py, driver CPU lane) will append here
 agent/logs/base16_ls.log
+# 11/03 round 25: chip zero-shot filler jobs (scripts/queue_zs_chip.py) append here
+agent/logs/zs_chip.log

@@ -39,9 +39,20 @@ TECHS = {"pcb": PCB, "pkg": PKG, "ip": IP}
 HARD, EASY = (0.02, 0.2), (0.2, 0.5)
 DIFFICULTY = {"pcb": HARD, "pkg": HARD, "ip": EASY}
 
+# Fourth kind, never in training or val (AGENT_PROMPT bonus: zero-shot to an unseen kind; fixed in
+# PROPOSALS 2026-11-03 before any policy result). On-die-like grid: small cells, very thin and
+# lossy metal (R_edge ~4x IP), short power-entry path seen from the bumps, MOS-style decaps with
+# low ESL and high ESR. Kept out of TECHS so pool builders / smoke tests over TECHS do not change.
+CHIP = dataclasses.replace(
+    PCB,
+    cell_size=100e-6, diel_thickness=0.2e-6, eps_r=3.9, metal_thickness=0.5e-6, vrm_r=2e-3, vrm_l=30e-12,
+    decaps=((1e-9, 3e-12, 0.05), (300e-12, 1.5e-12, 0.1), (50e-12, 0.5e-12, 0.3)))
+ZS_TECHS = {"chip": CHIP}
+ALL_TECHS = {**TECHS, **ZS_TECHS}
+
 
 def describe(name):
-    cfg = TECHS[name]
+    cfg = ALL_TECHS[name]
     import numpy as np
     srf = [1.0 / (2 * np.pi * np.sqrt(esl * c)) for c, esl, _ in cfg.decaps]
     return (f"{name}: cell {cfg.cell_size*1e6:.0f}um diel {cfg.diel_thickness*1e6:.0f}um "
@@ -51,5 +62,5 @@ def describe(name):
 
 
 if __name__ == "__main__":
-    for k in TECHS:
+    for k in ALL_TECHS:
         print(describe(k))
