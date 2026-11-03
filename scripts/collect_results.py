@@ -968,6 +968,52 @@ def distill_seed_table():
             "| 판 | seed | r0_coord | r1_modal | r2_mott |", "|---|---|---|---|---|"] + rows + verdict + [""]
 
 
+RL_REPLICATES = [("r2s1_rl", "r2_mott_rl", False), ("r2s2_rl", "r2_mott_rl", False),
+                 ("lo_pcb_r2s1_rl", "lo_pcb_r2_rl", True), ("lo_pcb_r2s2_rl", "lo_pcb_r2_rl", True)]
+RL_ONLY_MODS = [(f"{p}{m}_rl", f"{p}r2{'_mott' if not p else ''}_rl") for m in ("r2c", "r2v", "r2m", "r2g", "r2t", "r2h")
+                for p in ("", "lo_pcb_")]
+
+
+def rl_noise_table(recs):
+    """PROPOSALS 11/03 T5/T5b usage, written before the replicate results: d* = max |success-diff point estimate| of the
+    unmodified rl-seed replicates (same distilled init) over same-kind pcb/pkg and held-out pcb; (N1) every rl-only
+    modification's board estimate with |.| <= d* is labelled 'within rl noise' (its verdict stays as ruled); (N2) any
+    replicate CI excluding 0 -> a seed-0 'win' needs an rl seed-1 replicate before it is extended."""
+    def est(var, base, tech):
+        pr = paired(recs, base).get((tech, 10), {}).get(var)
+        if pr is None:
+            return None
+        om, orf = pr[0], pr[1]
+        lo, hi = boot_ci(lambda i: om[i].mean() - orf[i].mean(), len(om))
+        return om.mean() - orf.mean(), lo, hi
+    reps, n2 = [], False
+    for var, base, lo_run in RL_REPLICATES:
+        for tech in ("pcb",) if lo_run else ("pcb", "pkg"):
+            e = est(var, base, tech)
+            if e is not None:
+                reps.append(abs(e[0]))
+        for tech in ("pcb", "pkg", "ip"):
+            e = est(var, base, tech)
+            n2 |= e is not None and (e[1] > 0 or e[2] < 0)
+    if not reps:
+        return []
+    dstar = max(reps)
+    rows = []
+    for var, base in RL_ONLY_MODS:
+        cells = []
+        for tech in ("pcb", "pkg", "ip"):
+            e = est(var, base, tech)
+            cells.append("–" if e is None else f"{e[0]:+.2f}" + (" (잡음 안)" if abs(e[0]) <= dstar + 1e-9 else ""))
+        if any(c != "–" for c in cells):
+            rows.append(f"| `{var}` | `{base}` | " + " | ".join(cells) + " |")
+    return [f"## RL 재현 잡음 (PROPOSALS 11/03 T5·T5b, 사용법 결과 전에 적음): d* = {dstar:.2f} (재현 쌍 {len(reps)}개 값), "
+            f"N2 {'발동' if n2 else '미발동'}", "",
+            "수정 없이 같은 distill에서 RL seed만 바꾼 run (`r2s1`·`r2s2`·`lo_pcb_r2s1`·`lo_pcb_r2s2`) 대비 seed 0 run의 성공률 차 "
+            "|점추정| 최댓값이 d*. 아래는 RL만 다시 돈 수정의 판별 점추정 (vs 같은 distill의 seed 0 RL); |·| ≤ d*이면 \"잡음 안\" "
+            "(판정은 원래 규칙 그대로). N2 발동: 재현 쌍의 판 CI 중 0을 뺀 것이 있음 → 이후 seed 0 단독 \"이김\"은 RL seed 1 재현 뒤에만 확장.", "",
+            "| 수정 run | 기준 | pcb 10 | pkg 10 | ip 10 |", "|---|---|---|---|---|"] + rows + [""]
+
+
 def repair_ladder_table():
     """PROPOSALS 11/03 R4 (scripts/diag_repair_ladder.py): r2_mott+rep4 vs r0_coord+rep4 per seed and pooled."""
     f = "runs/analysis/diag_repair_ladder.json"
@@ -1125,6 +1171,7 @@ def main():
     lines += rulestart_table(recs)
     lines += count_gap_table()
     lines += distill_seed_table()
+    lines += rl_noise_table(recs)
     lines += repair_ladder_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
