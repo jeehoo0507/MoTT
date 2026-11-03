@@ -46,3 +46,6 @@ agent/logs/side_slot5.log
 agent/logs/diag_allfail.log
 agent/logs/make_rule_teacher.log
 agent/logs/make_rule_teacher_cp.log
+# 11/03 round 27: rule-augmented teacher stores (scripts/make_rule_teacher.py); only summary.json is tracked
+data/teacher_rbest/train_*
+data/teacher_rcp/train_*
