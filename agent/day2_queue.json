@@ -975,6 +975,54 @@
     "runs/analysis/smoke_ls16.json"
    ],
    "log": "agent/logs/smoke_ls16.log"
+  },
+  {
+   "name": "ls16 eval_pcb16_0",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls16 eval_pcb16_1",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_pcb16_1__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls16 eval_ip16_0",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_ip16_0__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls16 eval_ip16_1",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_ip16_1__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls16 eval_pkg16_0",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_pkg16_0__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
+  },
+  {
+   "name": "ls16 eval_pkg16_1",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "done": [
+    "runs/2026-10-28/baselines/eval/eval_pkg16_1__local_search.json"
+   ],
+   "log": "agent/logs/base16_ls.log"
   }
  ],
  "train_removed": [

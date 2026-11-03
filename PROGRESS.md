@@ -1,4 +1,11 @@
-# PROGRESS (갱신 2026-11-02 23:50 UTC, 재개 라운드 23)
+# PROGRESS (갱신 2026-11-03 00:20 UTC, 재개 라운드 24)
+
+## 재개 라운드 24 (2026-11-03 00:02~ UTC) — 날 첫 라운드: DAILY 11/03 작성
+- 상태: GPU `lo_pcb_r2m` RL it 125 (1758 s, fail 0.29, λ 3.31, margin-fail 27, gpu peak 11.2 GB, OOM 0; 끝 ~00:55) → r2g → lo_pcb_r2g (~03:35). CPU 줄 `pool20 eval k8` 3번째 파일 (pkg20 차례, 21:36~, ~2.5 h째, worker rss 6.3 GB·CPU 100% — 10/28 pkg16 판도 파일당 ~2 h였으므로 멈춘 것으로 보지 않음). side_slot: `ls10 ls16-timing smoke` 23:45~23:58 끝 (rc 0), 지금 대기 (남은 filler 없음, 다음은 lo_pcb_r2m 평가). pod 11.9 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.
+- **LS 16칸 시간 smoke (`runs/analysis/smoke_ls16.json`, 문제 하나, 작업 격자, 시간 측정용 — 보고서 숫자 아님):** local_search pcb16 88 s / pkg16 229 s (g+p 54 / 146 s 위에 추가), ip16_0 inst 0은 g+p 실패 (201개)라 LS 0 s; 최대 rss 22.7 GB (판 불러오기).
+- 결정: **LS16 6파일을 드라이버 CPU 줄 맨 끝에** (`scripts/queue_ls16.py`, 이름 `ls16 …`, pcb → ip → pkg, 명령은 ls10과 같음, 로그 `agent/logs/base16_ls.log` → `.gitignore`). 이유: g+p 16칸 기록의 rss가 19~34 GB라 LS16 파일은 다른 16/20칸 작업과 동시에 돌면 45 GiB 규칙을 넘을 수 있음 → 한 번에 하나만 도는 드라이버 줄에 두고, 이름을 `ls10 `으로 시작하지 않게 해 4번째 칸 filler로 뽑히지 않게 함. 20칸 평가 (QUEUE 10/29 지시)가 먼저: `queue_eval20.py`는 smoke 항목 바로 뒤에 끼우므로 LS16은 자동으로 20칸 뒤. 예상 (계획용, 측정 아님): 파일당 pcb ~1 h, pkg ~2.5 h.
+- DAILY.md 11/03 새로 씀 (어제 05:00 이후 정리 + 오늘 추천 큐 5개).
+- 다음 라운드: lo_pcb_r2m (~00:55) 평가 → r2m 최종 판정 (라운드 7 규칙); pool20 3번째 파일 확인; r2g·lo_pcb_r2g 뒤 GPU가 ~03:35에 빔 → 어떤 판정도 "이김"이 아니면 진단 근거 있는 후보가 생길 때까지 GPU를 비워 둠 (근거 없는 구조 변경 금지, QUEUE 11/01 23:45).
 
 ## 재개 라운드 23 (2026-11-02 23:21~ UTC)
 - 상태: GPU `r2m` RL 끝 (335 iter / 1.28 h, best it **100** — λ가 1 → 6.69로 계속 오르고 margin-fail이 늘면서 val이 it 100 뒤로 나빠짐; grid capped 112, OOM 0) → **`lo_pcb_r2m` RL 23:3x~** (끝 ~00:50) → r2g → lo_pcb_r2g. CPU 줄 `pool20 eval k8` 3번째 파일 21:36~ (~2 h 15 min째, 프로세스 CPU 100%로 계속 일함 — 다음 라운드에도 파일이 안 나오면 로그·rss를 다시 봄). side_slot: `ga10 eval_pkg10_1` 22:29~23:17 끝 (rc 0) → `eval10 r2m_rl` 23:32~23:44 끝 (rc 0); → `ls10 ls16-timing smoke` 23:45~ (라운드 15 결정, 시간·rss 측정만; 로그 `agent/logs/smoke_ls16.log` → `.gitignore`). pod 13.3 GiB / 60, oom_kill 0. QUEUE 새 지시 없음.

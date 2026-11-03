@@ -35,3 +35,5 @@ agent/logs/e0plus16.log
 agent/logs/base20.log
 # 11/02 round 23: LS 16-cell timing smoke (4th slot filler) appends here
 agent/logs/smoke_ls16.log
+# 11/03 round 24: LS 16-cell evals (scripts/queue_ls16.py, driver CPU lane) will append here
+agent/logs/base16_ls.log
