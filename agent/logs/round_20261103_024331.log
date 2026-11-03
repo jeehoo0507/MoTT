@@ -1,2 +1,6 @@
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   86c726b..a0bdd43  main -> main

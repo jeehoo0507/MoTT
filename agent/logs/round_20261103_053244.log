@@ -1,0 +1,22 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 28 is done and pushed (`8ecb65a`, `30c22e6`). Nothing has won yet this round. The second rule-augmented teacher test (T1') and the repair evals are still running.
+
+**r2t result (T1: better teacher, RL only).** It did not win on the board kinds it was trained on. Versus the current r2_mott, success changed by −0.04 on pcb (95% CI −0.16 to +0.08) and −0.06 on pkg (−0.20 to +0.08). Against the re-evaluated checkpoint it was −0.08 on pcb. The pkg drop is past the −0.05 limit set before the run, but both CIs include zero. The rule it learned from still beats it: −0.16 on pcb, −0.22 on pkg. The only remaining way for T1 to win is the leave-pcb-out run (lo_pcb_r2t), whose evaluation lands around 08:00. One caveat: this run only swaps the teacher for the RL stage, so the full version (r2tf, ~09:45–11:45) is the real test.
+
+**Diagnosis (existing records only).** On pcb and pkg boards, almost every method hits the 4-round cap on the exact check and then fails on its last solution. On the 16-cell pkg boards the hand-made rule fails too (0.68 / 0.52 success), so every method that places few decaps loses there. Only greedy+prune does well, using 22–31 decaps. The cause is that each round re-solves from scratch, so the final answer can rely on a gap in the frequency grid that hasn't been found yet.
+
+**New attempt: T2, "fix at the end" (QUEUE observation 1).**
+- **What it does:** a new `eval_policy.py --repair K` option. After the exact check, only the failed problems get their failing frequencies added to the grid. The same method then continues from its own placement, up to 4 times. Every method gets the same treatment.
+- **Code touched:** `modal_heuristic` gained an optional starting placement, with default behaviour unchanged. No environment files were touched.
+- **Fairness:** each result file also stores the before-repair numbers from the same run, so before and after are compared without eval-batch noise.
+- **Pass/fail rule:** written in PROPOSALS before any result.
+- **Smoke test:** passed. Problems that already passed were left alone, and the policy fixed 2 of 3 failures by adding one decap and removing another.
+- **Running now:** 10-cell boards for r2_mott, the rule, greedy+prune and the coordinate-only rung 0 (for fairness). They run in the 4th CPU slot behind training evals. The first job started at 06:43, and RESULTS has a new auto-generated section for them.
+
+**Housekeeping.** I restarted `report_watch` and `resume_agent`, which weren't running. `report_watch` then pushed results and exited by design, because all its leave-one-out runs are done. Memory is 12.5 / 60 GiB, with no new out-of-memory kills.
+
+**Next round:**
+- Give the final T1 verdict once lo_pcb_r2t is evaluated.
+- Apply the pre-set rules to T2 when its records arrive.
+- Have the next GPU candidate ready for when the GPU frees up around 11:45. One option with some support: about a third of RL iterations go to ip boards, which almost never fail during training.
