@@ -16,7 +16,7 @@ Q = os.path.join(ROOT, "agent/day2_queue.json")
 PY = ".venv/bin/python"
 POOL, OUT, LOG = "runs/pool_zs", "runs/zs_chip", "agent/logs/zs_chip.log"
 SETS = ["eval_chip10_0", "eval_chip10_1"]
-RUNG = ("r0_coord", "r1_modal", "r2_mott", "r3_loop")
+RUNG = ("r0_coord", "r1_modal", "r2_mott", "r3_loop", "r2a")   # r2a = final candidate (2단 + --fc_bias, QUEUE 10/29 item 3)
 
 new = [dict(name="ls10 zs-chip pool",
             cmd=f"{PY} scripts/build_pools.py --only eval --eval_sizes 10 --techs chip --out {POOL} --workers 1",
@@ -26,8 +26,9 @@ new = [dict(name="ls10 zs-chip pool",
                 f"--out {OUT}/baselines",
             done=[f"{OUT}/baselines/eval/{s}__{m}.json" for s in SETS for m in ("greedy+prune", "modal_rule")], log=LOG)]
 for seed in (0, 1, 2):
-    runs = [(f"{r}_rl", f"runs/2026-10-28/{r}_rl") if seed == 0 else (f"{r}_s{seed}_rl", f"runs/2026-10-29/{r}_s{seed}_rl")
-            for r in RUNG]
+    names = [f"{r}_rl" if seed == 0 else f"{r}_s{seed}_rl" for r in RUNG]
+    runs = [(n, next(d for d in (f"runs/2026-10-28/{n}", f"runs/2026-10-29/{n}") if os.path.exists(os.path.join(ROOT, d, "best.pt"))))
+            for n in names]
     pol = " ".join(f"{n}={d}/best.pt" for n, d in runs)
     new.append(dict(name=f"ls10 zs-chip ladder s{seed}",
                     cmd=f"{PY} scripts/eval_policy.py --pool {POOL} --sets 'eval_chip10_*' --policy {pol} --workers 1 "
@@ -40,8 +41,13 @@ for t in range(3):
                     done=[f"runs/analysis/gp_one_type/{s}__greedy+prune@type{t}.json" for s in SETS], log=LOG))
 
 q = json.load(open(Q))
+mine = {e["name"]: e for e in new}
+started = [e["name"] for e in q["cpu"] if e["name"] in mine and e["cmd"] != mine[e["name"]]["cmd"]
+           and any(os.path.exists(os.path.join(ROOT, p)) for p in e["done"])]
+assert not started, f"changed entries already have records: {started}"
+q["cpu"] = [mine.get(e["name"], e) for e in q["cpu"]]     # re-run: refresh entries in place (11/03: + r2a)
 names = {e["name"] for e in q["cpu"]}
 new = [e for e in new if e["name"] not in names]
 q["cpu"] += new
 json.dump(q, open(Q, "w"), indent=1, ensure_ascii=False)
-print("appended", len(new), "entries:", [e["name"] for e in new])
+print("appended", len(new), "entries:", [e["name"] for e in new], "| refreshed", len(mine) - len(new))

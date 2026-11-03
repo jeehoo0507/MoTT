@@ -1046,46 +1046,52 @@
   },
   {
    "name": "ls10 zs-chip ladder s0",
-   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt r1_modal_rl=runs/2026-10-28/r1_modal_rl/best.pt r2_mott_rl=runs/2026-10-28/r2_mott_rl/best.pt r3_loop_rl=runs/2026-10-28/r3_loop_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s0",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt r1_modal_rl=runs/2026-10-28/r1_modal_rl/best.pt r2_mott_rl=runs/2026-10-28/r2_mott_rl/best.pt r3_loop_rl=runs/2026-10-28/r3_loop_rl/best.pt r2a_rl=runs/2026-10-29/r2a_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s0",
    "done": [
     "runs/zs_chip/s0/eval/eval_chip10_0__r0_coord_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_0__r1_modal_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_0__r2_mott_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_0__r3_loop_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_0__r2a_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_1__r0_coord_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_1__r1_modal_rl.json",
     "runs/zs_chip/s0/eval/eval_chip10_1__r2_mott_rl.json",
-    "runs/zs_chip/s0/eval/eval_chip10_1__r3_loop_rl.json"
+    "runs/zs_chip/s0/eval/eval_chip10_1__r3_loop_rl.json",
+    "runs/zs_chip/s0/eval/eval_chip10_1__r2a_rl.json"
    ],
    "log": "agent/logs/zs_chip.log"
   },
   {
    "name": "ls10 zs-chip ladder s1",
-   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt r1_modal_s1_rl=runs/2026-10-29/r1_modal_s1_rl/best.pt r2_mott_s1_rl=runs/2026-10-29/r2_mott_s1_rl/best.pt r3_loop_s1_rl=runs/2026-10-29/r3_loop_s1_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s1",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt r1_modal_s1_rl=runs/2026-10-29/r1_modal_s1_rl/best.pt r2_mott_s1_rl=runs/2026-10-29/r2_mott_s1_rl/best.pt r3_loop_s1_rl=runs/2026-10-29/r3_loop_s1_rl/best.pt r2a_s1_rl=runs/2026-10-29/r2a_s1_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s1",
    "done": [
     "runs/zs_chip/s1/eval/eval_chip10_0__r0_coord_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_0__r1_modal_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_0__r2_mott_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_0__r3_loop_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_0__r2a_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_1__r0_coord_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_1__r1_modal_s1_rl.json",
     "runs/zs_chip/s1/eval/eval_chip10_1__r2_mott_s1_rl.json",
-    "runs/zs_chip/s1/eval/eval_chip10_1__r3_loop_s1_rl.json"
+    "runs/zs_chip/s1/eval/eval_chip10_1__r3_loop_s1_rl.json",
+    "runs/zs_chip/s1/eval/eval_chip10_1__r2a_s1_rl.json"
    ],
    "log": "agent/logs/zs_chip.log"
   },
   {
    "name": "ls10 zs-chip ladder s2",
-   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt r1_modal_s2_rl=runs/2026-10-29/r1_modal_s2_rl/best.pt r2_mott_s2_rl=runs/2026-10-29/r2_mott_s2_rl/best.pt r3_loop_s2_rl=runs/2026-10-29/r3_loop_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s2",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt r1_modal_s2_rl=runs/2026-10-29/r1_modal_s2_rl/best.pt r2_mott_s2_rl=runs/2026-10-29/r2_mott_s2_rl/best.pt r3_loop_s2_rl=runs/2026-10-29/r3_loop_s2_rl/best.pt r2a_s2_rl=runs/2026-10-29/r2a_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/zs_chip/s2",
    "done": [
     "runs/zs_chip/s2/eval/eval_chip10_0__r0_coord_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_0__r1_modal_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_0__r2_mott_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_0__r3_loop_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_0__r2a_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_1__r0_coord_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_1__r1_modal_s2_rl.json",
     "runs/zs_chip/s2/eval/eval_chip10_1__r2_mott_s2_rl.json",
-    "runs/zs_chip/s2/eval/eval_chip10_1__r3_loop_s2_rl.json"
+    "runs/zs_chip/s2/eval/eval_chip10_1__r3_loop_s2_rl.json",
+    "runs/zs_chip/s2/eval/eval_chip10_1__r2a_s2_rl.json"
    ],
    "log": "agent/logs/zs_chip.log"
   },
