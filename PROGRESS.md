@@ -1,4 +1,13 @@
-# PROGRESS (갱신 2026-11-03 09:05 UTC, 재개 라운드 30)
+# PROGRESS (갱신 2026-11-03 10:35 UTC, 재개 라운드 31)
+
+## 재개 라운드 31 (2026-11-03 09:16~ UTC)
+- 상태 (10:35): GPU **`lo_pcb_r2tf`** 증류 09:47~ (RL 끝 ~11:50) → r2h → lo_pcb_r2h (~14:20). CPU: 드라이버 줄 pool20 끝 (ip20 09:39) → **repair16** (pkg16 × r2_mott_rl·modal_rule·r0_coord_rl·g+p, 09:42~) + 학습 정확 검사 2 + side_slot6 (다음 filler T4 `ls10 rulestart …`) = 4. pod 15 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **r2tf 끝** (증류 2200 iter + RL 360 iter / 1.27 h, best it 200, replaced 233, OOM 0; `runs/2026-10-29/r2tf_rl/metrics.json`), 10칸 평가 09:48~09:59: ip 1.00 / pcb 0.88 / pkg 0.78, 개수÷g+p 0.74 / 0.85 / 0.86. **T1' 같은 종류 갈래 불충족:** r2tf − r2_mott_rl pcb +0.00 [−0.10, +0.10], pkg +0.06 [−0.08, +0.20], ip +0.00; `@last` 대비 pcb −0.04 [−0.14, +0.04], pkg +0.06. (ii) 다른 판 점추정 −0.05 아래 없음. 개수비 0.98~1.00. vs modal_rule (판정 아님): pcb −0.12 [−0.22, −0.04], pkg −0.10 [−0.22, +0.02], ip 개수 0.712. → T1' 최종 판정은 lo_pcb_r2tf − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0 여부 (~12:05 평가).
+- **T2 R3 (r0_coord_rl+rep4, 10:00~10:29):** 0단도 고치기로 오름 — pkg 0.76 → 0.92 **+0.16 [+0.08, +0.26]** (8문제, 개수 변화 0.00), pcb 0.96 → 0.98 (+0.02 [+0.00, +0.06]), ip 1.00 그대로. → R1이 r2 (pcb·pkg)와 0단 (pkg) 둘 다에서 성립 → 미리 적은 R3대로 **"고치기는 방법과 무관한 평가 절차 이득" (MoTT 이득으로 쓰지 않음).** 같은 고치기에서 0단 vs g+p+rep4 pcb +0.04 [−0.04, +0.12]·pkg −0.02 (차이 없음), 개수비 0.808·0.788; 0단 vs modal_rule+rep4 pkg −0.06 [−0.14, +0.00] (상한 0.00, < 0 아님 → 차이 없음), 개수비 pkg 0.923 [0.878, 0.972]. T2 seed 0 판정 끝 — seed 1·2 고치기는 T4 다음 4번째 칸.
+- **repair16 첫 기록 (관찰 4 근거, `runs/repair16/eval/`):** pkg16_1 r2_mott_rl+rep4 0.60 → **1.00** (25문제, 고친 10문제 +1.90개, 9.8 s/문제, rss 25.8 GB). 같은 판의 g+p·modal_rule·0단 고치기는 드라이버 줄에서 이어짐 → 네 방법이 다 나오면 "16칸 pkg 열세는 크기 일반화가 아니라 cutting-plane 상한 (평가 절차)"인지 판정 (가설은 결과 전 지금 적음: 맞으면 고친 뒤 r2 − g+p 성공률 CI가 0을 포함하고 개수비 < 1).
+  - 결정: 관찰 4의 학습 쪽 후보 (16칸 학습 판 추가 — 판 생성·선생님 16칸 rss 22~34 GB, 드라이버 줄 몇 시간)는 repair16 네 방법이 나올 때까지 만들지 않음 — 근거가 평가 절차 쪽을 가리키고 있고, 비용이 큼 (보수적).
+- 결정: 14:20 뒤 GPU 후보 (T5)는 다음 라운드 (~12:10, lo_pcb_r2tf·T4·repair16 결과 뒤)에 근거와 판정 규칙을 PROPOSALS에 먼저 적고 큐에 — 지금 근거 (T1·T1' 같은 종류·r2c·r2m·r2g·r2v 효과 없음, 고치기는 방법 무관)로는 정할 후보가 없음. GPU가 비기 전 두 라운드가 남음.
+- 다음: lo_pcb_r2tf 평가 (~12:05) → T1' 최종 판정; T4 10칸 (4번째 칸, ~11:00~) → S1·S2; repair16 나머지 → 관찰 4 판정; r2h·lo_pcb_r2h (~14:35) → T3 판정. DAILY 다음은 11/04 00:xx UTC.
 
 ## 재개 라운드 30 (2026-11-03 08:34~ UTC)
 - 상태 (09:00): GPU **`r2tf` RL 08:31~** (증류 0.77 h 끝: 2200 iter, best it 1900, val score 1.749 — r2_mott_distill 1.759; RL it 50 fail 0.00~0.12, teach ok 0.75~0.94, replaced 57, OOM 0; 끝 ~09:47) → lo_pcb_r2tf (~11:50) → r2h → lo_pcb_r2h (~14:20). CPU: 드라이버 줄 pool20 ip20 (마지막 2파일) + 학습 정확 검사 2 + side_slot6 (다음 filler `ls10 repair r0_coord_rl`, r2tf 평가 뒤) = 4. pod 6.7 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
