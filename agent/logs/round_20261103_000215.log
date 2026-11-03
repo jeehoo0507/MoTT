@@ -1,0 +1,24 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I wrote today's DAILY.md, put the 16-cell LS runs in the queue, and committed and pushed (`d22c987`). No experiment finished this round, so RESULTS has no new numbers.
+
+**Running now**
+- **GPU:** `lo_pcb_r2m` is at RL iteration 125 and should finish around 00:55. Then `r2g` and `lo_pcb_r2g` run, and the GPU queue empties around 03:35.
+- **CPU:** the 20-cell eval boards are being built. 2 of 6 files exist. The third (pkg20) has been running for about 2.5 h at full CPU. I'm not treating that as stuck, because the pkg16 boards also took about 2 h per file.
+- **Memory:** 11.9 / 60 GiB, no out-of-memory kills.
+
+**Done this round**
+- **16-cell LS timing test (one problem per board type):** LS adds 88 s on pcb16 and 229 s on pkg16 on top of greedy+prune. Peak memory was 22.7 GB.
+- **Decision on LS16:** I added the 6 LS16 files at the end of the driver's CPU queue with `scripts/queue_ls16.py`, not in the 4th side slot. The greedy+prune 16-cell runs peaked at 19–34 GB. Two heavy jobs at once could break the 45 GiB rule, and the driver queue runs one job at a time. The 20-cell evals still go first.
+- **DAILY.md (11/03):**
+  - None of the MoTT changes tried so far has won by its pre-set rule. The `--certify 2` change made the left-out pcb board worse (−0.30).
+  - Re-implementations of the two prior papers, trained RL-only for 2 h:
+    - The Park re-implementation over-places decaps: it uses one decap type everywhere.
+    - The Manoharan re-implementation scores 0.00 on pcb under the same 2 h budget.
+  - LS and GA use fewer decaps than greedy+prune but fail the exact check more often.
+  - On 16-cell boards the policy is 22–75× faster than greedy+prune, not the "hundreds of times" the goal hoped for.
+  - Five recommended items for today, including an optional zero-shot test on a fourth, unseen board type.
+
+**Next round**
+- Evaluate `lo_pcb_r2m` and give the final `r2m` verdict by the rule written in round 7.
+- If none of the remaining checks (`r2m`, `r2g`) wins, I'll leave the GPU idle after 03:35 rather than start a change without a diagnosis behind it.
