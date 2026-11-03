@@ -612,7 +612,8 @@ def design_rationale(recs):
     lines += ["", f"   → 주장할 수 있는 범위: **{', '.join(ok_t) if ok_t else '없음'}** 에서만 \"처음 보는 종류로의 범용화\" (seed 3개). "
               "그 밖의 종류는 위 판정 그대로 주장에서 뺀다. 좌표 (0단)가 무너지는 것은 1번 관찰 (좌표가 종류를 넘으면 뒤집힘)과 같은 방향; "
               "pkg는 학습한 두 종류 사이 (decap 라이브러리·맨판 위반이 pcb와 ip 사이, `scripts/type_distance.py`)라 내삽에 가깝다.", "",
-              "3. 주장하지 않는 것 (미리 적은 기준 불충족): 루프 > 기본 (\"루프 트랜스포머 vs 기본\" 표), MoTT 개선 시도 `--certify 2`·val 48문제·best-of-8 샘플링 "
+              "3. 주장하지 않는 것 (미리 적은 기준 불충족): 루프 > 기본 (\"루프 트랜스포머 vs 기본\" 표), MoTT 개선 시도 `--certify 2`·val 48문제·best-of-8 샘플링·"
+              "보상 성공 5% 여유 `--feas_margin` (r2m·lo_pcb_r2m: 성공률 CI 하한이 0 위인 판정 갈래 없음, 개수는 늘어남) "
               "(위 ABLATIONS·\"추론 샘플링\" 표), 주파수 궁합 편향 (`--fc_bias`)이 처음 보는 pcb·ip로의 범용화를 돕는다는 것 "
               "(`lo_<t>_r2a_rl` vs `lo_<t>_r2_rl`, seed 0, ABLATIONS), 학습이 처음 보는 종류에서 `modal_rule`을 이긴다는 것 (\"학습 vs 규칙\" 표에서 판마다 확인).", ""]
     return lines
