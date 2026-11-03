@@ -135,3 +135,10 @@
 - **D2 시작 전 점검 (라운드 34 18:40, r2it 시작 전·last.pt 결과 전에 적음):** diag_imit에서 seed 2 r2 증류 best.pt는 it 200 (거의 덜 학습, pkg nll 3.96)인데 평가 pkg 0.70 = seed 0·1 (it 1300·1600)과 같음 → "증류 갱신이 MoTT의 pkg 성공률을 움직이지 않는다"일 수 있음. 같은 seed 안에서 확인: r2_mott 증류 seed 0·1·2의 **last.pt** (각 1595·1618·1648 iter)를 10칸 pkg 2파일로 평가 (`<run>@last`, `runs/analysis/ckpt_last`). 규칙: seed 3개 모두 |last − best| pkg 성공률 ≤ 0.06이면 → "증류 후반 갱신은 pkg 성공률을 바꾸지 않음" → **D2 취소** (iter를 더 줘도 바뀔 근거 없음), GPU 큐에서 r2it를 뺌. 2개 이상 seed에서 last − best > +0.06이면 → best.pt 선택이 이른 체크포인트를 고르는 문제 → D2 그대로 두고 선택 쪽을 따로 적음. 그 밖 → D2 그대로.
   - 점검 결과: last.pt pkg 0.62 / 0.68 / 0.72 vs best 0.70 / 0.68 / 0.70 → "그 밖" → D2 그대로 돌림.
 - **D2 결과 (라운드 34 20:30): "갱신 횟수로는 설명 안 됨" → 이 갈래 버림.** `r2it_distill` (2192 iter, 1.06 h)의 best.pt는 it 1300, val score 1.759 — `r2_mott_distill`과 같은 iter·같은 점수이고 **가중치가 비트 단위로 같음** (max |차| 0.0; 같은 seed에서 증류는 결정적, 1596~2192 iter는 val score를 넘지 못함) → 주 비교의 차는 정확히 0 (평가를 다시 돌릴 필요 없음). 사다리 표 단서 ("2단은 같은 0.75 h에 갱신 ~27 % 적음")는 남김. 같이 보고: `r2it_distill@last` (it 2192) pkg 평가 (4번째 칸), `r2it_rl`은 같은 init·같은 seed의 RL이라 `r2_mott_rl`의 재현성 점검이 됨 (판정 아님).
+  - 관찰 (판정 아님, 라운드 35): `r2it_distill@last` (it 2192) 10칸 pkg 0.76 / 0.68 (평균 0.72) — r2 증류 last 0.62 / 0.68 / 0.72, best 0.70 / 0.68 / 0.70와 같은 범위, r0·r1 증류 (0.74~0.94)보다 낮음 그대로.
+
+## 11/03 D3·D4: D1 기제 진단 둘 (라운드 35 — 결과 전에 고정, 학습 없음, CPU)
+- 근거: D1 성립 (MoTT 증류 pkg가 seed 3개 모두 r0·r1보다 낮음). 기각된 설명: 모드 토큰 누락, 학습 풀 fit, prior 지배, 갱신 횟수. 남은 두 설명을 잼.
+- **D3 일반화 (`scripts/diag_imit_heldout.py`):** 같은 9개 증류 best.pt를 학습에 없는 10칸 eval 판 (종류마다 50)에서 선생님과 같은 규칙의 해 (LS가 정확 검사 통과면 LS 해, 아니면 g+p 해; `runs/2026-10-28/baselines/eval`)로 모방 nll을 잼. 규칙: seed 3개 모두 r2의 학습 밖 pkg nll이 r0·r1보다 높고 (학습 밖 − 학습 안) 격차도 r0·r1보다 크면 H-gen 성립 → 다음 후보 = MoTT 규제 한 가지 (seed 0·1, 같은 종류 + lo_pcb, 학습 전에 따로 적음). 아니면 규제 후보 버림.
+- **D4 격자 경계까지 빼기 (`scripts/diag_prune_feasible.py`):** 같은 9개를 eval pkg10 50판 기본 격자에서 greedy 한 번 (cutting-plane 없음), 빼기 허용 vs 빼기 금지 (= 처음 격자 만족 상태) 둘 다 정확 검사. cost = 정확 통과 (금지) − (허용). 규칙: seed 3개 모두 r2의 pkg cost > 0.04 이고 r0·r1의 cost보다 크면 H-prune 성립 → 다음 후보는 빼기 결정 쪽 (학습 전에 따로 적음). 아니면 빼기는 D1 기제가 아님.
+- 가장 가까운 선행: 없음 (진단) / 다른 점: 기여 아님.
