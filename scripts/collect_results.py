@@ -917,6 +917,22 @@ def count_gap_table():
                 lines.append(f"| {m} | {s} | {v['n_solved']} | {v['mean_count']:.2f} | {v['mean_removable']:.2f} | "
                              f"{v['frac_with_removable']:.2f} |")
         lines.append("")
+    f = "runs/analysis/diag_spatial.json"
+    if os.path.exists(f):
+        d = json.load(open(f))
+        lines += ["## 진단: 배치의 공간 군집 (`scripts/diag_spatial.py`, 고치기 없음, decap 2개 이상인 문제; "
+                  "adj = 8-이웃에 다른 decap이 있는 decap 비율, nn = 가장 가까운 decap까지 Chebyshev 거리 평균)", "",
+                  "| 판 | 방법 | 문제 수 | adj | nn | adj (성공) | adj (실패, 문제 수) |", "|---|---|---|---|---|---|---|"]
+        for tech, row in d.items():
+            for m, v in row["per_method"].items():
+                af = "–" if v["adj_fail"] is None else f"{v['adj_fail']:.3f} ({v['n_fail']})"
+                ao = "–" if v["adj_ok"] is None else f"{v['adj_ok']:.3f}"
+                lines.append(f"| {tech} 10 | {m} | {v['n']} | {v['adj']:.3f} | {v['nn']:.2f} | {ao} | {af} |")
+        lines += ["", "| 판 | seed | r2_mott − r0_coord adj (같은 문제) [95% CI] |", "|---|---|---|"]
+        for tech, row in d.items():
+            for s, ci in row["r2_minus_r0_adj"].items():
+                lines.append(f"| {tech} 10 | {s} | {ci[0]:+.3f} [{ci[1]:+.3f}, {ci[2]:+.3f}] |")
+        lines.append("")
     return lines
 
 

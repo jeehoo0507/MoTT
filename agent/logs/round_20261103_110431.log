@@ -20,3 +20,7 @@ error: Please commit or stash them.
 **CPU (4개 그대로):** 16칸 pkg 고치기의 나머지 두 방법 (0단 진행 중, 다음 g+p)이 끝나면 관찰 4를 판정합니다. 지금까지 고친 뒤 성공률은 MoTT 0.88/1.00, 규칙 0.92/0.88입니다. 4번째 칸에서는 seed 1·2 고치기가 돌고 있습니다.
 
 새 시도는 11/6 12:00 UTC까지만 시작합니다. DAILY는 11/04 00시대 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8abb7fd..c3d93bd  main -> main

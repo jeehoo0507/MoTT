@@ -1,4 +1,14 @@
-# PROGRESS (갱신 2026-11-03 12:15 UTC, 재개 라운드 32)
+# PROGRESS (갱신 2026-11-03 13:30 UTC, 재개 라운드 33)
+
+## 재개 라운드 33 (2026-11-03 12:25~ UTC)
+- 상태 (13:30): GPU **`lo_pcb_r2h`** RL 13:05~ (끝 ~14:23) → r2s1 → lo_pcb_r2s1 (T5, ~16:55). CPU: 드라이버 줄 repair16 `r0_coord_rl` (11:55~, pkg16 2파일) + 학습 정확 검사 2 + 4번째 칸 `ls10 repair r0_coord_s1_rl` (13:28~, bg로 직접 — FILL_GAP 동안 비는 칸) = 4. pod 13 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **r2h 끝** (RL 346 iter / 1.27 h, best it 300, replaced 281, OOM 0; `runs/2026-10-29/r2h_rl/metrics.json`), 10칸 평가 13:06~13:19: ip 0.98 / pcb 0.90 / pkg 0.72, 개수÷g+p 0.74 / 0.88 / 0.84.
+- **T3 같은 종류 갈래 불충족 (PROPOSALS T3 규칙 그대로):** r2h − r2_mott_rl pcb +0.02 [−0.06, +0.10], pkg +0.00 [−0.16, +0.16], ip −0.02 [−0.06, +0.00]; `@last` 대비 pcb −0.02 [−0.10, +0.06], pkg +0.00. (ii) 다른 판 점추정 −0.05 아래 없음. 개수비 pcb **1.076 [1.009, 1.147]** (미리 적은 주의대로 개수 증가), pkg 0.965, ip 0.999. 같이 보고 (판정 아님, `runs/analysis/diag_difficulty_r2h_rl.json`): g+p 개수 학습 3분위별 10칸 성공 pcb 1.00 / 0.89 / **0.86** (가중 없음 1.00 / 0.94 / 0.77), pkg 0.83 / 0.81 / 0.64 (가중 없음 0.83 / 0.81 / 0.64 — 그대로). → 최종 판정은 lo_pcb_r2h − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0 여부 (~14:40 평가).
+- **T2 고치기 seed 1·2 (10칸, 4번째 칸):** `r2_mott_s1_rl+rep4` ip 1.00/1.00, pcb 1.00/1.00, pkg 0.96/1.00; `r2_mott_s2_rl+rep4` (12:28~12:46, bg로 직접) pcb·pkg·ip 6파일 모두 1.00. 0단 s1 진행 중, s2 다음. 표는 RESULTS `repair_table` (자동).
+- **진단 (새, 기존 평가 기록만):**
+  - 가설 (실행 전에 `scripts/diag_spatial.py` docstring에 적음): "MoTT는 셀끼리 attention이 없어 (모드로만 통함, 좌표 없음) 배치가 공간적으로 뭉치고, 뭉침이 실패에 몰린다" — 맞으면 셀-셀 상호작용 추가가 후보. **결과: 반대 방향 → 기각.** 8-이웃에 다른 decap이 있는 비율 r2 − r0 (같은 문제, 같은 seed) pcb −0.09 [−0.17, −0.02] / −0.19 [−0.28, −0.10] / −0.12 [−0.18, −0.06], pkg −0.25 [−0.35, −0.15] / −0.18 [−0.29, −0.07] / −0.15 [−0.26, −0.03] (seed 0/1/2) — r2가 **덜** 뭉침; r2 실패 문제의 뭉침은 성공 문제와 비슷 (pcb 0.64~0.69 vs 0.58~0.67). ip는 모든 방법이 0.95~1.00. RESULTS 절 (`count_gap_table` 안).
+  - 증류만 한 체크포인트 (seed 0만 기록 있음): 10칸 pkg 성공 r0 0.90 / r1 0.90 / **r2 0.70** / r3 0.80, pcb 0.76 / 0.88 / 0.78 / 0.84 → pkg에서 r2의 약함은 증류 단계부터 있음 (RL에서 생긴 것 아님). 같은 0.75 h에 r2 증류는 1595 iter (r0 2192, r1 2109) — 다만 r2tf 증류는 2200 iter였고 효과 없음 (T1') → "iter 수 부족"은 근거 약함. seed 1·2 증류 평가가 없어 판정에 쓰지 않음.
+- 다음: lo_pcb_r2h (~14:40 평가) → T3 최종 판정; r2s1·lo_pcb_r2s1 (~17:10 평가) → T5 (N1/N2); repair16 r0·g+p → 관찰 4 판정; 4번째 칸 0단 s2 고치기. 16:55 뒤 GPU 후보는 T3·T5 결과로 다음 라운드가 PROPOSALS에 먼저 적고 큐에. 새 시도 시작은 11/6 12:00 UTC까지. DAILY 다음은 11/04 00:xx UTC.
 
 ## 재개 라운드 32 (2026-11-03 11:04~ UTC)
 - 상태 (12:15): GPU **`r2h`** RL 11:50~ (T3, 끝 ~13:05) → lo_pcb_r2h (~14:20) → **r2s1 → lo_pcb_r2s1 (T5, 새로 넣음, ~16:50)**. CPU: 드라이버 줄 repair16 (r0_coord_rl, 그다음 g+p) + 학습 정확 검사 2 + 4번째 칸 `ls10 repair r2_mott_s1_rl` (12:05~) = 4. pod ~19 GiB / 60, oom_kill 1 (라운드 27 그것). side_slot6 → **side_slot7** (`r2h lo_pcb_r2h r2s1 lo_pcb_r2s1`, 부모만 바꿈 — 돌던 repair 작업은 그대로). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
