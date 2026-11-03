@@ -14,3 +14,7 @@ error: Please commit or stash them.
 - 다음 라운드가 볼 메모: 고치기를 모두에 주면 MoTT의 성공률은 0단과 같고, pcb·pkg에서는 0단보다 decap을 더 많이 쓴다.
 
 **지금 도는 것:** GPU는 `lo_pcb_r2tf` → `r2h` → `lo_pcb_r2h`(~14:20 끝, T3 판정용)다. CPU 4칸은 16칸 고치기(드라이버 줄), 학습 정확 검사 2개, 4번째 칸(T4 0단 갈래, 이어서 seed 1·2 고치기)이다. 파드 메모리는 15 GiB / 60이고, OOM은 라운드 27의 1건 외에 새로 없다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f7c9cd4..3000289  main -> main
