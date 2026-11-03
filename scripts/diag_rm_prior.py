@@ -34,7 +34,16 @@ def main():
     torch.set_num_threads(1)
     from train import make_policy
     from decap_loop.bank import load_bank
-    d4 = json.load(open(os.path.join(ROOT, "runs/analysis/diag_prune_feasible.json")))
+    jp = os.path.join(ROOT, "runs/analysis/diag_prune_feasible.json")
+    if os.path.exists(jp):
+        d4 = json.load(open(jp))
+    else:                                    # D4 still on pcb: its pkg lines are already in the log
+        import ast
+        d4 = {}
+        for line in open(os.path.join(ROOT, "runs/analysis/diag_prune_feasible.log")):
+            parts = line.split(" ", 2)
+            if len(parts) == 3 and parts[1] == "pkg" and parts[2].startswith("{"):
+                d4.setdefault(parts[0], {})["pkg"] = ast.literal_eval(parts[2])
     res, h = {}, []
     for name in ("r2_mott", "r2_mott_s1", "r2_mott_s2"):
         ck = torch.load(os.path.join(ROOT, CKPTS[name]), map_location="cpu", weights_only=False)
