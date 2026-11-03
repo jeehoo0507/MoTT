@@ -1683,6 +1683,84 @@
     "runs/repair10/eval/eval_pkg10_1__r0_coord_s2_rl+rep4.json"
    ],
    "log": "agent/logs/repair10.log"
+  },
+  {
+   "name": "ls10 distill-eval r2_mott_s1_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2_mott_s1_distill=runs/2026-10-29/r2_mott_s1_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2_mott_s1_distill",
+   "done": [
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_ip10_0__r2_mott_s1_distill.json",
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_ip10_1__r2_mott_s1_distill.json",
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_pcb10_0__r2_mott_s1_distill.json",
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_pcb10_1__r2_mott_s1_distill.json",
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_pkg10_0__r2_mott_s1_distill.json",
+    "runs/2026-10-29/r2_mott_s1_distill/eval/eval_pkg10_1__r2_mott_s1_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r0_coord_s1_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r0_coord_s1_distill=runs/2026-10-29/r0_coord_s1_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_distill",
+   "done": [
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_ip10_0__r0_coord_s1_distill.json",
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_ip10_1__r0_coord_s1_distill.json",
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_pcb10_0__r0_coord_s1_distill.json",
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_pcb10_1__r0_coord_s1_distill.json",
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_pkg10_0__r0_coord_s1_distill.json",
+    "runs/2026-10-29/r0_coord_s1_distill/eval/eval_pkg10_1__r0_coord_s1_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r1_modal_s1_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r1_modal_s1_distill=runs/2026-10-29/r1_modal_s1_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r1_modal_s1_distill",
+   "done": [
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_ip10_0__r1_modal_s1_distill.json",
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_ip10_1__r1_modal_s1_distill.json",
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_pcb10_0__r1_modal_s1_distill.json",
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_pcb10_1__r1_modal_s1_distill.json",
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_pkg10_0__r1_modal_s1_distill.json",
+    "runs/2026-10-29/r1_modal_s1_distill/eval/eval_pkg10_1__r1_modal_s1_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r2_mott_s2_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2_mott_s2_distill=runs/2026-10-29/r2_mott_s2_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2_mott_s2_distill",
+   "done": [
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_ip10_0__r2_mott_s2_distill.json",
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_ip10_1__r2_mott_s2_distill.json",
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_pcb10_0__r2_mott_s2_distill.json",
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_pcb10_1__r2_mott_s2_distill.json",
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_pkg10_0__r2_mott_s2_distill.json",
+    "runs/2026-10-29/r2_mott_s2_distill/eval/eval_pkg10_1__r2_mott_s2_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r0_coord_s2_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r0_coord_s2_distill=runs/2026-10-29/r0_coord_s2_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_distill",
+   "done": [
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_ip10_0__r0_coord_s2_distill.json",
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_ip10_1__r0_coord_s2_distill.json",
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_pcb10_0__r0_coord_s2_distill.json",
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_pcb10_1__r0_coord_s2_distill.json",
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_pkg10_0__r0_coord_s2_distill.json",
+    "runs/2026-10-29/r0_coord_s2_distill/eval/eval_pkg10_1__r0_coord_s2_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r1_modal_s2_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r1_modal_s2_distill=runs/2026-10-29/r1_modal_s2_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r1_modal_s2_distill",
+   "done": [
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_ip10_0__r1_modal_s2_distill.json",
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_ip10_1__r1_modal_s2_distill.json",
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_pcb10_0__r1_modal_s2_distill.json",
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_pcb10_1__r1_modal_s2_distill.json",
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_pkg10_0__r1_modal_s2_distill.json",
+    "runs/2026-10-29/r1_modal_s2_distill/eval/eval_pkg10_1__r1_modal_s2_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
   }
  ],
  "train_removed": [
