@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-03 06:42 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-03 07:00 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -64,6 +64,7 @@
 | r1_modal_s2_rl | 1.00 / 1.30 / 1.11 [50] | 0.98 / 0.82 / 1.19 [50] | – | 0.96 / 0.80 / 0.18 [50] | – | – | 0.80 / 0.77 / 0.52 [50] | – |
 | r2_mott_distill | – | 0.92 / 0.74 / 1.02 [50] | – | 0.78 / 0.94 / 0.23 [50] | – | – | 0.70 / 0.97 / 0.69 [50] | – |
 | r2_mott_rl | 1.00 / 1.11 / 0.92 [50] | 1.00 / 0.74 / 1.02 [50] | 1.00 / 0.30 / 1.06 [50] | 0.88 / 0.88 / 0.21 [50] | 0.90 / 0.86 / 0.24 [50] | – | 0.72 / 0.88 / 0.59 [50] | 0.52 / 0.75 / 0.50 [50] |
+| r2_mott_rl+rep4 | – | – | – | 1.00 / 0.84 / 0.20 [50] | – | – | 0.98 / 0.86 / 0.60 [50] | – |
 | r2_mott_rl@last | – | 1.00 / 0.74 / 1.02 [50] | – | 0.92 / 0.86 / 0.20 [50] | – | – | 0.72 / 0.88 / 0.59 [50] | – |
 | r2_mott_s1_rl | 1.00 / 1.11 / 0.92 [50] | 1.00 / 0.74 / 1.01 [50] | – | 0.78 / 0.89 / 0.19 [50] | – | – | 0.84 / 0.84 / 0.57 [50] | – |
 | r2_mott_s1_rl@best | – | – | – | 0.78 / 0.89 / 0.19 [50] | – | – | 0.84 / 0.84 / 0.57 [50] | – |
@@ -250,6 +251,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | r1_modal_s2_rl | 50 | +0.30 [+0.16, +0.44] | 0.180 [0.146, 0.218] |
 | pcb 10 | r2_mott_distill | 50 | +0.12 [-0.06, +0.30] | 0.230 [0.167, 0.307] |
 | pcb 10 | r2_mott_rl | 50 | +0.22 [+0.04, +0.40] | 0.206 [0.164, 0.256] |
+| pcb 10 | r2_mott_rl+rep4 | 50 | +0.34 [+0.22, +0.46] | 0.202 [0.167, 0.242] |
 | pcb 10 | r2_mott_rl@last | 50 | +0.26 [+0.10, +0.42] | 0.204 [0.164, 0.251] |
 | pcb 10 | r2_mott_s1_rl | 50 | +0.12 [-0.06, +0.30] | 0.191 [0.152, 0.238] |
 | pcb 10 | r2_mott_s1_rl@best | 50 | +0.12 [-0.06, +0.30] | 0.191 [0.152, 0.238] |
@@ -336,6 +338,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | r1_modal_s2_rl | 50 | -0.02 [-0.16, +0.14] | 0.523 [0.459, 0.591] |
 | pkg 10 | r2_mott_distill | 50 | -0.12 [-0.24, +0.00] | 0.688 [0.618, 0.763] |
 | pkg 10 | r2_mott_rl | 50 | -0.10 [-0.24, +0.06] | 0.587 [0.509, 0.671] |
+| pkg 10 | r2_mott_rl+rep4 | 50 | +0.16 [+0.06, +0.28] | 0.601 [0.537, 0.668] |
 | pkg 10 | r2_mott_rl@last | 50 | -0.10 [-0.24, +0.06] | 0.587 [0.509, 0.671] |
 | pkg 10 | r2_mott_s1_rl | 50 | +0.02 [-0.12, +0.16] | 0.570 [0.506, 0.639] |
 | pkg 10 | r2_mott_s1_rl@best | 50 | +0.02 [-0.12, +0.16] | 0.570 [0.506, 0.639] |
@@ -525,6 +528,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | r1_modal_s2_rl | 50 | +0.06 [-0.04, +0.16] | 0.797 [0.705, 0.886] |
 | pcb 10 | r2_mott_distill | 50 | -0.12 [-0.26, +0.00] | 0.938 [0.819, 1.060] |
 | pcb 10 | r2_mott_rl | 50 | -0.02 [-0.12, +0.10] | 0.877 [0.772, 0.982] |
+| pcb 10 | r2_mott_rl+rep4 | 50 | +0.10 [+0.02, +0.18] | 0.840 [0.734, 0.942] |
 | pcb 10 | r2_mott_rl@last | 50 | +0.02 [-0.10, +0.14] | 0.859 [0.747, 0.966] |
 | pcb 10 | r2_mott_s1_rl | 50 | -0.12 [-0.26, +0.02] | 0.888 [0.763, 1.012] |
 | pcb 10 | r2_mott_s1_rl@best | 50 | -0.12 [-0.26, +0.02] | 0.888 [0.763, 1.012] |
@@ -611,6 +615,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | r1_modal_s2_rl | 50 | -0.10 [-0.24, +0.04] | 0.768 [0.719, 0.816] |
 | pkg 10 | r2_mott_distill | 50 | -0.20 [-0.32, -0.08] | 0.966 [0.871, 1.077] |
 | pkg 10 | r2_mott_rl | 50 | -0.18 [-0.34, -0.02] | 0.877 [0.813, 0.945] |
+| pkg 10 | r2_mott_rl+rep4 | 50 | +0.08 [+0.00, +0.18] | 0.860 [0.809, 0.913] |
 | pkg 10 | r2_mott_rl@last | 50 | -0.18 [-0.34, -0.02] | 0.877 [0.813, 0.945] |
 | pkg 10 | r2_mott_s1_rl | 50 | -0.06 [-0.20, +0.06] | 0.842 [0.778, 0.907] |
 | pkg 10 | r2_mott_s1_rl@best | 50 | -0.06 [-0.20, +0.06] | 0.842 [0.778, 0.907] |
@@ -1098,6 +1103,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | r1_modal_s2_rl | 50 (0, 1) | 0.96 | 6.44 | 0.797 | 0.180 | 0.679 | `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pcb10_0__r1_modal_s2_rl.json`, `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pcb10_1__r1_modal_s2_rl.json` |
 | r2_mott_distill | 50 (0, 1) | 0.78 | 7.38 | 0.938 | 0.230 | 1.887 | `runs/2026-10-28/r2_mott_distill/eval/eval_pcb10_0__r2_mott_distill.json`, `runs/2026-10-28/r2_mott_distill/eval/eval_pcb10_1__r2_mott_distill.json` |
 | r2_mott_rl | 50 (0, 1) | 0.88 | 6.77 | 0.877 | 0.206 | 0.683 | `runs/2026-10-28/r2_mott_rl/eval/eval_pcb10_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_pcb10_1__r2_mott_rl.json` |
+| r2_mott_rl+rep4 | 50 (0, 1) | 1.00 | 7.12 | 0.840 | 0.202 | 0.802 | `runs/repair10/eval/eval_pcb10_0__r2_mott_rl+rep4.json`, `runs/repair10/eval/eval_pcb10_1__r2_mott_rl+rep4.json` |
 | r2_mott_rl@last | 50 (0, 1) | 0.92 | 6.91 | 0.859 | 0.204 | 0.499 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_rl@last.json` |
 | r2_mott_s1_rl | 50 (0, 1) | 0.78 | 7.18 | 0.888 | 0.191 | 0.663 | `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pcb10_0__r2_mott_s1_rl.json`, `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pcb10_1__r2_mott_s1_rl.json` |
 | r2_mott_s1_rl@best | 50 (0, 1) | 0.78 | 7.18 | 0.888 | 0.191 | 0.684 | `runs/analysis/ckpt_last/eval/eval_pcb10_0__r2_mott_s1_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pcb10_1__r2_mott_s1_rl@best.json` |
@@ -1202,6 +1208,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | r1_modal_s2_rl | 50 (0, 1) | 0.80 | 5.58 | 0.768 | 0.523 | 0.848 | `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pkg10_0__r1_modal_s2_rl.json`, `runs/2026-10-29/r1_modal_s2_rl/eval/eval_pkg10_1__r1_modal_s2_rl.json` |
 | r2_mott_distill | 50 (0, 1) | 0.70 | 7.29 | 0.966 | 0.688 | 1.509 | `runs/2026-10-28/r2_mott_distill/eval/eval_pkg10_0__r2_mott_distill.json`, `runs/2026-10-28/r2_mott_distill/eval/eval_pkg10_1__r2_mott_distill.json` |
 | r2_mott_rl | 50 (0, 1) | 0.72 | 6.22 | 0.877 | 0.587 | 1.594 | `runs/2026-10-28/r2_mott_rl/eval/eval_pkg10_0__r2_mott_rl.json`, `runs/2026-10-28/r2_mott_rl/eval/eval_pkg10_1__r2_mott_rl.json` |
+| r2_mott_rl+rep4 | 50 (0, 1) | 0.98 | 7.88 | 0.860 | 0.601 | 2.023 | `runs/repair10/eval/eval_pkg10_0__r2_mott_rl+rep4.json`, `runs/repair10/eval/eval_pkg10_1__r2_mott_rl+rep4.json` |
 | r2_mott_rl@last | 50 (0, 1) | 0.72 | 6.22 | 0.877 | 0.587 | 0.690 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_rl@last.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_rl@last.json` |
 | r2_mott_s1_rl | 50 (0, 1) | 0.84 | 6.26 | 0.842 | 0.570 | 0.755 | `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pkg10_0__r2_mott_s1_rl.json`, `runs/2026-10-29/r2_mott_s1_rl/eval/eval_pkg10_1__r2_mott_s1_rl.json` |
 | r2_mott_s1_rl@best | 50 (0, 1) | 0.84 | 6.26 | 0.842 | 0.570 | 0.760 | `runs/analysis/ckpt_last/eval/eval_pkg10_0__r2_mott_s1_rl@best.json`, `runs/analysis/ckpt_last/eval/eval_pkg10_1__r2_mott_s1_rl@best.json` |
@@ -1488,6 +1495,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | r2_mott_distill | 실패 | 11 | 32.9 | 0.69 | 0.02 | 0.29 |
 | pcb 10 | r2_mott_rl | 성공 | 44 | 6.8 | 0.08 | 0.18 | 0.74 |
 | pcb 10 | r2_mott_rl | 실패 | 6 | 9.7 | 0.21 | 0.10 | 0.69 |
+| pcb 10 | r2_mott_rl+rep4 | 성공 | 50 | 7.1 | 0.10 | 0.17 | 0.73 |
 | pcb 10 | r2_mott_rl@last | 성공 | 46 | 6.9 | 0.08 | 0.18 | 0.74 |
 | pcb 10 | r2_mott_rl@last | 실패 | 4 | 8.5 | 0.15 | 0.21 | 0.65 |
 | pcb 10 | r2_mott_s1_rl | 성공 | 39 | 7.2 | 0.07 | 0.17 | 0.76 |
@@ -1662,6 +1670,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | r2_mott_distill | 실패 | 15 | 25.7 | 0.46 | 0.02 | 0.52 |
 | pkg 10 | r2_mott_rl | 성공 | 36 | 6.2 | 0.14 | 0.17 | 0.70 |
 | pkg 10 | r2_mott_rl | 실패 | 14 | 12.1 | 0.51 | 0.11 | 0.38 |
+| pkg 10 | r2_mott_rl+rep4 | 성공 | 49 | 7.9 | 0.31 | 0.14 | 0.55 |
+| pkg 10 | r2_mott_rl+rep4 | 실패 | 1 | 17.0 | 0.76 | 0.06 | 0.18 |
 | pkg 10 | r2_mott_rl@last | 성공 | 36 | 6.2 | 0.14 | 0.17 | 0.70 |
 | pkg 10 | r2_mott_rl@last | 실패 | 14 | 12.1 | 0.51 | 0.11 | 0.38 |
 | pkg 10 | r2_mott_s1_rl | 성공 | 42 | 6.3 | 0.19 | 0.16 | 0.65 |
@@ -2092,6 +2102,15 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pcb 10 | r2a_rl@8 | modal_rule | 0.90 / 1.00 | 25.32 / 0.50 | 50 | -0.10 [-0.18, -0.02] | 0.906 [0.868, 0.946] |
 | pcb 10 | r2a_rl@8 | gp_type_aware | 0.90 / 0.66 | 25.32 / 24.76 | 50 | +0.24 [+0.08, +0.40] | 0.186 [0.147, 0.231] |
 
+## 끝에서 고치기 (repair, PROPOSALS 11/03 T2): cutting-plane 뒤 정확 검사 실패 문제만, 실패 주파수를 격자에 더하고 같은 방법이 자기 배치에서 이어서 놓음 (최대 K번)
+
+판정 규칙은 결과 전에 PROPOSALS 11/03 T2에 적음. 본 표 (위)의 숫자는 고치기 없는 평가 그대로. 전후는 같은 기록 안 (`ok_pre`)이라 평가 배치 잡음 없음. CI는 짝지은 bootstrap 95% (2000회, seed 0).
+
+| 판 | 방법 | 성공률 (전 → 후) | 고친 문제 수 | 고친 문제의 개수 변화 (평균) | 고치기 시간 s/문제 | 문제 수 | 성공률 차 후 − 전 [95% CI] | 개수 비 후/전 (둘 다 성공) [95% CI] |
+|---|---|---|---|---|---|---|---|---|
+| pcb 10 | r2_mott_rl+rep4 | 0.88 → 1.00 | 6 | 0.00 | 0.36 | 50 | +0.12 [+0.04, +0.20] | 1.000 [1.000, 1.000] |
+| pkg 10 | r2_mott_rl+rep4 | 0.72 → 0.98 | 13 | 0.62 | 0.96 | 50 | +0.26 [+0.14, +0.38] | 1.000 [1.000, 1.000] |
+
 ## 진단: 같은 run의 last.pt vs best.pt (`<run>@last`, 짝지은 bootstrap 95% CI, 2000회, seed 0)
 
 best.pt = RL 중 val 3번 (판마다 16문제, score = 평균(개수비 + 2·fail))에서 가장 좋은 것 — 모든 표가 쓰는 체크포인트. 진단용, 보고 숫자 아님.
@@ -2157,7 +2176,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2c_rl | 87 / 112 | 4.0 | 1.00 | – | 0.62 | 57.3 | 0.84 |
 | lo_pcb_r2g_rl | 73 / 362 | 0.2 | 0.98 | – | 0.86 | 7.0 | 0.76 |
 | lo_pcb_r2m_rl | 119 / 339 | 0.5 | 1.00 | – | 0.96 | 7.4 | 0.94 |
-| lo_pcb_r2t_rl | 3 / – | 1.0 | – | – | – | 13.0 | – |
+| lo_pcb_r2t_rl | 29 / – | 1.0 | – | – | – | 9.2 | – |
 | lo_pcb_r2v_rl | 166 / 361 | 1.0 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r3_rl | 153 / 361 | 0.1 | 1.00 | – | 0.90 | 8.4 | 0.86 |
 | lo_pkg_r0_rl | 213 / 371 | 2.5 | 0.98 | 2.7 | 0.94 | – | 0.78 |
