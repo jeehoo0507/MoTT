@@ -596,11 +596,14 @@ def zs_chip_table(recs):
               "seed 0 짝지은 bootstrap 95% CI (같은 50문제):", "",
               "| 방법 | 기준 | 문제 수 | 성공률 차 (방법 − 기준) [95% CI] | 개수 비 방법/기준 (둘 다 성공) [95% CI] |",
               "|---|---|---|---|---|"]
-    for ref in ("greedy+prune", "modal_rule", TA):
+    for ref in ("greedy+prune", "modal_rule", TA, "r0_coord_rl"):   # vs 0단: descriptive (count), not the verdict
         pr = paired(recs, ref).get(("chip", 10), {})
         for r, _ in ZS_RUNGS:
             if f"{r}_rl" in pr:
                 lines.append(f"| {r}_rl | {ref} | " + ci_cells(*pr[f"{r}_rl"]) + " |")
+    if ms.get("r0_coord_rl") is not None and ms["r0_coord_rl"]["ok"].all():
+        lines += ["", "참고: seed 0에서 0단의 성공률이 이미 1.00이라 성공률로 정한 판정 (b)는 > 0이 될 수 없다 (천장). "
+                  "단 차이는 위 \"vs r0_coord_rl\" 개수 비에만 보인다 — 미리 적은 판정 대상이 아니므로 기술용으로만 쓴다."]
     return lines + [""]
 
 
