@@ -398,6 +398,10 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("lo_pcb_r2tf_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + 규칙 보강 선생님, 증류+RL 전체", "지금 선생님"),
     ("r2tf_rl", "modal_rule", "2단 + 규칙 보강 선생님 증류+RL 전체 vs 규칙 자체 (판정 아님)", "비학습 규칙"),
     ("lo_pcb_r2tf_rl", "modal_rule", "pcb 빼고 학습 2단 + 규칙 보강 선생님 증류+RL 전체 vs 규칙 자체 (판정 아님)", "비학습 규칙"),
+    # 11/03 round 29 (PROPOSALS T3): rl loss weighted by the instance's g+p-count percentile in its board kind
+    ("r2h_rl", "r2_mott_rl", "2단 + 어려운 문제 가중 RL (`--hard_weight 2`, 같은 distill에서 RL만)", "가중 없음"),
+    ("r2h_rl", "r2_mott_rl@last", "2단 + `--hard_weight 2` (같은 평가 설정 짝)", "가중 없음, 같은 가중치를 `--inst_chunk 5`로 다시 평가한"),
+    ("lo_pcb_r2h_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--hard_weight 2` (같은 distill에서 RL만)", "가중 없음"),
 ]
 
 

@@ -73,3 +73,11 @@
   - (R2) 같은 고치기를 준 규칙·g+p와 비교: `r2_mott_rl+rep4` vs `modal_rule+rep4`, vs `greedy+prune+rep4` 성공률 차 CI와 개수비 CI를 그대로 보고. CI 하한 > 0인 판만 "같은 고치기에서 정책이 낫다", 상한 < 0이면 "규칙(또는 g+p)이 낫다", 그 밖은 "차이 없음"으로 씀. QUEUE 관찰 3 "규칙보다 나은가"는 이 줄로만 답함.
   - (R3) 공정성: 0단 `r0_coord_rl+rep4` − `r0_coord_rl`도 같이 보고; R1이 r2와 0단 둘 다에서 성립하면 "고치기는 방법과 무관한 평가 절차 이득"으로 씀 (MoTT 이득으로 쓰지 않음).
   - R1이 성립하면 16칸 pkg 2파일 (관찰 4, 차이가 가장 큼)과 seed 1·2로 넓힘; 성립하지 않으면 "고치기 효과 없음"으로 RESULTS ABLATIONS에 남기고 넓히지 않음. 결과 보고 고치기 횟수·대상·판을 바꾸지 않음.
+
+## 11/03 T3: 어려운 문제 가중 RL `--hard_weight 2` (r2h·lo_pcb_r2h, QUEUE 11/03 관찰 2, 라운드 29 — 학습 결과 전에 고정)
+- **진단 (기존 판·평가 기록만, `scripts/diag_difficulty.py` → `runs/analysis/diag_difficulty_r2_mott_rl.json`, 가설은 실행 전에 PROGRESS 라운드 29에 적음):** 난이도 = g+p 개수 (같은 종류 학습 풀 432문제 중 백분위). r2_mott_rl 10칸 실패 중 학습 분포 상위 25% 위 비율 pcb 0.67 (4/6), pkg 0.64 (9/14), 16칸 pkg 0.83 (20/24); 학습 최댓값 위 문제는 10칸 0, 16칸 pcb 0.08 / pkg 0.06 → **어려운 문제는 학습 분포 안에 있지만 드묾**. 학습 3분위별 10칸 성공 pcb 1.00 / 0.94 / 0.77, pkg 0.83 / 0.81 / 0.64. 학습 풀 상위 1/3에서 지금 선생님 통과율 pcb 0.69 / pkg 0.52 (하위 1/3 1.00 / 0.80). 다른 두 척도 (맨판 최악 위반, 위반 피크 수)로는 갈림 (pkg 맨판 위반 0.07, pcb 피크 수 0.17) → 근거는 g+p 개수 척도 하나뿐임을 같이 적음.
+- **변경 하나:** RL 손실 (정책 경사 advantage와 두 모방 항)에 문제마다 가중치 w = (1 + 2·q) / 평균 (q = 같은 종류 학습 문제 중 g+p 개수 mid-rank 백분위, 학습 풀 전체 평균 1로 정규화 → 쉬운 문제 ~0.5, 어려운 문제 ~1.5). 문제 추출·보상·선생님 (`data/teacher` 그대로)·val·평가·정책 그대로; 추론 때 쓰는 것 없음. 뺀 pcb run은 pkg·ip 학습 풀만으로 백분위 계산 (pcb 정보 없음). 짝: r2_mott seed 0 distill best.pt에서 RL 1.25 h만 (`r2h` vs `r2_mott_rl`·`r2_mott_rl@last`), `lo_pcb_r2_distill` best.pt에서 RL만 (`lo_pcb_r2h` vs `lo_pcb_r2_rl`), 같은 seed. smoke: `scripts/smoke_hard_weight.py` (가중치 범위 + 기본값 0에서 HEAD train.py와 log.csv가 같음).
+- 가장 가까운 선행: 어려운 예제 가중 / prioritized sampling (curriculum·focal loss·PER 일반) / 다른 점: 없음 — 학습법 수정, 기여로 쓰지 않음.
+- **미리 적는 판정 (T1과 같은 규칙):** seed 0, 판마다 50문제 짝지은 bootstrap. (i) 같은 종류 pcb·pkg 중 하나 이상에서 r2h − r2_mott_rl 성공률 CI 하한 > 0이 day 1 기록과 `r2_mott_rl@last` **둘 다에서** 성립하거나, lo_pcb_r2h − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0, (ii) 그리고 다른 판에서 점추정이 −0.05 아래가 아니면 "이김" → seed 1·2 확장 + QUEUE 공정성: 같은 가중으로 0단 좌표 (`r0h`, r0_coord distill에서 RL만). 두 기준이 갈리면 "판정 보류", 그 밖은 "효과 없음"/"해로움". 같이 보고 (판정 아님): 개수비, 학습 3분위별 성공률 (`diag_difficulty.py <run> <method>`로 같은 표).
+- 주의 (결과 전): 같은 학습 예산에서 쉬운 문제 가중을 낮추므로 쉬운 문제 개수가 늘 수 있음 — 개수비를 같이 봄.
+

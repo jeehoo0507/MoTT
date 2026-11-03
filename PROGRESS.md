@@ -1,4 +1,8 @@
-# PROGRESS (갱신 2026-11-03 06:50 UTC, 재개 라운드 28)
+# PROGRESS (갱신 2026-11-03 07:15 UTC, 재개 라운드 29)
+
+## 재개 라운드 29 (2026-11-03 06:59~ UTC)
+- 상태 (07:05): GPU `lo_pcb_r2t` RL 06:28~ (끝 ~07:45) → r2tf → lo_pcb_r2tf (~11:45). CPU: 드라이버 줄 pool20 pkg20_1 (02:12~, ~4.9 h째; pkg20_0은 4.6 h) + 학습 정확 검사 2 + side_slot5 `ls10 repair r2_mott_rl` (06:43~) = 4. pod 12.0 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **진단 가설 (QUEUE 관찰 2, 결과 전에 적음, `scripts/diag_difficulty.py`):** "평가에서 정책이 지는 어려운 문제가 학습 풀의 난이도 범위 **안에 있지만 드물다**" (난이도 = 맨판 최악 위반 log10(Z/Zt), 위반 피크 수, g+p 개수; 학습 풀 27파일 432문제는 파일 균등·파일 안 균등 추출). 맞으면 (10칸 pcb·pkg 정책 실패의 절반 이상이 학습 분포 상위 25% 위, 그리고 학습 풀 상위 1/3에서 선생님 통과율이 낮음) → 다음 후보 = RL 문제 추출을 난이도 가중으로 (한 가지 변경). 실패가 학습 난이도 전체에 고르게 퍼져 있거나, 학습 최댓값보다 위에 몰려 있으면 (분포 밖 → 가중으로는 못 고침) 이 후보는 버림.
 
 ## 재개 라운드 28 (2026-11-03 05:32~ UTC)
 - 상태: GPU `r2t` RL it 75+ (05:12~, 끝 ~06:30, fail 0.01~0.11, λ 1.25, teach ok 0.69~1.00, gpu peak 14.2 GB, OOM 0; `runs/2026-10-29/r2t_rl/log.txt`) → lo_pcb_r2t → r2tf → lo_pcb_r2tf (~11:45). CPU: 드라이버 줄 pool20 pkg20_1 (02:12~) + 학습 정확 검사 2 + side_slot5 (r2t 평가 대기) = 4. pod 9.7 GiB / 60, oom_kill 1 (라운드 27의 그것, 새것 없음). `ensure_running`: report_watch·resume_agent가 죽어 있어 다시 띄움 (report_watch는 05:34에 결과 22개 push 뒤 "모든 lo_* 끝"으로 스스로 끝남 — 정상). QUEUE 새 지시 없음.

@@ -324,6 +324,20 @@
    "arm": "--model mott --teacher_dir data/teacher_rcp --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
    "seed": 0,
    "after": "runs/analysis/smoke_rule_teacher.ok"
+  },
+  {
+   "name": "r2h",
+   "arm": "--model mott --hard_weight 2",
+   "seed": 0,
+   "init": "runs/2026-10-28/r2_mott_distill/best.pt",
+   "after": "runs/analysis/smoke_hard_weight.ok"
+  },
+  {
+   "name": "lo_pcb_r2h",
+   "arm": "--model mott --hard_weight 2 --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0,
+   "init": "runs/2026-10-29/lo_pcb_r2_distill/best.pt",
+   "after": "runs/analysis/smoke_hard_weight.ok"
   }
  ],
  "cpu": [
@@ -865,6 +879,42 @@
     "runs/pool_v1/eval_ip20_0.pkl",
     "runs/pool_v1/eval_ip20_1.pkl"
    ]
+  },
+  {
+   "name": "repair16 pkg r2_mott_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_*' --policy r2_mott_rl=runs/2026-10-28/r2_mott_rl/best.pt --repair 4 --workers 1 --out runs/repair16",
+   "done": [
+    "runs/repair16/eval/eval_pkg16_0__r2_mott_rl+rep4.json",
+    "runs/repair16/eval/eval_pkg16_1__r2_mott_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair16.log"
+  },
+  {
+   "name": "repair16 pkg modal_rule",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_*' --methods modal_rule --repair 4 --workers 1 --out runs/repair16",
+   "done": [
+    "runs/repair16/eval/eval_pkg16_0__modal_rule+rep4.json",
+    "runs/repair16/eval/eval_pkg16_1__modal_rule+rep4.json"
+   ],
+   "log": "agent/logs/repair16.log"
+  },
+  {
+   "name": "repair16 pkg r0_coord_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_*' --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --repair 4 --workers 1 --out runs/repair16",
+   "done": [
+    "runs/repair16/eval/eval_pkg16_0__r0_coord_rl+rep4.json",
+    "runs/repair16/eval/eval_pkg16_1__r0_coord_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair16.log"
+  },
+  {
+   "name": "repair16 pkg greedy+prune",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_*' --methods gp --repair 4 --workers 1 --out runs/repair16",
+   "done": [
+    "runs/repair16/eval/eval_pkg16_0__greedy+prune+rep4.json",
+    "runs/repair16/eval/eval_pkg16_1__greedy+prune+rep4.json"
+   ],
+   "log": "agent/logs/repair16.log"
   },
   {
    "name": "eval20 eval_pcb20_0 r2a_rl",
@@ -1525,6 +1575,58 @@
     "runs/repair10/eval/eval_pcb10_1__r0_coord_rl+rep4.json",
     "runs/repair10/eval/eval_pkg10_0__r0_coord_rl+rep4.json",
     "runs/repair10/eval/eval_pkg10_1__r0_coord_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair10.log"
+  },
+  {
+   "name": "ls10 repair r2_mott_s1_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2_mott_s1_rl=runs/2026-10-29/r2_mott_s1_rl/best.pt --repair 4 --workers 1 --out runs/repair10",
+   "done": [
+    "runs/repair10/eval/eval_ip10_0__r2_mott_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_ip10_1__r2_mott_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_0__r2_mott_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_1__r2_mott_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_0__r2_mott_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_1__r2_mott_s1_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair10.log"
+  },
+  {
+   "name": "ls10 repair r2_mott_s2_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2_mott_s2_rl=runs/2026-10-29/r2_mott_s2_rl/best.pt --repair 4 --workers 1 --out runs/repair10",
+   "done": [
+    "runs/repair10/eval/eval_ip10_0__r2_mott_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_ip10_1__r2_mott_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_0__r2_mott_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_1__r2_mott_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_0__r2_mott_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_1__r2_mott_s2_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair10.log"
+  },
+  {
+   "name": "ls10 repair r0_coord_s1_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --out runs/repair10",
+   "done": [
+    "runs/repair10/eval/eval_ip10_0__r0_coord_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_ip10_1__r0_coord_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_0__r0_coord_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_1__r0_coord_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_0__r0_coord_s1_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_1__r0_coord_s1_rl+rep4.json"
+   ],
+   "log": "agent/logs/repair10.log"
+  },
+  {
+   "name": "ls10 repair r0_coord_s2_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --out runs/repair10",
+   "done": [
+    "runs/repair10/eval/eval_ip10_0__r0_coord_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_ip10_1__r0_coord_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_0__r0_coord_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pcb10_1__r0_coord_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_0__r0_coord_s2_rl+rep4.json",
+    "runs/repair10/eval/eval_pkg10_1__r0_coord_s2_rl+rep4.json"
    ],
    "log": "agent/logs/repair10.log"
   }

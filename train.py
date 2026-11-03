@@ -98,6 +98,9 @@ def parse():
     p.add_argument("--certify", type=int, default=1, help="exact-check the best sample of each instance every iteration; 2: every distinct grid-feasible sample")
     p.add_argument("--feas_margin", type=float, default=0.0, help="rl reward: a sample counts as feasible only if its "
                    "worst working-grid log10(|Z|/Zt) <= -this (0 = the env's feasibility); certify / val unchanged")
+    p.add_argument("--hard_weight", type=float, default=0.0, help="rl: weight each instance's loss terms by "
+                   "1 + this * (percentile of its g+p count among the loaded training instances of its board kind), "
+                   "normalised to mean 1 over the pool (0 = off; sampling unchanged)")
     p.add_argument("--prior", action="store_true", help="grid model: add the physics prior (as in MoTT)")
     p.add_argument("--no_prune", action="store_true", help="ablation: no remove / change-type actions")
     p.add_argument("--layers", type=int, default=6)
@@ -269,6 +272,21 @@ def main():
         for s in map(int, args.val_sizes.split(",")):
             vb = sample_batch(args.val_n, s, s, cfg, vrng, device=dev, **kw)
             val_sets[s] = (vb, greedy(vb, cfg))
+    hw = None
+    if pool and args.hard_weight > 0:
+        # 11/03 round 29 (QUEUE 11/03 observation 2, scripts/diag_difficulty.py): the eval failures sit in the top
+        # quartile of the training pool's g+p count, inside its range, where the teacher covers least
+        kind = [n.split("_")[1].rstrip("0123456789") for n in pool_names]
+        hw = []
+        for k, t in zip(kind, teachers):
+            g = np.concatenate([tt["gp"].cpu().numpy() for kk, tt in zip(kind, teachers) if kk == k])
+            x = t["gp"].cpu().numpy()
+            q = ((g[None, :] < x[:, None]).sum(1) + 0.5 * (g[None, :] == x[:, None]).sum(1)) / len(g)   # mid-rank
+            hw.append(1.0 + args.hard_weight * q)
+        mean = np.concatenate(hw).mean()
+        hw = [torch.from_numpy(w / mean).float().to(dev) for w in hw]
+        log(f"hard_weight {args.hard_weight}: instance weights {min(w.min().item() for w in hw):.2f}.."
+            f"{max(w.max().item() for w in hw):.2f}")
 
     best_val, best_iter, lam, t0 = 1e9, 0, args.lam, time.time()
     last_val, it_done, n_replaced, n_oom, n_capped = {}, 0, 0, 0, 0
@@ -422,6 +440,9 @@ def main():
                             Rb = -bo["count"].float() / n_ref[cb] - lam * (bfail.float() + bo["V"].float())
                             benv = bo = None
                         adv = (R - Rb[:, None]).view(-1)
+                    wc = hw[pi][ibc] if hw is not None else torch.ones(nb, device=dev)   # --hard_weight
+                    if hw is not None:
+                        adv = adv * wc.repeat_interleave(args.M)
                     loss += backward_logp(policy, out["traj"], adv, H, W, amp, scale=1.0 / E)
                     if args.imit > 0:  # imitate the best-known solution of each instance
                         key = cnt + fail * 1e6
@@ -430,14 +451,15 @@ def main():
                         ep = torch.arange(nb, device=dev) * args.M + best.indices
                         steps = (out["actions"] >= 0).sum(1).clamp(min=1).float()
                         wt = torch.zeros(nb * args.M, device=dev)
-                        wt[ep[use_sample]] = args.imit / steps[ep[use_sample]]
+                        wt[ep[use_sample]] = args.imit * wc[use_sample] / steps[ep[use_sample]]
                         loss += backward_logp(policy, out["traj"], wt, H, W, amp, scale=1.0 / args.B)
                         tb = torch.nonzero(~use_sample & teach["feasible"][cb]).squeeze(-1)
                         if tb.numel():
                             tenv = make_env(batch, ibc[tb], cfg, args.feat, max_steps=args.max_steps, allow_prune=not args.no_prune)
                             rep = rollout(policy, tenv, forced=teach["actions"][cb][tb], store=True, amp=amp)
                             tsteps = (rep["actions"] >= 0).sum(1).clamp(min=1).float()
-                            loss += backward_logp(policy, rep["traj"], args.imit / tsteps, H, W, amp, scale=1.0 / args.B)
+                            loss += backward_logp(policy, rep["traj"], args.imit * wc[tb] / tsteps, H, W, amp,
+                                                  scale=1.0 / args.B)
                         if pool and args.stage == "rl":
                             # expert iteration: a certified sample with fewer decaps than the stored teacher replaces it
                             better = cert_ok & (best.values < tch["count"][ibc].float())
