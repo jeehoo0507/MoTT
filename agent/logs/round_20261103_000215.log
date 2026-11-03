@@ -22,3 +22,7 @@ I wrote today's DAILY.md, put the 16-cell LS runs in the queue, and committed an
 **Next round**
 - Evaluate `lo_pcb_r2m` and give the final `r2m` verdict by the rule written in round 7.
 - If none of the remaining checks (`r2m`, `r2g`) wins, I'll leave the GPU idle after 03:35 rather than start a change without a diagnosis behind it.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d22c987..f50906c  main -> main
