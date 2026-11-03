@@ -63,12 +63,22 @@ def main():
     # 11/03 round 27: an arm may carry its own --teacher_dir (teacher-store change); argparse keeps the last value,
     # so the default must not follow it
     tdir = "" if "--teacher_dir" in a.arm.split() else f"--teacher_dir {a.teacher_dir} "
+    # 11/03 round 34 (PROPOSALS D2, diagnosis): an arm token "--distill_iters N" ends the distill stage at N
+    # iterations instead of the 0.75 h limit (MoTT gets ~1600 iterations in 0.75 h, the grid rungs ~2200); it is
+    # removed from the arm, so the rl stage is unchanged
+    dist_extra = ""
+    toks = a.arm.split()
+    if "--distill_iters" in toks:
+        i = toks.index("--distill_iters")
+        dist_extra = f" --iters {int(toks[i + 1])}"
+        a.distill_hours = max(a.distill_hours, 3.0)   # the iteration cap ends it, not the clock
+        a.arm = " ".join(toks[:i] + toks[i + 2:])
     pools = f"--pool {a.pool} {tdir}--seed {a.seed}"
     dist, rl = f"{base}_distill", f"{base}_rl"
     if a.init_from:   # 11/02: a one-change rl re-run paired with an existing rung shares its distilled init
         a.skip_distill = True
     if not a.skip_distill and fresh(dist):
-        sh(f"{PY} train.py --stage distill {a.arm} {a.common} {pools} --hours {a.distill_hours} --out {dist}", log)
+        sh(f"{PY} train.py --stage distill {a.arm} {a.common}{dist_extra} {pools} --hours {a.distill_hours} --out {dist}", log)
     if fresh(rl):
         init = "" if a.skip_distill else f"--init {dist}/best.pt "   # --skip_distill: rl from random init
         if a.init_from:

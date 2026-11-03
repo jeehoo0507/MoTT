@@ -122,3 +122,13 @@
 - **실행:** `r0_coord`·`r1_modal`·`r2_mott` seed 1·2의 `_distill/best.pt`를 드라이버 eval10과 같은 명령 (inst_chunk 5, workers 1)으로 10칸 6파일 평가. `scripts/queue_distill_eval.py`, 4번째 칸 filler (`ls10 distill-eval …`). 학습·코드 변경 없음.
 - 가장 가까운 선행: 없음 (진단) / 다른 점: 기여 아님.
 - **미리 적는 사용법:** r2_distill의 pkg 성공률이 seed 3개 **모두에서** r0_distill과 r1_distill 둘 다보다 낮으면 → "MoTT는 pkg에서 선생님을 덜 따라 한다 (증류 단계)"를 RESULTS에 발견으로 적고, 다음 MoTT 후보의 표적을 증류 단계로 정함 (후보 자체는 따로 결과 전에 적음). 하나라도 아니면 seed 0 차이는 "seed 하나"로만 적고 후보 근거로 쓰지 않음. pcb·ip는 같은 표로 보고만 함.
+- **결과 (라운드 34): 성립** — pkg r2 0.70 / 0.68 / 0.70, r0 0.90 / 0.74 / 0.78, r1 0.90 / 0.86 / 0.94 (RESULTS D1 표, 자동 판정 줄).
+
+## 11/03 D2: 증류 갱신 횟수를 0단과 맞춘 2단 (`r2it`, 라운드 34 — 학습 결과 전에 고정, 진단)
+- **근거:** D1 성립. 같은 라운드의 진단은 다른 설명을 기각: (a) 모드 토큰이 위반 대역을 놓침 (`diag_mode_cover`: 그런 판 pcb 0.18·pkg 0.06 < 0.20), (b) 선생님을 덜 맞춤 (`diag_imit` seed 0: 학습 풀 pkg nll r2 2.65 < r1 2.81 — r2가 더 잘 맞추는데 평가 pkg는 0.70 vs 0.90), (c) 고정 물리 prior가 지배 (prior sd ≪ 잔차 sd; pkg의 prior 일치율 0.26 < ip 0.53). 남은 차이: **같은 0.75 h에 MoTT 증류는 1477~1770 iter, 격자 단은 2100~2458 iter** (모든 run에서 약 27 % 적음, `*_distill/metrics.json`). best.pt가 이른 iter인 경우도 있음 (r2 s2 it 200).
+- **실행 (진단, 한 가지만 바꿈):** `r2_mott` seed 0과 같은 arm·선생님·풀·val, 증류만 **2192 iter에서 끝** (= `r0_coord_distill` seed 0의 iter 수; 시간 상한 대신 iter 상한, ~1.05 h), RL 1.25 h 그대로. `run_rung.py` arm 토큰 `--distill_iters 2192` (RL 단계에는 안 감). GPU 큐 lo_pcb_r2s2 뒤.
+- 가장 가까운 선행: 없음 (학습 예산 점검) / 다른 점: 기여 아님. 예산을 늘린 run이라 사다리 표·주장에는 쓰지 않음.
+- **미리 적는 사용법:** 주 비교 = `r2it_distill` vs `r2_mott_distill` (seed 0) 10칸 pkg 50문제 짝지은 bootstrap.
+  - CI 하한 > 0 → "같은 시간 예산에서 MoTT 증류의 갱신 횟수 부족이 D1 차이의 (일부) 원인" → 다음 후보 = 같은 0.75 h 안에서 MoTT 증류 iter를 늘리는 구현 변경 (모델 계산 줄이기; 학습법·예산 불변)을 따로 결과 전에 적음; 사다리 표에 "2단은 같은 시간에 갱신 27 % 적음" 단서.
+  - CI가 0을 포함하거나 상한 < 0 → "갱신 횟수로는 설명 안 됨" → 이 갈래 버림, 사다리 단서만 적음.
+  - 같이 보고 (판정 아님): pcb·ip 차, r0·r1 증류 pkg와의 차, `r2it_rl` vs `r2_mott_rl` (T5 N2 때문에 RL 쪽은 판정에 쓰지 않음).
