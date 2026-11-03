@@ -7,3 +7,6 @@
 [  1008s] eval_pkg10_0   r2_mott_s2_distill@last      ok 0.80 count 6.60 0.453s/inst rounds 4
 done
 2 sets x 1 methods = 2 jobs, 1 workers -> runs/analysis/ckpt_last/eval
+[   236s] eval_pkg10_1   r2it_distill@last            ok 0.68 count 7.88 1.347s/inst rounds 4
+[   368s] eval_pkg10_0   r2it_distill@last            ok 0.76 count 6.21 0.494s/inst rounds 4
+done
