@@ -40,7 +40,7 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start = args
     import resource
     import numpy as np
     import torch
@@ -54,6 +54,8 @@ def job(args):
     from train import make_policy
     name = os.path.splitext(os.path.basename(path))[0]
     tech, size = parse_set(name)
+    if start == "rule" and spec:                    # trained policies only; baselines in the same call run as usual
+        method = f"modal_rule>{method}"
     rec_method = f"{method}+rep{repair}" if repair else method
     dst = os.path.join(out, "eval", f"{name}__{rec_method}.json")
     if os.path.exists(dst):
@@ -121,6 +123,24 @@ def job(args):
             j = key.argmin(1) + torch.arange(bb.B) * S
             return dict(occ=o["occ"][j], feasible=o["feasible"][j])
 
+        if start == "rule":                       # (only reached for trained policies)
+            # 11/03 T4 (PROPOSALS, QUEUE 11/03 obs. 3): modal_rule's solution (already pruned like g+p) is the
+            # start; the policy continues from it with greedy decoding (on a met target the env only allows
+            # remove / change type / stop). Inside the cutting-plane, so every round re-runs rule -> policy.
+            assert S <= 1, "--start rule: greedy decoding only"
+
+            @torch.no_grad()
+            def fn(bb):
+                occ0 = modal_heuristic(bb, cfg)["occ"]
+                step = inst_chunk if inst_chunk > 0 else bb.B
+                occ, feas = [], []
+                for i in range(0, bb.B, step):
+                    env = make_env(bb, torch.arange(i, min(i + step, bb.B)), cfg, a["feat"], occ0=occ0[i:i + step])
+                    o = rollout(pol, env, greedy=True, amp=False)
+                    occ.append(o["occ"])
+                    feas.append(o["feasible"])
+                return dict(occ=torch.cat(occ), feasible=torch.cat(feas))
+
         if S <= 1:
             @torch.no_grad()
             def cont(bb, inst, occ0):
@@ -186,6 +206,8 @@ def main():
     ap.add_argument("--inst_chunk", type=int, default=0, help="policy greedy rollout: instances per rollout (0 = all)")
     ap.add_argument("--repair", type=int, default=0, help="after the cutting-plane: up to K repair rounds (method "
                     "continues from its placement on the grid + its exact-check failures); records '<method>+repK'")
+    ap.add_argument("--start", default="", choices=["", "rule"], help="policy: start from modal_rule's solution and "
+                    "let the policy continue (remove / change type / stop); records 'modal_rule><name>'")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     files = sorted({f for s in a.sets.split(",") for f in glob.glob(os.path.join(a.pool, s + ".pkl"))})
@@ -197,7 +219,7 @@ def main():
         methods.append((n if a.samples <= 1 else f"{n}@{a.samples}", path))
     ls_cfg = tuple(map(int, a.ls.split("x")))
     ga_cfg = tuple(map(int, a.ga.split("x")))
-    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair)
+    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair, a.start)
             for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()

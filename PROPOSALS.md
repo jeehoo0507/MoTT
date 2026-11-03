@@ -81,3 +81,14 @@
 - **미리 적는 판정 (T1과 같은 규칙):** seed 0, 판마다 50문제 짝지은 bootstrap. (i) 같은 종류 pcb·pkg 중 하나 이상에서 r2h − r2_mott_rl 성공률 CI 하한 > 0이 day 1 기록과 `r2_mott_rl@last` **둘 다에서** 성립하거나, lo_pcb_r2h − lo_pcb_r2_rl (뺀 pcb) CI 하한 > 0, (ii) 그리고 다른 판에서 점추정이 −0.05 아래가 아니면 "이김" → seed 1·2 확장 + QUEUE 공정성: 같은 가중으로 0단 좌표 (`r0h`, r0_coord distill에서 RL만). 두 기준이 갈리면 "판정 보류", 그 밖은 "효과 없음"/"해로움". 같이 보고 (판정 아님): 개수비, 학습 3분위별 성공률 (`diag_difficulty.py <run> <method>`로 같은 표).
 - 주의 (결과 전): 같은 학습 예산에서 쉬운 문제 가중을 낮추므로 쉬운 문제 개수가 늘 수 있음 — 개수비를 같이 봄.
 
+
+## 11/03 T4: 규칙 해에서 출발해 정책이 다듬기 — 평가만, 학습 없음 (QUEUE 11/03 관찰 3 두 번째 갈래, 라운드 30 — 10칸 결과 전에 고정)
+- **근거:** H3 (MoTT 해의 종류 비율 ≈ modal_rule), T2 R2 (같은 고치기를 주면 성공률은 r2 = 규칙, 정책이 이기는 곳은 ip 개수 ×0.689뿐), 10칸 seed 0에서 규칙이 pcb 1.00·pkg 0.88로 정책 (0.88·0.72)보다 높음. → "규칙의 성공 + 정책의 적은 개수"를 한 파이프라인으로 얻을 수 있는지를 학습 없이 먼저 본다 (작은 실험 먼저).
+- **변경 하나 (`eval_policy.py --start rule`, 기록 이름 `modal_rule><정책>`):** cutting-plane 각 round 안에서 modal_rule (g+p처럼 prune까지 한 해)을 시작 배치로 두고, 정책이 그 배치에서 greedy decoding으로 이어 감 (목표를 만족한 상태라 환경은 remove·종류 바꿈·stop만 허용 → 격자 위에서는 개수가 늘 수 없음). 정책·체크포인트·판·정확 검사·cutting-plane 4 round는 그대로, 고치기 (`--repair`) 없음. smoke (`scripts/smoke_rule_start.py`, pkg 8칸 6문제, 1 round): 경로 동작, 격자에서 성공한 규칙 해 위에서 개수 증가 없음 → `runs/analysis/smoke_rule_start.ok` (smoke에서는 6문제 모두 정책이 바로 stop — 숫자는 보고 안 함).
+- 대상 (10칸 6파일 150문제, seed 0): `modal_rule>r2_mott_rl`, 공정성으로 `modal_rule>r0_coord_rl`. 비교 상대는 기존 `modal_rule` 기록 (`runs/2026-10-28/baselines`, 같은 판, 결정적). 기록 `runs/rulestart10/eval/`. 4번째 CPU 칸 filler (`ls10 rulestart …`), T2 seed 0 고치기 (g+p·0단) 뒤, seed 1·2 고치기 앞.
+- 가장 가까운 선행: 규칙/휴리스틱 해를 시작점으로 학습 개선 (learning-to-improve, Chen & Tian 2019; LS의 destroy-repair) / 다른 점: 없음 — 평가 파이프라인 변형, 기여로 쓰지 않음. 정책에 규칙을 넣는 것이 아니라 규칙 해 위에서 정책을 돌리는 것이라 보고서에는 "규칙+정책" 별도 행으로만.
+- **미리 적는 판정:** 판 (ip·pcb·pkg 10칸, 각 50문제)마다 짝지은 bootstrap 95% CI.
+  - (S1) `modal_rule>r2_mott_rl` vs `modal_rule`: 개수비 (둘 다 성공한 문제) CI 상한 < 1 이고 성공률 차 점추정 ≥ −0.05 → 그 판에서 "정책 다듬기가 규칙 해를 줄인다". 성공률 차 CI 상한 < 0 → "해로움". 그 밖은 "효과 없음".
+  - (S2) 공정성: `modal_rule>r0_coord_rl`에 같은 규칙. S1이 r2와 0단 둘 다에서 성립하면 "학습 정책 일반의 다듬기 (MoTT 고유 아님)"로 씀.
+  - 같이 보고 (판정 아님): 정책이 규칙 해를 바꾼 문제 비율, vs `r2_mott_rl` 단독 (성공률·개수비).
+  - 다음 결정: S1이 어느 판에서든 성립하면 → GPU 후보 "규칙 해에서 출발하는 RL" (학습 결과 전에 따로 적음). 정책이 거의 바꾸지 않으면 (smoke처럼 바로 stop) → 평가 파이프라인으로는 효과 없음으로 기록, 학습 쪽 후보로 할지는 T1'·T3 판정 뒤 근거와 함께 따로 정함. 결과 보고 대상·판·round를 바꾸지 않음.

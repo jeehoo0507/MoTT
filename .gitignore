@@ -54,3 +54,5 @@ agent/logs/repair10.log
 # 11/03 round 29: widened repair (driver lane, 16-cell) and the side slot with the T3 targets, appended while running
 agent/logs/repair16.log
 agent/logs/side_slot6.log
+# 11/03 round 30: T4 rule-start eval jobs (side_slot filler), appended while running
+agent/logs/rulestart10.log

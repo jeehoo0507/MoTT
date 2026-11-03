@@ -832,6 +832,39 @@ def repair_table(recs):
     return lines
 
 
+def rulestart_table(recs):
+    """PROPOSALS 11/03 T4: modal_rule's solution as the start, the policy continues (`modal_rule><policy>`,
+    eval_policy.py --start rule). (S1/S2) vs modal_rule, paired on the same problems; descriptive: how often the
+    policy changed the rule's placement, and vs the same policy from an empty board."""
+    rs = [r for r in recs if r["method"].startswith("modal_rule>")]
+    if not rs:
+        return []
+    rule = {r["set"]: r for r in recs if r["method"] == "modal_rule" and "ok_pre" not in r}
+    rows = []
+    by = defaultdict(lambda: defaultdict(list))
+    for r in rs:
+        by[(r["tech"], int(r["size"]))][r["method"]].append(r)
+    for key in sorted(by):
+        for m in sorted(by[key]):
+            ch = n = 0
+            for r in by[key][m]:
+                if r["set"] in rule:
+                    ch += sum(a != b for a, b in zip(r["occ"], rule[r["set"]]["occ"]))
+                    n += r["n"]
+            rows.append(f"| {key[0]} {key[1]} | {m} | {ch} / {n} |")
+    pol = {r["method"] for r in rs}
+    lines = ["## 규칙 해에서 출발해 정책이 다듬기 (PROPOSALS 11/03 T4, 평가만): cutting-plane 각 round에서 modal_rule 해를 "
+             "시작 배치로, 정책이 greedy decoding으로 이어 감 (목표 만족 상태라 remove·종류 바꿈·stop만)", "",
+             "판정 규칙은 결과 전에 PROPOSALS 11/03 T4에 적음. 고치기 없음. 정책이 규칙 배치를 바꾼 문제 수는 같은 판의 "
+             "`modal_rule` 기록 (cutting-plane 마지막 해)과 배치가 다른 문제 (기술용).", "",
+             "| 판 | 방법 | 배치가 규칙과 다른 문제 |", "|---|---|---|"] + rows + [""]
+    lines += ci_table(recs, ref="modal_rule", title="`modal_rule` (규칙 단독)", only=pol)
+    for m in sorted(pol):
+        lines += ci_table(recs, ref=m.split(">", 1)[1], title=f"같은 정책 빈 판에서 시작 (`{m.split('>', 1)[1]}`, 판정 아님)",
+                          only={m})
+    return lines
+
+
 def ckpt_table(recs):
     """Diagnosis H1 (PROGRESS 11/02): the same run's last.pt (`<run>@last`, runs/analysis/ckpt_last) vs the best.pt
     that every table reports (chosen on 3 RL validations of 16 problems per type)."""
@@ -966,6 +999,7 @@ def main():
     lines += design_rationale(recs)
     lines += sampling_table(recs)
     lines += repair_table(recs)
+    lines += rulestart_table(recs)
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
     lines += train_table()
