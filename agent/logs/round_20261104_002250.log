@@ -24,3 +24,7 @@ error: Please commit or stash them.
 - 16칸 g+p 고치기가 00:33에 끝났고(pkg16_1 0.96), 드라이버 CPU 줄은 20칸 평가로 넘어갔습니다. 메모리는 18.5 / 60 GiB, oom_kill은 예전 1건 그대로입니다.
 
 다음 라운드: lo_pcb_r2pk 평가(~03:15) → r2pk_s1 증류만 평가 큐(~04:00) → P1 묶음 판정(~07:15) 순서이고, P1 평가가 끝나면 P2용 평가 칸(side_slot)을 다시 띄웁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0ba1f16..e40ba01  main -> main
