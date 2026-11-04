@@ -10,7 +10,8 @@
   - 결정: 09:24에 이미 시작된 `eval20 eval_ip20_1 r3_loop_rl`은 죽이지 않고 끝까지 둠 — 이유: 지시가 도착하기 전 시작, 수 분짜리라 죽이면 일만 버림; 그다음이 바로 modal_rule 20.
   - 결정: ls16 (LS 16칸 6개, 지시에 없음)은 사람 지시 항목 전부 뒤로 — 이유: 지시 항목이 우선이고, LS16은 메모리가 큰 작업 (메모리 기록 OOM 11/03)이라 늦게 도는 쪽이 보수적.
   - P2가 "이김"이면 `queue_scale_curve.py --r2dd`로 r2dd_rl 16·20칸을 r2pk 뒤에 (스크립트가 판정 확인).
-- 할 일 (다음): (1) `--refine_u` 결과 → PROPOSALS P3 같이 보고. (2) lo_pcb_r2dd 평가 (~11:25) → P2 일찍 멈춤 규칙. (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
+- **`--refine_u` (보고만):** P1 점검과 같은 덮인 실패 70개에서 보정 초과량 > 0.02 비율 원래 이웃 0.41 (재현) → 고유 이웃 0.56, 중앙값 0.012 → 0.024 decade (덜 풀림 0.45). 맨판 (0.09 → 0.65)보다 차이가 작음 → PROPOSALS P3 근거 문장을 "맨판 기준"으로 정정 (규칙·큐 조건 그대로).
+- 할 일 (다음): (2) lo_pcb_r2dd 평가 (~11:25) → P2 일찍 멈춤 규칙. (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
 - 상태 (08:45): GPU **P2 `r2dd`** RL 07:52~ (끝 ~09:05) → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → **P1 확장** r2pk_s2 → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:00). CPU: 드라이버 줄 eval20 (`eval_ip20_0`) + 학습 정확 검사 2 + 4번째 칸 side_slot = 4. pod ~8 GiB / 60, oom_kill 1 (라운드 27 그것).
