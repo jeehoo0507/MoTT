@@ -1,7 +1,9 @@
-# PROGRESS (갱신 2026-11-04 05:40 UTC, 재개 라운드 39)
+# PROGRESS (갱신 2026-11-04 07:30 UTC, 재개 라운드 39)
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
-- 상태 (05:40): GPU **`lo_pcb_r2pk_s1`** (끝 ~07:05) → P2 r2dd → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00). CPU: 드라이버 줄 eval20 (`eval_pkg20_1` 차례) + 학습 정확 검사 2 + 4번째 칸 side_slot (P1 seed 1 + P2 대상) = 4. pod 5~13 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- 상태 (07:30): GPU **P2 `r2dd`** 증류 07:05~ (끝 ~07:50, RL ~09:05) → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → **P1 확장** r2pk_s2 → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:00).
+- **P1 판정 (PROPOSALS P1 규칙 그대로, RESULTS "P1 seed 0·1 묶음 판정" 자동): "이김" (같은 종류 pcb)** — pcb 묶음 +0.080 [+0.010, +0.160] (seed +0.02 / +0.14), pkg +0.050 [−0.050, +0.150], ip −0.010, 뺀 pcb +0.000 [−0.080, +0.090] (seed −0.04 / +0.04). `lo_pcb_r2pk_s1` (355 iter / 1.26 h) 10칸: 뺀 pcb 0.88 / pkg 0.82 / ip 1.00. 확장 4 run 큐 (`scripts/queue_p1_ext.py`, 판정이 "이김"이 아니면 거부하는 스크립트). 최종 구조 채택은 seed 3개 확인 + 뺀 ip·pkg 뒤 (RESULTS `### P1 확장` 자동).
+- 이전 상태 (05:40): GPU `lo_pcb_r2pk_s1` (끝 ~07:05) → P2 4 run (~15:00). CPU: 드라이버 줄 eval20 (`eval_pkg20_1` 차례) + 학습 정확 검사 2 + 4번째 칸 side_slot (P1 seed 1 + P2 대상) = 4. pod 5~13 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
 - **`r2pk_s1_rl` 끝** (340 iter / 1.28 h, best it 300, replaced 133 시점 기록 — RESULTS ckpt 표), 10칸 평가 05:05~05:16: ip 1.00 / pcb **0.92** / pkg **0.88**; vs `r2_mott_s1_rl` pcb **+0.14 [+0.02, +0.26]**, pkg +0.04 [−0.08, +0.16], ip +0.00.
 - **P1 묶음 (뺀 pcb seed 1 대기, 판정 전):** 같은 종류 pcb +0.02 / +0.14 → 묶음 **+0.080 [+0.010, +0.160]** (조건 (i) 충족), pkg +0.050 [−0.050, +0.150], ip −0.010. 남은 것: (ii) 뺀 pcb 묶음 점추정 ≥ −0.05 이고 해로움 없음 (seed 0 −0.04). 주의 (판정 안 바꿈): seed 1 기준 `r2_mott_s1_rl` pcb 0.78은 seed 3개 중 가장 낮음.
 - **P1 확장 계획 (PROPOSALS P1, lo_pcb_r2pk_s1 결과 전에 적음):** "이김"이면 r2pk_s2·lo_pcb_r2pk_s2·lo_ip_r2pk·lo_pkg_r2pk를 **P2 4 run 뒤**에 큐 (기존 순서 유지), seed 0·1·2 묶음 CI 하한 > 0 + seed 2 ≥ 0이면 "seed 3개 확인", 최종 구조 채택은 뺀 ip·pkg 점추정 > −0.16 추가. `collect_results.pooled_mod_table`에 확장 표 코드 (`### P1 확장`, 판정 "이김"일 때만 나옴); `scripts/test_pooled_ext.py` (가짜 기록으로 세 상태 렌더링만 확인) 통과.
