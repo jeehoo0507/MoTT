@@ -1274,6 +1274,96 @@ def pooled_mod_table(recs):
     return L
 
 
+SCALE_METHODS = ["greedy+prune", TA, "modal_rule", "r0_coord_rl", "r1_modal_rl", "r2_mott_rl", "r2pk_rl", "r2pk_s1_rl"]
+
+
+def scale_curve_table(recs):
+    """QUEUE 11/04 18:20 KST (human): per kind, rows = methods, columns = 10 / 16 / 20 cells (exact success, count ratio
+    vs modal_rule on problems both solve paired within the same pool file, sec per problem, problems). 20 cells has
+    8-16 problems: success and ratio get a 95% bootstrap CI and the "작은 표본" mark. A `*.json.memskip` marker
+    (scripts/mem_guard.py, 45 GiB rule) shows as "메모리로 생략". Item 4 (record only): r2_mott_rl - r1_modal_rl at 20."""
+    by = merged(recs)
+    pr = paired(recs, "modal_rule")
+    skips = defaultdict(list)
+    for f in glob.glob("runs/**/eval/*.json.memskip", recursive=True):
+        s, m = os.path.basename(f)[:-len(".json.memskip")].split("__", 1)
+        t, n = re.match(r"eval_([a-z]+)(\d+)_\d+", s).groups()
+        skips[(t, int(n), m)].append(s)
+    if not any(k[1] == 20 for k in by):
+        return []
+    L = ["## 규모 곡선: 판 크기 10 → 16 → 20 (QUEUE 11/04 18:20 KST; 새 학습 없음, 평가만)", "",
+         "칸마다 성공률 / 개수비 vs `modal_rule` (둘 다 성공, 같은 풀 파일끼리 짝) / 문제당 초 / 문제 수. 20칸은 문제 수가 적어 "
+         "성공률·개수비에 95% bootstrap CI를 붙이고 \"작은 표본\"으로 표시. `gp_type_aware`는 종류별 g+p 기록이 있는 크기만.", ""]
+    for tech in ("pcb", "pkg", "ip"):
+        L += [f"### {tech}", "", "| 방법 | 10칸 | 16칸 | 20칸 (작은 표본) |", "|---|---|---|---|"]
+        for m in SCALE_METHODS:
+            cells = []
+            for n in (10, 16, 20):
+                r = by.get((tech, n), {}).get(m)
+                if r is None:
+                    sk = skips.get((tech, n, m))
+                    cells.append(f"메모리로 생략 ({', '.join(sorted(sk))})" if sk else "–")
+                    continue
+                ok = r["ok"].astype(float)
+                if m == "modal_rule":
+                    rt = "1 (기준)"
+                else:
+                    p = pr.get((tech, n), {}).get(m)
+                    if p is None:
+                        rt = "–"
+                    else:
+                        om, orf, cm, cr = p
+                        def ratio(i, om=om, orf=orf, cm=cm, cr=cr):
+                            b = om[i] & orf[i]
+                            return (cm[i][b] / np.maximum(cr[i][b], 1)).mean() if b.any() else np.nan
+                        rt = fmt(ratio(np.arange(len(om))), 3)
+                        if n == 20:
+                            lo, hi = boot_ci(ratio, len(om))
+                            rt += f" [{fmt(lo, 2)}, {fmt(hi, 2)}]"
+                sr = f"{ok.mean():.2f}"
+                if n == 20:
+                    lo, hi = boot_ci(lambda i, ok=ok: ok[i].mean(), len(ok))
+                    sr += f" [{lo:.2f}, {hi:.2f}]"
+                sk = skips.get((tech, n, m))
+                extra = f"; 메모리로 생략 {', '.join(sorted(sk))}" if sk else ""
+                cells.append(f"{sr} / {rt} / {fmt(r['sec'], 2)} s / {len(ok)}{extra}")
+            L.append(f"| {m} | " + " | ".join(cells) + " |")
+        L.append("")
+    p20 = paired(recs, "r1_modal_rl")
+    rows = [f"| {t} 20 | " + ci_cells(*p20[(t, 20)]["r2_mott_rl"]) + " |" for t in ("pcb", "pkg", "ip")
+            if "r2_mott_rl" in p20.get((t, 20), {})]
+    if rows:
+        L += ["#### 20칸 모드 토큰 효과 (기록만, 판정 없음): `r2_mott_rl` − `r1_modal_rl` (seed 0, 짝지은 bootstrap)", "",
+              "| 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 r2/r1 (둘 다 성공) [95% CI] |", "|---|---|---|---|"] + rows + [""]
+    return L
+
+
+def loop_r_size_table(recs):
+    """QUEUE 11/04 18:15 KST (human, record only): r3_loop_rl evaluated with R = 2/4/8/16 loop iterations (R8 = the
+    plain r3_loop_rl record) at 10 / 16 / 20 cells: success, mean count on solved, sec per problem."""
+    by = merged(recs)
+    rows = []
+    for n in (10, 16, 20):
+        for tech in ("pcb", "pkg", "ip"):
+            ms = by.get((tech, n), {})
+            if not any(f"r3_loop_rl@R{r}" in ms for r in (2, 4, 16)):
+                continue
+            cells = []
+            for r in (2, 4, 8, 16):
+                x = ms.get("r3_loop_rl" if r == 8 else f"r3_loop_rl@R{r}")
+                cells.append("–" if x is None else
+                             f"{x['ok'].mean():.2f} / {fmt(x['cnt'][x['ok']].mean() if x['ok'].any() else None, 1)} / "
+                             f"{fmt(x['sec'], 2)} s ({len(x['ok'])})")
+            rows.append(f"| {tech} {n} | " + " | ".join(cells) + " |")
+    if not rows:
+        return []
+    return ["## 루프 반복 수 vs 판 크기 (QUEUE 11/04 18:15 KST, 기록만; `r3_loop_rl` seed 0, R8 = 기본 평가)", "",
+            "미리 적은 읽기 (결과 전, 사람): 16·20칸에서 R이 클수록 성공률이 오르거나 개수가 줄면 \"큰 판에서 반복이 쓰인다\"; "
+            "평평하면 \"반복의 이득은 관찰되지 않았다\".", "",
+            "| 판 | R 2 | R 4 | R 8 | R 16 |", "|---|---|---|---|---|",
+            "| (칸 내용) | 성공률 / 개수 (성공 평균) / 문제당 초 (문제 수) | | | |"] + rows + [""]
+
+
 def repair_ladder_table():
     """PROPOSALS 11/03 R4 (scripts/diag_repair_ladder.py): r2_mott+rep4 vs r0_coord+rep4 per seed and pooled."""
     f = "runs/analysis/diag_repair_ladder.json"
@@ -1434,6 +1524,8 @@ def main():
     lines += distill_mech_table()
     lines += rl_noise_table(recs)
     lines += pooled_mod_table(recs)
+    lines += scale_curve_table(recs)
+    lines += loop_r_size_table(recs)
     lines += repair_ladder_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)

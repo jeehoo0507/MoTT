@@ -6,6 +6,10 @@
 - **P3 미리 적음 (PROPOSALS 11/04 P3, 08:56 UTC — `r2dd_rl` 평가 전):** P1 위에 P2 (`--peak_refine --dedup_modes` → `--feat mott_pkdd`, `decap_loop/pkdd_env.py`), 기준 = P1 run (r2pk·lo_pcb_r2pk seed 0·1). 근거 (smoke `scripts/smoke_pkdd.py` → `.ok`): 맨판 유효 토큰 중 P1 보정 초과량 > 0.01 비율 pkg 0.09 / pcb 0.21 — 패딩 중복으로 j±1 이웃이 복사본이라 0; 고유 이웃이면 0.65 / 0.59. 큐 조건: P1 "이김" + P2 판정 "해로움" 아님 → `scripts/queue_p3.py` (P1 확장 뒤). `pooled_mod_table`·ABLATIONS에 P3 등록 (기준 run을 mod마다 받게 일반화).
   - 결정: P2 "이김"만 조건으로 하지 않음 — 이유는 PROPOSALS P3 (표적이 P1 채널 결함, P2 판정은 그 질문에 답하지 않음; "해로움"이면 취소).
   - 보충 (정확하게): 0.09는 **맨판** 값. P1 큐 전 점검 (근-만족 실패 해의 덮는 토큰)에서는 초과량 > 0.02 비율 0.41이었음 → 같은 실패 해에서 고유 이웃 값을 `diag_fail_freq.py --refine_u` (보고만, 규칙 없음)로 잼.
+- **QUEUE 11/04 18:20·18:15 KST (사람, 09:20 UTC에 pull) 반영 — 드라이버 CPU 줄 (`scripts/queue_scale_curve.py`, 원자적 쓰기, 다시 돌려도 같음):** 대기 순서 = base20 modal_rule 6 → eval20 남은 것 (r3_loop ip20_1 하나) → base20 g+p 6 (`scripts/mem_guard.py`로 감쌈: pod > 45 GiB면 죽이고 `<기록>.json.memskip` → RESULTS "메모리로 생략") → **r2pk_rl·r2pk_s1_rl × 16·20칸 12 세트** (24) → **r3_loop_rl @R2·@R4·@R16 × 같은 12 세트** (12) → 나머지 (ls16 6). RESULTS 새 절 "규모 곡선" (종류별 방법 × 10/16/20칸, 개수비 vs modal_rule, 20칸 CI + "작은 표본", 20칸 r2 − r1 기록만)·"루프 반복 수 vs 판 크기" (R 2/4/8/16, 미리 적은 읽기 그대로, 기록만) 자동.
+  - 결정: 09:24에 이미 시작된 `eval20 eval_ip20_1 r3_loop_rl`은 죽이지 않고 끝까지 둠 — 이유: 지시가 도착하기 전 시작, 수 분짜리라 죽이면 일만 버림; 그다음이 바로 modal_rule 20.
+  - 결정: ls16 (LS 16칸 6개, 지시에 없음)은 사람 지시 항목 전부 뒤로 — 이유: 지시 항목이 우선이고, LS16은 메모리가 큰 작업 (메모리 기록 OOM 11/03)이라 늦게 도는 쪽이 보수적.
+  - P2가 "이김"이면 `queue_scale_curve.py --r2dd`로 r2dd_rl 16·20칸을 r2pk 뒤에 (스크립트가 판정 확인).
 - 할 일 (다음): (1) `--refine_u` 결과 → PROPOSALS P3 같이 보고. (2) lo_pcb_r2dd 평가 (~11:25) → P2 일찍 멈춤 규칙. (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
