@@ -422,6 +422,11 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("lo_pcb_r2dd_s1_rl", "lo_pcb_r2_s1_rl", "pcb 빼고 학습 2단 + `--dedup_modes` (seed 1)", "중복 그대로"),
     ("r2dd_distill", "r2_mott_distill", "증류만: 2단 + `--dedup_modes` (seed 0, D1 표적)", "중복 그대로"),
     ("r2dd_s1_distill", "r2_mott_s1_distill", "증류만: 2단 + `--dedup_modes` (seed 1, D1 표적)", "중복 그대로"),
+    # 11/04 round 39 (PROPOSALS P1 확장, queued after the seed 0+1 "win"): seed 2 + held-out ip / pkg
+    ("r2pk_s2_rl", "r2_mott_s2_rl", "2단 + `--peak_refine` (seed 2, P1 확장)", "보정 없음"),
+    ("lo_pcb_r2pk_s2_rl", "lo_pcb_r2_s2_rl", "pcb 빼고 학습 2단 + `--peak_refine` (seed 2, P1 확장)", "보정 없음"),
+    ("lo_ip_r2pk_rl", "lo_ip_r2_rl", "ip 빼고 학습 2단 + `--peak_refine` (seed 0, P1 확장)", "보정 없음"),
+    ("lo_pkg_r2pk_rl", "lo_pkg_r2_rl", "pkg 빼고 학습 2단 + `--peak_refine` (seed 0, P1 확장)", "보정 없음"),
 ]
 
 
@@ -1092,6 +1097,23 @@ def distill_mech_table():
               + " — 그러나 극대 수가 패딩 중복으로 부풀어 거의 자동으로 성립하는 측정이라 K 8 → 16 후보는 큐에 넣지 않음 "
               "(PROPOSALS 11/04 D8). D8b 규칙 (r2, seed 3개 모두 D_dup ≥ 0.5): "
               + ("**성립** → 후보 P2 `--dedup_modes` (PROPOSALS 11/04 P2)" if d8.get("H_dup") else "**기각**"), ""]
+        # P1/P2 "같이 보고" (report only, no rule): D7 + D8b of extra distill ckpts vs the same-seed r2_mott distill
+        extra = sorted(glob.glob("runs/analysis/diag_fail_rank_*_distill.json"))
+        if extra:
+            L += ["P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격자 greedy 한 번)의 증류 ckpt 비교. "
+                  "mott_dd ckpt는 DedupEnv와 같은 고유 주파수 토큰으로 덮임을 셈", "",
+                  "| ckpt | 비교 (같은 seed) | 정확 통과 | 실패 수 | 덮임 | 안 덮임 수 | 덜 풀림 중앙값 | 토큰 고유 중앙값 |",
+                  "|---|---|---|---|---|---|---|---|"]
+            for f in extra:
+                n = os.path.basename(f)[len("diag_fail_rank_"):-len(".json")]
+                ref = "r2_mott" + ("_s1" if "_s1_" in n else "_s2" if "_s2_" in n else "")
+                for name, x in ((n, json.load(open(f)).get(n, {}).get("pkg", {}).get("summary")),
+                                (ref, d8.get(ref, {}).get("pkg", {}).get("summary"))):
+                    if x:
+                        L.append(f"| {name} | {ref if name == n else '–'} | {x['exact_pass']:.2f} | {x['n_fail']} | "
+                                 f"{x['covered']:.2f} | {x['n_uncov']} | {x['underres_med']:.2f} | "
+                                 f"{x['n_tok_distinct_med']:.0f} |")
+            L.append("")
     return L
 
 
