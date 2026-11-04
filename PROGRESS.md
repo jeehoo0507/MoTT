@@ -1,4 +1,9 @@
-# PROGRESS (갱신 2026-11-04 12:35 UTC, 재개 라운드 40)
+# PROGRESS (갱신 2026-11-04 13:35 UTC, 재개 라운드 41)
+
+## 재개 라운드 41 (2026-11-04 12:38~ UTC)
+- 상태 (13:35): GPU **`lo_pcb_r2dd_s1`** 증류 13:13~ (RL 끝 ~15:15) → P1 확장 4 run (~23:00) → (조건부) P3 4 run. CPU: 드라이버 줄 `base20 eval_pkg20_0 greedy+prune` (mem_guard, 11:02~) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 14:40` (r2pk 16칸 남은 5개: ip16_0·1) = 4. pod 12~22 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- **P2 `r2dd_s1_rl`** (342 iter / 1.27 h, best it 200) 10칸 (side_slot 13:13~13:26): ip 1.00 / pcb 0.88 / pkg 0.84; vs `r2_mott_s1_rl` pcb +0.10 [−0.04, +0.24], pkg +0.00 [−0.14, +0.14], ip +0.00; 개수비 0.97~1.02. 같은 종류 묶음 (seed 0·1): pcb **+0.070 [−0.020, +0.160]**, pkg **+0.070 [−0.020, +0.160]**, ip +0.000 → 규칙 (i)의 같은 종류 판은 CI 하한 ≤ 0, 뺀 pcb는 seed 0이 −0.08이라 "두 seed 모두 > 0" 불충족 → **RL 단계 "이김"은 이미 불가능**; "해로움" 여부는 lo_pcb_r2dd_s1 (~15:30) 뒤 (`pooled_mod_table`).
+- 16칸 r2pk 규모 곡선: pkg16_1 r2pk_s1까지 7 / 12 끝 (라운드 40 4번째 칸).
 
 ## 재개 라운드 40 (2026-11-04 08:44~12:35 UTC)
 - 상태 (12:35): GPU **`r2dd_s1`** RL 12:03~ (끝 ~13:18) → lo_pcb_r2dd_s1 (~15:15) → P1 확장 4 run (~23:00) → (조건부) P3 4 run. CPU: 드라이버 줄 = 사람 11/04 순서 (base20 modal_rule 진행 중 → g+p 20 (mem_guard) → r2pk 16·20칸 → r3_loop R 스윕 16·20칸 → ls16) + 학습 정확 검사 2 + 4번째 칸 (`run_queue_entries.py 12:45` r2pk 16칸, side_slot은 r2dd_s1 RL 평가 대기) = 4. pod 12~20 GiB / 60, oom_kill 1 (라운드 27 그것). 16칸 r2pk 평가 6 / 12 끝 (4번째 칸).
