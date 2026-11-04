@@ -1,4 +1,8 @@
-# PROGRESS (갱신 2026-11-04 01:40 UTC, 재개 라운드 37)
+# PROGRESS (갱신 2026-11-04 02:20 UTC, 재개 라운드 38)
+
+## 재개 라운드 38 (2026-11-04 01:57~ UTC)
+- 상태 (02:20): GPU **`lo_pcb_r2pk`** RL 01:45~ (끝 ~03:00) → r2pk_s1 → lo_pcb_r2pk_s1 (~07:00) → P2 r2dd 4 run (~15:00). CPU: 드라이버 줄 eval20 (`eval_pcb20_1` r0_coord_rl) + 학습 정확 검사 2 + 4번째 칸 side_slot (RL 끝 1 h 안이라 대기) = 4. pod 10.9 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **P1 같이 보고 (판정 아님, PROPOSALS P1 "D7 측정을 r2pk 증류에 다시"):** `scripts/diag_fail_freq.py --ckpt r2pk_distill=...` (D7·D8b와 같은 경로, pkg 50판, 4번째 칸 빈 시간에 6분) → `runs/analysis/diag_fail_rank_r2pk_distill.json`. r2pk 증류 vs r2_mott 증류 seed 0: 기본 격자 greedy 한 번 정확 통과 **0.26 vs 0.18**, 격자 만족·정확 실패 36 vs 40, 덮임 0.67 vs 0.65, 덜 풀림 중앙값 0.42 vs 0.44 decade, 안 덮임 12 vs 14 (D_dup 1.00, 고유 토큰 중앙값 3 그대로). 즉 피크 보정 채널을 넣어도 실패 꼴 (토큰 옆 피크를 낮게 읽음, 중복 토큰) 은 거의 그대로 — seed 하나라 해석 안 함.
 
 ## 재개 라운드 37 (2026-11-04 00:23~ UTC)
 - 상태 (01:40): GPU **`lo_pcb_r2pk`** 증류 00:59~ (RL 끝 ~03:00) → r2pk_s1 → lo_pcb_r2pk_s1 (~07:00) → **P2 r2dd → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1** (~15:00). CPU: 드라이버 줄 eval20 (16칸 고치기 `repair16 pkg greedy+prune` 00:33 끝: pkg16_1 0.96 / 17.3개) + 학습 정확 검사 2 + 4번째 칸 side_slot (P1 대상) = 4. pod 18.5 GiB / 60, oom_kill 1 (라운드 27 그것). QUEUE 새 지시 없음. DAILY 11/04는 라운드 36이 씀 (다음은 11/05 00:15 뒤).

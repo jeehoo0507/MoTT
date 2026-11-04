@@ -33,6 +33,11 @@ REFINE = "--refine" in sys.argv
 # maximum within s of fw (A = rank > K_TOK, "token budget"; B = none within s, "invisible on grid");
 # writes runs/analysis/diag_fail_rank.json
 RANK = "--rank" in sys.argv
+# --ckpt NAME=PATH (P1/P2 "같이 보고", PROPOSALS 11/03 P1 / 11/04 P2): D7 + D8b summaries of one more distill checkpoint
+# on pkg (report only, no rule); writes runs/analysis/diag_fail_rank_<NAME>.json
+EXTRA = dict(a.split("=", 1) for a in sys.argv[sys.argv.index("--ckpt") + 1:]) if "--ckpt" in sys.argv else {}
+if EXTRA:
+    RANK = True
 
 
 def tokens_and_grid(b, ib, occ, allpk=None):
@@ -140,6 +145,9 @@ def main():
     torch.set_num_threads(1)
     from train import make_policy
     from decap_loop.bank import load_bank
+    if EXTRA:
+        CKPTS.clear()
+        CKPTS.update(EXTRA)
     names = [n for n in CKPTS if n.startswith("r2" if REFINE else ("r1", "r2"))]
     res = {n: {} for n in names}
     for tech in (("pkg",) if REFINE or RANK else ("pkg", "pcb")):
@@ -167,6 +175,12 @@ def main():
         res["P1_queue"] = res["P1_check"]["frac_gt_002"] >= 0.20
         print("P1 check", res["P1_check"], "-> queue" if res["P1_queue"] else "-> cancel")
         json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_freq_refine.json"), "w"), indent=1)
+        return
+    if EXTRA:
+        for name in names:
+            out = os.path.join(ROOT, f"runs/analysis/diag_fail_rank_{name}.json")
+            json.dump({name: res[name], "ckpt": CKPTS[name]}, open(out, "w"), indent=1)
+            print("wrote", out)
         return
     if RANK:
         hk = []
