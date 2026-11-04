@@ -17,3 +17,7 @@ error: Please commit or stash them.
 - **결정: GPU는 비워 둠.** 근거 있는 수정 후보가 없고, 이전 라운드에 정한 규칙상 수정 하나마다 seed 2개가 필요해 근거 없는 run은 GPU 4~8시간을 쓰고도 판정을 못 냅니다. QUEUE의 "GPU를 비우지 마라"와 충돌하므로, 진단(CPU)을 계속하는 것으로 해석했습니다. 이유는 PROGRESS에 "결정:"으로 적었습니다.
 - **일정:** 새 시도는 11/6 12:00 UTC까지만 시작합니다. 그때까지 이긴 수정이 없으면 r2_mott를 최종 구조로 확정하고, 시도한 수정과 효과 없음을 RESULTS ABLATIONS에 남깁니다. DAILY.md는 24시간이 되는 11/04 00:15 UTC 이후 첫 라운드에서 씁니다.
 - **도는 중:** 드라이버의 16칸 고치기 평가(`repair16 pkg greedy+prune`)와 `r2it_rl` 10칸 평가가 돌고 있습니다. 결과를 자동으로 올리는 `report_watch`는 꺼져 있어서 다시 띄웠습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ddc2409..0e6609c  main -> main
