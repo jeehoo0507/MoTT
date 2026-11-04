@@ -33,3 +33,7 @@ P1 (`--peak_refine`) passes its pre-registered rule: "이김" on same-kind pcb. 
 - If P2 also wins, write the rule for combining P1 and P2 before any of those results come in.
 
 I also corrected a memory note: live training progress is in `<name>_distill/log.txt` and `<name>_rl/log.txt`, not `rung_stdout.log`.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6530206..54c78d7  main -> main
