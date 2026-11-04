@@ -1,4 +1,8 @@
-# PROGRESS (갱신 2026-11-04 19:40 UTC, 재개 라운드 42)
+# PROGRESS (갱신 2026-11-04 20:40 UTC, 재개 라운드 43)
+
+## 재개 라운드 43 (2026-11-04 19:50~ UTC)
+- 상태 (20:40): GPU **`lo_ip_r2pk`** RL 20:05~ (P1 확장 3/4, 끝 ~21:25) → lo_pkg_r2pk (~23:30) → P3 4 run (~11/05 07:30). CPU: 드라이버 줄 g+p pkg20_1 (15:45~, 4.9 h째) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 20:40` (R 스윕 ip16_1 하나, 20:35~) = 4. pod 16~29 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch (27 rung 다 끝나 바로 종료)·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- **R 스윕 16칸 pcb·pkg·ip16_0 끝 (기록만, 읽기는 16·20칸 다 끝난 뒤, RESULTS "루프 반복 수 vs 판 크기" 자동):** pkg16 R2 / R4 / R8 / R16 = 0.58 / 0.64 / 0.58 / 0.50, 개수 11.2 / 9.4 / 9.2 / 8.9, 문제당 3.4 / 3.6 / 3.6 / 6.4 s (50문제). ip16_0 (20:18~20:33, 15 분), ip16_1 진행 중 → 그다음 20칸 6개.
 
 ## 재개 라운드 42 (2026-11-04 16:39~ UTC)
 - 상태 (17:40): GPU **`lo_pcb_r2pk_s2`** 증류 17:18~ (P1 확장 2/4, RL 끝 ~19:25) → lo_ip_r2pk → lo_pkg_r2pk (~23:30) → P3 4 run (~11/05 07:30). CPU: 드라이버 줄 `base20 eval_pkg20_1 greedy+prune` (mem_guard, 15:45~, 끝 ~20:30 예상) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 18:30` (R 스윕 남은 11개, queue 순서, pcb16_1부터) = 4. pod 13~21 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
