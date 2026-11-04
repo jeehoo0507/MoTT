@@ -29,3 +29,7 @@ error: Please commit or stash them.
 - 커밋 두 개를 `git push r2e main` 했습니다.
 
 QUEUE.md에 새 지시는 없었고, STUCK도 없습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d0d42f3..96550f7  main -> main
