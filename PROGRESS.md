@@ -10,6 +10,10 @@
 - **F1 (PROPOSALS 11/04 F1, 결과 전에 고정): 최종 후보 r2pk의 뺀 ip·pkg seed 1·2** — `lo_ip_r2pk_s1/_s2`, `lo_pkg_r2pk_s1/_s2` (arm은 seed 0 짝 그대로) GPU 큐 P3 뒤 (`scripts/queue_f1.py`, P1 확장 판정이 채택이 아니면 거부; driver dry-run 확인), ~11/05 07:30~15:45. 판정 = QUEUE 10/31 11:30 기준 그대로 (2단 자리에 r2pk), RESULTS "최종 후보 r2pk의 한 종류 빼고 학습, seed별" 자동 (r2_mott도 같은 규칙으로 나란히: ip 실패, pcb 통과, pkg 실패 — 기존 판정과 같음). r2pk 뺀 pcb는 seed 3개로 이미 **통과** ((b') +0.28 / +0.24 / +0.22, (c') 평균 −0.03).
   - 결정: F1을 P3 확장 (P3가 이길 때) 앞에 둠 — 이유: 지금 채택된 구조의 확인이 먼저 (보수적), P3 판정 (~07:45)은 F1 첫 run 시작 (~07:30)과 거의 같고 P3 확장 4 run도 11/6 12:00 전 시작 가능 (~15:45).
   - side_slot 다시 띄움 (23:45, 칸 빔 확인 뒤): `r2pkdd lo_pcb_r2pkdd r2pkdd_s1 lo_pcb_r2pkdd_s1 lo_ip_r2pk_s1 lo_ip_r2pk_s2 lo_pkg_r2pk_s1 lo_pkg_r2pk_s2`.
+- **QUEUE 11/05 08:05 KST (사람, 23:50 UTC pull) 그림 "같은 판, 공진 규칙 vs MoTT" 끝** (`scripts/fig_rule_vs_mott.py`, 기존 평가 기록 occ + `fig_board.draw`만, 새 평가 없음; 판 고르기는 QUEUE 규칙 그대로 — 둘 다 정확 통과 중 개수 차 (modal_rule − r2pk_rl)가 파일 중앙값에 가장 가까운 문제, 동률이면 작은 인덱스):
+  - `reports/fig_rule_vs_mott_ip16.png`: `eval_ip16_0` #3 (둘 다 통과 25 / 25, 중앙값 차 +4.0) — modal_rule **10개** (최악 0.979) vs MoTT+P1 **6개** (0.952).
+  - `reports/fig_rule_vs_mott_pcb20.png`: `eval_pcb20_0` #4 (둘 다 통과 8 / 8, 중앙값 차 +2.0) — modal_rule **6개** (0.980) vs MoTT+P1 **4개** (0.991).
+  - 결정: 두 파일 중 `_0`을 씀 — 이유: QUEUE가 "_0 또는 _1"로 열어 둠; 결과를 보기 전에 첫 파일로 고정 (파일 고르기로 체리피킹하지 않게). 4번째 칸이 비어 있을 때 (side_slot 대기, R 스윕 20칸은 드라이버 줄) 돌림, 각 1 분 미만.
 - 상태 (21:40): GPU **`lo_pkg_r2pk`** 증류 21:2x~ (P1 확장 4/4, RL 끝 ~23:30). 4번째 칸 `run_queue_entries.py 22:30` R 스윕 20칸 (pcb20 → pkg20 → ip20; R 스윕 16칸 6/6 끝).
 
 ## 재개 라운드 42 (2026-11-04 16:39~ UTC)
