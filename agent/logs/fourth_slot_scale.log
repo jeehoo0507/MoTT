@@ -1,0 +1,16 @@
+[09:30:55] START scale eval_pcb16_0 r2pk_rl | mem 5.4 GiB / 60.0 GiB, oom_kill 1
+[09:31:13] START scale eval_pcb16_0 r2pk_rl | mem 5.4 GiB / 60.0 GiB, oom_kill 1
+[10:03:09] END scale eval_pcb16_0 r2pk_rl rc=0 | mem 13.0 GiB / 60.0 GiB, oom_kill 1
+[10:03:09] START scale eval_pcb16_0 r2pk_s1_rl | mem 13.0 GiB / 60.0 GiB, oom_kill 1
+[10:16:17] END scale eval_pcb16_0 r2pk_s1_rl rc=0 | mem 12.0 GiB / 60.0 GiB, oom_kill 1
+[10:16:17] START scale eval_pcb16_1 r2pk_rl | mem 12.0 GiB / 60.0 GiB, oom_kill 1
+[10:30:20] END scale eval_pcb16_1 r2pk_rl rc=0 | mem 10.5 GiB / 60.0 GiB, oom_kill 1
+[10:30:20] START scale eval_pcb16_1 r2pk_s1_rl | mem 10.5 GiB / 60.0 GiB, oom_kill 1
+[10:41:02] END scale eval_pcb16_1 r2pk_s1_rl rc=0 | mem 8.8 GiB / 60.0 GiB, oom_kill 1
+[10:41:02] START scale eval_pkg16_0 r2pk_rl | mem 8.8 GiB / 60.0 GiB, oom_kill 1
+[10:57:04] END scale eval_pkg16_0 r2pk_rl rc=0 | mem 18.9 GiB / 60.0 GiB, oom_kill 1
+[10:57:04] deadline 10:55 UTC reached, 7 left
+[11:27:01] START scale eval_pkg16_0 r2pk_s1_rl | mem 12.6 GiB / 60.0 GiB, oom_kill 1
+[11:44:09] END scale eval_pkg16_0 r2pk_s1_rl rc=0 | mem 11.7 GiB / 60.0 GiB, oom_kill 1
+[11:44:09] deadline 11:35 UTC reached, 6 left
+[12:22:12] START scale eval_pkg16_1 r2pk_rl | mem 15.0 GiB / 60.0 GiB, oom_kill 1

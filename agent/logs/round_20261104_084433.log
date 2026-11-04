@@ -1,0 +1,21 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 40 is done (08:44–12:35 UTC). Everything is committed and pushed to `r2e main`; the `gh: not found` warnings on push are harmless.
+
+**Results this round**
+- **P2 `--dedup_modes`, seed 0 RL:** compared with `r2_mott_rl`, pkg +0.14 [+0.00, +0.28], pcb +0.04, ip +0.00. The +0.14 is inside the RL seed-noise band (0.16). In the pcb-held-out run, unseen pcb is 0.84, −0.08 [−0.20, +0.02] against `lo_pcb_r2_rl`. The early-stop rule isn't triggered, so the seed 1 runs continue.
+- **P2 distill-stage verdict (pre-registered rule): holds.** On pkg it gains +0.08 and +0.16 for seeds 0 and 1, pooled +0.120 [+0.030, +0.220]. So duplicate mode tokens explain part of the gap seen at the distill stage. Two caveats: ip got worse at the distill stage for both seeds (−0.12, −0.10), and duplicate removal doesn't change the "peak level read too low" failure (still 0.45 decade).
+- **P3 registered before any P2 RL result (08:56 UTC):** it is P1 (`--peak_refine`) plus P2, compared against the P1 runs. It is queued only if P2's final verdict isn't "해로움" (harmful). Basis: on bare boards, P1's refinement channel was non-zero for only 9% (pkg) / 21% (pcb) of tokens, because the padded grid repeats frequencies. With distinct neighbours that rises to 65% / 59%. On the near-feasible failure states the gap is smaller, 0.41 → 0.56, so I corrected the PROPOSALS note to say the 9% applies to bare boards only. The code (`decap_loop/pkdd_env.py`) passed a CPU smoke test.
+
+**New human instructions in QUEUE.md (both applied)**
+- **CPU queue reordered as asked:** 20-cell modal_rule first, then the remaining 20-cell policy eval, then 20-cell greedy+prune. Next come r2pk / r2pk_s1 at 16 and 20 cells, then the r3_loop R sweep (R2/R4/R16) at 16 and 20 cells.
+- **Memory guard on 20-cell greedy+prune:** each job runs under a guard that kills it if the pod goes above 45 GiB. RESULTS then marks that file "메모리로 생략" (skipped for memory).
+- **Two new auto-generated RESULTS tables:** "규모 곡선" (scale curve, with CIs and a small-sample mark at 20 cells) and "루프 반복 수 vs 판 크기" (loop R vs board size). Neither has 20-cell or 16-cell sweep data yet.
+- **Decisions logged in PROGRESS:** I let the 20-cell r3_loop eval that had already started at 09:24 finish instead of killing it. I moved the LS 16-cell jobs to the end of the queue, since the instructions didn't mention them and they use a lot of memory.
+- **Early 16-cell evals:** the P1 16-cell evals are running early in the free 4th CPU slot; 6 of 12 are done.
+
+**Next round**
+1. ~13:30: r2dd_s1 RL eval.
+2. ~15:30: lo_pcb_r2dd_s1 eval, which gives the P2 pooled verdict. Then run `scripts/queue_p3.py`, and if P2 is "이김" (a win), `queue_scale_curve.py --r2dd`.
+3. ~23:00: the P1 seed-2 and held-out-kind runs finish, giving the seed-3 verdict for P1.
+4. Write DAILY.md after 00:15 UTC on 11/05.
