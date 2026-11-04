@@ -9,9 +9,12 @@
 - **QUEUE 11/04 18:20·18:15 KST (사람, 09:20 UTC에 pull) 반영 — 드라이버 CPU 줄 (`scripts/queue_scale_curve.py`, 원자적 쓰기, 다시 돌려도 같음):** 대기 순서 = base20 modal_rule 6 → eval20 남은 것 (r3_loop ip20_1 하나) → base20 g+p 6 (`scripts/mem_guard.py`로 감쌈: pod > 45 GiB면 죽이고 `<기록>.json.memskip` → RESULTS "메모리로 생략") → **r2pk_rl·r2pk_s1_rl × 16·20칸 12 세트** (24) → **r3_loop_rl @R2·@R4·@R16 × 같은 12 세트** (12) → 나머지 (ls16 6). RESULTS 새 절 "규모 곡선" (종류별 방법 × 10/16/20칸, 개수비 vs modal_rule, 20칸 CI + "작은 표본", 20칸 r2 − r1 기록만)·"루프 반복 수 vs 판 크기" (R 2/4/8/16, 미리 적은 읽기 그대로, 기록만) 자동.
   - 결정: 09:24에 이미 시작된 `eval20 eval_ip20_1 r3_loop_rl`은 죽이지 않고 끝까지 둠 — 이유: 지시가 도착하기 전 시작, 수 분짜리라 죽이면 일만 버림; 그다음이 바로 modal_rule 20.
   - 결정: ls16 (LS 16칸 6개, 지시에 없음)은 사람 지시 항목 전부 뒤로 — 이유: 지시 항목이 우선이고, LS16은 메모리가 큰 작업 (메모리 기록 OOM 11/03)이라 늦게 도는 쪽이 보수적.
+  - 결정: 4번째 칸이 비는 동안 (side_slot은 lo_pcb_r2dd RL 끝 ~11:10까지 대기) r2pk·r2pk_s1 16칸 12개를 그 칸에서 먼저 (`scripts/run_queue_entries.py 10:55 ...`, 드라이버 항목과 같은 cmd·done → 드라이버는 나중에 건너뜀; 10:55 뒤 새 항목 안 띄움) — 이유: 동시 4개 한도 안, 드라이버 순서는 안 바꿈, 정책 16칸 평가는 짧음 (r2 2.4 s/문제).
   - P2가 "이김"이면 `queue_scale_curve.py --r2dd`로 r2dd_rl 16·20칸을 r2pk 뒤에 (스크립트가 판정 확인).
 - **`--refine_u` (보고만):** P1 점검과 같은 덮인 실패 70개에서 보정 초과량 > 0.02 비율 원래 이웃 0.41 (재현) → 고유 이웃 0.56, 중앙값 0.012 → 0.024 decade (덜 풀림 0.45). 맨판 (0.09 → 0.65)보다 차이가 작음 → PROPOSALS P3 근거 문장을 "맨판 기준"으로 정정 (규칙·큐 조건 그대로).
-- 할 일 (다음): (2) lo_pcb_r2dd 평가 (~11:25) → P2 일찍 멈춤 규칙. (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
+- **P2 `lo_pcb_r2dd` seed 0** (359 iter / 1.26 h, best it 148) 10칸 (side_slot 11:10~11:24): 처음 보는 pcb **0.84** vs `lo_pcb_r2_rl` **−0.08 [−0.20, +0.02]**, pkg 0.90 (+0.08), ip 1.00 (+0.00). P2 seed 0 쌍: 같은 종류 pkg +0.14, 뺀 pcb −0.08 → 일찍 멈춤 규칙 (둘 다 ≤ −0.16) 해당 없음 → r2dd_s1·lo_pcb_r2dd_s1 그대로.
+- 4번째 칸 규모 곡선 (10:55까지): r2pk·r2pk_s1 16칸 5개 끝 (pcb16_0·1 둘 다, pkg16_0 r2pk_rl), 11:35까지 하나 더.
+- 할 일 (다음): (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
 - 상태 (08:45): GPU **P2 `r2dd`** RL 07:52~ (끝 ~09:05) → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → **P1 확장** r2pk_s2 → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:00). CPU: 드라이버 줄 eval20 (`eval_ip20_0`) + 학습 정확 검사 2 + 4번째 칸 side_slot = 4. pod ~8 GiB / 60, oom_kill 1 (라운드 27 그것).
