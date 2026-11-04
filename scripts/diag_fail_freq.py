@@ -40,9 +40,10 @@ if EXTRA:
     RANK = True
 
 
-def tokens_and_grid(b, ib, occ, allpk=None):
+def tokens_and_grid(b, ib, occ, allpk=None, dedup=False):
     """Sorted working-grid log10 f [E,F], level [E,F] and the K_TOK token log10 f [E,<=K].
-    allpk (list) gets every episode's local-maximum indices sorted by level (descending)."""
+    allpk (list) gets every episode's local-maximum indices sorted by level (descending).
+    dedup: tokens as decap_loop/dedup_env.py picks them (feat mott_dd: peaks of the distinct-frequency curve)."""
     from decap_loop.sim import probe_impedance
     b.bank.ensure(ib, torch.where(occ >= 0, torch.arange(b.n, device=occ.device), -1))
     z = probe_impedance(b, ib, occ, b.zd()[ib])
@@ -57,6 +58,11 @@ def tokens_and_grid(b, ib, occ, allpk=None):
         j = np.flatnonzero(peak[e])
         if allpk is not None:
             allpk.append(j[np.argsort(-lv[e, j])])
+        if dedup:
+            _, iu = np.unique(np.round(lf[e], 9), return_index=True)
+            vu = lv[e, iu]
+            ju = np.flatnonzero((vu >= np.r_[-np.inf, vu[:-1]]) & (vu >= np.r_[vu[1:], -np.inf]))
+            j = iu[ju]
         tj.append(j[np.argsort(-lv[e, j])[:K_TOK]])
         toks.append(lf[e, tj[-1]])
     return lf, lv, toks, tj
@@ -81,7 +87,7 @@ def run(pol, feat, b):
     wv, fw, _ = certify_parallel(b, ib, occ, b.cfg, workers=1)
     feas = out["feasible"].numpy()
     allpk = [] if RANK else None
-    lf, lv, toks, tj = tokens_and_grid(b, ib, occ, allpk)
+    lf, lv, toks, tj = tokens_and_grid(b, ib, occ, allpk, dedup=feat == "mott_dd")
     rows = []
     for e in np.flatnonzero(feas & (wv > TOL1)):
         x = np.log10(fw[e])
