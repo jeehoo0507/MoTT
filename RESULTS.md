@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-04 08:44 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-04 08:57 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -66,7 +66,7 @@
 | modal_rule>r0_coord_rl | – | 0.94 / 1.10 / 1.56 [50] | – | – | 0.94 / 0.81 / 0.20 [50] | – | – | 0.70 / 0.79 / 0.55 [50] | – | – |
 | modal_rule>r2_mott_rl | – | 0.94 / 1.10 / 1.56 [50] | – | – | 1.00 / 0.84 / 0.21 [50] | – | – | 0.88 / 0.86 / 0.61 [50] | – | – |
 | r0_coord_distill | – | 0.96 / 1.17 / 2.04 [50] | – | – | 0.76 / 1.78 / 0.48 [50] | 0.80 / 3.63 / 0.90 [25] | – | 0.90 / 1.59 / 1.16 [50] | 0.80 / 2.67 / 1.44 [25] | – |
-| r0_coord_rl | 1.00 / 2.10 / 1.67 [50] | 1.00 / 1.05 / 1.45 [50] | 1.00 / 0.34 / 1.45 [50] | 1.00 / – / – [8] | 0.96 / 0.80 / 0.20 [50] | 1.00 / 0.99 / 0.25 [50] | 0.94 / – / – [16] | 0.76 / 0.79 / 0.58 [50] | 0.64 / 0.63 / 0.43 [50] | 0.50 / – / – [16] |
+| r0_coord_rl | 1.00 / 2.10 / 1.67 [50] | 1.00 / 1.05 / 1.45 [50] | 1.00 / 0.34 / 1.45 [50] | 1.00 / – / – [16] | 0.96 / 0.80 / 0.20 [50] | 1.00 / 0.99 / 0.25 [50] | 0.94 / – / – [16] | 0.76 / 0.79 / 0.58 [50] | 0.64 / 0.63 / 0.43 [50] | 0.50 / – / – [16] |
 | r0_coord_rl+rep4 | – | 1.00 / 1.05 / 1.45 [50] | – | – | 0.98 / 0.80 / 0.20 [50] | – | – | 0.92 / 0.80 / 0.57 [50] | 0.80 / 0.65 / 0.42 [50] | – |
 | r0_coord_s1_distill | – | 0.90 / 0.93 / 1.83 [50] | – | – | 0.88 / 1.33 / 0.28 [50] | – | – | 0.74 / 1.09 / 0.80 [50] | – | – |
 | r0_coord_s1_rl | 1.00 / 2.65 / 1.98 [50] | 0.96 / 0.97 / 1.29 [50] | – | – | 0.94 / 0.91 / 0.22 [50] | – | – | 0.74 / 0.77 / 0.54 [50] | – | – |
@@ -1502,7 +1502,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 
 | 방법 | 문제 수 (풀 파일) | 정확 검사 성공률 | 개수 (성공 평균) | 개수 / greedy+prune (둘 다 성공, 같은 파일끼리 짝지음) | 개수 / 종류 인식 greedy (둘 다 성공) | 문제당 시간 (s) | 출처 |
 |---|---|---|---|---|---|---|---|
-| r0_coord_rl | 8 (0) | 1.00 | 21.62 | – | – | 3.735 | `runs/2026-10-28/r0_coord_rl/eval/eval_ip20_0__r0_coord_rl.json` |
+| r0_coord_rl | 16 (0, 1) | 1.00 | 26.69 | – | – | 6.317 | `runs/2026-10-28/r0_coord_rl/eval/eval_ip20_0__r0_coord_rl.json`, `runs/2026-10-28/r0_coord_rl/eval/eval_ip20_1__r0_coord_rl.json` |
 | r1_modal_rl | 8 (0) | 1.00 | 31.00 | – | – | 37.106 | `runs/2026-10-28/r1_modal_rl/eval/eval_ip20_0__r1_modal_rl.json` |
 | r2_mott_rl | 8 (0) | 0.88 | 23.57 | – | – | 30.678 | `runs/2026-10-28/r2_mott_rl/eval/eval_ip20_0__r2_mott_rl.json` |
 | r2a_rl | 16 (0, 1) | 1.00 | 35.25 | – | – | 18.347 | `runs/2026-10-29/r2a_rl/eval/eval_ip20_0__r2a_rl.json`, `runs/2026-10-29/r2a_rl/eval/eval_ip20_1__r2a_rl.json` |
@@ -1989,7 +1989,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 16 | r2_mott_rl | 성공 | 50 | 14.6 | 0.93 | 0.02 | 0.04 |
 | ip 16 | r2a_rl | 성공 | 50 | 13.9 | 1.00 | 0.00 | 0.00 |
 | ip 16 | r3_loop_rl | 성공 | 50 | 13.7 | 1.00 | 0.00 | 0.00 |
-| ip 20 | r0_coord_rl | 성공 | 8 | 21.6 | 0.97 | 0.03 | 0.00 |
+| ip 20 | r0_coord_rl | 성공 | 16 | 26.7 | 0.99 | 0.01 | 0.00 |
 | ip 20 | r1_modal_rl | 성공 | 8 | 31.0 | 0.99 | 0.01 | 0.00 |
 | ip 20 | r2_mott_rl | 성공 | 7 | 23.6 | 0.75 | 0.15 | 0.10 |
 | ip 20 | r2_mott_rl | 실패 | 1 | 282.0 | 0.14 | 0.21 | 0.65 |
@@ -3351,7 +3351,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | r2a_s2_rl | 148 / 353 | 1.0 | 0.98 | 4.6 | 0.92 | 11.0 | 0.80 |
 | r2am_rl | 139 / 356 | 0.5 | 1.00 | 6.0 | 0.94 | 8.2 | 0.86 |
 | r2c_rl | 92 / 105 | 2.0 | 1.00 | 46.0 | 0.90 | 53.0 | 0.80 |
-| r2dd_rl | 70 / – | 0.0 | – | 7.0 | – | 7.7 | – |
+| r2dd_rl | 99 / – | 0.2 | – | 7.0 | – | 7.7 | – |
 | r2g_rl | 16 / 348 | 0.2 | 0.98 | 5.3 | 0.88 | 8.8 | 0.76 |
 | r2h_rl | 118 / 346 | 0.2 | 0.98 | 5.3 | 0.90 | 10.7 | 0.72 |
 | r2it_rl | 126 / 349 | 0.5 | 1.00 | 8.3 | 0.92 | 10.8 | 0.72 |
@@ -3508,6 +3508,8 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/analysis/smoke_dedup_modes/r | mott_dd / mott | rl | 2 | 0.07 | val_pcb10_0: 1.71/0.62, val_pkg10_0: 1.00/0.62, val_ip10_0: 1.32/0.38 | `runs/analysis/smoke_dedup_modes/r/metrics.json` |
 | runs/analysis/smoke_peak_refine/d | mott_pk / mott | distill | 30 | 0.04 | val_pcb10_0: 1.05/0.75, val_pkg10_0: 1.00/0.94, val_ip10_0: 0.71/0.19 | `runs/analysis/smoke_peak_refine/d/metrics.json` |
 | runs/analysis/smoke_peak_refine/r | mott_pk / mott | rl | 3 | 0.05 | val_pcb10_0: 1.25/0.88, val_pkg10_0: 1.00/0.88, val_ip10_0: 0.71/0.25 | `runs/analysis/smoke_peak_refine/r/metrics.json` |
+| runs/analysis/smoke_pkdd/d | mott_pkdd / mott | distill | 5 | 0.06 | val_pcb10_0: 1.75/0.56, val_pkg10_0: 1.00/0.56, val_ip10_0: 0.71/0.38 | `runs/analysis/smoke_pkdd/d/metrics.json` |
+| runs/analysis/smoke_pkdd/r | mott_pkdd / mott | rl | 2 | 0.07 | val_pcb10_0: 1.80/0.62, val_pkg10_0: 1.00/0.50, val_ip10_0: 0.77/0.44 | `runs/analysis/smoke_pkdd/r/metrics.json` |
 | runs/smoke_chunk0 | coord / grid | rl | 4 | 0.01 | val_ip10_0: 0.75/0.81 | `runs/smoke_chunk0/metrics.json` |
 | runs/smoke_chunk2 | coord / grid | rl | 4 | 0.01 | val_ip10_0: 0.46/0.88 | `runs/smoke_chunk2/metrics.json` |
 | runs/smoke_rl_grid_cap | coord / grid | rl | 6 | 0.01 | val_ip10_0: 0.75/0.81 | `runs/smoke_rl_grid_cap/metrics.json` |

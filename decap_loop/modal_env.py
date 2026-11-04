@@ -51,6 +51,9 @@ def make_env(batch, inst, cfg, feat_mode, **kw):
     if feat_mode == "mott_pk":   # MoTT + parabolic peak refinement per mode token (decap_loop/peak_env.py)
         from .peak_env import PkEnv
         return PkEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
+    if feat_mode == "mott_pkdd":   # P1 channels on the P2 token set (decap_loop/pkdd_env.py)
+        from .pkdd_env import PkDdEnv
+        return PkDdEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
     if feat_mode == "mott_dd":   # MoTT with mode tokens on distinct working-grid frequencies (decap_loop/dedup_env.py)
         from .dedup_env import DedupEnv
         return DedupEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)

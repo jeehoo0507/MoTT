@@ -200,3 +200,14 @@
   - 일찍 멈춤: seed 0 쌍에서 같은 종류 pkg와 뺀 pcb 점추정이 둘 다 ≤ −0.16 이면 seed 1 run을 큐에서 뺌.
   - P1과의 관계: P1·P2가 둘 다 "이김"이면 합치기는 따로 결과 전에 적음 (한 번에 하나). 같이 보고 (판정 아님): D7·D8b 측정을 r2dd 증류에 다시 (안 덮임 비율이 줄었는지).
 - **P1·P2 판정 코드 해석 (라운드 37 01:55 — P1 seed 1·lo_pcb_r2pk 결과 전, P2 결과 전에 적음):** 규칙의 "판" = 같은 종류 pcb·pkg·ip + 뺀 pcb (lo_pcb run의 pcb). (i)은 적힌 그대로 같은 종류 pcb·pkg·뺀 pcb만; (ii) "다른 판 묶음 점추정 −0.05 아래 아님"과 "해로움 (어느 판이든)"에는 같은 종류 ip도 넣음 (보수적: 판 하나라도 나빠지면 이김 아님). lo_pcb run의 학습한 종류 (pkg·ip)는 보고만. 코드 `collect_results.pooled_mod_table` (RESULTS "P1/P2 seed 0·1 묶음 판정" 절, 자동).
+
+## 11/04 P3: P1 위에 P2 — 중복 없는 토큰 + 고유 이웃 피크 보정 (`r2pkdd`·`lo_pcb_r2pkdd` seed 0·1, 라운드 40 08:56 UTC — P2 RL 결과 (`r2dd_rl` 평가) 전, P3 학습 전에 고정)
+- **근거 (새 관찰, `scripts/smoke_pkdd.py`, 학습 없음):** P1의 포물선 세 점은 정렬 격자의 j−1, j, j+1인데, 패딩 격자 (D8)에서는 피크 주파수가 반복돼 이웃이 j의 복사본이 됨 → `refine`이 "안쪽 아님"으로 보고 보정 초과량 0. 맨판 유효 토큰 중 보정 초과량 > 0.01 비율: P1 (`PkEnv`) **pkg 0.09 / pcb 0.21** → 토큰은 고유 주파수에서 고르고 (P2) 세 점은 가장 가까운 **다른** 주파수 이웃으로 잡으면 **0.65 / 0.59**. 즉 P1 ("이김", 같은 종류 pcb)은 대부분의 토큰에서 채널이 0인 상태로 이겼고, 같은 패딩 결함이 P1 채널도 지움. (P1 라운드 36 큐 전 점검의 맨판 0.09도 이 결함 때문으로 보임 — 보고만.)
+- **변경 하나 (P1 대비, 입력 표현):** P1 입력의 모드 부분 전체를 고유 주파수 기준으로 — 토큰 고르기는 `DedupEnv`, 두 보정 채널은 고유 이웃 세 점 (`decap_loop/pkdd_env.py` `PkDdEnv`; 중복이 없으면 `peak_env.refine`과 비트 단위 같음, smoke 1). `train.py --peak_refine --dedup_modes` (→ `--feat mott_pkdd`). `sim.py`·`peak_env.py`·`dedup_env.py` 불변, 모델·보상·선생님·풀·val·평가·예산 그대로. 입력이 바뀌므로 증류부터. smoke `scripts/smoke_pkdd.py` → `.ok` (CPU 증류 5 + RL 2 iter, ckpt feat `mott_pkdd`).
+- **짝 (기준 = P1 run, 같은 arm 나머지·같은 seed):** `r2pkdd` vs `r2pk`, `r2pkdd_s1` vs `r2pk_s1`, `lo_pcb_r2pkdd` vs `lo_pcb_r2pk`, `lo_pcb_r2pkdd_s1` vs `lo_pcb_r2pk_s1`. 같이 보고 (판정 아님): vs `r2_mott` (두 수정 합), vs `r2dd`.
+- **큐 조건 (결과 전에 고정):** P1 "이김" (이미) **이고** P2 seed 0·1 묶음 판정이 "해로움"이 아님 → `scripts/queue_p3.py`로 **P1 확장 4 run 뒤**에 r2pkdd → lo_pcb_r2pkdd → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~11/05 07:00 UTC 끝; 시작 마감 11/6 12:00 안). P2가 "해로움"이면 P3 취소 (고유 토큰 자체가 해로우면 합칠 근거 없음). P2 "효과 없음"이어도 큐: 근거가 P2 판정이 아니라 위 관찰 (P1 채널이 결함으로 지워짐).
+  - 결정: P2 "이김"만 조건으로 하지 않음 — 이유: P3의 표적은 P1 채널의 결함이고, P2 판정 (토큰만 바꾼 효과, vs r2_mott)은 그 질문에 답하지 않음; "해로움"이면 멈추는 것으로 보수성 유지. GPU는 P1 확장 뒤 (~23:00) 비므로 (QUEUE 11/03 "GPU를 비우지 마라") 기존 run을 밀어내지 않음.
+- **미리 적는 판정 (P1·P2와 같은 꼴·같은 코드 `pooled_mod_table`, 기준만 P1 run):** "이김" (i) 같은 종류 pcb·pkg 또는 뺀 pcb 중 하나 이상에서 seed 0·1 묶음 CI 하한 > 0 이고 seed 두 개 점추정 모두 > 0, (ii) 판정 판 (같은 종류 ip 포함) 묶음 점추정 −0.05 아래 없음. "해로움" 어느 판이든 묶음 CI 상한 < 0. 그 밖 "효과 없음". 증류 단계: `r2pkdd_distill` − `r2pk_distill` pkg, 같은 (i) 조건 → 성립이면 "고유 이웃 보정이 D1 차이를 (일부) 줄임".
+  - 일찍 멈춤: seed 0 쌍 같은 종류 pkg와 뺀 pcb 점추정이 둘 다 ≤ −0.16 → seed 1 run을 큐에서 뺌.
+  - "이김"이면 P1 확장과 같은 확장 (r2pkdd_s2·lo_pcb_r2pkdd_s2·lo_ip_r2pkdd·lo_pkg_r2pkdd, 같은 seed 3개 규칙·뺀 ip·pkg −0.16 규칙) — 11/6 12:00 전에 시작 가능할 때만. "효과 없음"·"해로움"이면 최종 구조 후보는 P1 확장 판정 그대로.
+- 가장 가까운 선행: 없음 / 다른 점: 기여 아님 — "구현 결함 (패딩 중복) 수정을 P1 입력에도"로 씀.

@@ -427,6 +427,13 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("lo_pcb_r2pk_s2_rl", "lo_pcb_r2_s2_rl", "pcb 빼고 학습 2단 + `--peak_refine` (seed 2, P1 확장)", "보정 없음"),
     ("lo_ip_r2pk_rl", "lo_ip_r2_rl", "ip 빼고 학습 2단 + `--peak_refine` (seed 0, P1 확장)", "보정 없음"),
     ("lo_pkg_r2pk_rl", "lo_pkg_r2_rl", "pkg 빼고 학습 2단 + `--peak_refine` (seed 0, P1 확장)", "보정 없음"),
+    # 11/04 round 40 (PROPOSALS P3, written before the P2 rl results): P2 tokens + distinct-neighbour refine on top of P1
+    ("r2pkdd_rl", "r2pk_rl", "2단 P1 + 고유 주파수 토큰·이웃 (`--peak_refine --dedup_modes`, seed 0, P3)", "P1"),
+    ("r2pkdd_s1_rl", "r2pk_s1_rl", "2단 P1 + 고유 주파수 (seed 1, P3)", "P1"),
+    ("lo_pcb_r2pkdd_rl", "lo_pcb_r2pk_rl", "pcb 빼고 학습 2단 P1 + 고유 주파수 (seed 0, P3)", "P1"),
+    ("lo_pcb_r2pkdd_s1_rl", "lo_pcb_r2pk_s1_rl", "pcb 빼고 학습 2단 P1 + 고유 주파수 (seed 1, P3)", "P1"),
+    ("r2pkdd_distill", "r2pk_distill", "증류만: 2단 P1 + 고유 주파수 (seed 0, P3)", "P1"),
+    ("r2pkdd_s1_distill", "r2pk_s1_distill", "증류만: 2단 P1 + 고유 주파수 (seed 1, P3)", "P1"),
 ]
 
 
@@ -1163,7 +1170,9 @@ def rl_noise_table(recs):
             "| 수정 run | 기준 | pcb 10 | pkg 10 | ip 10 |", "|---|---|---|---|---|"] + rows + [""]
 
 
-POOLED_MODS = [("P1", "pk", "`--peak_refine`"), ("P2", "dd", "`--dedup_modes`")]
+# (tag, run infix, label, same-kind reference run, held-out reference infix): runs r2{x}*, lo_{t}_r2{x}* vs ref*, lo_{t}_{lref}*
+POOLED_MODS = [("P1", "pk", "`--peak_refine`", "r2_mott", "r2"), ("P2", "dd", "`--dedup_modes`", "r2_mott", "r2"),
+               ("P3", "pkdd", "`--peak_refine --dedup_modes` (기준 P1 run)", "r2pk", "r2pk")]
 
 
 def pooled_mod_table(recs):
@@ -1187,9 +1196,9 @@ def pooled_mod_table(recs):
         return [float(x.mean()) for x in d], float(np.concatenate(d).mean()), np.percentile(bs, [2.5, 97.5])
 
     L = []
-    for tag, x, label in POOLED_MODS:
-        boards = [("같은 종류 pcb", "pcb", f"r2{x}", "r2_mott", True), ("같은 종류 pkg", "pkg", f"r2{x}", "r2_mott", True),
-                  ("같은 종류 ip", "ip", f"r2{x}", "r2_mott", False), ("뺀 pcb", "pcb", f"lo_pcb_r2{x}", "lo_pcb_r2", True)]
+    for tag, x, label, rs, rl in POOLED_MODS:
+        boards = [("같은 종류 pcb", "pcb", f"r2{x}", rs, True), ("같은 종류 pkg", "pkg", f"r2{x}", rs, True),
+                  ("같은 종류 ip", "ip", f"r2{x}", rs, False), ("뺀 pcb", "pcb", f"lo_pcb_r2{x}", f"lo_pcb_{rl}", True)]
         rows, res, missing = [], {}, False
         for name, tech, m, ref, in_i in boards:
             pairs = [arr(f"{m}{s}_rl", f"{ref}{s}_rl", tech) for s in ("", "_s1")]
@@ -1215,7 +1224,7 @@ def pooled_mod_table(recs):
             verdict = ("**해로움** (" + ", ".join(harm) + ")" if harm else
                        "**이김** (" + ", ".join(win_i) + ")" if win_i and not low else
                        "효과 없음" + (f" ((i) {', '.join(win_i)} 성립, (ii) {', '.join(low)} < −0.05)" if win_i else ""))
-        dl = [arr(f"r2{x}{s}_distill", f"r2_mott{s}_distill", "pkg") for s in ("", "_s1")]
+        dl = [arr(f"r2{x}{s}_distill", f"{rs}{s}_distill", "pkg") for s in ("", "_s1")]
         if all(p is not None for p in dl):
             ps, pe, ci = pool(dl)
             dv = (f"증류만 pkg: seed {ps[0]:+.2f} / {ps[1]:+.2f}, 묶음 {pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] → "
@@ -1240,7 +1249,7 @@ def pooled_mod_table(recs):
             rows3.append(f"| {name} | {ps[2]:+.2f} | {pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] | "
                          f"{sum(len(p[0]) for p in pairs)} |")
         for t in ("ip", "pkg"):
-            p = arr(f"lo_{t}_r2{x}_rl", f"lo_{t}_r2_rl", t)
+            p = arr(f"lo_{t}_r2{x}_rl", f"lo_{t}_{rl}_rl", t)
             if p is None:
                 rows_lo.append(f"| 뺀 {t} | – | – | – |")
                 continue

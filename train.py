@@ -221,8 +221,9 @@ def load_teacher(path, batch, dev, log):
 def main():
     args = parse()
     if args.model in ("mott", "loop"):
-        assert not (args.peak_refine and args.dedup_modes), "one change at a time"
-        args.feat = "mott_pk" if args.peak_refine else "mott_dd" if args.dedup_modes else "mott"
+        # both flags = PROPOSALS 11/04 P3 (P2 tokens on top of P1, compared with the P1 run: still one change)
+        args.feat = ("mott_pkdd" if args.peak_refine and args.dedup_modes else "mott_pk" if args.peak_refine
+                     else "mott_dd" if args.dedup_modes else "mott")
     elif args.model == "park_am":
         args.feat = "coord"
     elif args.model == "manoharan":
