@@ -14,7 +14,9 @@
 - **`--refine_u` (보고만):** P1 점검과 같은 덮인 실패 70개에서 보정 초과량 > 0.02 비율 원래 이웃 0.41 (재현) → 고유 이웃 0.56, 중앙값 0.012 → 0.024 decade (덜 풀림 0.45). 맨판 (0.09 → 0.65)보다 차이가 작음 → PROPOSALS P3 근거 문장을 "맨판 기준"으로 정정 (규칙·큐 조건 그대로).
 - **P2 `lo_pcb_r2dd` seed 0** (359 iter / 1.26 h, best it 148) 10칸 (side_slot 11:10~11:24): 처음 보는 pcb **0.84** vs `lo_pcb_r2_rl` **−0.08 [−0.20, +0.02]**, pkg 0.90 (+0.08), ip 1.00 (+0.00). P2 seed 0 쌍: 같은 종류 pkg +0.14, 뺀 pcb −0.08 → 일찍 멈춤 규칙 (둘 다 ≤ −0.16) 해당 없음 → r2dd_s1·lo_pcb_r2dd_s1 그대로.
 - 4번째 칸 규모 곡선 (10:55까지): r2pk·r2pk_s1 16칸 5개 끝 (pcb16_0·1 둘 다, pkg16_0 r2pk_rl), 11:35까지 하나 더.
-- 할 일 (다음): (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
+- **P2 증류 단계 판정 (규칙 그대로): "성립" (모드 토큰 중복이 D1 차이를 일부 설명).** `r2dd_s1_distill` (1584 iter / 0.77 h, best it 900) 10칸 (side_slot 11:58~12:17): ip 0.82 / pcb 0.90 / pkg **0.84**; vs r2_mott_s1_distill pkg +0.16 [+0.02, +0.30], pcb +0.08, ip −0.10. pkg seed 0 / 1 = +0.08 / +0.16, 묶음 **+0.120 [+0.030, +0.220]**. 주의 (같이 보고): 증류 ip는 두 seed 모두 −0.10~−0.12 (계속 놓는 실패 꼴). D7·D8b seed 1: 안 덮임 0 vs 17, 고유 토큰 5 vs 3, 덜 풀림 0.45 그대로 (seed 0과 같은 꼴). PROPOSALS P2에 기록.
+- r2dd_s1 RL 11:58~ (끝 ~13:15) → lo_pcb_r2dd_s1 (~15:15) → P2 RL 묶음 판정 (~15:30).
+- 할 일 (다음): (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
 - 상태 (08:45): GPU **P2 `r2dd`** RL 07:52~ (끝 ~09:05) → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → **P1 확장** r2pk_s2 → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:00). CPU: 드라이버 줄 eval20 (`eval_ip20_0`) + 학습 정확 검사 2 + 4번째 칸 side_slot = 4. pod ~8 GiB / 60, oom_kill 1 (라운드 27 그것).
