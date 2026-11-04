@@ -1204,6 +1204,42 @@ def pooled_mod_table(recs):
               "bootstrap 2000회)", "",
               "| 판 | seed 0 차 | seed 1 차 | 묶음 차 [95% CI] | 짝 수 |", "|---|---|---|---|---|"] + rows + [
               "", f"판정: {verdict}. {dv}", ""]
+        # extension (PROPOSALS P1 "확장 계획", written before lo_pcb_r2pk_s1): seed 0+1+2 pooled + held-out ip/pkg seed 0
+        if missing or not verdict.startswith("**이김**"):
+            continue
+        rows3, res3, rows_lo = [], {}, []
+        for name, tech, m, ref, in_i in boards:
+            pairs = [arr(f"{m}{s}_rl", f"{ref}{s}_rl", tech) for s in ("", "_s1", "_s2")]
+            if pairs[2] is None:
+                rows3.append(f"| {name} | – | – | {len(pairs[0][0]) + len(pairs[1][0])} |")
+                continue
+            ps, pe, ci = pool(pairs)
+            res3[name] = (ps, pe, ci)
+            rows3.append(f"| {name} | {ps[2]:+.2f} | {pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] | "
+                         f"{sum(len(p[0]) for p in pairs)} |")
+        for t in ("ip", "pkg"):
+            p = arr(f"lo_{t}_r2{x}_rl", f"lo_{t}_r2_rl", t)
+            if p is None:
+                rows_lo.append(f"| 뺀 {t} | – | – | – |")
+                continue
+            _, pe, ci = pool([p])
+            rows_lo.append(f"| 뺀 {t} | {pe:+.2f} [{ci[0]:+.2f}, {ci[1]:+.2f}] | {len(p[0])} | "
+                           + ("−0.16 위" if pe > -0.16 else "**−0.16 이하**") + " |")
+        judged = [n for n in win_i]
+        if not all(n in res3 for n in judged) or any(r.startswith("| 뺀") and "| – |" in r for r in rows_lo):
+            v3 = "seed 2·뺀 ip·pkg run이 다 끝나야 판정"
+        else:
+            harm3 = [n for n, (ps, pe, ci) in res3.items() if ci[1] < 0]
+            ok3 = [n for n in judged if res3[n][2][0] > 0 and res3[n][0][2] >= 0]
+            lo_ok = all("−0.16 위" in r for r in rows_lo)
+            v3 = ("**해로움** (" + ", ".join(harm3) + ")" if harm3 else
+                  ("**이김 (seed 3개 확인)** (" + ", ".join(ok3) + ")" if ok3 else "seed 2에서 확인 안 됨")
+                  + ("; 뺀 ip·pkg 모두 −0.16 위 → 최종 구조 후보" if ok3 and lo_ok else
+                     "; 뺀 ip·pkg 손해 가능 → 범용화 주장은 r2_mott" if ok3 else ""))
+        L += [f"### {tag} 확장: seed 0·1·2 묶음 + 뺀 ip·pkg (PROPOSALS {tag} 확장 계획, 결과 전에 적음)", "",
+              "| 판 | seed 2 차 | seed 0·1·2 묶음 차 [95% CI] | 짝 수 |", "|---|---|---|---|"] + rows3 + [
+              "", "| 뺀 종류 (seed 0) | 차 [95% CI] | 짝 수 | d* 기준 |", "|---|---|---|---|"] + rows_lo + [
+              "", f"판정: {v3}.", ""]
     return L
 
 

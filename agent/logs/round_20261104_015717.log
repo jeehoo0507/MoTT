@@ -18,3 +18,7 @@ Round 38 is done and pushed to `r2e main`. P1 (`--peak_refine`) failed one of it
 2. Once `lo_pcb_r2pk_s1` finishes (~07:20), the full P1 seed 0+1 pooled verdict gets recorded.
 3. When `r2dd` distillation finishes (~08:00), queue its distill-only eval and run the same diagnostic on it.
 4. If P1 wins, queue seed 2 plus the held-out ip and pkg runs before the 11/6 12:00 UTC cutoff for new attempts.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3082796..8ab91a8  main -> main

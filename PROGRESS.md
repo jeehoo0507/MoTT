@@ -1,4 +1,11 @@
-# PROGRESS (갱신 2026-11-04 04:35 UTC, 재개 라운드 38)
+# PROGRESS (갱신 2026-11-04 05:40 UTC, 재개 라운드 39)
+
+## 재개 라운드 39 (2026-11-04 04:36~ UTC)
+- 상태 (05:40): GPU **`lo_pcb_r2pk_s1`** (끝 ~07:05) → P2 r2dd → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00). CPU: 드라이버 줄 eval20 (`eval_pkg20_1` 차례) + 학습 정확 검사 2 + 4번째 칸 side_slot (P1 seed 1 + P2 대상) = 4. pod 5~13 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **`r2pk_s1_rl` 끝** (340 iter / 1.28 h, best it 300, replaced 133 시점 기록 — RESULTS ckpt 표), 10칸 평가 05:05~05:16: ip 1.00 / pcb **0.92** / pkg **0.88**; vs `r2_mott_s1_rl` pcb **+0.14 [+0.02, +0.26]**, pkg +0.04 [−0.08, +0.16], ip +0.00.
+- **P1 묶음 (뺀 pcb seed 1 대기, 판정 전):** 같은 종류 pcb +0.02 / +0.14 → 묶음 **+0.080 [+0.010, +0.160]** (조건 (i) 충족), pkg +0.050 [−0.050, +0.150], ip −0.010. 남은 것: (ii) 뺀 pcb 묶음 점추정 ≥ −0.05 이고 해로움 없음 (seed 0 −0.04). 주의 (판정 안 바꿈): seed 1 기준 `r2_mott_s1_rl` pcb 0.78은 seed 3개 중 가장 낮음.
+- **P1 확장 계획 (PROPOSALS P1, lo_pcb_r2pk_s1 결과 전에 적음):** "이김"이면 r2pk_s2·lo_pcb_r2pk_s2·lo_ip_r2pk·lo_pkg_r2pk를 **P2 4 run 뒤**에 큐 (기존 순서 유지), seed 0·1·2 묶음 CI 하한 > 0 + seed 2 ≥ 0이면 "seed 3개 확인", 최종 구조 채택은 뺀 ip·pkg 점추정 > −0.16 추가. `collect_results.pooled_mod_table`에 확장 표 코드 (`### P1 확장`, 판정 "이김"일 때만 나옴); `scripts/test_pooled_ext.py` (가짜 기록으로 세 상태 렌더링만 확인) 통과.
+- 결정: 확장 4 run을 P2 앞이 아니라 뒤에 — 이유: 기존 큐 순서 유지 (보수적), 둘 다 11/4 23:00 UTC 전에 끝나 11/6 마감 안; P2가 같이 이기면 합치기를 일찍 정할 수 있음.
 
 ## 재개 라운드 38 (2026-11-04 01:57~ UTC)
 - 상태 (04:35): GPU **`r2pk_s1`** RL 03:47~ (끝 ~05:05) → lo_pcb_r2pk_s1 (~07:05) → P2 r2dd → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00). CPU: 드라이버 줄 eval20 (`eval_pkg20_0` r3_loop_rl) + 학습 정확 검사 2 + 4번째 칸 side_slot = 4. pod ~12 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
