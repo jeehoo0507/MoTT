@@ -1,4 +1,12 @@
-# PROGRESS (갱신 2026-11-04 08:45 UTC, 재개 라운드 39)
+# PROGRESS (갱신 2026-11-04 09:30 UTC, 재개 라운드 40)
+
+## 재개 라운드 40 (2026-11-04 08:44~ UTC)
+- 상태 (09:30): GPU **`lo_pcb_r2dd`** 증류 09:07~ (RL 끝 ~11:10) → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → P1 확장 4 run (~23:00). CPU: 드라이버 줄 eval20 + 학습 정확 검사 2 + 4번째 칸 (side_slot 대기 중 → `diag_fail_freq --refine_u` 09:28~) = 4. pod 9 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **P2 `r2dd_rl` seed 0** (367 iter / 1.27 h, best it 300) 10칸 (side_slot 09:08~09:20): ip 1.00 / pcb 0.92 / pkg **0.86**; vs `r2_mott_rl` pkg **+0.14 [+0.00, +0.28]**, pcb +0.04 [−0.08, +0.14], ip +0.00; 개수비 0.98~1.01. 일찍 멈춤 규칙 (seed 0 쌍 둘 다 ≤ −0.16) 해당 없음 (lo_pcb_r2dd 대기). 판정은 seed 1 뒤 (`pooled_mod_table`). 주의 (판정 안 바꿈): pkg +0.14는 RL 잡음 d* 0.16 안.
+- **P3 미리 적음 (PROPOSALS 11/04 P3, 08:56 UTC — `r2dd_rl` 평가 전):** P1 위에 P2 (`--peak_refine --dedup_modes` → `--feat mott_pkdd`, `decap_loop/pkdd_env.py`), 기준 = P1 run (r2pk·lo_pcb_r2pk seed 0·1). 근거 (smoke `scripts/smoke_pkdd.py` → `.ok`): 맨판 유효 토큰 중 P1 보정 초과량 > 0.01 비율 pkg 0.09 / pcb 0.21 — 패딩 중복으로 j±1 이웃이 복사본이라 0; 고유 이웃이면 0.65 / 0.59. 큐 조건: P1 "이김" + P2 판정 "해로움" 아님 → `scripts/queue_p3.py` (P1 확장 뒤). `pooled_mod_table`·ABLATIONS에 P3 등록 (기준 run을 mod마다 받게 일반화).
+  - 결정: P2 "이김"만 조건으로 하지 않음 — 이유는 PROPOSALS P3 (표적이 P1 채널 결함, P2 판정은 그 질문에 답하지 않음; "해로움"이면 취소).
+  - 보충 (정확하게): 0.09는 **맨판** 값. P1 큐 전 점검 (근-만족 실패 해의 덮는 토큰)에서는 초과량 > 0.02 비율 0.41이었음 → 같은 실패 해에서 고유 이웃 값을 `diag_fail_freq.py --refine_u` (보고만, 규칙 없음)로 잼.
+- 할 일 (다음): (1) `--refine_u` 결과 → PROPOSALS P3 같이 보고. (2) lo_pcb_r2dd 평가 (~11:25) → P2 일찍 멈춤 규칙. (3) r2dd_s1 증류 `done:` 뒤 (~12:00) `queue_distill_eval_named.py r2dd_s1_distill` + `diag_fail_freq.py --ckpt r2dd_s1_distill=...`. (4) lo_pcb_r2dd_s1 평가 (~15:20) → P2 묶음 판정 → `queue_p3.py`. (5) DAILY는 11/05 00:15 UTC 뒤.
 
 ## 재개 라운드 39 (2026-11-04 04:36~ UTC)
 - 상태 (08:45): GPU **P2 `r2dd`** RL 07:52~ (끝 ~09:05) → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1 (~15:00) → **P1 확장** r2pk_s2 → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:00). CPU: 드라이버 줄 eval20 (`eval_ip20_0`) + 학습 정확 검사 2 + 4번째 칸 side_slot = 4. pod ~8 GiB / 60, oom_kill 1 (라운드 27 그것).

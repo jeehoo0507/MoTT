@@ -29,6 +29,10 @@ K_TOK = 8
 # --refine (P1 pre-queue check, PROPOSALS 11/03 P1): r2 pkg only; per failure also the peak_env refined excess of the
 # nearest token; writes runs/analysis/diag_fail_freq_refine.json
 REFINE = "--refine" in sys.argv
+# --refine_u (PROPOSALS 11/04 P3 "같이 보고", no rule): --refine plus the same excess with the parabola through the
+# nearest *distinct*-frequency neighbours (decap_loop/pkdd_env.py); writes runs/analysis/diag_fail_freq_refine_u.json
+REFINE_U = "--refine_u" in sys.argv
+REFINE |= REFINE_U
 # --rank (D8, PROPOSALS 11/04 D8): r1/r2 pkg; per uncovered failure the level rank of the nearest working-grid local
 # maximum within s of fw (A = rank > K_TOK, "token budget"; B = none within s, "invisible on grid");
 # writes runs/analysis/diag_fail_rank.json
@@ -75,6 +79,16 @@ def refined_excess(lf, lv, j):
     return float(exc)
 
 
+def refined_excess_u(lf, lv, j):
+    """pkdd_env.refine_at at the run of sorted grid index j, neighbours = nearest distinct frequencies."""
+    from decap_loop.pkdd_env import distinct_neighbours, refine_at
+    jf = int(np.flatnonzero(lf == lf[int(j)])[0])                 # first member of j's equal-frequency run
+    lvt, lft, jt = torch.from_numpy(lv[None]), torch.from_numpy(lf[None]), torch.tensor([[jf]])
+    jl, jr = distinct_neighbours(lft, jt)
+    exc, _ = refine_at(lvt, lft, jl, jt, jr)
+    return float(exc)
+
+
 @torch.no_grad()
 def run(pol, feat, b):
     from decap_loop.modal_env import make_env
@@ -100,6 +114,8 @@ def run(pol, feat, b):
                          underres=float(wv[e] - lv[e, near]), count=int(out["count"][e])))
         if REFINE and len(toks[e]):
             rows[-1]["refined_excess"] = refined_excess(lf[e], lv[e], tj[e][int(np.argmin(np.abs(toks[e] - x)))])
+            if REFINE_U:
+                rows[-1]["refined_excess_u"] = refined_excess_u(lf[e], lv[e], tj[e][int(np.argmin(np.abs(toks[e] - x)))])
         if RANK:
             pk = allpk[e]
             dist = np.abs(g[pk] - x)
@@ -180,6 +196,18 @@ def main():
                                median=round(float(np.median(ex)), 4))
         res["P1_queue"] = res["P1_check"]["frac_gt_002"] >= 0.20
         print("P1 check", res["P1_check"], "-> queue" if res["P1_queue"] else "-> cancel")
+        if REFINE_U:
+            cov = [r for n in names for r in res[n]["pkg"]["rows"] if r["covered"] and "refined_excess_u" in r]
+            eu = np.array([r["refined_excess_u"] for r in cov])
+            e0 = np.array([r["refined_excess"] for r in cov])
+            res["P3_report"] = dict(n_covered=len(cov), frac_gt_002_raw=round(float(np.mean(e0 > 0.02)), 4),
+                                    frac_gt_002_distinct=round(float(np.mean(eu > 0.02)), 4),
+                                    median_raw=round(float(np.median(e0)), 4),
+                                    median_distinct=round(float(np.median(eu)), 4),
+                                    underres_med=round(float(np.median([r["underres"] for r in cov])), 4))
+            print("P3 report", res["P3_report"])
+            json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_freq_refine_u.json"), "w"), indent=1)
+            return
         json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_freq_refine.json"), "w"), indent=1)
         return
     if EXTRA:
