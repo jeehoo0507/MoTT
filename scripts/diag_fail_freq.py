@@ -95,6 +95,17 @@ def run(pol, feat, b):
             within = np.flatnonzero(dist <= s)
             rows[-1]["n_max"] = int(len(pk))
             rows[-1]["rank"] = int(within[np.argmin(dist[within])]) + 1 if len(within) else -1   # 1-based, -1 = none
+            # D8b: same on the de-duplicated curve (the padded working grid repeats frequencies, pdn.add_freqs)
+            gu, iu = np.unique(np.round(g, 9), return_index=True)
+            vu = lv[e][iu]
+            pad = np.array([-np.inf])
+            pku = np.flatnonzero((vu >= np.r_[pad, vu[:-1]]) & (vu >= np.r_[vu[1:], pad]))
+            pku = pku[np.argsort(-vu[pku])]
+            du = np.abs(gu[pku] - x)
+            wu = np.flatnonzero(du <= s)
+            rows[-1]["n_max_u"] = int(len(pku))
+            rows[-1]["rank_u"] = int(wu[np.argmin(du[wu])]) + 1 if len(wu) else -1
+            rows[-1]["n_tok_distinct"] = int(len(np.unique(np.round(toks[e], 9))))
     return rows, int(feas.sum()), int(((wv <= TOL1) & feas).sum()), b.B
 
 
@@ -102,9 +113,14 @@ def rank_summ(rows):
     unc = [r for r in rows if not r["covered"]]
     a = sum(r["rank"] > K_TOK for r in unc)
     bb = sum(r["rank"] < 0 for r in unc)
+    au = sum(1 <= r["rank_u"] <= K_TOK for r in unc)
     return dict(n_fail=len(rows), n_uncov=len(unc),
                 A_budget=round(a / len(unc), 4) if unc else None, B_invisible=round(bb / len(unc), 4) if unc else None,
                 other=len(unc) - a - bb,
+                D_dup=round(au / len(unc), 4) if unc else None,       # D8b: a top-8 distinct peak, pushed out by copies
+                Bu_invisible=round(sum(r["rank_u"] < 0 for r in unc) / len(unc), 4) if unc else None,
+                n_tok_distinct_med=float(np.median([r["n_tok_distinct"] for r in rows])) if rows else None,
+                n_max_u_med=float(np.median([r["n_max_u"] for r in rows])) if rows else None,
                 n_max_med=float(np.median([r["n_max"] for r in rows])) if rows else None,
                 frac_gt_K=round(float(np.mean([r["n_max"] > K_TOK for r in rows])), 4) if rows else None)
 
@@ -159,6 +175,12 @@ def main():
             hk.append(bool(s2["n_uncov"] >= 5 and s2["A_budget"] >= 0.5))
         res["H_K_per_seed"], res["H_K"] = hk, all(hk)
         print("H_K", hk, all(hk))
+        hd = []
+        for sfx in ("", "_s1", "_s2"):
+            s2 = res[f"r2_mott{sfx}"]["pkg"]["summary"]
+            hd.append(bool(s2["n_uncov"] >= 5 and s2["D_dup"] >= 0.5))
+        res["H_dup_per_seed"], res["H_dup"] = hd, all(hd)
+        print("H_dup (D8b)", hd, all(hd))
         json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_rank.json"), "w"), indent=1)
         print("wrote runs/analysis/diag_fail_rank.json")
         return
