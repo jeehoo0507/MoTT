@@ -3,6 +3,8 @@
 ## 재개 라운드 43 (2026-11-04 19:50~ UTC)
 - 상태 (20:40): GPU **`lo_ip_r2pk`** RL 20:05~ (P1 확장 3/4, 끝 ~21:25) → lo_pkg_r2pk (~23:30) → P3 4 run (~11/05 07:30). CPU: 드라이버 줄 g+p pkg20_1 (15:45~, 4.9 h째) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 20:40` (R 스윕 ip16_1 하나, 20:35~) = 4. pod 16~29 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch (27 rung 다 끝나 바로 종료)·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
 - **R 스윕 16칸 pcb·pkg·ip16_0 끝 (기록만, 읽기는 16·20칸 다 끝난 뒤, RESULTS "루프 반복 수 vs 판 크기" 자동):** pkg16 R2 / R4 / R8 / R16 = 0.58 / 0.64 / 0.58 / 0.50, 개수 11.2 / 9.4 / 9.2 / 8.9, 문제당 3.4 / 3.6 / 3.6 / 6.4 s (50문제). ip16_0 (20:18~20:33, 15 분), ip16_1 진행 중 → 그다음 20칸 6개.
+- **P1 확장 `lo_ip_r2pk_rl`** (278 iter / 1.27 h, best it 200; side_slot 21:22~21:34) 10칸: 뺀 ip **1.00** / pcb 0.90 / pkg 0.86; vs `lo_ip_r2_rl` 뺀 ip **+0.00 [+0.00, +0.00]** (개수비 1.005 [0.990, 1.021]), pcb +0.02, pkg +0.02 (학습한 종류, 보고만). 뺀 ip 점추정 > −0.16 → 채택 조건 절반 충족; 뺀 pkg는 lo_pkg_r2pk (~23:30 RL 끝, 평가 ~23:45). 주의 (판정 안 바꿈): 기준 lo_ip_r2 seed 0도 1.00이라 천장 — 이 짝은 손해 여부만 잼.
+- 상태 (21:40): GPU **`lo_pkg_r2pk`** 증류 21:2x~ (P1 확장 4/4, RL 끝 ~23:30). 4번째 칸 `run_queue_entries.py 22:30` R 스윕 20칸 (pcb20 → pkg20 → ip20; R 스윕 16칸 6/6 끝).
 
 ## 재개 라운드 42 (2026-11-04 16:39~ UTC)
 - 상태 (17:40): GPU **`lo_pcb_r2pk_s2`** 증류 17:18~ (P1 확장 2/4, RL 끝 ~19:25) → lo_ip_r2pk → lo_pkg_r2pk (~23:30) → P3 4 run (~11/05 07:30). CPU: 드라이버 줄 `base20 eval_pkg20_1 greedy+prune` (mem_guard, 15:45~, 끝 ~20:30 예상) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 18:30` (R 스윕 남은 11개, queue 순서, pcb16_1부터) = 4. pod 13~21 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
