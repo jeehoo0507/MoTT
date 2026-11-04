@@ -51,6 +51,9 @@ def make_env(batch, inst, cfg, feat_mode, **kw):
     if feat_mode == "mott_pk":   # MoTT + parabolic peak refinement per mode token (decap_loop/peak_env.py)
         from .peak_env import PkEnv
         return PkEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
+    if feat_mode == "mott_dd":   # MoTT with mode tokens on distinct working-grid frequencies (decap_loop/dedup_env.py)
+        from .dedup_env import DedupEnv
+        return DedupEnv(batch, inst, cfg, feat_mode=feat_mode, **kw)
     if feat_mode == "manoharan":
         from baselines_ml.manoharan import ManoharanEnv
         return ManoharanEnv(batch, inst, cfg, **kw)

@@ -116,6 +116,9 @@ def parse():
     p.add_argument("--peak_refine", action="store_true", help="mott/loop (PROPOSALS 11/03 D7 -> P1): append to each "
                    "mode token the parabolic-vertex excess of its peak level over the working grid and its violating "
                    "flag (--feat mott_pk, decap_loop/peak_env.py)")
+    p.add_argument("--dedup_modes", action="store_true", help="mott/loop (PROPOSALS 11/04 D8b -> P2): pick the mode "
+                   "tokens on distinct working-grid frequencies (the padded grid repeats frequencies, which made "
+                   "copies of one peak fill the token slots) (--feat mott_dd, decap_loop/dedup_env.py)")
     p.add_argument("--lr", type=float, default=1e-4)
     p.add_argument("--imit", type=float, default=1.0, help="weight of imitating the best-known solution (0=off)")
     p.add_argument("--teacher", choices=["gp", "ls"], default="gp", help="(no pool) greedy+prune, or + local search")
@@ -218,7 +221,8 @@ def load_teacher(path, batch, dev, log):
 def main():
     args = parse()
     if args.model in ("mott", "loop"):
-        args.feat = "mott_pk" if args.peak_refine else "mott"
+        assert not (args.peak_refine and args.dedup_modes), "one change at a time"
+        args.feat = "mott_pk" if args.peak_refine else "mott_dd" if args.dedup_modes else "mott"
     elif args.model == "park_am":
         args.feat = "coord"
     elif args.model == "manoharan":

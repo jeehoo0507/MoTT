@@ -415,6 +415,13 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("lo_pcb_r2pk_s1_rl", "lo_pcb_r2_s1_rl", "pcb 빼고 학습 2단 + `--peak_refine` (seed 1)", "보정 없음"),
     ("r2pk_distill", "r2_mott_distill", "증류만: 2단 + `--peak_refine` (seed 0, D1 표적)", "보정 없음"),
     ("r2pk_s1_distill", "r2_mott_s1_distill", "증류만: 2단 + `--peak_refine` (seed 1, D1 표적)", "보정 없음"),
+    # 11/04 round 37 (PROPOSALS P2, D8b H-dup): mode tokens on distinct working-grid frequencies, full pipeline, seeds 0/1
+    ("r2dd_rl", "r2_mott_rl", "2단 + 중복 없는 모드 토큰 (`--dedup_modes`, 증류+RL 전체, seed 0)", "중복 그대로"),
+    ("r2dd_s1_rl", "r2_mott_s1_rl", "2단 + `--dedup_modes` (seed 1)", "중복 그대로"),
+    ("lo_pcb_r2dd_rl", "lo_pcb_r2_rl", "pcb 빼고 학습 2단 + `--dedup_modes` (seed 0)", "중복 그대로"),
+    ("lo_pcb_r2dd_s1_rl", "lo_pcb_r2_s1_rl", "pcb 빼고 학습 2단 + `--dedup_modes` (seed 1)", "중복 그대로"),
+    ("r2dd_distill", "r2_mott_distill", "증류만: 2단 + `--dedup_modes` (seed 0, D1 표적)", "중복 그대로"),
+    ("r2dd_s1_distill", "r2_mott_s1_distill", "증류만: 2단 + `--dedup_modes` (seed 1, D1 표적)", "중복 그대로"),
 ]
 
 
@@ -1068,6 +1075,23 @@ def distill_mech_table():
             c = json.load(open("runs/analysis/diag_fail_freq_refine.json"))["P1_check"]
             L += [f"P1 큐 전 점검 (r2 seed 0~2 pkg 덮임 실패 {c['n_covered']}개에서 덮는 토큰의 세 점 포물선 보정 초과량): "
                   f"> 0.02 비율 {c['frac_gt_002']:.2f}, 중앙값 {c['median']:.3f} (규칙: ≥ 0.20이면 큐)", ""]
+    if os.path.exists("runs/analysis/diag_fail_rank.json"):
+        d8 = json.load(open("runs/analysis/diag_fail_rank.json"))
+        L += ["D8 / D8b 안 덮인 실패 옆의 격자 극대 (D7과 같은 해, pkg). D8 순위는 작업 격자 그대로 (패딩으로 같은 주파수가 "
+              "반복됨), D8b 순위는 중복을 지운 곡선. 토큰 고유 = 최종 상태의 모드 토큰 8칸 중 서로 다른 주파수 수", "",
+              "| 단 | seed | 실패 수 | 안 덮임 | 극대 수 (그대로 / 고유) | 토큰 고유 중앙값 | D8 A (순위 > 8) | D8b D_dup (고유 순위 ≤ 8) |",
+              "|---|---|---|---|---|---|---|---|"]
+        for r in ("r1_modal", "r2_mott"):
+            for s, sfx in ((0, ""), (1, "_s1"), (2, "_s2")):
+                x = d8.get(f"{r}{sfx}", {}).get("pkg", {}).get("summary")
+                if not x or not x.get("n_uncov"):
+                    continue
+                L.append(f"| {r} | {s} | {x['n_fail']} | {x['n_uncov']} | {x['n_max_med']:.0f} / {x['n_max_u_med']:.0f} | "
+                         f"{x['n_tok_distinct_med']:.0f} | {x['A_budget']:.2f} | {x['D_dup']:.2f} |")
+        L += ["", "D8 규칙 (r2, seed 3개 모두 A ≥ 0.5): " + ("성립" if d8["H_K"] else "기각")
+              + " — 그러나 극대 수가 패딩 중복으로 부풀어 거의 자동으로 성립하는 측정이라 K 8 → 16 후보는 큐에 넣지 않음 "
+              "(PROPOSALS 11/04 D8). D8b 규칙 (r2, seed 3개 모두 D_dup ≥ 0.5): "
+              + ("**성립** → 후보 P2 `--dedup_modes` (PROPOSALS 11/04 P2)" if d8.get("H_dup") else "**기각**"), ""]
     return L
 
 
