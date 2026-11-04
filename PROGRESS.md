@@ -1,4 +1,10 @@
-# PROGRESS (갱신 2026-11-04 15:40 UTC, 재개 라운드 41)
+# PROGRESS (갱신 2026-11-04 17:40 UTC, 재개 라운드 42)
+
+## 재개 라운드 42 (2026-11-04 16:39~ UTC)
+- 상태 (17:40): GPU **`lo_pcb_r2pk_s2`** 증류 17:18~ (P1 확장 2/4, RL 끝 ~19:25) → lo_ip_r2pk → lo_pkg_r2pk (~23:30) → P3 4 run (~11/05 07:30). CPU: 드라이버 줄 `base20 eval_pkg20_1 greedy+prune` (mem_guard, 15:45~, 끝 ~20:30 예상) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 18:30` (R 스윕 남은 11개, queue 순서, pcb16_1부터) = 4. pod 13~21 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- **P1 확장 seed 2 `r2pk_s2_rl`** (341 iter / 1.27 h, best it 200; side_slot 평가 17:18~17:30) 10칸: ip 0.98 / pcb **0.94** / pkg **0.80**; vs `r2_mott_s2_rl` pcb +0.10 [−0.02, +0.22], pkg **+0.18 [+0.02, +0.34]**, ip −0.02 [−0.06, +0.00]; 개수비 pcb 1.08 [1.01, 1.14], pkg 1.03, ip 0.99. seed 0·1·2 묶음 (150 짝, RESULTS `### P1 확장` 자동): 같은 종류 pcb **+0.087 [+0.020, +0.153]**, pkg +0.093 [+0.007, +0.180], ip −0.013 [−0.033, +0.000].
+  - PROPOSALS P1 확장 규칙 대조 (판정 줄은 남은 3 run 뒤 자동): (i)을 성립시킨 판 (같은 종류 pcb)에서 묶음 CI 하한 +0.020 > 0 이고 seed 2 +0.10 ≥ 0 → "seed 3개 확인" 조건은 충족. 최종 구조 채택은 뺀 ip·pkg 점추정 > −0.16 (lo_ip_r2pk·lo_pkg_r2pk, ~23:30) 뒤. 주의 (판정 안 바꿈): 개수비 pcb 1.08 (CI 1 위) — 성공이 오른 만큼 개수가 약간 늘어남, 같이 보고.
+- R 스윕 16칸 `eval_pcb16_0` R2·R4·R16 끝 (16:21~17:07, 4번째 칸; R2 13 분, R4 14 분, R16 19 분). 표는 두 파일 다 끝나야 채워짐 (자동).
 
 ## 재개 라운드 41 (2026-11-04 12:38~ UTC)
 - 상태 (15:40): GPU **`r2pk_s2`** 증류 15:13~ (P1 확장 1/4, RL 끝 ~17:15) → lo_pcb_r2pk_s2 → lo_ip_r2pk → lo_pkg_r2pk (~23:15) → **P3** r2pkdd → lo_pcb_r2pkdd → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~11/05 07:30). CPU: 드라이버 줄 `base20 eval_pkg20_0 greedy+prune` (11:02~, 4.5 h째, 8문제, rss 9 GB) + 학습 정확 검사 2 + 4번째 칸 `run_queue_entries.py 16:20` (r2pk 20칸 남은 6개) = 4. pod 12~15 GiB / 60, oom_kill 1.

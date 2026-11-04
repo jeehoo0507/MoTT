@@ -52,3 +52,6 @@
 [16:20:20] END scale eval_ip20_1 r2pk_s1_rl rc=0 | mem 13.2 GiB / 60.0 GiB, oom_kill 1
 [16:20:20] nothing left
 [16:21:39] START scale eval_pcb16_0 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 | mem 13.3 GiB / 60.0 GiB, oom_kill 1
+[17:07:41] END scale eval_pcb16_0 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 rc=0 | mem 12.7 GiB / 60.0 GiB, oom_kill 1
+[17:07:41] deadline 16:35 UTC reached, 1 left
+[17:30:58] START scale eval_pcb16_1 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 | mem 12.3 GiB / 60.0 GiB, oom_kill 1

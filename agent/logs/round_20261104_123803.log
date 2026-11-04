@@ -39,3 +39,7 @@ error: Please commit or stash them.
 - P3 증류가 끝나면 증류만 한 체크포인트 평가를 큐에 넣기
 - DAILY.md는 11/05 00:15 UTC 뒤 첫 라운드에서 새로 씀
 - 새 시도를 시작할 수 있는 마감은 11/6 12:00 UTC이고, P3가 마지막 시도입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   88855cb..4bdd408  main -> main
