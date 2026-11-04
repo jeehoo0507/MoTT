@@ -29,10 +29,15 @@ K_TOK = 8
 # --refine (P1 pre-queue check, PROPOSALS 11/03 P1): r2 pkg only; per failure also the peak_env refined excess of the
 # nearest token; writes runs/analysis/diag_fail_freq_refine.json
 REFINE = "--refine" in sys.argv
+# --rank (D8, PROPOSALS 11/04 D8): r1/r2 pkg; per uncovered failure the level rank of the nearest working-grid local
+# maximum within s of fw (A = rank > K_TOK, "token budget"; B = none within s, "invisible on grid");
+# writes runs/analysis/diag_fail_rank.json
+RANK = "--rank" in sys.argv
 
 
-def tokens_and_grid(b, ib, occ):
-    """Sorted working-grid log10 f [E,F], level [E,F] and the K_TOK token log10 f [E,<=K]."""
+def tokens_and_grid(b, ib, occ, allpk=None):
+    """Sorted working-grid log10 f [E,F], level [E,F] and the K_TOK token log10 f [E,<=K].
+    allpk (list) gets every episode's local-maximum indices sorted by level (descending)."""
     from decap_loop.sim import probe_impedance
     b.bank.ensure(ib, torch.where(occ >= 0, torch.arange(b.n, device=occ.device), -1))
     z = probe_impedance(b, ib, occ, b.zd()[ib])
@@ -45,6 +50,8 @@ def tokens_and_grid(b, ib, occ):
     toks, tj = [], []
     for e in range(lv.shape[0]):
         j = np.flatnonzero(peak[e])
+        if allpk is not None:
+            allpk.append(j[np.argsort(-lv[e, j])])
         tj.append(j[np.argsort(-lv[e, j])[:K_TOK]])
         toks.append(lf[e, tj[-1]])
     return lf, lv, toks, tj
@@ -68,7 +75,8 @@ def run(pol, feat, b):
     occ = out["occ"]
     wv, fw, _ = certify_parallel(b, ib, occ, b.cfg, workers=1)
     feas = out["feasible"].numpy()
-    lf, lv, toks, tj = tokens_and_grid(b, ib, occ)
+    allpk = [] if RANK else None
+    lf, lv, toks, tj = tokens_and_grid(b, ib, occ, allpk)
     rows = []
     for e in np.flatnonzero(feas & (wv > TOL1)):
         x = np.log10(fw[e])
@@ -81,7 +89,24 @@ def run(pol, feat, b):
                          underres=float(wv[e] - lv[e, near]), count=int(out["count"][e])))
         if REFINE and len(toks[e]):
             rows[-1]["refined_excess"] = refined_excess(lf[e], lv[e], tj[e][int(np.argmin(np.abs(toks[e] - x)))])
+        if RANK:
+            pk = allpk[e]
+            dist = np.abs(g[pk] - x)
+            within = np.flatnonzero(dist <= s)
+            rows[-1]["n_max"] = int(len(pk))
+            rows[-1]["rank"] = int(within[np.argmin(dist[within])]) + 1 if len(within) else -1   # 1-based, -1 = none
     return rows, int(feas.sum()), int(((wv <= TOL1) & feas).sum()), b.B
+
+
+def rank_summ(rows):
+    unc = [r for r in rows if not r["covered"]]
+    a = sum(r["rank"] > K_TOK for r in unc)
+    bb = sum(r["rank"] < 0 for r in unc)
+    return dict(n_fail=len(rows), n_uncov=len(unc),
+                A_budget=round(a / len(unc), 4) if unc else None, B_invisible=round(bb / len(unc), 4) if unc else None,
+                other=len(unc) - a - bb,
+                n_max_med=float(np.median([r["n_max"] for r in rows])) if rows else None,
+                frac_gt_K=round(float(np.mean([r["n_max"] > K_TOK for r in rows])), 4) if rows else None)
 
 
 def summ(rows):
@@ -101,7 +126,7 @@ def main():
     from decap_loop.bank import load_bank
     names = [n for n in CKPTS if n.startswith("r2" if REFINE else ("r1", "r2"))]
     res = {n: {} for n in names}
-    for tech in (("pkg",) if REFINE else ("pkg", "pcb")):
+    for tech in (("pkg",) if REFINE or RANK else ("pkg", "pcb")):
         for name in names:
             ck = torch.load(os.path.join(ROOT, CKPTS[name]), map_location="cpu", weights_only=False)
             a = ck["args"]
@@ -115,6 +140,8 @@ def main():
                 rows += r; nf += f; nok += o; nb += n
             s = summ(rows)
             s.update(grid_feasible=round(nf / nb, 4), exact_pass=round(nok / nb, 4), n=nb)
+            if RANK:
+                s.update(rank_summ(rows))
             res[name][tech] = dict(summary=s, rows=rows)
             print(name, tech, s, flush=True)
     if REFINE:
@@ -124,6 +151,16 @@ def main():
         res["P1_queue"] = res["P1_check"]["frac_gt_002"] >= 0.20
         print("P1 check", res["P1_check"], "-> queue" if res["P1_queue"] else "-> cancel")
         json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_freq_refine.json"), "w"), indent=1)
+        return
+    if RANK:
+        hk = []
+        for sfx in ("", "_s1", "_s2"):
+            s2 = res[f"r2_mott{sfx}"]["pkg"]["summary"]
+            hk.append(bool(s2["n_uncov"] >= 5 and s2["A_budget"] >= 0.5))
+        res["H_K_per_seed"], res["H_K"] = hk, all(hk)
+        print("H_K", hk, all(hk))
+        json.dump(res, open(os.path.join(ROOT, "runs/analysis/diag_fail_rank.json"), "w"), indent=1)
+        print("wrote runs/analysis/diag_fail_rank.json")
         return
     hu, hr = [], []
     for sfx in ("", "_s1", "_s2"):
