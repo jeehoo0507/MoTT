@@ -55,3 +55,8 @@
 [17:07:41] END scale eval_pcb16_0 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 rc=0 | mem 12.7 GiB / 60.0 GiB, oom_kill 1
 [17:07:41] deadline 16:35 UTC reached, 1 left
 [17:30:58] START scale eval_pcb16_1 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 | mem 12.3 GiB / 60.0 GiB, oom_kill 1
+[18:14:44] END scale eval_pcb16_1 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 rc=0 | mem 12.7 GiB / 60.0 GiB, oom_kill 1
+[18:14:44] START scale eval_pkg16_0 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 | mem 12.7 GiB / 60.0 GiB, oom_kill 1
+[19:08:56] END scale eval_pkg16_0 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 rc=0 | mem 14.2 GiB / 60.0 GiB, oom_kill 1
+[19:08:56] deadline 18:30 UTC reached, 9 left
+[19:32:39] START scale eval_pkg16_1 r3_loop_rl@R2 r3_loop_rl@R4 r3_loop_rl@R16 | mem 13.4 GiB / 60.0 GiB, oom_kill 1
