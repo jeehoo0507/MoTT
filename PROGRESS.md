@@ -1,4 +1,13 @@
-# PROGRESS (갱신 2026-11-03 23:05 UTC, 재개 라운드 36)
+# PROGRESS (갱신 2026-11-04 01:40 UTC, 재개 라운드 37)
+
+## 재개 라운드 37 (2026-11-04 00:23~ UTC)
+- 상태 (01:40): GPU **`lo_pcb_r2pk`** 증류 00:59~ (RL 끝 ~03:00) → r2pk_s1 → lo_pcb_r2pk_s1 (~07:00) → **P2 r2dd → lo_pcb_r2dd → r2dd_s1 → lo_pcb_r2dd_s1** (~15:00). CPU: 드라이버 줄 eval20 (16칸 고치기 `repair16 pkg greedy+prune` 00:33 끝: pkg16_1 0.96 / 17.3개) + 학습 정확 검사 2 + 4번째 칸 side_slot (P1 대상) = 4. pod 18.5 GiB / 60, oom_kill 1 (라운드 27 그것). QUEUE 새 지시 없음. DAILY 11/04는 라운드 36이 씀 (다음은 11/05 00:15 뒤).
+- **P1 seed 0 (관찰, 판정은 seed 1과 묶어서):** `r2pk_rl` (349 iter / 1.27 h, best it 200) 10칸 ip 0.98 / pcb 0.90 / pkg 0.78; vs `r2_mott_rl` pcb +0.02 [−0.08, +0.12], pkg +0.06 [−0.08, +0.22], ip −0.02. 일찍 멈춤 규칙 (seed 0 쌍 둘 다 ≤ −0.16) 해당 없음 → seed 1 그대로.
+- **D8 (PROPOSALS 11/04, 결과 전 규칙):** 규칙대로는 H-K 성립 (r2 안 덮인 실패 옆 격자 극대 순위 > 8 비율 1.00 × 3 seed) — **그러나 측정 오염 발견**: 작업 격자 236점 중 고유 주파수 58~167 (`scripts/diag_grid_shape.py`). `pdn.add_freqs` (pdn.py 323)가 판마다 seed peak 수를 맞추려 **마지막 seed peak 주파수를 반복**해 채움 → `sim.features_mott`의 ≥ 규칙이 반복을 모두 극대로 셈 (극대 134~157개) → **모드 토큰 8칸이 한 피크의 복사본·경사 위 평탄부로 참** (pkg10_0 판 0: 고유 3개).
+  - 결정: K 8 → 16 후보는 큐에 넣지 않음 — 측정이 자동 성립에 가까워 근거가 아님; 오염을 뺀 D8b를 결과 전에 적고 먼저 돌림 (작은 실험 먼저).
+- **D8b (결과 전 규칙): H-dup 성립.** r2 pkg 안 덮인 실패 14 / 17 / 22개 **모두** 중복만 없었으면 토큰이 됐을 고유 순위 ≤ 8 피크 옆 (D_dup 1.00 × 3); 실패 해의 고유 토큰 중앙값 3 / 8칸, 고유 극대 4~5개. r1 (`modal_env` 3피크)도 같은 ≥ 규칙 — 같은 결함. RESULTS "진단" 절에 D8/D8b 표 (자동).
+- **P2 `--dedup_modes` (PROPOSALS 11/04 P2, 판정 규칙 학습 전에 적음 — P1과 같은 꼴, seed 0·1 묶음):** 같은 주파수 반복을 한 점으로, 다른 주파수 이웃과 비교해 극대 (`decap_loop/dedup_env.py`, `sim.py` 불변, node·edge·decap·K 그대로). smoke `scripts/smoke_dedup_modes.py` → `.ok` (맨판 node·decap 비트 단위 같음, 유효 토큰 고유; 맨판 고유 토큰 pkg 3.00 → 2.52 — 가짜 평탄부 피크가 빠짐; CPU 증류+RL). GPU 큐 P1 뒤 4 run (`scripts/queue_dedup_modes.py`), driver dry-run 확인. RESULTS ABLATIONS 6행 등록 (자동).
+- 할 일 (다음 라운드): (1) lo_pcb_r2pk 평가 (~03:15) → RESULTS. (2) r2pk_s1 증류 best.pt (~04:00) → `scripts/queue_distill_eval_named.py r2pk_s1_distill`. (3) lo_pcb_r2pk_s1 평가 뒤 (~07:15) **P1 묶음 판정** (PROPOSALS P1 규칙 그대로; 묶음 CI 코드 필요 — `collect_results.py`에 P1·P2 공통 seed 0·1 묶음 표). (4) P1 side_slot이 끝나면 `side_slot.py r2dd lo_pcb_r2dd r2dd_s1 lo_pcb_r2dd_s1`로 다시 띄움 (안 띄워도 드라이버 CPU 줄이 eval20 사이에 평가함); r2dd 증류 best.pt가 생기면 증류만 평가 큐. (5) P2가 이기면 1단 수정판 공정성 짝 (PROPOSALS P2). 새 시도 시작 마감 11/6 12:00 UTC.
 
 ## 재개 라운드 36 (2026-11-03 22:25~ UTC)
 - 상태 (23:05): GPU **`r2pk`** 증류 22:57~ (P1, 끝 ~00:57) → lo_pcb_r2pk → r2pk_s1 → lo_pcb_r2pk_s1 (~07:00). CPU: 드라이버 줄 `repair16 pkg greedy+prune` (16:12~) + 학습 정확 검사 2 + 4번째 칸 **side_slot10** (`r2pk lo_pcb_r2pk r2pk_s1 lo_pcb_r2pk_s1`) = 4. pod 13 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.

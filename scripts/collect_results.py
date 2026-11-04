@@ -1141,6 +1141,72 @@ def rl_noise_table(recs):
             "| 수정 run | 기준 | pcb 10 | pkg 10 | ip 10 |", "|---|---|---|---|---|"] + rows + [""]
 
 
+POOLED_MODS = [("P1", "pk", "`--peak_refine`"), ("P2", "dd", "`--dedup_modes`")]
+
+
+def pooled_mod_table(recs):
+    """PROPOSALS 11/03 P1 / 11/04 P2 (rules written before training): seed 0+1 pooled paired bootstrap per board
+    (problems resampled within each seed, 2000x). Judged boards: same-kind pcb / pkg / ip and held-out pcb of the
+    lo_pcb runs. Win: (i) same-kind pcb or pkg or held-out pcb has pooled CI low > 0 and both seed estimates > 0,
+    (ii) no judged board has a pooled estimate below -0.05. Harm: any judged board's pooled CI high < 0.
+    Distill stage (D1 target): r2X_distill vs r2_mott_distill pkg, same (i) condition."""
+    cache = {}
+
+    def arr(m, ref, tech):
+        if ref not in cache:
+            cache[ref] = paired(recs, ref)
+        v = cache[ref].get((tech, 10), {}).get(m)
+        return None if v is None else (v[0].astype(float), v[1].astype(float))
+
+    def pool(pairs, B=2000, seed=0):
+        d = [a - b for a, b in pairs]
+        rng = np.random.default_rng(seed)
+        bs = [np.mean(np.concatenate([x[rng.integers(0, len(x), len(x))] for x in d])) for _ in range(B)]
+        return [float(x.mean()) for x in d], float(np.concatenate(d).mean()), np.percentile(bs, [2.5, 97.5])
+
+    L = []
+    for tag, x, label in POOLED_MODS:
+        boards = [("같은 종류 pcb", "pcb", f"r2{x}", "r2_mott", True), ("같은 종류 pkg", "pkg", f"r2{x}", "r2_mott", True),
+                  ("같은 종류 ip", "ip", f"r2{x}", "r2_mott", False), ("뺀 pcb", "pcb", f"lo_pcb_r2{x}", "lo_pcb_r2", True)]
+        rows, res, missing = [], {}, False
+        for name, tech, m, ref, in_i in boards:
+            pairs = [arr(f"{m}{s}_rl", f"{ref}{s}_rl", tech) for s in ("", "_s1")]
+            if pairs[0] is None:
+                missing = True
+                continue
+            if pairs[1] is None:
+                missing = True
+                rows.append(f"| {name} | {np.mean(pairs[0][0] - pairs[0][1]):+.2f} | – | – | {len(pairs[0][0])} |")
+                continue
+            ps, pe, ci = pool(pairs)
+            res[name] = (ps, pe, ci, in_i)
+            rows.append(f"| {name} | {ps[0]:+.2f} | {ps[1]:+.2f} | {pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] | "
+                        f"{len(pairs[0][0]) + len(pairs[1][0])} |")
+        if not rows:
+            continue
+        if missing:
+            verdict = "seed 0·1 네 run이 다 끝나야 판정"
+        else:
+            win_i = [n for n, (ps, pe, ci, in_i) in res.items() if in_i and ci[0] > 0 and min(ps) > 0]
+            low = [n for n, (ps, pe, ci, in_i) in res.items() if pe < -0.05]
+            harm = [n for n, (ps, pe, ci, in_i) in res.items() if ci[1] < 0]
+            verdict = ("**해로움** (" + ", ".join(harm) + ")" if harm else
+                       "**이김** (" + ", ".join(win_i) + ")" if win_i and not low else
+                       "효과 없음" + (f" ((i) {', '.join(win_i)} 성립, (ii) {', '.join(low)} < −0.05)" if win_i else ""))
+        dl = [arr(f"r2{x}{s}_distill", f"r2_mott{s}_distill", "pkg") for s in ("", "_s1")]
+        if all(p is not None for p in dl):
+            ps, pe, ci = pool(dl)
+            dv = (f"증류만 pkg: seed {ps[0]:+.2f} / {ps[1]:+.2f}, 묶음 {pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] → "
+                  + ("**성립** (D1 차이를 일부 설명)" if ci[0] > 0 and min(ps) > 0 else "D1은 이것으로 설명 안 됨"))
+        else:
+            dv = "증류만 pkg: seed 0·1 평가가 다 있어야 판정"
+        L += [f"## {tag} {label} seed 0·1 묶음 판정 (PROPOSALS {tag} 규칙, 학습 전에 적음; 판마다 seed 안에서 문제를 다시 뽑는 "
+              "bootstrap 2000회)", "",
+              "| 판 | seed 0 차 | seed 1 차 | 묶음 차 [95% CI] | 짝 수 |", "|---|---|---|---|---|"] + rows + [
+              "", f"판정: {verdict}. {dv}", ""]
+    return L
+
+
 def repair_ladder_table():
     """PROPOSALS 11/03 R4 (scripts/diag_repair_ladder.py): r2_mott+rep4 vs r0_coord+rep4 per seed and pooled."""
     f = "runs/analysis/diag_repair_ladder.json"
@@ -1300,6 +1366,7 @@ def main():
     lines += distill_seed_table()
     lines += distill_mech_table()
     lines += rl_noise_table(recs)
+    lines += pooled_mod_table(recs)
     lines += repair_ladder_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)

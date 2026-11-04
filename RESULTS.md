@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-04 01:36 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-04 01:39 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -3042,6 +3042,16 @@ D8 규칙 (r2, seed 3개 모두 A ≥ 0.5): 성립 — 그러나 극대 수가 �
 | `lo_pcb_r2t_rl` | `lo_pcb_r2_rl` | -0.02 (잡음 안) | -0.16 (잡음 안) | +0.00 (잡음 안) |
 | `r2h_rl` | `r2_mott_rl` | +0.02 (잡음 안) | +0.00 (잡음 안) | -0.02 (잡음 안) |
 | `lo_pcb_r2h_rl` | `lo_pcb_r2_rl` | -0.40 | -0.02 (잡음 안) | -0.02 (잡음 안) |
+
+## P1 `--peak_refine` seed 0·1 묶음 판정 (PROPOSALS P1 규칙, 학습 전에 적음; 판마다 seed 안에서 문제를 다시 뽑는 bootstrap 2000회)
+
+| 판 | seed 0 차 | seed 1 차 | 묶음 차 [95% CI] | 짝 수 |
+|---|---|---|---|---|
+| 같은 종류 pcb | +0.02 | – | – | 50 |
+| 같은 종류 pkg | +0.06 | – | – | 50 |
+| 같은 종류 ip | -0.02 | – | – | 50 |
+
+판정: seed 0·1 네 run이 다 끝나야 판정. 증류만 pkg: seed 0·1 평가가 다 있어야 판정
 
 ## 같은 고치기에서 2단 vs 0단, seed 3개 (PROPOSALS 11/03 R4; seed 0·1과 r2 seed 2는 규칙 전에 봤음, r0 seed 2만 결과 전)
 
