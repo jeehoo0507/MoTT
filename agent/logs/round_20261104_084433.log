@@ -19,3 +19,7 @@ Round 40 is done (08:44–12:35 UTC). Everything is committed and pushed to `r2e
 2. ~15:30: lo_pcb_r2dd_s1 eval, which gives the P2 pooled verdict. Then run `scripts/queue_p3.py`, and if P2 is "이김" (a win), `queue_scale_curve.py --r2dd`.
 3. ~23:00: the P1 seed-2 and held-out-kind runs finish, giving the seed-3 verdict for P1.
 4. Write DAILY.md after 00:15 UTC on 11/05.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7edfc46..c0d7499  main -> main
