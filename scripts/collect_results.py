@@ -527,10 +527,50 @@ def leave_out_table(recs):
             pm = paired(recs, ref).get((t, 10), {}).get(m)
             cells = ci_cells(*pm) if pm is not None else "– | – | –"
             lines.append(f"| {t} 10 | {what} | {m} | {ref} | {cells} |")
-    return lines + [""] + leave_out_seed_table(by) + loop_vs_plain_table(recs, by)
+    return lines + [""] + leave_out_seed_table(by) + final_leave_out_table(by) + loop_vs_plain_table(recs, by)
 
 
 LO_SEEDS = (0, 1, 2)
+
+
+def final_leave_out_table(by):
+    """PROPOSALS 11/04 F1 (written round 43, before lo_{ip,pkg}_r2pk_s{1,2} ran): the QUEUE 10/31 11:30 leave-out rule
+    applied unchanged to the adopted final structure r2pk (2단 + `--peak_refine`): per held-out type t, (b') lo_t_r2pk
+    − lo_t_r0 > 0 at all three seeds and (c') mean over seeds of lo_t_r2pk − r2pk (same seed) ≥ −0.05 -> "통과".
+    The r2_mott verdict is recomputed next to it with the same rule (not changed)."""
+    if not any(m.startswith("lo_") and "_r2pk" in m for ms in by.values() for m in ms):
+        return []
+
+    def rate(t, m):
+        r = by.get((t, 10), {}).get(m)
+        return r["ok"].mean() if r is not None else None
+
+    def diffs(t, a, b):
+        return [None if x is None or y is None else x - y
+                for x, y in ((rate(t, a(s)), rate(t, b(s))) for s in LO_SEEDS)]
+
+    def fmt3(v, sign=True):
+        return " / ".join("–" if x is None else (f"{x:+.2f}" if sign else f"{x:.2f}") for x in v)
+
+    def verdict(b, c):
+        if any(x is None for x in b + c):
+            return "seed 3개가 다 나온 뒤"
+        cm = float(np.mean(c))
+        return ("**통과**" if all(x > 0 for x in b) and cm >= -0.05 else
+                f"실패 ((b') seed별 {fmt3(b)}, (c') 평균 {cm:+.2f})")
+    lines = ["### 최종 후보 r2pk (2단 + `--peak_refine`)의 한 종류 빼고 학습, seed별 (PROPOSALS 11/04 F1, QUEUE 10/31 11:30 기준 그대로)", "",
+             "| 뺀 종류 | 단 | 뺀 학습 seed 0 / 1 / 2 | 전체 학습 seed 0 / 1 / 2 | (b') 뺀 학습 − 0단 뺀 학습 | (c') 뺀 − 전체 (같은 seed) | 평균 (c') | 판정 |",
+             "|---|---|---|---|---|---|---|---|"]
+    for t in LO_TECHS:
+        for r, full, desc in (("r2pk", "r2pk", "최종 후보 r2pk"), ("r2", "r2_mott", "2단 MoTT (기존, 같은 규칙)")):
+            lo = [rate(t, seed_run(f"lo_{t}_{r}", s)) for s in LO_SEEDS]
+            fu = [rate(t, seed_run(full, s)) for s in LO_SEEDS]
+            b = diffs(t, lambda s: seed_run(f"lo_{t}_{r}", s), lambda s: seed_run(f"lo_{t}_r0", s))
+            c = diffs(t, lambda s: seed_run(f"lo_{t}_{r}", s), lambda s: seed_run(full, s))
+            cm = "–" if any(x is None for x in c) else f"{np.mean(c):+.2f}"
+            lines.append(f"| {t} 10 | {desc} | {fmt3(lo, False)} | {fmt3(fu, False)} | {fmt3(b)} | {fmt3(c)} | {cm} | "
+                         f"{verdict(b, c)} |")
+    return lines + [""]
 
 
 def seed_run(base, s):

@@ -463,6 +463,30 @@
    "arm": "--model mott --peak_refine --dedup_modes --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
    "seed": 1,
    "after": "runs/analysis/smoke_pkdd.ok"
+  },
+  {
+   "name": "lo_ip_r2pk_s1",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 1,
+   "after": "runs/analysis/smoke_peak_refine.ok"
+  },
+  {
+   "name": "lo_ip_r2pk_s2",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_pkg*.pkl --val_pools val_pcb10_0,val_pkg10_0",
+   "seed": 2,
+   "after": "runs/analysis/smoke_peak_refine.ok"
+  },
+  {
+   "name": "lo_pkg_r2pk_s1",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1,
+   "after": "runs/analysis/smoke_peak_refine.ok"
+  },
+  {
+   "name": "lo_pkg_r2pk_s2",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2,
+   "after": "runs/analysis/smoke_peak_refine.ok"
   }
  ],
  "cpu": [
