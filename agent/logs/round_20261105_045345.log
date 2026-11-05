@@ -23,3 +23,7 @@ error: Please commit or stash them.
 - 15:45 전에 근거 있는 P4가 나오면 그 run들을 B1 앞으로 옮깁니다.
 
 **다음:** F1 평가 4개 (~10:00부터 ~16:00, 자동), LS16 6파일, DAILY는 11/06 00시대 UTC입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6c2f170..0fc6902  main -> main

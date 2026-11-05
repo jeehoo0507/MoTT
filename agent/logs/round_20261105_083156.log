@@ -1,0 +1,26 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Waiting for the F1 seed 1 evaluation; I'll be re-invoked when it finishes.
+
+라운드 47을 마쳤습니다. PROGRESS·RESULTS를 갱신하고 커밋·`git push r2e main`까지 끝났으며, 원격과 동기화된 상태입니다. QUEUE.md에 새 지시는 없었습니다.
+
+**F1 결과 — 판정이 하나 정해졌습니다**
+- `lo_ip_r2pk_s1`은 학습에서 뺀 ip에서 성공률 0.98입니다. 그런데 비교 대상인 0단(`lo_ip_r0_s1`)도 0.98이라 (b') 차이가 +0.00입니다.
+- 미리 정한 규칙은 "seed 0·1·2 모두 > 0"이므로, **최종 구조 r2pk의 뺀 ip "통과"는 이제 불가능**합니다. 판정 칸은 seed 2가 나오면 자동으로 "실패"가 됩니다. 규칙은 바꾸지 않았습니다.
+- 뺀 pkg도 seed 0의 (b')가 이미 −0.08이라 같은 이유로 통과할 수 없습니다. 따라서 r2pk로 범용화를 주장할 수 있는 종류는 pcb 하나입니다 (seed 3개 모두 통과).
+- 참고로만 기록: 성공률은 같지만 r2pk가 decap을 21% 적게 씁니다 (개수비 0.794 [0.728, 0.857]).
+- 남은 F1 3개 run은 큐를 바꾸지 않고 그대로 돌립니다. 범용화 표를 seed 3개로 채우는 것이 F1의 목적이기 때문이고, 이 결정은 PROGRESS에 "결정:"으로 적었습니다.
+
+**그림 2·3 초안을 r2pk로 다시 그림** (기존 평가 기록만 사용, 옛 초안 파일은 그대로 둠)
+- `reports/fig2_bigboard_draft_r2pk.png` (16·20칸): 문제당 시간이 g+p는 62~565 s, r2pk는 1.4~7.6 s입니다.
+  - 16칸 pcb에서 r2pk가 7.6 s로 느린 이유를 확인했습니다. 서버 부하나 계산 비용이 아니라, 한 문제(#9)가 decap 199개를 놓고 실패하면서 평균을 끌어올린 것입니다. 보고서 캡션에 "평균, 이 문제 포함"이라고 적어 둘 예정입니다.
+  - LS 막대는 16·20칸 기록이 없어 아직 비어 있습니다.
+- `reports/fig3_ladder_seeds_draft_r2pk.png` (10칸, seed 3개): r2pk의 성공률은 pcb 0.92 / pkg 0.82 / ip 0.99입니다.
+- 그리면서 `fig_results.py`의 버그를 고쳤습니다. 예전 코드는 `r2pk_rl`에도 "rung 2"라는 이름을 붙였습니다.
+
+**지금 돌고 있는 것**
+- GPU: `lo_ip_r2pk_s2` (평가 ~12:05 UTC) → `lo_pkg_r2pk_s1`·`lo_pkg_r2pk_s2` (~16:00) → 선행 연구 재구현 8개 run.
+- CPU: 16칸 LS를 메모리를 덜 쓰도록 나눠 돌리는 `ls16c eval_pcb16_0`이 1시간 41분째입니다. 메모리는 8.9 GB에서 평평합니다. 예전 방식은 같은 파일이 2시간 안에 메모리 초과로 죽었습니다. 끝나면 PROGRESS 첫 줄의 STUCK을 정리하겠습니다.
+- OOM은 2회로 그대로입니다.
+
+이번 라운드에 기록만 읽는 보조 스크립트 `scripts/rec_time.py`, `rec_counts.py`, `pair2.py`를 추가했습니다. 다음 DAILY는 11/06 00시대(UTC)에 씁니다.
