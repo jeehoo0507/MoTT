@@ -1,6 +1,8 @@
-# PROGRESS (갱신 2026-11-05 00:55 UTC, 재개 라운드 44)
+# PROGRESS (갱신 2026-11-05 02:10 UTC, 재개 라운드 44)
 
 ## 재개 라운드 44 (2026-11-05 00:29~ UTC)
+- 상태 (02:10, 라운드 끝): GPU **`lo_pcb_r2pkdd`** (01:25~, 증류 → RL, 끝 ~03:25, side_slot 평가 ~03:40) → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run. CPU: 드라이버 줄 LS16 `eval_pcb16_0` (00:22~) + 학습 정확 검사 2 = 3 (4번째 칸은 side_slot 대기). pod 13 GiB / 60, oom_kill 1 (라운드 27 그것).
+- P3 일찍 멈춤 규칙 (seed 0 쌍의 같은 종류 pkg **와** 뺀 pcb가 둘 다 ≤ −0.16): 같은 종류 pkg가 이미 +0.04 → lo_pcb_r2pkdd 결과와 무관하게 발동 안 함, seed 1 run은 큐 그대로.
 - 상태 (00:55): GPU **P3 `r2pkdd`** RL (00:0x~, ~01:25 끝) → lo_pcb_r2pkdd → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run. CPU: 드라이버 줄 **LS16** `eval_pcb16_0 ls` (00:22~, rss 16 GB, 무거운 작업 하나) + 학습 정확 검사 2 + 4번째 칸 비어 있음 (side_slot이 r2pkdd_rl 끝 기다림) = 3. pod 15 GiB / 60, oom_kill 1 (라운드 27 그것). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
 - **R 스윕 16·20칸 18 / 18 끝 → 미리 적은 읽기 (QUEUE 11/04 18:15, RESULTS "루프 반복 수 vs 판 크기"):** 16칸 **"반복의 이득은 관찰되지 않았다"** — R16 − R2 짝지은 성공률 pcb −0.08 [−0.18, +0.02], pkg −0.08 [−0.24, +0.08], ip +0.00; 개수비 1.045 / 0.994 / 1.001. 20칸 (16문제): pcb R16 − R2 **+0.25 [+0.06, +0.50]** 이지만 R2/4/8/16 = 0.75 / 0.94 / 0.75 / 1.00 단조 아님·개수비 1.143 → 주장하지 않고 고찰용 관찰; pkg +0.06 [−0.31, +0.44], ip +0.00 (개수비 1.035).
   - 결정: 표에 **R16 vs R2 짝지은 행**을 더함 (`collect_results.loop_r_size_table`) — 이유: 기존 표의 개수는 R마다 다른 성공 문제 집합의 평균이라, pkg의 "개수 감소" (16칸 11.2 → 8.9)가 짝지으면 사라짐 (0.994). 짝 없는 숫자로 "개수가 줄었다"를 읽으면 규칙을 잘못 적용하게 됨. 읽기 문장은 숫자 없이 스크립트에 고정.
@@ -8,7 +10,7 @@
 - **P3 `r2pkdd_rl` seed 0** (341 iter / 1.27 h, best it 300; side_slot 01:27~01:40) 10칸: ip 0.98 / pcb **0.96** / pkg **0.82**; vs P1 `r2pk_rl` pcb +0.06 [−0.02, +0.14], pkg +0.04 [−0.10, +0.18], ip +0.00 (개수비 0.973 / 0.969 / 1.022). 같이 보고 vs greedy+prune: pcb +0.06 [−0.04, +0.16], pkg −0.08 [−0.22, +0.04]; vs 종류 인식 greedy pcb +0.30, pkg +0.00, ip −0.02. 판정은 seed 1 + lo_pcb 쌍 뒤.
 - **그림 1 초안을 채택 구조로 다시** `reports/fig1_board_draft_r2pk_10.png` (`fig_board.py`, `r2pk_rl` seed 0, 10칸 `_0` 세 종류, 이전 초안과 같은 `--pick median`): pcb #8 7개 (최악 0.917), pkg #22 5개 (0.675), ip #13 7개 (0.930). 기존 평가 기록만, 새 평가 없음. P3가 "이김"이면 r2pkdd로 다시 그림.
 - **RESULTS 새 절 "시도한 수정과 효과 (한눈에)"** (`collect_results.tried_mods_table`, QUEUE 11/03 11:40 KST의 ABLATIONS 정리를 미리): 수정 15개 + 평가 단계 3개, 칸 = seed 0 짝지은 성공률 차 [CI] (자동), 판정 = 각 규칙을 적용했을 때 적은 말 (PROGRESS·PROPOSALS 위치 같이), P1~P3 판정은 `pooled_mod_table`에서 바로 (P3는 지금 "판정 대기"). 11/6 12:00 뒤에는 P3 판정만 채워지면 됨.
-- 할 일 (다음): (1) 일찍 멈춤 규칙 (같은 종류 pkg와 뺀 pcb 둘 다 ≤ −0.16)은 lo_pcb_r2pkdd 평가 (~03:45) 뒤 확인. (2) r2pkdd_s1 증류 `done:` 뒤 `queue_distill_eval_named.py r2pkdd_s1_distill`. (3) P3 판정 (~07:45). (4) LS16 6파일 (드라이버) → 그림 2 LS 열.
+- 할 일 (다음): (1) lo_pcb_r2pkdd 평가 (~03:40) → RESULTS·PROGRESS. (2) r2pkdd_s1 증류 `done:` 뒤 `queue_distill_eval_named.py r2pkdd_s1_distill`. (3) P3 판정 (~07:45). (4) LS16 6파일 (드라이버) → 그림 2 LS 열.
 
 ## 재개 라운드 43 (2026-11-04 19:50~ UTC)
 - 상태 (00:20): GPU **P3 `r2pkdd`** 증류 끝 (23:2x~00:07, 1520 iter / 0.77 h, best it 600, val score 1.768) → RL ~01:25 → lo_pcb_r2pkdd → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~07:30) → **F1** 4 run (~15:45). CPU: 드라이버 줄 R 스윕 20칸 (pkg20_1 진행 → ip20_0·1 → ls16 6) + 학습 정확 검사 2 + side_slot `ls10 distill-eval r2pkdd_distill` (00:10~, `queue_distill_eval_named.py`, P3 증류 단계 판정용) = 4. pod 8~14 GiB / 60, oom_kill 1 (라운드 27 그것).
