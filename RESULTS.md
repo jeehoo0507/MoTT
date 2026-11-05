@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 20:26 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 23:05 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -19,6 +19,7 @@
 | bp_park_rl | – | 0.72 / 0.97 / 1.38 [50] | – | – | 0.46 / 4.86 / 1.13 [50] | – | – | 0.16 / 3.39 / 3.04 [50] | – | – |
 | bp_park_rlonly_rl | – | 0.12 / 6.37 / 9.99 [50] | – | – | 0.86 / 8.14 / 1.76 [50] | – | – | 0.86 / 7.05 / 4.87 [50] | – | – |
 | bp_park_s1_rl | – | 0.96 / 1.32 / 1.92 [50] | – | – | 0.48 / 4.84 / 1.28 [50] | – | – | 0.74 / 2.96 / 1.98 [50] | – | – |
+| bp_park_s2_rl | – | 0.98 / 1.28 / 1.80 [50] | – | – | 0.02 / 0.86 / 0.50 [50] | – | – | 0.64 / 1.20 / 0.84 [50] | – | – |
 | genetic | – | 0.40 / 1.02 / 2.37 [50] | – | – | 0.78 / 0.96 / 0.35 [50] | – | – | 0.42 / 0.88 / 0.62 [50] | – | – |
 | greedy+prune+rep4 | – | 0.40 / 1.00 / 2.03 [50] | – | – | 0.94 / 1.00 / 0.33 [50] | – | – | 0.94 / 1.00 / 0.74 [50] | 0.96 / 1.00 / 0.87 [50] | – |
 | lo_ip_r0_rl | – | 0.56 / 0.94 / 1.66 [50] | – | – | 1.00 / 0.82 / 0.20 [50] | – | – | 0.76 / 0.82 / 0.56 [50] | – | – |
@@ -185,6 +186,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bp_park_rl | 50 | -0.28 [-0.42, -0.16] | 1.383 [1.216, 1.567] |
 | ip 10 | bp_park_rlonly_rl | 50 | -0.88 [-0.96, -0.78] | 9.987 [7.446, 12.868] |
 | ip 10 | bp_park_s1_rl | 50 | -0.04 [-0.10, +0.00] | 1.916 [1.475, 2.647] |
+| ip 10 | bp_park_s2_rl | 50 | -0.02 [-0.06, +0.00] | 1.798 [1.459, 2.331] |
 | ip 10 | genetic | 50 | -0.60 [-0.72, -0.46] | 2.373 [1.524, 3.410] |
 | ip 10 | greedy+prune+rep4 | 50 | -0.60 [-0.72, -0.46] | 2.034 [1.363, 2.797] |
 | ip 10 | lo_ip_r0_rl | 50 | -0.44 [-0.58, -0.30] | 1.662 [1.403, 2.039] |
@@ -328,6 +330,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bp_park_rl | 50 | -0.20 [-0.36, -0.02] | 1.131 [0.701, 1.725] |
 | pcb 10 | bp_park_rlonly_rl | 50 | +0.20 [+0.10, +0.32] | 1.763 [1.346, 2.262] |
 | pcb 10 | bp_park_s1_rl | 50 | -0.18 [-0.34, -0.02] | 1.283 [0.815, 1.906] |
+| pcb 10 | bp_park_s2_rl | 50 | -0.64 [-0.76, -0.52] | 0.500 [0.500, 0.500] |
 | pcb 10 | genetic | 50 | +0.12 [-0.06, +0.28] | 0.352 [0.247, 0.478] |
 | pcb 10 | greedy+prune+rep4 | 50 | +0.28 [+0.14, +0.42] | 0.330 [0.241, 0.432] |
 | pcb 10 | lo_ip_r0_rl | 50 | +0.34 [+0.22, +0.46] | 0.198 [0.162, 0.239] |
@@ -475,6 +478,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bp_park_rl | 50 | -0.66 [-0.78, -0.52] | 3.040 [1.252, 6.016] |
 | pkg 10 | bp_park_rlonly_rl | 50 | +0.04 [-0.06, +0.16] | 4.873 [4.215, 5.672] |
 | pkg 10 | bp_park_s1_rl | 50 | -0.08 [-0.24, +0.10] | 1.982 [1.681, 2.311] |
+| pkg 10 | bp_park_s2_rl | 50 | -0.18 [-0.34, -0.02] | 0.839 [0.646, 1.156] |
 | pkg 10 | genetic | 50 | -0.40 [-0.56, -0.24] | 0.623 [0.512, 0.746] |
 | pkg 10 | greedy+prune+rep4 | 50 | +0.12 [+0.04, +0.22] | 0.739 [0.657, 0.825] |
 | pkg 10 | lo_ip_r0_rl | 50 | -0.06 [-0.22, +0.10] | 0.561 [0.489, 0.639] |
@@ -654,6 +658,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bp_park_rl | 50 | +0.32 [+0.14, +0.48] | 0.975 [0.689, 1.266] |
 | ip 10 | bp_park_rlonly_rl | 50 | -0.28 [-0.40, -0.16] | 6.365 [4.015, 8.500] |
 | ip 10 | bp_park_s1_rl | 50 | +0.56 [+0.42, +0.70] | 1.318 [0.912, 1.805] |
+| ip 10 | bp_park_s2_rl | 50 | +0.58 [+0.44, +0.72] | 1.284 [0.911, 1.721] |
 | ip 10 | genetic | 50 | +0.00 [-0.08, +0.08] | 1.021 [0.908, 1.141] |
 | ip 10 | greedy+prune+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
 | ip 10 | lo_ip_r0_rl | 50 | +0.16 [+0.00, +0.32] | 0.943 [0.729, 1.163] |
@@ -808,6 +813,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bp_park_rl | 50 | -0.44 [-0.60, -0.26] | 4.860 [3.000, 6.976] |
 | pcb 10 | bp_park_rlonly_rl | 50 | -0.04 [-0.16, +0.06] | 8.136 [6.632, 9.706] |
 | pcb 10 | bp_park_s1_rl | 50 | -0.42 [-0.60, -0.24] | 4.842 [3.371, 6.560] |
+| pcb 10 | bp_park_s2_rl | 50 | -0.88 [-0.96, -0.78] | 0.857 [0.857, 0.857] |
 | pcb 10 | genetic | 50 | -0.12 [-0.24, -0.02] | 0.959 [0.910, 1.007] |
 | pcb 10 | greedy+prune+rep4 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | pcb 10 | lo_ip_r0_rl | 50 | +0.10 [+0.02, +0.18] | 0.818 [0.718, 0.910] |
@@ -966,6 +972,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bp_park_rl | 50 | -0.74 [-0.84, -0.62] | 3.392 [2.206, 4.938] |
 | pkg 10 | bp_park_rlonly_rl | 50 | -0.04 [-0.14, +0.06] | 7.048 [6.206, 7.918] |
 | pkg 10 | bp_park_s1_rl | 50 | -0.16 [-0.30, -0.02] | 2.964 [2.514, 3.427] |
+| pkg 10 | bp_park_s2_rl | 50 | -0.26 [-0.42, -0.10] | 1.198 [0.937, 1.638] |
 | pkg 10 | genetic | 50 | -0.48 [-0.62, -0.32] | 0.881 [0.789, 0.975] |
 | pkg 10 | greedy+prune+rep4 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_ip_r0_rl | 50 | -0.14 [-0.30, +0.00] | 0.818 [0.753, 0.886] |
@@ -1760,6 +1767,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bp_park_rl | 50 (0, 1) | 0.72 | 9.78 | 0.975 | 1.383 | 2.314 | `runs/2026-10-29/bp_park_rl/eval/eval_ip10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_ip10_1__bp_park_rl.json` |
 | bp_park_rlonly_rl | 50 (0, 1) | 0.12 | 46.17 | 6.365 | 9.987 | 5.740 | `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_ip10_0__bp_park_rlonly_rl.json`, `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_ip10_1__bp_park_rlonly_rl.json` |
 | bp_park_s1_rl | 50 (0, 1) | 0.96 | 13.56 | 1.318 | 1.916 | 1.010 | `runs/2026-10-29/bp_park_s1_rl/eval/eval_ip10_0__bp_park_s1_rl.json`, `runs/2026-10-29/bp_park_s1_rl/eval/eval_ip10_1__bp_park_s1_rl.json` |
+| bp_park_s2_rl | 50 (0, 1) | 0.98 | 12.98 | 1.284 | 1.798 | 0.914 | `runs/2026-10-29/bp_park_s2_rl/eval/eval_ip10_0__bp_park_s2_rl.json`, `runs/2026-10-29/bp_park_s2_rl/eval/eval_ip10_1__bp_park_s2_rl.json` |
 | genetic | 50 (0, 1) | 0.40 | 12.20 | 1.021 | 2.373 | 9.246 | `runs/2026-10-28/baselines/eval/eval_ip10_0__genetic.json`, `runs/2026-10-28/baselines/eval/eval_ip10_1__genetic.json` |
 | greedy+prune+rep4 | 50 (0, 1) | 0.40 | 10.30 | 1.000 | 2.034 | 2.991 | `runs/repair10/eval/eval_ip10_0__greedy+prune+rep4.json`, `runs/repair10/eval/eval_ip10_1__greedy+prune+rep4.json` |
 | lo_ip_r0_rl | 50 (0, 1) | 0.56 | 13.39 | 0.943 | 1.662 | 7.944 | `runs/2026-10-29/lo_ip_r0_rl/eval/eval_ip10_0__lo_ip_r0_rl.json`, `runs/2026-10-29/lo_ip_r0_rl/eval/eval_ip10_1__lo_ip_r0_rl.json` |
@@ -1932,6 +1940,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bp_park_rl | 50 (0, 1) | 0.46 | 36.26 | 4.860 | 1.131 | 7.636 | `runs/2026-10-29/bp_park_rl/eval/eval_pcb10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_pcb10_1__bp_park_rl.json` |
 | bp_park_rlonly_rl | 50 (0, 1) | 0.86 | 59.79 | 8.136 | 1.763 | 6.977 | `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pcb10_0__bp_park_rlonly_rl.json`, `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pcb10_1__bp_park_rlonly_rl.json` |
 | bp_park_s1_rl | 50 (0, 1) | 0.48 | 35.12 | 4.842 | 1.283 | 9.516 | `runs/2026-10-29/bp_park_s1_rl/eval/eval_pcb10_0__bp_park_s1_rl.json`, `runs/2026-10-29/bp_park_s1_rl/eval/eval_pcb10_1__bp_park_s1_rl.json` |
+| bp_park_s2_rl | 50 (0, 1) | 0.02 | 6.00 | 0.857 | 0.500 | 10.190 | `runs/2026-10-29/bp_park_s2_rl/eval/eval_pcb10_0__bp_park_s2_rl.json`, `runs/2026-10-29/bp_park_s2_rl/eval/eval_pcb10_1__bp_park_s2_rl.json` |
 | genetic | 50 (0, 1) | 0.78 | 12.18 | 0.959 | 0.352 | 16.406 | `runs/2026-10-28/baselines/eval/eval_pcb10_0__genetic.json`, `runs/2026-10-28/baselines/eval/eval_pcb10_1__genetic.json` |
 | greedy+prune+rep4 | 50 (0, 1) | 0.94 | 11.85 | 1.000 | 0.330 | 4.603 | `runs/repair10/eval/eval_pcb10_0__greedy+prune+rep4.json`, `runs/repair10/eval/eval_pcb10_1__greedy+prune+rep4.json` |
 | lo_ip_r0_rl | 50 (0, 1) | 1.00 | 6.94 | 0.818 | 0.198 | 2.165 | `runs/2026-10-29/lo_ip_r0_rl/eval/eval_pcb10_0__lo_ip_r0_rl.json`, `runs/2026-10-29/lo_ip_r0_rl/eval/eval_pcb10_1__lo_ip_r0_rl.json` |
@@ -2108,6 +2117,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bp_park_rl | 50 (0, 1) | 0.16 | 26.38 | 3.392 | 3.040 | 5.519 | `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_1__bp_park_rl.json` |
 | bp_park_rlonly_rl | 50 (0, 1) | 0.86 | 52.74 | 7.048 | 4.873 | 4.991 | `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pkg10_0__bp_park_rlonly_rl.json`, `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pkg10_1__bp_park_rlonly_rl.json` |
 | bp_park_s1_rl | 50 (0, 1) | 0.74 | 24.78 | 2.964 | 1.982 | 9.774 | `runs/2026-10-29/bp_park_s1_rl/eval/eval_pkg10_0__bp_park_s1_rl.json`, `runs/2026-10-29/bp_park_s1_rl/eval/eval_pkg10_1__bp_park_s1_rl.json` |
+| bp_park_s2_rl | 50 (0, 1) | 0.64 | 11.75 | 1.198 | 0.839 | 10.977 | `runs/2026-10-29/bp_park_s2_rl/eval/eval_pkg10_0__bp_park_s2_rl.json`, `runs/2026-10-29/bp_park_s2_rl/eval/eval_pkg10_1__bp_park_s2_rl.json` |
 | genetic | 50 (0, 1) | 0.42 | 7.14 | 0.881 | 0.623 | 31.824 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__genetic.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__genetic.json` |
 | greedy+prune+rep4 | 50 (0, 1) | 0.94 | 8.00 | 1.000 | 0.739 | 2.755 | `runs/repair10/eval/eval_pkg10_0__greedy+prune+rep4.json`, `runs/repair10/eval/eval_pkg10_1__greedy+prune+rep4.json` |
 | lo_ip_r0_rl | 50 (0, 1) | 0.76 | 5.82 | 0.818 | 0.561 | 1.546 | `runs/2026-10-29/lo_ip_r0_rl/eval/eval_pkg10_0__lo_ip_r0_rl.json`, `runs/2026-10-29/lo_ip_r0_rl/eval/eval_pkg10_1__lo_ip_r0_rl.json` |
@@ -2317,6 +2327,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bp_park_rlonly_rl | 실패 | 44 | 73.5 | 0.00 | 1.00 | 0.00 |
 | ip 10 | bp_park_s1_rl | 성공 | 48 | 13.6 | 0.96 | 0.00 | 0.04 |
 | ip 10 | bp_park_s1_rl | 실패 | 2 | 21.0 | 0.90 | 0.00 | 0.10 |
+| ip 10 | bp_park_s2_rl | 성공 | 49 | 13.0 | 0.98 | 0.02 | 0.00 |
+| ip 10 | bp_park_s2_rl | 실패 | 1 | 21.0 | 1.00 | 0.00 | 0.00 |
 | ip 10 | genetic | 성공 | 20 | 12.2 | 0.42 | 0.03 | 0.55 |
 | ip 10 | genetic | 실패 | 30 | 76.6 | 0.06 | 0.02 | 0.92 |
 | ip 10 | gp_type_aware | 성공 | 50 | 8.3 | 1.00 | 0.00 | 0.00 |
@@ -2538,6 +2550,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bp_park_rlonly_rl | 실패 | 7 | 70.6 | 0.00 | 1.00 | 0.00 |
 | pcb 10 | bp_park_s1_rl | 성공 | 24 | 35.1 | 0.28 | 0.00 | 0.72 |
 | pcb 10 | bp_park_s1_rl | 실패 | 26 | 58.9 | 0.51 | 0.00 | 0.49 |
+| pcb 10 | bp_park_s2_rl | 성공 | 1 | 6.0 | 0.17 | 0.33 | 0.50 |
+| pcb 10 | bp_park_s2_rl | 실패 | 49 | 76.0 | 1.00 | 0.00 | 0.00 |
 | pcb 10 | genetic | 성공 | 39 | 12.2 | 0.41 | 0.13 | 0.45 |
 | pcb 10 | genetic | 실패 | 11 | 30.3 | 0.66 | 0.09 | 0.25 |
 | pcb 10 | gp_type_aware | 성공 | 33 | 45.3 | 0.00 | 0.94 | 0.06 |
@@ -2840,6 +2854,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bp_park_rlonly_rl | 실패 | 7 | 70.9 | 0.00 | 1.00 | 0.00 |
 | pkg 10 | bp_park_s1_rl | 성공 | 37 | 24.8 | 0.62 | 0.00 | 0.38 |
 | pkg 10 | bp_park_s1_rl | 실패 | 13 | 32.2 | 0.37 | 0.00 | 0.63 |
+| pkg 10 | bp_park_s2_rl | 성공 | 32 | 11.8 | 0.48 | 0.06 | 0.46 |
+| pkg 10 | bp_park_s2_rl | 실패 | 18 | 25.7 | 0.82 | 0.05 | 0.13 |
 | pkg 10 | genetic | 성공 | 21 | 7.1 | 0.21 | 0.19 | 0.60 |
 | pkg 10 | genetic | 실패 | 29 | 8.7 | 0.10 | 0.19 | 0.72 |
 | pkg 10 | gp_type_aware | 성공 | 41 | 12.4 | 0.55 | 0.43 | 0.02 |
@@ -3246,12 +3262,15 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bp_park_rl | 50 | 0.72 | 0.97 | 1.38 | 2.314 |
 | ip 10 | bp_park_rlonly_rl | 50 | 0.12 | 6.37 | 9.99 | 5.740 |
 | ip 10 | bp_park_s1_rl | 50 | 0.96 | 1.32 | 1.92 | 1.010 |
+| ip 10 | bp_park_s2_rl | 50 | 0.98 | 1.28 | 1.80 | 0.914 |
 | pcb 10 | bp_park_rl | 50 | 0.46 | 4.86 | 1.13 | 7.636 |
 | pcb 10 | bp_park_rlonly_rl | 50 | 0.86 | 8.14 | 1.76 | 6.977 |
 | pcb 10 | bp_park_s1_rl | 50 | 0.48 | 4.84 | 1.28 | 9.516 |
+| pcb 10 | bp_park_s2_rl | 50 | 0.02 | 0.86 | 0.50 | 10.190 |
 | pkg 10 | bp_park_rl | 50 | 0.16 | 3.39 | 3.04 | 5.519 |
 | pkg 10 | bp_park_rlonly_rl | 50 | 0.86 | 7.05 | 4.87 | 4.991 |
 | pkg 10 | bp_park_s1_rl | 50 | 0.74 | 2.96 | 1.98 | 9.774 |
+| pkg 10 | bp_park_s2_rl | 50 | 0.64 | 1.20 | 0.84 | 10.977 |
 
 - **원 문제가 다름 (Park 2022 arXiv v2 원문 확인):** 원 논문은 HBM PDN 한 장에서 **decap 개수 m 고정 + 임피던스 감소 최대화** (목표 임피던스·성공 판정 없음, 166점 |Z11|·|Z21| 감소 끝 보상) — 우리는 목표 만족 + 개수 최소화. 그래서 이 행들은 "Park의 정책 구조·입력을 우리 문제로 옮긴 재구현"이지 원 논문 재현이 아님. 전체 차이 표: `research_notes/선행 기준선 재구현 차이 표.md`.
 - 학습 예산: 원 논문은 RL만 (rollout + paired t-test 기준선, 2만 문제) — `bp_park_rl`은 우리와 같은 distill 0.75 h + RL 1.25 h (같은 선생님 해, 같은 학습 풀), `bp_park_rlonly_rl`은 RL만 2.0 h.
@@ -3291,9 +3310,9 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 
 | 판 | 재구현 | 성공률 seed 0 / 1 / 2 | 평균 | r2pk − 재구현 seed 0 / 1 / 2 | 묶음 차 [95% CI] | 읽기 |
 |---|---|---|---|---|---|---|
-| ip 10 | `bp_park` | 0.72 / 0.96 / – | – | +0.26 / +0.04 / – | +0.150 [+0.080, +0.220] (2 seed) | r2pk 높음 |
-| pcb 10 | `bp_park` | 0.46 / 0.48 / – | – | +0.44 / +0.44 / – | +0.440 [+0.330, +0.540] (2 seed) | r2pk 높음 |
-| pkg 10 | `bp_park` | 0.16 / 0.74 / – | – | +0.62 / +0.14 / – | +0.380 [+0.280, +0.480] (2 seed) | r2pk 높음 |
+| ip 10 | `bp_park` | 0.72 / 0.96 / 0.98 | 0.89 | +0.26 / +0.04 / +0.00 | +0.100 [+0.047, +0.153] (3 seed) | r2pk 높음 |
+| pcb 10 | `bp_park` | 0.46 / 0.48 / 0.02 | 0.32 | +0.44 / +0.44 / +0.92 | +0.600 [+0.527, +0.673] (3 seed) | r2pk 높음 |
+| pkg 10 | `bp_park` | 0.16 / 0.74 / 0.64 | 0.51 | +0.62 / +0.14 / +0.16 | +0.307 [+0.213, +0.393] (3 seed) | r2pk 높음 |
 | ip 10 | `bp_park_rlonly` | 0.12 / – / – | – | +0.86 / – / – | +0.860 [+0.760, +0.940] (1 seed) | r2pk 높음 |
 | pcb 10 | `bp_park_rlonly` | 0.86 / – / – | – | +0.04 / – / – | +0.040 [-0.100, +0.180] (1 seed) | 구분 안 됨 |
 | pkg 10 | `bp_park_rlonly` | 0.86 / – / – | – | -0.08 / – / – | -0.080 [-0.220, +0.060] (1 seed) | 구분 안 됨 |
@@ -4143,10 +4162,12 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | bm_manoharan_rl | 3 / 321 | 0.0 | 0.00 | 0.0 | 0.00 | 0.2 | 0.00 |
 | bm_manoharan_rlonly_l20_rl | 213 / 504 | 1.2 | 0.96 | 1.4 | 0.00 | 5.1 | 0.88 |
 | bm_manoharan_rlonly_l20_s1_rl | 167 / 591 | 2.4 | 0.96 | 1.6 | 0.00 | 2.9 | 0.00 |
+| bm_manoharan_rlonly_l20_s2_rl | 103 / – | 3.4 | – | 4.8 | – | 4.0 | – |
 | bm_manoharan_rlonly_rl | 0 / – | 0.0 | – | 0.0 | – | 1.2 | – |
 | bp_park_rl | 44 / 199 | 6.0 | 0.72 | 3.0 | 0.46 | 11.8 | 0.16 |
 | bp_park_rlonly_rl | 107 / 296 | 7.3 | 0.12 | 1.0 | 0.86 | 7.7 | 0.86 |
 | bp_park_s1_rl | 43 / 184 | 9.0 | 0.96 | 6.5 | 0.48 | 11.0 | 0.74 |
+| bp_park_s2_rl | 37 / 175 | 10.0 | 0.98 | 6.0 | 0.02 | 9.3 | 0.64 |
 | lo_ip_r0_rl | 187 / 300 | – | 0.56 | 6.8 | 1.00 | 9.9 | 0.76 |
 | lo_ip_r0_s1_rl | 163 / 289 | – | 0.98 | 5.7 | 0.96 | 10.2 | 0.70 |
 | lo_ip_r0_s2_rl | 186 / 306 | – | 0.40 | 4.0 | 1.00 | 10.2 | 0.86 |
@@ -4252,6 +4273,8 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/bp_park_rlonly_rl | coord / park_am | rl | 296 | 2.03 | val_pcb10_0: 7.84/0.56, val_pkg10_0: 13.40/0.69, val_ip10_0: –/0.94 | `runs/2026-10-29/bp_park_rlonly_rl/metrics.json` |
 | runs/2026-10-29/bp_park_s1_distill | coord / park_am | distill | 2200 | 0.77 | val_pcb10_0: 2.41/0.69, val_pkg10_0: 6.07/0.44, val_ip10_0: 0.79/0.12 | `runs/2026-10-29/bp_park_s1_distill/metrics.json` |
 | runs/2026-10-29/bp_park_s1_rl | coord / park_am | rl | 184 | 1.27 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bp_park_s1_rl/metrics.json` |
+| runs/2026-10-29/bp_park_s2_distill | coord / park_am | distill | 2257 | 0.77 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bp_park_s2_distill/metrics.json` |
+| runs/2026-10-29/bp_park_s2_rl | coord / park_am | rl | 175 | 1.27 | val_pcb10_0: 1.00/0.94, val_pkg10_0: 1.00/0.94, val_ip10_0: 0.61/0.62 | `runs/2026-10-29/bp_park_s2_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r0_distill | coord / grid | distill | 2282 | 0.77 | val_pcb10_0: 2.52/0.50, val_pkg10_0: 1.00/0.81 | `runs/2026-10-29/lo_ip_r0_distill/metrics.json` |
 | runs/2026-10-29/lo_ip_r0_rl | coord / grid | rl | 300 | 1.27 | val_pcb10_0: 0.96/0.25, val_pkg10_0: 1.00/0.69 | `runs/2026-10-29/lo_ip_r0_rl/metrics.json` |
 | runs/2026-10-29/lo_ip_r0_s1_distill | coord / grid | distill | 2318 | 0.77 | val_pcb10_0: 1.90/0.50, val_pkg10_0: 1.27/0.69 | `runs/2026-10-29/lo_ip_r0_s1_distill/metrics.json` |
