@@ -11,3 +11,29 @@ Status at 14:40 UTC:
 - No new instructions in `agent/QUEUE.md` or on the remote. The round-start entry in PROGRESS.md is committed and pushed.
 
 When the evaluation finishes, the pkg verdict cell fills in automatically. Under the pre-registered rule it will read "fail": seed 0 is already ≤ 0 on the rung-0 comparison. I'll then regenerate RESULTS.md, record the numbers in PROGRESS.md, and commit and push.
+
+The last leave-one-out run has finished, so all 12 leave-one-out runs for the final model (`r2pk`) are done. Under the rule set in advance (QUEUE 10/31), the final model's claim to handle a board type it never trained on holds for **pcb only**.
+
+**New result:** `lo_pkg_r2pk_s2` solves 0.78 of the 50 pkg evaluation boards when pkg is left out of training. The pkg verdict is **fail**:
+- **(b') vs. the coordinate-input model (rung 0) also trained without pkg:** −0.08 / −0.20 / +0.00 across seeds 0, 1, 2. The rule needs all three above 0.
+- **(c') vs. the same model trained on all three types:** −0.08 / −0.24 / −0.02, mean −0.11. The rule needs at least −0.05.
+
+I did not change the rule.
+
+**Final verdict across all three seeds:**
+
+| Left-out type | Verdict | (c') mean |
+|---|---|---|
+| pcb | pass | −0.03 |
+| ip | fail (seed 1 ties rung 0 on (b')) | +0.01 |
+| pkg | fail | −0.11 |
+
+This matches the plain MoTT model (rung 2) and the reversal you noted on 11/01: on pkg, the coordinate model does not drop when pkg is unseen.
+
+**Descriptive only, not part of the verdict:** adding `--peak_refine` removes the seeds where rung 2 collapsed on the left-out type. Rung 2 scored 0.66 (ip, seed 1), 0.56 (pkg, seed 1) and 0.50 (pkg, seed 2); the final model scores 0.98, 0.64 and 0.78 there. On seed 2 pkg, the gap over rung 2 is +0.28 [+0.12, +0.42].
+
+**Running now:**
+- **GPU:** the driver moved on to the 8 reimplementation runs of the prior-work baselines, starting with `bp_park_s1` at 15:40. They should finish around 07:45 UTC on 11/06, and the side slot will evaluate each one automatically.
+- **CPU:** the 16-cell local-search baseline job (`eval_ip16_0`) is still running and has written nothing yet. Pod memory is 18.7 of 60 GiB, and the out-of-memory kill count is still 2.
+
+RESULTS.md is regenerated, PROGRESS.md is updated, and both are committed and pushed to `r2e main` with the new evaluation files. No new experiment is planned before the 11/6 12:00 UTC cutoff for new attempts.
