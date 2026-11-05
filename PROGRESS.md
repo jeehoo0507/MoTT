@@ -1,5 +1,11 @@
 STUCK (해제 시도 중, 11/05 08:10): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). 이것도 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 10:10 UTC, 재개 라운드 47)
+# PROGRESS (갱신 2026-11-05 10:25 UTC, 재개 라운드 48)
+
+## 재개 라운드 48 (2026-11-05 10:06~ UTC)
+- 상태 (10:25): GPU **F1 `lo_ip_r2pk_s2`** 증류 끝 무렵 (2234 s, val pkg fail 0.62) → RL (~12:00) → side_slot 평가 (~12:15) → lo_pkg_r2pk_s1 → lo_pkg_r2pk_s2 → B1 8 run. CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 1 h 57 분째 worker rss **9.4 GB 평평**) + 학습 정확 검사 2 + side_slot 대기. pod 13.7 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음.
+- **RESULTS "설계 근거" 표에 채택 구조 r2pk 열** (`collect_results.design_rationale`): 뺀 − 전체 seed 평균과 같은 10/31 기준 판정 (F1 표와 같은 값). 지금 pcb **−0.03 / 통과**, ip·pkg는 seed 3개 뒤 자동. 3번 "주장하지 않는 것"에 P2·P3 (효과 없음) 추가, 4번 "채택한 수정 하나: P1" (근거 D7, 숫자는 P1 확장 표를 가리킴, 손 숫자 없음).
+- **`research_notes/그림 캡션 메모.md`** (새): 그림 1·2·3·정성 그림마다 캡션에 넣을 조건 (seed, 문제 고르기 규칙, 시간 = 평균·폭주 한 문제 포함, 개수비 = 둘 다 성공만, 20칸 작은 표본, LS16 메모리 생략·`ls_chunk`, r2pk는 사다리 단 아님, 평가 배치 잡음). 숫자는 RESULTS 표에서 읽게 함.
+- 결정: P4 새 시도 없음, B1 그대로 — 이유: 라운드 46 판단 (근거 있는 후보 없음) 이후 새 진단 근거가 생기지 않음; 큐를 바꾸지 않는 쪽이 보수적. 11/6 12:00 UTC 시작 마감 그대로.
 
 ## 재개 라운드 47 (2026-11-05 08:31~ UTC)
 - 상태 (10:10, 라운드 끝): GPU **F1 `lo_ip_r2pk_s2`** 증류 (09:52~, RL 끝 ~11:50, side_slot 평가 ~12:05) → lo_pkg_r2pk_s1 (~14:05) → lo_pkg_r2pk_s2 (~16:00) → B1 8 run. CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 1 h 41 분째 worker rss **8.9 GB로 평평**, pod 13.6 GiB — unchunked 때는 같은 파일이 2 h 안에 커널 OOM) + 학습 정확 검사 2 + side_slot. oom_kill 2.
