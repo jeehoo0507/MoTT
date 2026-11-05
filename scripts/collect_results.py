@@ -23,16 +23,45 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
+# Server-2 records (PROPOSALS 11/05 L1-L4 / FRESH, QUEUE 11/05 19:50 KST). FRESH evaluates on pools regenerated on
+# another machine under the same file names (eval_pcb10_0, ...) and the same method names (r2pk_rl, ...), so it is a
+# separate comparison and is never merged here (merged() keeps the last file per (set, method), which would silently
+# replace the server-1 records). L1-L4 use the server-1 pools: kept, but their per-problem seconds come from another
+# CPU and are blanked, and a server-1 record of the same (set, method) always wins over a server-2 duplicate (L3).
+S2_EXCLUDE = ("runs/2026-11-05fresh/", "runs/pool_s2_fresh/")
+S2_PREFIX = ("runs/2026-11-05s2/",)
+S2_L1 = re.compile(r"runs/2026-10-29/(r2_mott|r3_loop)_s[12]_rl/eval/eval_[a-z]+(16|20)_\d__")
+S2_COUNT = {"excluded": 0, "server2": 0, "dup_dropped": 0}
+
+
+def is_server2(f):
+    return f.startswith(S2_PREFIX) or S2_L1.match(f) is not None
+
+
 def load_evals():
     recs = []
     for f in sorted(glob.glob("runs/**/eval/*.json", recursive=True)):
+        if f.startswith(S2_EXCLUDE):
+            S2_COUNT["excluded"] += 1
+            continue
         try:
             d = json.load(open(f))
             d["_file"] = f
             recs.append(d)
         except Exception as e:  # noqa: BLE001
             print("skip", f, e, file=sys.stderr)
-    return recs
+    s1 = {(r["set"], r["method"]) for r in recs if not is_server2(r["_file"])}
+    out = []
+    for r in recs:
+        if is_server2(r["_file"]):
+            if (r["set"], r["method"]) in s1:
+                S2_COUNT["dup_dropped"] += 1
+                continue
+            r["sec_per_inst"] = float("nan")
+            r["_server2"] = True
+            S2_COUNT["server2"] += 1
+        out.append(r)
+    return out
 
 
 TA = "gp_type_aware"   # E0+ type-aware greedy (scripts/make_type_aware.py), the day-2 reference
@@ -1686,8 +1715,12 @@ def main():
     recs = load_evals()
     lines = [f"# RESULTS (자동 생성: `scripts/collect_results.py`, {time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime())})", "",
              "성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. "
-             "시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.", "",
-             "## 평가 (정확 검사)", ""]
+             "시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.", ""]
+    if any(S2_COUNT.values()):
+        lines += [f"서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 {S2_COUNT['server2']}개는 표에 넣되 시간 칸은 \"–\" "
+                  f"(다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 {S2_COUNT['dup_dropped']}개; "
+                  f"FRESH (다시 만든 풀, 이름만 같음) {S2_COUNT['excluded']}개는 이 문서의 어떤 표에도 넣지 않음.", ""]
+    lines += ["## 평가 (정확 검사)", ""]
     lines += ladder_table(recs)
     lines += ci_table(recs)
     lines += ci_table(recs, ref="greedy+prune", title="greedy+prune")
