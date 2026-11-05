@@ -6,6 +6,7 @@
   - 결정: 표에 **R16 vs R2 짝지은 행**을 더함 (`collect_results.loop_r_size_table`) — 이유: 기존 표의 개수는 R마다 다른 성공 문제 집합의 평균이라, pkg의 "개수 감소" (16칸 11.2 → 8.9)가 짝지으면 사라짐 (0.994). 짝 없는 숫자로 "개수가 줄었다"를 읽으면 규칙을 잘못 적용하게 됨. 읽기 문장은 숫자 없이 스크립트에 고정.
 - **P3 증류 단계 seed 0 (`r2pkdd_distill`, 10칸, 00:10~00:33):** ip 0.68 / pcb 0.82 / pkg 0.58; vs `r2pk_distill` pkg **−0.16 [−0.32, +0.00]**, ip −0.22 [−0.34, −0.12], pcb +0.02. 판정은 seed 1 증류 (~05:15 `done:`) 평가 뒤 (PROPOSALS P3 규칙 그대로).
 - **P3 `r2pkdd_rl` seed 0** (341 iter / 1.27 h, best it 300; side_slot 01:27~01:40) 10칸: ip 0.98 / pcb **0.96** / pkg **0.82**; vs P1 `r2pk_rl` pcb +0.06 [−0.02, +0.14], pkg +0.04 [−0.10, +0.18], ip +0.00 (개수비 0.973 / 0.969 / 1.022). 같이 보고 vs greedy+prune: pcb +0.06 [−0.04, +0.16], pkg −0.08 [−0.22, +0.04]; vs 종류 인식 greedy pcb +0.30, pkg +0.00, ip −0.02. 판정은 seed 1 + lo_pcb 쌍 뒤.
+- **그림 1 초안을 채택 구조로 다시** `reports/fig1_board_draft_r2pk_10.png` (`fig_board.py`, `r2pk_rl` seed 0, 10칸 `_0` 세 종류, 이전 초안과 같은 `--pick median`): pcb #8 7개 (최악 0.917), pkg #22 5개 (0.675), ip #13 7개 (0.930). 기존 평가 기록만, 새 평가 없음. P3가 "이김"이면 r2pkdd로 다시 그림.
 - 할 일 (다음): (1) 일찍 멈춤 규칙 (같은 종류 pkg와 뺀 pcb 둘 다 ≤ −0.16)은 lo_pcb_r2pkdd 평가 (~03:45) 뒤 확인. (2) r2pkdd_s1 증류 `done:` 뒤 `queue_distill_eval_named.py r2pkdd_s1_distill`. (3) P3 판정 (~07:45). (4) LS16 6파일 (드라이버) → 그림 2 LS 열.
 
 ## 재개 라운드 43 (2026-11-04 19:50~ UTC)
