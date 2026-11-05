@@ -1,0 +1,65 @@
+SERVER 2: one unattended run (same GPU model as server 1)
+
+Do not start the legacy server2_loop.sh cpu/gpu as well: the new runner includes L1/L2.
+Server 1's experiment driver is unchanged. No GPU training was run by the author of this script.
+
+1. SERVER 1, without pulling or modifying the working tree used by running experiments:
+
+curl -fL https://raw.githubusercontent.com/jeehoo0507/R2E/main/scripts/server2_once.py -o /tmp/r2e_server2_once.py
+python3 /tmp/r2e_server2_once.py pack --root "$HOME/R2E" --archive /tmp/r2e_s2.tgz
+scp /tmp/r2e_s2.tgz USER@SERVER2:/tmp/r2e_s2.tgz
+
+Change the source repository path and SSH destination to the real ones. The package includes the full pool
+and seven finished checkpoints: r2_mott_s1/s2, r3_loop_s1/s2, r2pk/r2pk_s1/r2pk_s2.
+Teacher solutions are already tracked in Git. Missing inputs stop packaging; no replacement pools are generated.
+
+2. SERVER 2, use a fresh checkout:
+
+git clone https://github.com/jeehoo0507/R2E.git R2E-s2
+cd R2E-s2
+bash scripts/server2_once.sh /tmp/r2e_s2.tgz
+
+Requires Linux, Python >=3.10 with venv support, git, flock, NVIDIA driver, internet for dependencies,
+and sufficient free disk/RAM for the copied inputs, CUDA PyTorch and experiments. CPU_PAR defaults to 2.
+The setup command installs dependencies and extracts inputs, then detaches with nohup.
+You can close SSH after the PID is printed. Inspect the log once for 'Preflight OK' and a training start.
+On resume, run the same command in the same checkout. Do not start another clone concurrently.
+
+3. OPTIONAL GITHUB AUTHENTICATION (on server 2, if GitHub CLI is installed):
+
+gh auth login --hostname github.com --git-protocol https --web
+gh auth setup-git
+
+The web/device login is completed by the user. Do not put tokens in commands, source code or chat.
+Authentication is not required to clone the public repository or run experiments.
+At completion the runner attempts to push only results from an isolated checkout. It supplies a
+per-commit 'R2E server 2' identity; no global user.name/user.email is required.
+Upload failure never deletes the local results archive. If gh is unavailable, copy the archive back.
+
+4. STATUS:
+
+python3 scripts/server2_once.py status
+tail -f agent/logs/s2_once/launcher.log
+
+Training logs: agent/logs/s2_once/train_*.log
+File-specific evaluation logs: agent/logs/s2_once/L*.log
+Machine-readable progress: agent/logs/s2_once/status.json
+Summary: agent/logs/s2_once/summary.csv (per-file descriptive statistics, not significance tests)
+Archive: server2_loop_results.tgz (refreshed on completed phases, and at completion)
+
+Successful completion is counts.done == 216, counts.failed == 0, counts.blocked == 0, final == true.
+There are 4 training runs and 216 evaluation files: L1 48, L2 24, L3 72, L4 72.
+An existing valid result is reused. Missing/failed training blocks its downstream evaluations.
+There is no success-driven early stopping or seed selection. Resource failures are recorded.
+
+5. RETRY UPLOAD AFTER AUTHENTICATING:
+
+python3 scripts/server2_once.py publish
+
+Or, from your own computer, fetch the archive:
+scp USER@SERVER2:~/R2E-s2/server2_loop_results.tgz .
+
+Time budget: four training runs at 0.75h distillation + 1.25h RL each; nominal training-only budget is
+8 GPU-hours total, distributed over visible GPUs. Loading, validation and CPU evaluations take additional
+time. Next-day completion is a target, not a measured runtime guarantee. L2 metrics/evaluations are
+prioritized once checkpoints are ready; L4 runs after the other phases.
