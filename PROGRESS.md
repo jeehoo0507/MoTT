@@ -1,12 +1,14 @@
 STUCK: LS16 `eval_pcb16_0`이 커널 OOM으로 두 번 죽음 (11/03 03:55, 11/05 02:24~03:27) → 그 파일은 "메모리로 생략" (`.memskip`), 남은 ls16 5파일은 mem_guard로 감싸 계속.
-# PROGRESS (갱신 2026-11-05 03:50 UTC, 재개 라운드 45)
+# PROGRESS (갱신 2026-11-05 04:45 UTC, 재개 라운드 45)
 
 ## 재개 라운드 45 (2026-11-05 02:24~ UTC)
+- 상태 (04:45, 라운드 끝): GPU **`r2pkdd_s1`** RL (04:15~, 끝 ~05:30, side_slot 평가 ~05:45) → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run (~15:45). CPU: 드라이버 줄 `ls16 eval_pcb16_1` (03:46~, mem_guard) + 학습 정확 검사 2; side_slot 대기. pod 12 GiB / 60, oom_kill 2.
 - 상태 (03:50): GPU **`r2pkdd_s1`** 증류 (03:27~, 끝 ~04:15) → RL (~05:30) → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run (~15:45). CPU: 드라이버 줄 `ls16 eval_pcb16_1` (mem_guard) + 학습 정확 검사 2; 4번째 칸 side_slot 대기. pod ~7 GiB / 60, **oom_kill 2** (아래). QUEUE·원격 새 지시 없음.
 - **OOM 2번째 (oom_kill 1 → 2, 02:24~03:27 사이):** 커널이 LS16 `eval_pcb16_0` worker를 다시 죽임 (02:24에 rss 11 GB·2 h째, pod 14.8 GiB; 옆에는 RL 학습 + 정확 검사 2뿐 — 11/03처럼 겹친 무거운 작업 없음). 즉 LS16 pcb16_0은 혼자서도 ~45 GiB를 넘게 자람. 부모 eval_policy는 worker 없이 멈춰 있어 `kill_pat.py`로 정리 → 드라이버가 다음 항목으로 넘어감. pod·학습은 영향 없음 (lo_pcb_r2pkdd rc 0).
   - 결정 (STUCK 규칙: 같은 문제 두 번): pcb16_0 LS는 포기, `scripts/guard_ls16.py`로 `eval_pcb16_0__local_search.json.memskip` (reason memory, "kernel oom_kill x2")을 쓰고 ls16 6항목을 `mem_guard.py`로 감쌈 (명령 그대로; pod > 45 GiB면 그 작업만 죽이고 marker → RESULTS "메모리로 생략"). 이유: 커널이 고르는 대신 우리 작업만 죽게 해 학습을 지킴 (보수적), 나머지 5파일은 혼자 돌 때 맞을 수도 있으니 측정은 계속.
 - **P3 `lo_pcb_r2pkdd_rl` seed 0** (366 iter / 1.27 h, best it 300; side_slot 03:28~03:42) 10칸: 뺀 pcb **0.84** / pkg 0.82 / ip 1.00; vs P1 `lo_pcb_r2pk_rl` 뺀 pcb **−0.04 [−0.16, +0.08]** (개수비 0.969), pkg +0.02, ip +0.00. 같이 보고: vs 종류 인식 greedy 뺀 pcb +0.18 [+0.02, +0.34], vs greedy+prune −0.06 [−0.18, +0.06]. P3 seed 0 쌍: 같은 종류 pcb +0.06 / pkg +0.04 / ip +0.00, 뺀 pcb −0.04 → 일찍 멈춤 규칙 (pkg·뺀 pcb 둘 다 ≤ −0.16) 발동 안 함; 판정은 seed 1 쌍 뒤 (~07:45, `pooled_mod_table`).
-- 할 일 (다음): (1) r2pkdd_s1 증류 `done:` (~04:15) 뒤 `queue_distill_eval_named.py r2pkdd_s1_distill` → P3 증류 단계 판정. (2) r2pkdd_s1 RL 평가 (~05:45)·lo_pcb_r2pkdd_s1 평가 (~07:45, side_slot 자동) → **P3 판정**; "이김"이면 P3 확장 4 run을 F1 뒤 (11/6 12:00 전 시작). (3) F1 평가 → 범용화 표. (4) ls16 나머지 (mem_guard) → 그림 2 LS 열 / "메모리로 생략". DAILY 다음 11/06 00:xx UTC.
+- **P3 증류 단계 판정 (PROPOSALS P3 규칙 그대로, RESULTS P3 절 자동): 불성립 — "고유 이웃 보정이 D1 차이를 줄임"은 아님.** `r2pkdd_s1_distill` (1527 iter / 0.77 h, best it 900; side_slot 04:16~04:35) 10칸 ip 0.92 / pcb 0.84 / pkg 0.68. 증류만 pkg vs `r2pk_*_distill` seed 0 / 1 = −0.16 / −0.12, 묶음 **−0.140 [−0.240, −0.030]** — 같은 증류 예산에서 P3 입력이 pkg를 오히려 낮춤 (CI 0 아래; 증류 단계 규칙에는 "해로움" 갈래가 없어 기록만). RL 단계 P3 판정 (주 판정)은 그대로 seed 1 쌍 뒤.
+- 할 일 (다음): (1) (끝) r2pkdd_s1 증류 평가. (2) r2pkdd_s1 RL 평가 (~05:45)·lo_pcb_r2pkdd_s1 평가 (~07:45, side_slot 자동) → **P3 판정**; "이김"이면 P3 확장 4 run을 F1 뒤 (11/6 12:00 전 시작). (3) F1 평가 → 범용화 표. (4) ls16 나머지 (mem_guard) → 그림 2 LS 열 / "메모리로 생략". DAILY 다음 11/06 00:xx UTC.
 
 ## 재개 라운드 44 (2026-11-05 00:29~ UTC)
 - 상태 (02:10, 라운드 끝): GPU **`lo_pcb_r2pkdd`** (01:25~, 증류 → RL, 끝 ~03:25, side_slot 평가 ~03:40) → r2pkdd_s1 → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run. CPU: 드라이버 줄 LS16 `eval_pcb16_0` (00:22~) + 학습 정확 검사 2 = 3 (4번째 칸은 side_slot 대기). pod 13 GiB / 60, oom_kill 1 (라운드 27 그것).
