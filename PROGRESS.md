@@ -4,6 +4,11 @@ STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB�
 ## 재개 라운드 51 (2026-11-05 14:33~ UTC)
 - 상태 (14:40): GPU **F1 `lo_pkg_r2pk_s2`** RL (14:24~, 끝 ~15:50, side_slot 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, 2 h째, worker rss 5.3 GB, 기록 아직 없음) + 학습 정확 검사 2; 4번째 칸은 side_slot (LS16 게이트로 scale-eval 대기, F1·B1 평가 대상). pod 19.3 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
 - 이번 라운드: lo_pkg_r2pk_s2 평가를 기다려 F1 pkg 판정 칸 (자동)·"설계 근거" r2pk pkg 칸 확인 → RESULTS 재생성·commit·push.
+- **F1 끝 (12 / 12 run).** `lo_pkg_r2pk_s2_rl` (side_slot 15:41~15:53) 10칸 뺀 pkg **0.78**. **F1 뺀 pkg 판정 (QUEUE 10/31 기준 그대로, RESULTS 자동): 실패** — (b') vs 0단 뺀 학습 seed별 −0.08 / −0.20 / **+0.00**, (c') 뺀 − 전체 −0.08 / −0.24 / −0.02, 평균 **−0.11** (< −0.05). 규칙 바꾸지 않음.
+  - 기술용 (판정 아님, `pair2.py`, 같은 50문제): vs `lo_pkg_r0_s2` 성공 +0.00 [−0.14, +0.14], 개수비 1.102 [1.021, 1.186] (둘 다 성공 33); vs 전체 학습 `r2pk_s2_rl` −0.02 [−0.16, +0.12], 개수비 1.000; vs P1 없는 `lo_pkg_r2_s2` (0.50) **+0.28 [+0.12, +0.42]**.
+  - **최종 구조 r2pk의 범용화 정리 (RESULTS "설계 근거" 2번 표, seed 3개, 같은 기준):** pcb 통과 (c' −0.03), ip 실패 (c' +0.01이지만 (b') seed 1 동률), pkg 실패 (c' −0.11, 0단 좌표가 안 떨어짐 = 11/01 사람 판독 "pkg 반전" 그대로). 보고서 주장 범위는 2단 MoTT와 같이 **pcb 하나**. 기록만: r2pk는 2단 MoTT의 뺀 학습 무너짐 seed (ip s1 0.66, pkg s1·s2 0.56·0.50)를 없앰 (r2pk 0.98, 0.64·0.78) — seed 안정성 관찰이지 판정 기준이 아님.
+- GPU: 드라이버가 F1 다음 **B1 `bp_park_s1`** 시작 (15:40). side_slot이 B1 평가 대상 그대로.
+- 할 일 (다음): (1) B1 8 run 평가 (side_slot 자동) → RESULTS "선행 연구 재구현 seed 0·1·2" (B1 규칙, 보고만). (2) LS16 ip16_0 → ls16r pcb16_0 → … 기록·peak. (3) LS16 뒤 r2pk_s2 규모 평가 9파일. (4) 11/6 12:00 UTC 새 시도 마감 (P4 없음) → 그 뒤 GPU는 B1 끝 (~07:45)부터 빔; 새 학습 없이 둠이 기본. DAILY 다음 11/06 00:xx UTC.
 
 ## 재개 라운드 50 (2026-11-05 14:09~ UTC)
 - 상태 (14:15): GPU **F1 `lo_pkg_r2pk_s2`** 증류 (13:38~, RL 끝 ~15:50, 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, worker rss 5.9 GB) + 학습 정확 검사 2 + 4번째 칸 `scale-eval eval_pkg16_0 r2pk_s2_rl` (13:53~). pod 29 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.

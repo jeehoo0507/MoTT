@@ -1,2 +1,13 @@
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+I stopped the duplicate wait. The first background wait (until the F1 `lo_pkg_r2pk_s2` evaluation finishes, expected around 16:05 UTC) is still running, and I'll pick up when it notifies.
+
+Status at 14:40 UTC:
+- **GPU:** `lo_pkg_r2pk_s2` is in reinforcement learning (RL), which should end around 15:50. After it come the 8 prior-work reimplementation runs (B1), finishing around 07:45 UTC on 11/06.
+- **CPU:**
+  - The 16-cell local search on `eval_ip16_0` (chunked) has run for 2 hours at about 5.3 GB with no record yet.
+  - The 4th slot is holding the scale evaluations while that local-search job runs.
+- **Memory:** pod at 19.3 GiB of 60, kernel OOM-kill count unchanged at 2.
+- No new instructions in `agent/QUEUE.md` or on the remote. The round-start entry in PROGRESS.md is committed and pushed.
+
+When the evaluation finishes, the pkg verdict cell fills in automatically. Under the pre-registered rule it will read "fail": seed 0 is already ≤ 0 on the rung-0 comparison. I'll then regenerate RESULTS.md, record the numbers in PROGRESS.md, and commit and push.
