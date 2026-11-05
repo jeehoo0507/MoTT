@@ -488,7 +488,53 @@ def prior_table(recs):
         for k, m, r in rows:
             lines.append(f"| {k[0]} {k[1]} | {m} | {len(r['ok'])} | {r['ok'].mean():.2f} | {fmt(r['rel'])} | {fmt(r['rel_ta'])} | {fmt(r['sec'], 3)} |")
         lines += [""] + [f"- {n}" for n in notes] + [""]
-    return lines
+    return lines + prior_seed_table(recs)
+
+
+PRIOR_SEED_BASES = ("bp_park", "bp_park_rlonly", "bm_manoharan", "bm_manoharan_rlonly_l20")
+
+
+def prior_seed_table(recs):
+    """PROPOSALS 11/05 B1 (written before the seed 1-2 runs): the four re-implementations at seeds 0-2, report-only.
+    Per board: success at each seed and the mean; adopted r2pk minus the re-implementation at the same seed, pooled
+    over the seeds (problems resampled within each seed, 2000x). "우리가 낫다/낮다" only when the pooled CI excludes 0."""
+    by = merged(recs)
+    if not any(seed_run(b, 1) in by.get((t, 10), {}) for b in PRIOR_SEED_BASES for t in LO_TECHS):
+        return []
+
+    def rate(t, m):
+        r = by.get((t, 10), {}).get(m)
+        return None if r is None else r["ok"].mean()
+
+    rows = []
+    for b in PRIOR_SEED_BASES:
+        for t in LO_TECHS:
+            v = [rate(t, seed_run(b, s)) for s in LO_SEEDS]
+            if v[0] is None:
+                continue
+            pairs = []
+            for s in LO_SEEDS:
+                p = paired(recs, seed_run(b, s)).get((t, 10), {}).get(seed_run("r2pk", s))
+                pairs.append(None if p is None else (p[0].astype(float), p[1].astype(float)))
+            have = [p for p in pairs if p is not None]
+            if have:
+                d = [a - c for a, c in have]
+                rng = np.random.default_rng(0)
+                bs = [np.mean(np.concatenate([x[rng.integers(0, len(x), len(x))] for x in d])) for _ in range(2000)]
+                pe, ci = float(np.concatenate(d).mean()), np.percentile(bs, [2.5, 97.5])
+                read = ("r2pk 높음" if ci[0] > 0 else "r2pk 낮음" if ci[1] < 0 else "구분 안 됨")
+                pooled = f"{pe:+.3f} [{ci[0]:+.3f}, {ci[1]:+.3f}] ({len(have)} seed) | {read}"
+            else:
+                pooled = "– | –"
+            mean = f"{np.mean(v):.2f}" if all(x is not None for x in v) else "–"
+            rows.append(f"| {t} 10 | `{b}` | " + " / ".join("–" if x is None else f"{x:.2f}" for x in v) +
+                        f" | {mean} | " + " / ".join("–" if p is None else f"{(p[0] - p[1]).mean():+.2f}" for p in pairs) +
+                        f" | {pooled} |")
+    return ["### 선행 연구 재구현 seed 0·1·2 (PROPOSALS 11/05 B1, 보고만 — 판정 없음, run 전에 적음)", "",
+            "같은 arm·같은 2 h 예산, seed만 다름. r2pk − 재구현 = 같은 seed끼리 같은 50문제 짝지은 성공률 차; 묶음 = seed 안에서 "
+            "문제를 다시 뽑는 bootstrap 2000회. 읽기: 묶음 CI가 0 밖일 때만 \"r2pk 높음/낮음\".", "",
+            "| 판 | 재구현 | 성공률 seed 0 / 1 / 2 | 평균 | r2pk − 재구현 seed 0 / 1 / 2 | 묶음 차 [95% CI] | 읽기 |",
+            "|---|---|---|---|---|---|---|"] + rows + [""]
 
 
 LO_TECHS = ("ip", "pcb", "pkg")
