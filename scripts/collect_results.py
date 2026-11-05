@@ -1407,7 +1407,8 @@ def pooled_mod_table(recs):
     return L
 
 
-SCALE_METHODS = ["greedy+prune", TA, "modal_rule", "r0_coord_rl", "r1_modal_rl", "r2_mott_rl", "r2pk_rl", "r2pk_s1_rl"]
+SCALE_METHODS = ["greedy+prune", TA, "modal_rule", "r0_coord_rl", "r1_modal_rl", "r2_mott_rl", "r2pk_rl", "r2pk_s1_rl",
+                 "r2pk_s2_rl"]
 
 
 def scale_curve_table(recs):

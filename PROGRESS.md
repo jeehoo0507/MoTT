@@ -1,5 +1,11 @@
 STUCK (해제 시도 중, 11/05 08:10): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). 이것도 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 10:25 UTC, 재개 라운드 48)
+# PROGRESS (갱신 2026-11-05 12:20 UTC, 재개 라운드 49)
+
+## 재개 라운드 49 (2026-11-05 12:13~ UTC)
+- 상태 (12:20): GPU **F1 `lo_pkg_r2pk_s1`** 증류 끝 무렵 (11:36~, RL 끝 ~13:40, side_slot 평가 ~13:55) → lo_pkg_r2pk_s2 (~15:50) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 4 h 째, worker rss 10.2 GB 평평, 기록 없음) + 학습 정확 검사 2 + side_slot (아래 filler). pod 23.5 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음, 서버 2 기록 아직 없음.
+- **규모 곡선에 채택 구조 seed 2 추가 (평가만):** RESULTS "규모 곡선"의 r2pk는 16·20칸에서 seed 0·1뿐 (`r2pk_s2`는 QUEUE 11/04 18:20 뒤에 학습됨). `scripts/queue_scale_r2pk_s2.py`로 `r2pk_s2_rl` × `eval_{pcb,pkg,ip}{16,20}_{0,1}` 12파일을 seed 0·1과 같은 명령 (`--workers 1 --inst_chunk 5`)으로 CPU 큐 끝에 넣음 — 이름 `ls10 scale-eval …` (side_slot FILL 접두, `ls10 distill-eval` 관례)이라 4번째 칸이 학습 평가 사이에 돌림, 드라이버 줄은 LS16 먼저. 첫 파일 12:16 시작. `collect_results.SCALE_METHODS`에 `r2pk_s2_rl` 행 (기록 전엔 "–").
+  - 결정: seed 2 규모 평가를 넣음 — 이유: 최종 구조의 10칸 숫자는 seed 3개인데 16·20칸은 2개라 그림 2·규모 곡선 캡션이 조건이 달라짐; 새 학습·새 풀·판정 없음, seed 0·1 때 같은 4번째 칸에서 pod ≤ 29 GiB였음 (`agent/logs/fourth_slot_scale.log`), `wait_mem` 그대로. 서버 2 L3 (r2pk 16·20칸 seed 0~2)는 FRESH로 대체되어 기다리지 않음. 표에 seed 평균 행은 만들지 않음 (판정 없음, 행 그대로 읽기).
+- 할 일 (다음): (1) lo_pkg_r2pk_s1·s2 평가 → F1 pkg 판정 자동 → "설계 근거" r2pk pkg 칸. (2) r2pk_s2 규모 평가 12파일 (~8 h, filler 틈) → RESULTS 자동. (3) ls16c pcb16_0 끝나면 시간·peak rss → STUCK 줄 정리; 6파일이 각각 4 h 넘게 걸리면 LS16 열은 11/07~08에야 차므로 그림 2 캡션에 "LS16은 일부 파일" 가능성. (4) 11/6 12:00 UTC 새 시도 마감 (P4 없음). DAILY 다음 11/06 00:xx UTC.
 
 ## 재개 라운드 48 (2026-11-05 10:06~ UTC)
 - 상태 (12:00, 라운드 끝): GPU **F1 `lo_pkg_r2pk_s1`** 증류 (11:36~, RL 끝 ~13:40, side_slot 평가 ~13:55) → lo_pkg_r2pk_s2 (~15:50) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 3 h 50 분째, rss 9.4 GB 평평) + 학습 정확 검사 2 + side_slot. pod 22.6 GiB / 60, oom_kill 2.
