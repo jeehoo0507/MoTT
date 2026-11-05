@@ -24,3 +24,7 @@ Waiting for the F1 seed 1 evaluation; I'll be re-invoked when it finishes.
 - OOM은 2회로 그대로입니다.
 
 이번 라운드에 기록만 읽는 보조 스크립트 `scripts/rec_time.py`, `rec_counts.py`, `pair2.py`를 추가했습니다. 다음 DAILY는 11/06 00시대(UTC)에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cfad73c..a4bc1ef  main -> main
