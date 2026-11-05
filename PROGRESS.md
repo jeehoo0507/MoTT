@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 14:40 UTC, 재개 라운드 51)
+# PROGRESS (갱신 2026-11-05 16:20 UTC, 재개 라운드 52)
+
+## 재개 라운드 52 (2026-11-05 16:12~ UTC)
+- 상태 (16:15): GPU **B1 `bp_park_s1`** 증류 (15:40~, it 1525 / val pcb fail 0.50, pkg 0.69, ip 0.19; RL 끝 ~17:40, side_slot 평가 ~17:55) → 나머지 B1 7 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, 3 h 35 분째, worker rss 5.6 GB, 기록 아직 없음) + 학습 정확 검사 2; 4번째 칸 side_slot은 LS16 게이트로 scale-eval 대기 (B1 평가 대상 그대로). pod 18.5 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
+- 확인: B1 표 `collect_results.prior_seed_table` (PROPOSALS B1 규칙, 보고만)은 seed 1 기록이 하나라도 생기면 RESULTS "선행 연구 재구현" 절 아래에 자동으로 나옴 — 코드 바꿀 것 없음.
+- 일정 메모 (판정 없음): CPU 줄에 LS16 5파일 (ls16r pcb16_0·1, ls16c ip16_1·pkg16_0·1)이 ip16_0 뒤에 남음; 파일당 ≥ 3.5 h면 LS16 열은 11/07 이후. r2pk_s2 규모 평가 9파일은 LS16 게이트 뒤. B1 끝 (~11/06 07:45) 뒤 GPU가 비면 학습 정확 검사 2칸이 비므로, 그때 게이트를 그대로 둘지 (LS ~10 GB + scale-eval 시작 +22 GiB, 학습 없으면 pod ~35 GiB 이하 예상이 아니라 **그때 mem.py로 확인**) 다음 라운드가 정한다.
+- 결정: 이번 라운드는 큐·설정을 바꾸지 않음 — 이유: 도는 작업 (B1, LS16) 모두 정상이고 새 지시·새 근거 없음; 11/6 12:00 UTC 새 시도 마감 전 P4 후보 없음 (라운드 46·48 판단 그대로).
+- 할 일 (다음): (1) `bp_park_s1_rl` 평가 (~17:55) → RESULTS 재생성 → B1 seed 표 첫 행 확인·commit. (2) LS16 ip16_0 기록·시간·peak. (3) DAILY 11/06 00:xx UTC (대상 11/05 00:20 ~ 11/06 00:xx, 라운드 44~).
 
 ## 재개 라운드 51 (2026-11-05 14:33~ UTC)
 - 상태 (14:40): GPU **F1 `lo_pkg_r2pk_s2`** RL (14:24~, 끝 ~15:50, side_slot 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, 2 h째, worker rss 5.3 GB, 기록 아직 없음) + 학습 정확 검사 2; 4번째 칸은 side_slot (LS16 게이트로 scale-eval 대기, F1·B1 평가 대상). pod 19.3 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
