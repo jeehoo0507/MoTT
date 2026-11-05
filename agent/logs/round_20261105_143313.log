@@ -37,3 +37,7 @@ This matches the plain MoTT model (rung 2) and the reversal you noted on 11/01: 
 - **CPU:** the 16-cell local-search baseline job (`eval_ip16_0`) is still running and has written nothing yet. Pod memory is 18.7 of 60 GiB, and the out-of-memory kill count is still 2.
 
 RESULTS.md is regenerated, PROGRESS.md is updated, and both are committed and pushed to `r2e main` with the new evaluation files. No new experiment is planned before the 11/6 12:00 UTC cutoff for new attempts.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   036041c..8feec4f  main -> main
