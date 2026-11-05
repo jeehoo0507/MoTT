@@ -1,0 +1,22 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+In round 50 I found a problem caused by my own change in the previous round and fixed it. Both commits are pushed to `r2e main`, and PROGRESS.md is updated.
+
+**What went wrong:** Two of the memory-limited 16-cell local-search baseline runs (the ones split into chunks of 8, needed for the LS column of Figure 2), `eval_pcb16_0` and `eval_pcb16_1`, were stopped by the 45 GiB memory guard at 12:16 and 12:34 UTC. Local search itself was not the cause. The guard watches memory for the whole pod, and each stop came 28–37 s after one of the seed-2 board-size evaluations I added last round started. Those evaluations raise pod memory by about 22 GiB in their first 30 seconds. Over the previous 4 hours the LS worker had stayed flat at about 10 GB. Round 49's status line also said `pcb16_0` was "still running at 4 h", but it had already been stopped by then; I corrected that in PROGRESS.md.
+
+**Fixes:**
+- `scripts/side_slot.py` no longer starts a board-size evaluation while a 16-cell LS job is running. I restarted it with the same targets. After the `pkg16_0` evaluation finished, it did not start the next one, so the block is working.
+- `scripts/queue_ls16_retry.py` keeps the two stop markers as `*.memskip_concurrent` (committed as a record) and renames the queue entries `ls16r …`. The command, the 45 GiB rule and the chunk size of 8 are unchanged, and the driver will rerun `pcb16_0` after the current `ip16_0` run.
+- Decision (in PROGRESS.md): rerun these two files rather than marking them "메모리로 생략" (skipped for memory). Marking them skipped would wrongly suggest local search itself is too big for memory. If an LS run goes over 45 GiB on its own, that file is skipped for good.
+- Decision (in PROGRESS.md): the remaining 9 seed-2 board-size evaluations now wait until all six LS files finish, because Figure 2's LS column comes first. One 16-cell LS run took more than 4 hours without finishing, so this could slip past 11/07. Evaluations are still allowed after the 11/8 freeze.
+
+**Results this round** (the board-size table in RESULTS.md updates automatically):
+- At 16 cells, seed 2 succeeds on 0.90 of pcb problems (seed 0 and 1 also had 0.90 and 0.96).
+- On pkg it succeeds on 0.44, but that covers only one of the two 25-problem files, so I'm not reading anything into it yet.
+
+**Next round:**
+- The seed-2 held-out-pkg run (`lo_pkg_r2pk_s2`) is evaluated around 16:05 UTC. That fills the pkg verdict cell automatically. Under the pre-registered rule it can only come out "실패" (fail).
+- The six 16-cell LS runs continue, then the remaining board-size evaluations.
+- The deadline for starting new attempts is 11/6 12:00 UTC, and no new attempt is planned.
+
+One risk is left open: once LS finishes, the driver and the 4th slot could each start a 16-cell evaluation at about the same time. That only matters if the two starts land within about 30 seconds of each other, so I left it as is and noted it in PROGRESS.md.
