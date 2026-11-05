@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import tempfile
 import subprocess
+import pickle
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -30,7 +32,72 @@ def result(job):
                                   samples=1, inst_chunk=5, ok=[True], count=[3], worst=[0], occ=[[0]], sec_total=1))
 
 
+@contextlib.contextmanager
+def fresh_mode():
+    names = ("FRESH", "DAY", "NEW", "LOG", "POOL", "PHASES", "RESULT_ARCHIVE")
+    saved = {name: getattr(r, name) for name in names}
+    r.configure_fresh()
+    try:
+        yield
+    finally:
+        for name, value in saved.items():
+            setattr(r, name, value)
+
+
 class RunnerTests(unittest.TestCase):
+    def test_fresh_plan_has_no_server1_dependencies(self):
+        with fresh_mode():
+            jobs = r.plan()
+            self.assertEqual(len(jobs), 180)
+            self.assertEqual(len({j["result"] for j in jobs}), 180)
+            self.assertEqual(len(r.train_specs()), 6)
+            self.assertEqual([seed for _, seed in r.train_specs()], [0, 0, 1, 1, 2, 2])
+            self.assertTrue(all(Path(j["ckpt"]).is_relative_to(r.NEW) for j in jobs))
+            self.assertFalse(any("2026-10-29" in j["ckpt"] for j in jobs))
+
+    def test_fresh_training_selects_both_architectures(self):
+        with fresh_mode(), workspace(), patch.object(r, "trained", return_value=False), \
+                patch.object(r, "execute", return_value=0) as execute:
+            r.gpu_worker(0, [("r2pk", 0), ("r3pk", 0)])
+            cmds = [c.args[0] for c in execute.call_args_list]
+            self.assertEqual([c[c.index("--arm") + 1] for c in cmds],
+                             ["--model mott --peak_refine", "--model loop --peak_refine"])
+            self.assertTrue(all(c[c.index("--pool") + 1] == str(r.POOL) for c in cmds))
+
+    def test_pool_metadata_alone_cannot_mark_a_partial_pickle_ready(self):
+        with fresh_mode(), workspace():
+            name = "eval_pcb10_0"
+            p = r.POOL / (name + ".pkl")
+            r.save_json(p.with_suffix(".json"), {"name": name, "n": 25, "size": 10})
+            p.write_bytes(b"partial")
+            self.assertFalse(r.usable_pool(name))
+            with p.open("wb") as f:
+                pickle.dump(dict(valid=SimpleNamespace(shape=(25, 100)), H=10, W=10,
+                                 results={"greedy+prune": {}}), f)
+            self.assertTrue(r.usable_pool(name))
+
+    def test_fresh_scheduler_completes_without_transfer_files(self):
+        with fresh_mode(), workspace():
+            full = r.plan()
+            jobs = [full[0], next(j for j in full if j["phase"] == "FR")]
+            for j in jobs:
+                p = Path(j["ckpt"])
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(b"checkpoint")
+                r.save_json(p.parent / "metrics.json", {"complete": True})
+            def evaluate(j):
+                result(j)
+                return "done"
+            with patch.object(r, "plan", return_value=jobs), patch.object(r, "preflight", return_value=["fake GPU"]), \
+                 patch.object(r, "gpu_worker"), patch.object(r, "build_fresh_evaluation"), \
+                 patch.object(r, "usable_pool", return_value=True), patch.object(r, "available_gib", return_value=64), \
+                 patch.object(r.subprocess, "check_output", return_value="fake-git"), \
+                 patch.object(r.time, "sleep"), patch.object(r, "evaluate", side_effect=evaluate):
+                self.assertEqual(r.run(1, False), 0)
+            self.assertEqual(r.read_json(r.LOG / "status.json")["counts"]["done"], 2)
+            self.assertTrue(Path("server2_fresh_results.tgz").exists())
+            self.assertFalse(Path("server2_transfer_manifest.json").exists())
+
     def test_plan_is_complete_and_unique(self):
         jobs = r.plan()
         self.assertEqual(len(jobs), 216)

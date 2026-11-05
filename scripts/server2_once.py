@@ -27,8 +27,29 @@ LOG = Path("agent/logs/s2_once")
 BASE = ["r2pk", "r2pk_s1", "r2pk_s2"]
 LOOP = ["r3pk", "r3pk_s1", "r3pk_s2"]
 LEGACY = ["r2_mott_s1", "r2_mott_s2", "r3_loop_s1", "r3_loop_s2"]
+POOL = Path("runs/pool_v1")
+FRESH = False
+PHASES = ("L2", "L1", "L3", "L4")
+RESULT_ARCHIVE = Path("server2_loop_results.tgz")
 CHILDREN = set()
 CHILD_LOCK = threading.Lock()
+
+
+def configure_fresh():
+    global FRESH, DAY, NEW, LOG, POOL, PHASES, RESULT_ARCHIVE
+    FRESH = True
+    DAY = "2026-11-05fresh"
+    NEW = Path("runs") / DAY
+    LOG = Path("agent/logs/s2_fresh")
+    POOL = Path("runs/pool_s2_fresh")
+    PHASES = ("F10", "Fbig", "FR")
+    RESULT_ARCHIVE = Path("server2_fresh_results.tgz")
+
+
+def train_specs():
+    if FRESH:
+        return [(name, seed) for seed, pair in enumerate(zip(BASE, LOOP)) for name in pair]
+    return list(zip(LOOP + ["lo_pcb_r3pk"], (0, 1, 2, 0)))
 
 
 def read_json(path):
@@ -69,6 +90,15 @@ def plan():
                              ckpt=str(Path(folder) / "best.pt"), out=str(Path(out or folder)),
                              result=str(dst), state="pending"))
 
+    if FRESH:
+        for name in BASE + LOOP:
+            folder = NEW / (name + "_rl")
+            add("F10", name, folder, (10,))
+            add("Fbig", name, folder, (16, 20))
+            if name in LOOP:
+                for repeat in (2, 4):
+                    add("FR", name, folder, (16, 20), repeat=repeat)
+        return jobs
     for name in LEGACY:
         add("L1", name, OLD / (name + "_rl"), (16, 20))
     for name in LOOP + ["lo_pcb_r3pk"]:
@@ -170,11 +200,11 @@ def gpu_worker(gpu, names):
     for name, seed in names:
         if trained(name):
             continue
-        arm = "--model loop --peak_refine"
+        arm = "--model " + ("mott" if name in BASE else "loop") + " --peak_refine"
         if name.startswith("lo_"):
             arm += " --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0"
         cmd = [sys.executable, "scripts/run_rung.py", "--name", name, "--arm", arm,
-               "--day", DAY, "--pool", "runs/pool_v1", "--seed", str(seed),
+               "--day", DAY, "--pool", str(POOL), "--seed", str(seed),
                "--distill_hours", "0.75", "--rl_hours", "1.25", "--skip_eval"]
         print(f"TRAIN {name}: starting on GPU {gpu}", flush=True)
         rc = execute(cmd, LOG / f"train_{name}.log", {"CUDA_VISIBLE_DEVICES": str(gpu), "CERTIFY_WORKERS": "2"})
@@ -187,7 +217,7 @@ def evaluate(job):
         return "done"
     if dst.exists():  # The legacy evaluator skips any existing path, even truncated JSON.
         dst.rename(str(dst) + f".invalid.{time.time_ns()}")
-    cmd = [sys.executable, "scripts/eval_policy.py", "--pool", "runs/pool_v1",
+    cmd = [sys.executable, "scripts/eval_policy.py", "--pool", str(POOL),
            "--sets", job["pool"], "--policy", f"{job['method']}={job['ckpt']}",
            "--workers", "1", "--inst_chunk", "5", "--out", job["out"]]
     rc = execute(cmd, LOG / f"{job['phase']}_{job['pool']}__{job['method']}.log", timeout=4 * 3600)
@@ -207,25 +237,70 @@ def available_gib():
     return available / 1024 ** 3
 
 
+def usable_pool(name):
+    """The builder writes the metadata last; reject a partial pickle on resume."""
+    import pickle
+    p = POOL / (name + ".pkl")
+    meta = read_json(p.with_suffix(".json"))
+    if not isinstance(meta, dict) or meta.get("name") != name or not p.is_file():
+        return False
+    try:
+        with p.open("rb") as f:
+            data = pickle.load(f)
+        return (data["valid"].shape[0] == meta["n"] and data["H"] == data["W"] == meta["size"]
+                and "greedy+prune" in data["results"])
+    except Exception:
+        return False
+
+
+def build_pools(only, sizes="10", n=25):
+    POOL.mkdir(parents=True, exist_ok=True)
+    for p in POOL.glob("*.pkl"):
+        if not usable_pool(p.stem):
+            p.rename(str(p) + f".incomplete.{time.time_ns()}")
+    cmd = [sys.executable, "scripts/build_pools.py", "--out", str(POOL), "--only", only,
+           "--eval_sizes", sizes, "--eval_n", str(n), "--workers", "1", "--techs", "pcb,pkg,ip"]
+    print(f"POOL generation: {only}, sizes={sizes}, eval_n={n}", flush=True)
+    rc = execute(cmd, LOG / f"build_{only.replace(',', '_')}_{sizes}.log", timeout=48 * 3600)
+    if rc:
+        raise RuntimeError(f"Pool generation failed ({rc}); see build log")
+
+
+def build_fresh_evaluation():
+    for size, n in ((10, 25), (16, 25), (20, 8)):
+        build_pools("eval", str(size), n)
+        missing = [s for s in sets((size,)) if not usable_pool(s)]
+        if missing:
+            raise RuntimeError(f"Incomplete generated evaluation pools: {missing}")
+        save_json(LOG / "pool_manifest.json", {str(p): sha(p) for p in POOL.glob("*.pkl") if usable_pool(p.stem)})
+
+
 def preflight():
     import torch
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is unavailable; refusing to train on CPU")
-    manifest = read_json("server2_transfer_manifest.json")
-    if not isinstance(manifest, dict) or not manifest:
-        raise RuntimeError("Missing transfer manifest; use the pack command")
-    print(f"Verifying {len(manifest)} transferred files...", flush=True)
-    for path, expected in manifest.items():
-        if not Path(path).is_file() or sha(path) != expected:
-            raise RuntimeError(f"Transfer checksum mismatch: {path}")
-    required = [Path("runs/pool_v1") / (s + ".pkl") for s in sets((10, 16, 20))]
-    required += [OLD / (n + "_rl") / "best.pt" for n in LEGACY + BASE]
-    required += [Path("runs/pool_v1") / f"{split}_{t}{n}_{k}.pkl"
+    required = []
+    if FRESH:
+        save_json(LOG / "status.json", {"pid": os.getpid(), "stage": "building_train_val", "final": False})
+        build_pools("train,val")
+    else:
+        manifest = read_json("server2_transfer_manifest.json")
+        if not isinstance(manifest, dict) or not manifest:
+            raise RuntimeError("Missing transfer manifest; use the pack command")
+        print(f"Verifying {len(manifest)} transferred files...", flush=True)
+        for path, expected in manifest.items():
+            if not Path(path).is_file() or sha(path) != expected:
+                raise RuntimeError(f"Transfer checksum mismatch: {path}")
+        required += [POOL / (s + ".pkl") for s in sets((10, 16, 20))]
+        required += [OLD / (n + "_rl") / "best.pt" for n in LEGACY + BASE]
+    required += [POOL / f"{split}_{t}{n}_{k}.pkl"
                  for split, sizes, copies in [("train", (8, 10, 12), range(3)), ("val", (10,), range(1))]
                  for t in ("pcb", "pkg", "ip") for n in sizes for k in copies]
     for p in required:
         if not p.is_file():
             raise RuntimeError(f"Missing input: {p}")
+        if FRESH and not usable_pool(p.stem):
+            raise RuntimeError(f"Invalid generated pool: {p}")
         if p.name.startswith("train_") and p.suffix == ".pkl":
             teacher = Path("data/teacher") / (p.stem + ".npz")
             if not teacher.is_file():
@@ -256,10 +331,12 @@ def bundle(jobs):
     files.add(LOG / "summary.csv")
     files.update(NEW.glob("*/metrics.json"))
     files.update(NEW.glob("*/driver.log"))
+    if FRESH:
+        files.update(POOL.glob("*.json"))
     for p in files:
         if not p.is_file():
             raise RuntimeError(f"Missing result artifact: {p}")
-    dst = Path("server2_loop_results.tgz")
+    dst = RESULT_ARCHIVE
     with tarfile.open(str(dst) + ".partial", "w:gz") as tar:
         for p in sorted(files | set(LOG.glob("*.log"))):
             tar.add(p, arcname=str(p), recursive=False)
@@ -284,7 +361,7 @@ def publish(files):
         if subprocess.run(["git", "-C", temp, "diff", "--cached", "--quiet"]).returncode == 0:
             return
         git("-c", "user.name=R2E server 2", "-c", "user.email=server2@localhost", "commit", "-m",
-            "server2: unattended loop experiment results (L1-L4)")
+            "server2: standalone loop results" if FRESH else "server2: unattended loop experiment results (L1-L4)")
         for attempt in range(3):
             try:
                 git("push", "origin", "HEAD:main")
@@ -306,16 +383,20 @@ def run(cpu_par, push):
         gpus = preflight()
         print("Preflight OK:", gpus, flush=True)
         jobs = plan()
-        train = list(zip(LOOP + ["lo_pcb_r3pk"], (0, 1, 2, 0)))
+        train = train_specs()
         metadata = dict(pid=os.getpid(), started=time.time(), gpus=gpus, cpu_parallel=cpu_par,
                         git=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-                        note="L3/L4 supplementary; existing pools; no change to L1/L2 verdicts; timings are server 2 only")
+                        note=("Standalone matched comparison on regenerated pools; do not merge with server 1 results"
+                              if FRESH else "L3/L4 supplementary; existing pools; no change to L1/L2 verdicts; timings are server 2 only"))
         for j in jobs:
             if complete(j):
                 j["state"] = "done"
         try:
-            with ThreadPoolExecutor(max_workers=len(gpus)) as trainers, ThreadPoolExecutor(max_workers=cpu_par) as evaluators:
+            with ThreadPoolExecutor(max_workers=len(gpus)) as trainers, ThreadPoolExecutor(max_workers=cpu_par) as evaluators, \
+                    ThreadPoolExecutor(max_workers=1) as builders:
                 training = [trainers.submit(gpu_worker, g, train[g::len(gpus)]) for g in range(min(len(gpus), len(train)))]
+                building = builders.submit(build_fresh_evaluation) if FRESH else None
+                valid_pools = set()
                 active = {}
                 idle_since = None
                 milestones = set()
@@ -329,12 +410,19 @@ def run(cpu_par, push):
                                 j.update(state="failed", error=str(e))
                             print(f"{j['phase']} {j['pool']} {j['method']}: {j['state']}", flush=True)
                     finished = all(t.done() for t in training)
-                    for j in sorted(jobs, key=lambda x: {"L2": 0, "L1": 1, "L3": 2, "L4": 3}[x["phase"]]):
+                    for j in sorted(jobs, key=lambda x: PHASES.index(x["phase"])):
                         if j["state"] != "pending":
                             continue
-                        if j["phase"] == "L4" and (not finished or any(
-                                q["phase"] != "L4" and q["state"] in ("pending", "running") for q in jobs)):
+                        if j["phase"] == PHASES[-1] and (not finished or any(
+                                q["phase"] != PHASES[-1] and q["state"] in ("pending", "running") for q in jobs)):
                             continue
+                        if FRESH and j["pool"] not in valid_pools:
+                            if usable_pool(j["pool"]):
+                                valid_pools.add(j["pool"])
+                            else:
+                                if building.done():
+                                    j.update(state="blocked", error="Evaluation pool generation failed")
+                                continue
                         ckpt = Path(j["ckpt"])
                         needs_training = ckpt.is_relative_to(NEW)
                         ready = (trained(ckpt.parent.name.removesuffix("_rl")) if needs_training else ckpt.is_file())
@@ -342,11 +430,12 @@ def run(cpu_par, push):
                             if finished:
                                 j["state"] = "blocked"
                             continue
-                        if len(active) >= cpu_par or available_gib() < 12:
+                        reserved = 12 if building is not None and not building.done() else 0
+                        if len(active) >= cpu_par or available_gib() < 12 + reserved:
                             break
                         j["state"] = "running"
                         active[evaluators.submit(evaluate, j)] = j
-                    if finished and not active and any(j["state"] == "pending" for j in jobs):
+                    if finished and (building is None or building.done()) and not active and any(j["state"] == "pending" for j in jobs):
                         idle_since = idle_since or time.monotonic()
                         if time.monotonic() - idle_since > 600:
                             for j in jobs:
@@ -355,7 +444,7 @@ def run(cpu_par, push):
                     else:
                         idle_since = None
                     receipt(jobs, metadata)
-                    for phase in ("L1", "L2", "L3", "L4"):
+                    for phase in PHASES:
                         group = [j for j in jobs if j["phase"] == phase]
                         if group and phase not in milestones and all(j["state"] not in ("pending", "running") for j in group):
                             bundle(jobs)
@@ -364,10 +453,12 @@ def run(cpu_par, push):
                     time.sleep(5)
                 for t in training:
                     t.result()
+                if building is not None:
+                    building.result()
         finally:
             counts = receipt(jobs, metadata, final=True)
             files = bundle(jobs)
-            print("Results:", counts, "archive: server2_loop_results.tgz", flush=True)
+            print("Results:", counts, "archive:", RESULT_ARCHIVE, flush=True)
         if push:
             try:
                 publish(files)
@@ -384,8 +475,13 @@ def main():
     ap.add_argument("--archive", default="/tmp/r2e_s2.tgz")
     ap.add_argument("--cpu-par", type=int, default=2)
     ap.add_argument("--push", action="store_true")
+    ap.add_argument("--fresh", action="store_true", help="Generate local pools and train both models; no server-1 files")
     a = ap.parse_args()
     os.chdir(a.root)
+    if a.fresh:
+        configure_fresh()
+        if a.action in ("pack", "unpack"):
+            ap.error("--fresh does not use transferred archives")
     if a.cpu_par < 1:
         ap.error("--cpu-par must be positive")
     if a.action == "pack":
@@ -394,7 +490,7 @@ def main():
         unpack(a.archive)
     elif a.action == "plan":
         jobs = plan()
-        print(json.dumps({"training": 4, "eval_jobs": len(jobs), "phases": {p: sum(j['phase'] == p for j in jobs) for p in ('L1', 'L2', 'L3', 'L4')}}, indent=2))
+        print(json.dumps({"training": len(train_specs()), "eval_jobs": len(jobs), "phases": {p: sum(j['phase'] == p for j in jobs) for p in PHASES}}, indent=2))
     elif a.action == "status":
         s = read_json(LOG / "status.json")
         print(json.dumps({k: v for k, v in (s or {}).items() if k != "jobs"}, indent=2))
