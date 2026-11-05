@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정. **20:15 보충: chunk 판 ip16_0 첫 완주** (7.3 h, mem_guard peak pod 40.6 GiB, 중단 없음) — 남은 5파일도 같은 길.
-# PROGRESS (갱신 2026-11-05 20:15 UTC, 재개 라운드 54)
+# PROGRESS (갱신 2026-11-05 20:35 UTC, 재개 라운드 55)
+
+## 재개 라운드 55 (2026-11-05 20:25~ UTC)
+- 상태 (20:30): GPU **B1 `bp_park_s2`** 증류 (19:44~, it 2025, 2432 s; RL 끝 ~21:45 → side_slot 평가). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 24 분째, worker rss 11.2 GB) + 학습 정확 검사 2; 4번째 칸 side_slot 대기 (LS16 게이트 닫힘 — scale-eval 9파일 그대로 대기). pod 22.2 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
+- **라운드 54 위험 기록 풀림:** LS16 사이 빈틈에 시작된 scale-eval `r2pk_s2_rl eval_pkg16_1`은 20:12에 rc 0으로 끝남 (pcb16_0 LS와 11분 겹침, mem_guard 중단 없음, 끝 pod 21.6 GiB). → side_slot 게이트는 고치지 않음 (라운드 54 결정 조건 "pcb16_0이 죽을 때만" 안 맞음).
+- **r2pk_s2 16칸 pkg 50문제 완성** (RESULTS "규모 곡선" 자동): 성공률 **0.56** (seed 0 / 1 = 0.58 / 0.54), 4.38 s/문제. 짝지은 차이 vs g+p (0.82, 130.85 s/문제) −0.26 [−0.40, −0.10], 둘 다 성공 개수비 0.723 [0.597, 0.845]; vs 종류 인식 greedy −0.24 [−0.40, −0.06]; 개수비 vs modal_rule 0.916. 즉 16칸 pkg는 r2pk seed 3개 모두 0.54~0.58로 g+p보다 성공률 낮고, 성공한 문제에선 개수가 적음 — 기록만, 판정 없음. r2pk_s2 규모 평가 남은 것: ip16 ×2, 20칸 ×6 (LS16 뒤).
+- 결정: 큐·설정 그대로 — 이유: 도는 작업 모두 정상, 새 지시·새 근거 없음.
+- 할 일 (다음): (1) `bp_park_s2` 평가 (~21:45~) → `bm_manoharan_rlonly_l20_s2` (~23:45) → 나머지 B1 4 run. (2) LS16 pcb16_0 (~7 h 예상, ~03:00). (3) **DAILY 11/06 00:xx UTC** (대상 11/05 00:20 ~, 라운드 44~55). (4) 11/6 12:00 UTC 새 시도 마감 (P4 없음).
 
 ## 재개 라운드 54 (2026-11-05 20:08~ UTC)
 - 상태 (20:12): GPU **B1 `bp_park_s2`** 증류 (19:44~, it 1200, val pcb fail 1.00 / pkg 0.75 / ip 0.31; 끝 ~21:45 → side_slot 평가). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~) + 학습 정확 검사 2; 4번째 칸 side_slot은 **LS16 사이 빈틈 (19:57:49)에 scale-eval `r2pk_s2_rl eval_pkg16_1`을 시작** (ip16_0 LS가 19:57에 끝나고 pcb16_0 LS는 20:01 시작 → `ls16_alive()` 게이트가 그 4분 동안 열림). pod 32.0 GiB / 60 (scale-eval worker 10.5 GB, LS worker 8.6 GB), oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0). 시작 때 loop의 `git pull --rebase`는 dirty 로그로 거절됨 (메모 그대로, 손대지 않음).

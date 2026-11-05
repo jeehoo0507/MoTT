@@ -23,3 +23,7 @@ Round 54 is done. One finished experiment went into RESULTS, PROGRESS.md is upda
 - The deadline for starting new attempts is 11/06 12:00 UTC, and there is no new candidate yet. Once B1 finishes, the default is to leave the GPU idle.
 
 I also added the gate-gap finding to my memory file on 16-cell LS memory problems.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cd4f7c3..3497a6a  main -> main
