@@ -1,0 +1,23 @@
+{
+ "reason": "memory",
+ "mem_gib": 45.08,
+ "limit_gib": 45.0,
+ "peak_pod_gib": 45.08,
+ "cmd": [
+  ".venv/bin/python",
+  "scripts/eval_policy.py",
+  "--pool",
+  "runs/pool_v1",
+  "--sets",
+  "eval_pcb16_1",
+  "--methods",
+  "ls",
+  "--ls_chunk",
+  "8",
+  "--workers",
+  "1",
+  "--out",
+  "runs/2026-10-28/baselines"
+ ],
+ "time": "2026-11-05 12:34:12 UTC"
+}

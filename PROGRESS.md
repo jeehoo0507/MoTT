@@ -1,5 +1,14 @@
-STUCK (해제 시도 중, 11/05 08:10): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). 이것도 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 14:00 UTC, 재개 라운드 49 끝)
+STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
+# PROGRESS (갱신 2026-11-05 14:20 UTC, 재개 라운드 50)
+
+## 재개 라운드 50 (2026-11-05 14:09~ UTC)
+- 상태 (14:15): GPU **F1 `lo_pkg_r2pk_s2`** 증류 (13:38~, RL 끝 ~15:50, 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, worker rss 5.9 GB) + 학습 정확 검사 2 + 4번째 칸 `scale-eval eval_pkg16_0 r2pk_s2_rl` (13:53~). pod 29 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- **라운드 49 기록 고침: ls16c pcb16_0·pcb16_1은 12:16·12:34에 mem_guard로 중단됐음** (라운드 49 상태 줄의 "pcb16_0 4 h 째"는 이미 끝난 뒤였음). 원인은 LS가 아니라 **내가 라운드 49에 넣은 4번째 칸 scale-eval**: `side_slot.log` START scale-eval pcb16_0 12:16:04 → mem_guard KILL 12:16:41 (37 s), START pcb16_1 12:33:44 → KILL 12:34:12 (28 s). 16칸 정책 평가는 시작 30 s 동안 pod를 ~22 GiB 올림 (23.0 → 45.0), 그동안 chunk LS worker는 4 h 동안 ~10 GB 평평 (라운드 47~49 기록). 즉 두 "메모리로 생략" 표시는 LS16 자체의 메모리를 말하지 않음.
+  - 고침: (1) `scripts/side_slot.py`: 드라이버 LS16 (`--methods ls --ls_chunk`, 16_) 작업이 살아 있는 동안 `scale-eval` filler를 시작하지 않음 (10칸 학습 평가·다른 filler는 그대로) → side_slot 같은 대상으로 다시 띄움 (도는 scale-eval pkg16_0 자식은 그대로 끝까지). (2) `scripts/queue_ls16_retry.py`: 두 marker를 `.memskip_concurrent`로 보관 (RESULTS glob 밖, git에 기록), 항목 이름 `ls16r …` (명령·mem_guard·`--ls_chunk 8` 그대로) → 드라이버가 ip16_0 다음에 pcb16_0부터 다시.
+  - 결정: 두 pcb16 LS 파일을 다시 돌림 (생략 확정하지 않음) — 이유: 미리 적은 규칙 "넘으면 생략"은 그 작업이 메모리를 넘을 때를 뜻함; 넘게 만든 것은 내가 넣은 선택 작업 (평가만, 판정 없음)이므로 생략으로 적으면 그림 2·규모 곡선 LS 열을 사실과 다르게 비움. 알고리즘·설정·45 GiB 규칙은 그대로.
+  - 결정: r2pk_s2 규모 평가 (남은 10파일)는 LS16 6파일 뒤로 밀림 — 이유: LS16은 QUEUE/AGENT_PROMPT 그림 2 항목, scale-eval은 내 선택 보충; 평가는 11/8 동결 뒤에도 허용. 드라이버 줄도 queue 순서상 LS16 뒤에 scale-eval을 돌림.
+  - 남은 위험 (기록만): LS16이 다 끝난 뒤 드라이버 줄과 4번째 칸이 scale-eval을 하나씩 동시에 돌릴 수 있음 (각 시작 +22 GiB, mem_guard 없음). 둘의 시작이 30 s 안에 겹칠 때만 문제라 그대로 둠; 그때 pod가 높으면 다음 라운드에서 하나를 멈춤.
+- LS16 시간: pcb16_0 chunk 판은 4 h 6 분 돌고도 기록 전 (문제별 로그 없음) → 6파일이 각각 4 h 이상이면 LS16 열은 11/07 이후. 그림 2 캡션 메모의 "LS16은 일부 파일" 가능성 그대로.
 
 ## 재개 라운드 49 (2026-11-05 12:13~ UTC)
 - 상태 (12:20): GPU **F1 `lo_pkg_r2pk_s1`** 증류 끝 무렵 (11:36~, RL 끝 ~13:40, side_slot 평가 ~13:55) → lo_pkg_r2pk_s2 (~15:50) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 4 h 째, worker rss 10.2 GB 평평, 기록 없음) + 학습 정확 검사 2 + side_slot (아래 filler). pod 23.5 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음, 서버 2 기록 아직 없음.

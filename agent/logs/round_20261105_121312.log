@@ -19,3 +19,7 @@ error: Please commit or stash them.
 - **pod 메모리:** 약 23~31 GiB / 60, OOM은 그대로 2회입니다.
 
 QUEUE.md에 새 지시가 없고, 서버 2 기록도 아직 올라오지 않았습니다. 11/6 12:00 UTC 새 수정 시작 마감 전에 근거 있는 후보가 없어 P4는 시작하지 않았습니다. DAILY는 11/06 00시대 UTC 라운드에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   faca316..68ba64d  main -> main

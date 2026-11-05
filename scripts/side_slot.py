@@ -23,6 +23,21 @@ from pipeline_day2 import DAY, ROOT, PY, eval_jobs, exists, queue, rl_done  # no
 FILL = ("ls10 ", "ga10 ", "samp10 ")   # samp10: best-of-8 policy sampling (PROGRESS 11/02 round 6)
 FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this left (11/02: ls pcb10_1 took the
                     # slot 1 min before bm_manoharan_rlonly_l20 ended)
+LS16 = ("--methods ls --ls_chunk",)   # 11/05 round 50: a 16/20-cell "scale-eval" filler start (~+22 GiB in 30 s) put the
+                                      # pod over 45 GiB and mem_guard killed ls16c pcb16_0 (4 h in) and pcb16_1 -> no
+                                      # scale-eval filler while a driver LS16 job is alive
+
+
+def ls16_alive():
+    for pid in os.listdir("/proc"):
+        if pid.isdigit():
+            try:
+                cmd = open(f"/proc/{pid}/cmdline", "rb").read().replace(b"\0", b" ").decode(errors="ignore")
+            except OSError:
+                continue
+            if "eval_policy.py" in cmd and any(s in cmd for s in LS16) and "16_" in cmd:
+                return True
+    return False
 
 
 def log(msg):
@@ -71,7 +86,7 @@ while True:
     left = [s for s in (rl_left_s(n) for n in targets) if s is not None]
     if not todo and not any(s < FILL_GAP_S for s in left):   # a filler (<= ~50 min) must not hold a training's eval
         todo = [j for j in queue().get("cpu", []) if j["name"].startswith(FILL) and pending(j)
-                and j["name"] not in failed]
+                and j["name"] not in failed and not ("scale-eval" in j["name"] and ls16_alive())]
     if todo:
         if run(todo[0]) != 0 or not all(exists(p) for p in todo[0]["done"]):
             failed.add(todo[0]["name"])
