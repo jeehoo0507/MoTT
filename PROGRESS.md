@@ -1,5 +1,10 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정. **20:15 보충: chunk 판 ip16_0 첫 완주** (7.3 h, mem_guard peak pod 40.6 GiB, 중단 없음) — 남은 5파일도 같은 길.
-# PROGRESS (갱신 2026-11-05 20:35 UTC, 재개 라운드 55)
+# PROGRESS (갱신 2026-11-05 20:50 UTC, 재개 라운드 56)
+
+## 재개 라운드 56 (2026-11-05 20:42~ UTC)
+- 상태 (20:45): GPU **B1 `bp_park_s2`** RL (20:33~, it 25 / 606 s, val fail pkg 0.11, GPU peak 12.5 GB; 끝 ~21:45 → side_slot 평가). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 41 분째, worker rss 8.6 GB, 100 % CPU) + 학습 정확 검사 2; 4번째 칸 side_slot 대기 (LS16 게이트). pod 21.6 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0; 마지막 QUEUE 항목은 서버 2 FRESH — 서버 1 큐에 넣지 않음, 그대로).
+- 결정: 큐·설정 그대로 — 이유: 도는 작업 모두 정상, 새 지시·새 근거 없음 (라운드 55 판단 그대로). 끝난 실험 없음 → RESULTS 변경 없음.
+- 할 일 (다음): (1) `bp_park_s2` 평가 (~21:45~) → `bm_manoharan_rlonly_l20_s2` (~23:45) → 나머지 B1 4 run. (2) LS16 pcb16_0 (~03:00 예상) — 끝나거나 죽었는지 확인. (3) **DAILY 11/06 00:xx UTC** (대상 11/05 00:20 ~, 라운드 44~). (4) 11/6 12:00 UTC 새 시도 마감 (P4 없음).
 
 ## 재개 라운드 55 (2026-11-05 20:25~ UTC)
 - 상태 (20:30): GPU **B1 `bp_park_s2`** 증류 (19:44~, it 2025, 2432 s; RL 끝 ~21:45 → side_slot 평가). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 24 분째, worker rss 11.2 GB) + 학습 정확 검사 2; 4번째 칸 side_slot 대기 (LS16 게이트 닫힘 — scale-eval 9파일 그대로 대기). pod 22.2 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
