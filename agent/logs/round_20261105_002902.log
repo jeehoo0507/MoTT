@@ -20,3 +20,7 @@ Round 44 is finished and pushed to `r2e main`, and the working tree is clean. No
 **Still running:** the GPU is training lo_pcb_r2pkdd, which should finish around 03:25 UTC with its evaluation around 03:40. The driver's CPU lane is running the first local-search (LS) evaluation on 16×16 boards. Pod memory is 13 GiB of 60, and the out-of-memory kill count is still 1 (the old one from round 27).
 
 **Next round:** record lo_pcb_r2pkdd, then evaluate the seed-1 distillation checkpoint once it finishes training. The P3 verdict should come around 07:45 UTC. After that come the four held-out-kind runs on r2pk (F1), then Figure 2 once all six LS evaluations are done.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f24585b..37e848b  main -> main

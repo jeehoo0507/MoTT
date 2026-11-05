@@ -77,3 +77,11 @@ done
 [   676s] eval_pkg10_0   r2pkdd_distill               ok 0.76 count 5.79 0.403s/inst rounds 4
 [  1097s] eval_pcb10_1   r2pkdd_distill               ok 0.80 count 6.95 2.522s/inst rounds 4
 [  1244s] eval_ip10_0    r2pkdd_distill               ok 0.72 count 5.78 2.287s/inst rounds 1
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-29/r2pkdd_s1_distill/eval
+[   251s] eval_pkg10_1   r2pkdd_s1_distill            ok 0.64 count 7.44 1.753s/inst rounds 4
+[   451s] eval_pcb10_0   r2pkdd_s1_distill            ok 0.92 count 6.65 0.919s/inst rounds 4
+[   583s] eval_pkg10_0   r2pkdd_s1_distill            ok 0.72 count 6.67 0.771s/inst rounds 4
+[   863s] eval_pcb10_1   r2pkdd_s1_distill            ok 0.76 count 6.53 1.828s/inst rounds 4
+[   993s] eval_ip10_0    r2pkdd_s1_distill            ok 0.92 count 7.48 1.120s/inst rounds 2
+[  1146s] eval_ip10_1    r2pkdd_s1_distill            ok 0.92 count 7.57 0.681s/inst rounds 4
+done
