@@ -637,7 +637,7 @@ def leave_out_seed_table(by):
 
 
 ZS_RUNGS = (("r0_coord", "0단 좌표"), ("r1_modal", "1단 modal"), ("r2_mott", "2단 MoTT"), ("r3_loop", "3단 루프"),
-            ("r2a", "최종 후보 r2a (2단 + fc_bias)"))
+            ("r2a", "최종 후보 r2a (2단 + fc_bias)"), ("r2pk", "채택 구조 r2pk (2단 + P1 피크 보정)"))
 
 
 def zs_chip_table(recs):
@@ -669,7 +669,8 @@ def zs_chip_table(recs):
     lines += ["", "| 비교 | seed 0 / 1 / 2 | 평균 | 0보다 큰 seed 수 |", "|---|---|---|---|"]
     verdict = None
     for what, a, b in (("(a) 1단 − 0단", "r1_modal", "r0_coord"), ("(b) 2단 − 0단", "r2_mott", "r0_coord"),
-                       ("3단 − 0단", "r3_loop", "r0_coord"), ("r2a − 0단", "r2a", "r0_coord")):
+                       ("3단 − 0단", "r3_loop", "r0_coord"), ("r2a − 0단", "r2a", "r0_coord"),
+                       ("r2pk − 0단", "r2pk", "r0_coord"), ("r2pk − 2단", "r2pk", "r2_mott")):
         d = [None if x is None or y is None else x - y
              for x, y in ((rate(seed_run(a, s)), rate(seed_run(b, s))) for s in LO_SEEDS)]
         have = [x for x in d if x is not None]

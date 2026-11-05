@@ -487,6 +487,54 @@
    "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
    "seed": 2,
    "after": "runs/analysis/smoke_peak_refine.ok"
+  },
+  {
+   "name": "bp_park_s1",
+   "arm": "--model park_am --baseline rollout --imit 0",
+   "seed": 1
+  },
+  {
+   "name": "bm_manoharan_rlonly_l20_s1",
+   "arm": "--model manoharan --imit 0 --lam 20",
+   "seed": 1,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "bp_park_s2",
+   "arm": "--model park_am --baseline rollout --imit 0",
+   "seed": 2
+  },
+  {
+   "name": "bm_manoharan_rlonly_l20_s2",
+   "arm": "--model manoharan --imit 0 --lam 20",
+   "seed": 2,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "bp_park_rlonly_s1",
+   "arm": "--model park_am --baseline rollout --imit 0 --lam 20",
+   "seed": 1,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "bm_manoharan_s1",
+   "arm": "--model manoharan",
+   "seed": 1
+  },
+  {
+   "name": "bp_park_rlonly_s2",
+   "arm": "--model park_am --baseline rollout --imit 0 --lam 20",
+   "seed": 2,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_rlonly.ok"
+  },
+  {
+   "name": "bm_manoharan_s2",
+   "arm": "--model manoharan",
+   "seed": 2
   }
  ],
  "cpu": [
@@ -2303,6 +2351,19 @@
     "runs/2026-10-29/r2pkdd_s1_distill/eval/eval_pcb10_1__r2pkdd_s1_distill.json",
     "runs/2026-10-29/r2pkdd_s1_distill/eval/eval_pkg10_0__r2pkdd_s1_distill.json",
     "runs/2026-10-29/r2pkdd_s1_distill/eval/eval_pkg10_1__r2pkdd_s1_distill.json"
+   ],
+   "log": "agent/logs/distill_eval.log"
+  },
+  {
+   "name": "ls10 distill-eval r2pk_s2_distill",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2pk_s2_distill=runs/2026-10-29/r2pk_s2_distill/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_distill",
+   "done": [
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_ip10_0__r2pk_s2_distill.json",
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_ip10_1__r2pk_s2_distill.json",
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_pcb10_0__r2pk_s2_distill.json",
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_pcb10_1__r2pk_s2_distill.json",
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_pkg10_0__r2pk_s2_distill.json",
+    "runs/2026-10-29/r2pk_s2_distill/eval/eval_pkg10_1__r2pk_s2_distill.json"
    ],
    "log": "agent/logs/distill_eval.log"
   }

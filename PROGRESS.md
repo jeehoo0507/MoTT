@@ -1,5 +1,17 @@
-STUCK: LS16 `eval_pcb16_0`이 커널 OOM으로 두 번 죽음 (11/03 03:55, 11/05 02:24~03:27) → 그 파일은 "메모리로 생략" (`.memskip`), 남은 ls16 5파일은 mem_guard로 감싸 계속.
-# PROGRESS (갱신 2026-11-05 04:45 UTC, 재개 라운드 45)
+STUCK: LS16 `eval_pcb16_0`이 커널 OOM으로 두 번 죽음 (11/03 03:55, 11/05 02:24~03:27) → 그 파일은 "메모리로 생략" (`.memskip`), 남은 ls16 5파일은 mem_guard로 감싸 계속. 11/05 05:49 `eval_pcb16_1`도 mem_guard가 45.6 GiB에서 멈춤 → 메모리로 생략 (커널 OOM 아님); ip16·pkg16 4파일 계속.
+# PROGRESS (갱신 2026-11-05 06:05 UTC, 재개 라운드 46)
+
+## 재개 라운드 46 (2026-11-05 04:53~ UTC)
+- 상태 (06:05): GPU **`lo_pcb_r2pkdd_s1`** 증류 (05:46~, RL 끝 ~07:30, side_slot 평가 ~07:45) → F1 4 run (~15:45). CPU: 드라이버 줄 `ls16 eval_ip16_0` (05:53~, mem_guard) + 4번째 칸 (chip zero-shot r2pk 끝 → `r2pk_s2_distill` 평가 filler) + 학습 정확 검사 2. pod 14.5 GiB / 60, oom_kill 2 (그대로).
+- **LS16 `eval_pcb16_1`도 메모리로 생략 (mem_guard가 설계대로 작동):** 03:46~05:49, worker rss 26 GB·2 h째에 pod **45.6 GiB > 45** → mem_guard가 그 작업만 죽이고 `eval_pcb16_1__local_search.json.memskip` (peak 45.61 GiB) → 커널 OOM 없음 (oom_kill 2 그대로), 학습 영향 없음. 즉 LS16 pcb는 두 파일 모두 "메모리로 생략" (RESULTS 규모 곡선·그림 2 LS 열 자동). 남은 ip16·pkg16 4파일은 그대로 mem_guard로. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- **P3 `r2pkdd_s1_rl`** (338 iter / 1.27 h; side_slot 05:31~05:45) 10칸: ip 1.00 / pcb **0.96** / pkg **0.86**; vs P1 `r2pk_s1_rl` pcb +0.04 [−0.06, +0.14], pkg −0.02 [−0.16, +0.10], ip +0.00 (개수비 0.982 / 0.980 / 1.006). 같이 보고: vs greedy+prune pcb +0.06 [−0.04, +0.16], pkg −0.04 [−0.16, +0.08]; vs 종류 인식 greedy pcb +0.30, pkg +0.04, ip +0.60.
+  - 같은 종류 seed 0·1 묶음 (`pooled_mod_table`, 이제 4 run 중 3 끝): pcb +0.050 [−0.010, +0.110], pkg +0.010 [−0.080, +0.110], ip +0.000. → **P3 "이김"은 더 나올 수 없음** (규칙 (i): 같은 종류 pcb·pkg는 CI 하한 ≤ 0으로 확정, 뺀 pcb는 seed 0이 −0.04라 "seed 두 개 모두 > 0" 불가). 남은 갈래는 "효과 없음" / "해로움" (뺀 pcb 묶음 CI 상한 < 0일 때만) — lo_pcb_r2pkdd_s1 (~07:45) 뒤 자동 판정 줄. 어느 쪽이든 P3 확장은 큐에 넣지 않고 최종 구조 = **r2pk** (P1 확장 판정 그대로).
+- **보너스 chip zero-shot에 채택 구조 추가** (4번째 칸, 06:00~, `eval_policy.py --pool runs/pool_zs --sets 'eval_chip10_*'`, `r2pk_rl`·`r2pk_s1_rl`·`r2pk_s2_rl`, 기존 사다리 chip 평가와 같은 명령, → `runs/zs_chip/r2pk/`). `collect_results.zs_chip_table`에 r2pk 행 + "r2pk − 0단"·"r2pk − 2단" 비교 행 (기술용; 미리 적은 판정 (b) 2단 − 0단은 그대로, 이미 "불충족").
+  - 결정: chip zero-shot을 최종 구조로도 잰다 — 이유: 보고서 보너스 절은 최종 구조로 써야 하고 (r2a 행은 이전 후보), 새 학습 없이 기존 eval 판·명령 그대로라 CPU 10칸 평가 하나뿐 (보수적). 판정 규칙은 새로 만들지 않음.
+  - 결과 (06:00~06:05, 6 job 277 s): r2pk seed 0 / 1 / 2 chip 성공률 **1.00 / 1.00 / 1.00**, 개수÷g+p 1.36 / 1.12 / 1.11 (r2_mott 1.11 / 1.11 / 1.14). seed 0 짝: vs modal_rule 개수비 1.160 [1.065, 1.263], vs 종류 인식 greedy 1.035 [0.963, 1.139], vs 0단 0.914 [0.777, 1.061]. 성공률은 모든 단이 천장이라 구분 없음 (기존 판정 "불충족" 그대로); 기술용 기록만.
+- **F1 뒤 GPU = 선행 연구 재구현 seed 1·2 (PROPOSALS 11/05 B1, 보고만, run 전에 고정)** — `scripts/queue_baseline_seeds.py` 8 run (`bp_park`·`bm_manoharan_rlonly_l20` s1·s2 먼저 ~23:45, 그다음 `bp_park_rlonly`·`bm_manoharan` s1·s2 ~11/06 07:45). `driver_dryrun.py`로 큐 순서 확인 (lo_pcb_r2pkdd_s1 ATTACH → F1 4 → B1 8).
+  - 결정: 새 수정 (P4) 대신 재구현 seed — 이유: 근거 있는 P4 후보 없음 (r2pk 실패 = 근소 실패 0.06~0.11 decade·6~8개, 이미 본 cutting-plane 상한 꼴, T2 "방법 무관"); 재구현 표가 seed 1개라 한 seed 비교는 RL seed 잡음 d* 0.16 안에서 약함. 15:45 전에 근거 있는 P4가 PROPOSALS에 적히면 P4를 B1 앞으로 (11/6 12:00 시작 마감).
+- **`r2pk_s2_distill` 증류만 평가 큐** (`queue_distill_eval_named.py`, side_slot filler) — 채택 구조의 "증류만" 숫자를 seed 3개로 (지금 seed 0·1만). chip 평가가 끝난 뒤 넣음 (4번째 칸 동시 2개 방지).
 
 ## 재개 라운드 45 (2026-11-05 02:24~ UTC)
 - 상태 (04:45, 라운드 끝): GPU **`r2pkdd_s1`** RL (04:15~, 끝 ~05:30, side_slot 평가 ~05:45) → lo_pcb_r2pkdd_s1 (~07:30) → F1 4 run (~15:45). CPU: 드라이버 줄 `ls16 eval_pcb16_1` (03:46~, mem_guard) + 학습 정확 검사 2; side_slot 대기. pod 12 GiB / 60, oom_kill 2.
