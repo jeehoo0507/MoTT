@@ -1,5 +1,9 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 14:20 UTC, 재개 라운드 50)
+# PROGRESS (갱신 2026-11-05 14:40 UTC, 재개 라운드 51)
+
+## 재개 라운드 51 (2026-11-05 14:33~ UTC)
+- 상태 (14:40): GPU **F1 `lo_pkg_r2pk_s2`** RL (14:24~, 끝 ~15:50, side_slot 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, 2 h째, worker rss 5.3 GB, 기록 아직 없음) + 학습 정확 검사 2; 4번째 칸은 side_slot (LS16 게이트로 scale-eval 대기, F1·B1 평가 대상). pod 19.3 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
+- 이번 라운드: lo_pkg_r2pk_s2 평가를 기다려 F1 pkg 판정 칸 (자동)·"설계 근거" r2pk pkg 칸 확인 → RESULTS 재생성·commit·push.
 
 ## 재개 라운드 50 (2026-11-05 14:09~ UTC)
 - 상태 (14:15): GPU **F1 `lo_pkg_r2pk_s2`** 증류 (13:38~, RL 끝 ~15:50, 평가 ~16:05) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_ip16_0` (12:38~, worker rss 5.9 GB) + 학습 정확 검사 2 + 4번째 칸 `scale-eval eval_pkg16_0 r2pk_s2_rl` (13:53~). pod 29 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음.
