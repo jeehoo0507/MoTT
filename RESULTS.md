@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 14:15 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 14:33 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -4121,6 +4121,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pkg_r2a_rl | 137 / 366 | 0.2 | 1.00 | 5.1 | 0.88 | – | 0.72 |
 | lo_pkg_r2pk_rl | 132 / 359 | 0.0 | 1.00 | 4.4 | 0.86 | – | 0.70 |
 | lo_pkg_r2pk_s1_rl | 131 / 342 | 1.0 | 1.00 | 5.7 | 0.90 | – | 0.64 |
+| lo_pkg_r2pk_s2_rl | 0 / – | – | – | 11.0 | – | – | – |
 | r0_coord_s1_rl | 167 / 338 | 3.2 | 0.96 | 3.7 | 0.94 | 9.7 | 0.74 |
 | r0_coord_s2_rl | 163 / 349 | 2.6 | 1.00 | 5.8 | 0.98 | 13.0 | 0.76 |
 | r1_modal_s1_rl | 203 / 377 | 1.8 | 0.92 | 3.6 | 0.84 | 9.8 | 0.74 |
@@ -4266,6 +4267,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pkg_r2pk_rl | mott_pk / mott | rl | 359 | 1.26 | val_pcb10_0: 1.16/0.62, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pkg_r2pk_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_r2pk_s1_distill | mott_pk / mott | distill | 1543 | 0.76 | val_pcb10_0: 1.15/0.62, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pkg_r2pk_s1_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_r2pk_s1_rl | mott_pk / mott | rl | 342 | 1.26 | val_pcb10_0: 0.76/0.81, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pkg_r2pk_s1_rl/metrics.json` |
+| runs/2026-10-29/lo_pkg_r2pk_s2_distill | mott_pk / mott | distill | 1510 | 0.76 | val_pcb10_0: 0.94/0.62, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pkg_r2pk_s2_distill/metrics.json` |
 | runs/2026-10-29/r0_coord_s1_distill | coord / grid | distill | 2215 | 0.77 | val_pcb10_0: 1.97/0.38, val_pkg10_0: 1.20/0.69, val_ip10_0: 0.83/0.19 | `runs/2026-10-29/r0_coord_s1_distill/metrics.json` |
 | runs/2026-10-29/r0_coord_s1_rl | coord / grid | rl | 338 | 1.27 | val_pcb10_0: 1.13/0.75, val_pkg10_0: 1.04/0.75, val_ip10_0: 0.78/0.38 | `runs/2026-10-29/r0_coord_s1_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s2_distill | coord / grid | distill | 2281 | 0.77 | val_pcb10_0: 2.04/0.50, val_pkg10_0: 1.17/0.75, val_ip10_0: 0.79/0.25 | `runs/2026-10-29/r0_coord_s2_distill/metrics.json` |
