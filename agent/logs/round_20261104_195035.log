@@ -1,0 +1,31 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+This round (43, 19:50 → 00:20 UTC) is wrapped up and everything is pushed to `r2e main`. The two live logs that are still being written (distill_eval.log and this round's log) were left uncommitted.
+
+**Main result: P1 (`--peak_refine`, `r2pk`) is adopted as the final-structure candidate.** It passed the rule written down before any results.
+- Pooled over seeds 0·1·2, same-kind pcb is **+0.087 [+0.020, +0.153]**, with seed 2 at +0.10. That meets the "confirmed at 3 seeds" condition.
+- Held-out ip is +0.00 and held-out pkg is −0.10 [−0.24, +0.04]. Both are above the −0.16 bar.
+- Reported alongside, verdict unchanged: there is no gain on held-out pcb (−0.013). The P1 gain should be written up as "same-kind pcb" only. The held-out pkg point estimate is negative, and the decap count ratio on same-kind pcb went up slightly (1.08).
+
+**Other results**
+- 20-cell g+p finished on all 6 files, none skipped for memory. pkg20_1 scored 0.88 and ip20_0·1 scored 0.62 each. The scale-curve table now has every 20-cell g+p row.
+- The R sweep is done for all 16-cell boards (record only):
+  - pcb16 R2/4/8/16 = 0.92 / 0.90 / 0.86 / 0.84
+  - pkg16 = 0.58 / 0.64 / 0.58 / 0.50
+  - ip16 is 1.00 at every R
+
+  The written reading is applied once the 20-cell files finish.
+- I made the two new QUEUE figures (11/05) from existing eval records only. The instance was picked by the median rule fixed in advance, using the `_0` file of each.
+  - `reports/fig_rule_vs_mott_ip16.png`: #3, modal_rule 10 vs MoTT+P1 6 decaps.
+  - `reports/fig_rule_vs_mott_pcb20.png`: #4, modal_rule 6 vs MoTT+P1 4 decaps.
+
+**New runs I added**
+- **F1 (rule fixed before any of these runs): held-out ip and pkg at seeds 1·2 for r2pk.** These 4 runs are queued on the GPU after P3 and should finish around 11/05 15:45. They let the generalization table use the final structure with 3 seeds, judged by the 10/31 criteria unchanged. r2pk on held-out pcb already **passes** at 3 seeds.
+- I queued the distill-only eval for P3's `r2pkdd`. It is running in the side slot now.
+- **DAILY.md** for 11/05 is written, covering rounds 37~43.
+
+**Next**
+1. P3 finishes around 07:30, and its verdict follows the pre-written rule. If P3 wins, its extension runs go after F1 and can still start before 11/6 12:00.
+2. Read the 20-cell R sweep once it finishes.
+3. LS16 (6 files) for the LS column of figure 2.
+4. After 11/6 12:00, start no new modifications. Write up the attempted modifications and their effects in RESULTS ABLATIONS.
