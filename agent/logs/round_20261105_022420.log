@@ -15,3 +15,7 @@ Round 45 is wrapped up and both commits are pushed to `r2e main` (f74516c, 6d700
 **Next**
 - **GPU:** `r2pkdd_s1` RL, then `lo_pcb_r2pkdd_s1`, which completes the seed 1 pair (~07:45). After that come the four F1 runs (~15:45).
 - **New-attempt deadline:** If P3 wins, its four extension runs go after F1. They must start before the 11/6 12:00 UTC cutoff for new attempts. If P3 does not win, the final structure stays `r2pk`.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6d70061..efb420b  main -> main
