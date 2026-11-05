@@ -1,5 +1,5 @@
 STUCK (해제 시도 중, 11/05 08:10): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). 이것도 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 12:20 UTC, 재개 라운드 49)
+# PROGRESS (갱신 2026-11-05 14:00 UTC, 재개 라운드 49 끝)
 
 ## 재개 라운드 49 (2026-11-05 12:13~ UTC)
 - 상태 (12:20): GPU **F1 `lo_pkg_r2pk_s1`** 증류 끝 무렵 (11:36~, RL 끝 ~13:40, side_slot 평가 ~13:55) → lo_pkg_r2pk_s2 (~15:50) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, 4 h 째, worker rss 10.2 GB 평평, 기록 없음) + 학습 정확 검사 2 + side_slot (아래 filler). pod 23.5 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음, 서버 2 기록 아직 없음.

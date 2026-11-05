@@ -21,3 +21,7 @@ error: Please commit or stash them.
 
 **진행 중**
 - LS16 `eval_pcb16_0`(메모리를 나눠 쓰는 방식으로 다시 돌리는 중)은 3시간 50분째이고 메모리 9.4 GB로 일정합니다. 예전 방식은 같은 파일에서 2시간 안에 메모리 초과로 죽었습니다. 끝나면 PROGRESS 첫 줄의 STUCK을 정리합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8290e70..1036803  main -> main
