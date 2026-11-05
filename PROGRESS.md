@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). 이것도 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-05 08:15 UTC, 재개 라운드 46)
+# PROGRESS (갱신 2026-11-05 08:45 UTC, 재개 라운드 47)
+
+## 재개 라운드 47 (2026-11-05 08:31~ UTC)
+- 상태 (08:45): GPU **F1 `lo_ip_r2pk_s1`** RL (07:32~, 끝 ~09:35, side_slot 평가 ~09:50) → lo_ip_r2pk_s2 → lo_pkg_r2pk_s1 → lo_pkg_r2pk_s2 (~15:45) → B1 8 run. CPU: 드라이버 줄 `ls16c eval_pcb16_0` (08:10~, `--ls_chunk 8`, mem_guard; 22 분째 worker rss 8.9 GB, pod 13.3 GiB — chunk 전 같은 시점 11~16 GB보다 낮음) + 학습 정확 검사 2 + side_slot 대기. oom_kill 2 (그대로). `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE 새 지시 없음 (마지막 11/05 08:05 KST 그림 절은 라운드 43에 끝).
+- **그림 2·3 초안을 채택 구조 `r2pk`로 다시** (기존 평가 기록만, 새 평가 없음; 옛 초안 파일은 그대로 둠):
+  - `reports/fig2_bigboard_draft_r2pk.png` (`fig_results.py --fig 2 --sizes 16,20`, 방법 g+p·LS·E0+·modal_rule·0단·2단·r2pk, seed 0). 문제당 초 16칸 pcb / pkg / ip: g+p 62 / 131 / 82, **r2pk 7.6 / 3.3 / 1.4** (r2_mott 2.4 / 4.1 / 1.8); 20칸 g+p 1.3 / 565 / 72, r2pk 1.5 / 4.5 / 4.5. 성공률 16칸 r2pk 0.90 / 0.58 / 1.00 (g+p 0.92 / 0.82 / 0.56), 20칸 (16문제) 1.00 / 0.69 / 1.00 (g+p 1.00 / 0.75 / 0.62). LS 막대 칸은 16·20칸 기록이 없어 빔 (ls16c 진행 중, pcb16_1 등 "메모리로 생략"). 주의 (읽기용): 16칸 pcb r2pk 7.6 s는 r2_mott 2.4 s의 3배 — 원인 미확인 (peak_refine 입력 계산 또는 평가 때 pod 부하; 시간 비교를 보고서에 쓰기 전에 기록의 `sec_per_inst`·평가 시각 확인 필요).
+  - `reports/fig3_ladder_seeds_draft_r2pk.png` (`--fig 3 --seeds`, 10칸, 0~3단 + `r2pk_rl` seed 0·1·2): 성공률 seed 평균 pcb 0.96 / 0.93 / 0.83 / 0.91 / **0.92**, pkg 0.75 / 0.74 / 0.73 / 0.83 / **0.82**, ip 0.99 / 0.95 / 1.00 / 0.99 / **0.99**; 개수÷E0+ ip 1.41 / 1.24 / 1.01 / 1.01 / **1.01**. r2pk는 사다리 단이 아니라 2단 + 입력 하나 (P1) — 막대 이름을 `r2pk_rl`로 두고 보고서 캡션에 적을 것.
+  - `fig_results.py` 고침: x축 "rung k" 이름을 사다리 4개 이름에만 (예전 코드는 `r2pk_rl`도 "rung 2"로 표시했을 것).
 
 ## 재개 라운드 46 (2026-11-05 04:53~ UTC)
 - 상태 (08:15, 라운드 끝): GPU **F1 `lo_ip_r2pk_s1`** (07:32~, ~09:35) → lo_ip_r2pk_s2 → lo_pkg_r2pk_s1 → lo_pkg_r2pk_s2 (~15:45) → B1 8 run (~11/06 07:45). CPU: 드라이버 줄 **`ls16c eval_pcb16_0`** (08:10~, `--ls_chunk 8`, mem_guard; 시작 때 pod 27 GiB 한 번 (판 읽기) → 5 분째 12 GiB) + 학습 정확 검사 2 + side_slot (F1·B1 평가 대기). oom_kill 2.

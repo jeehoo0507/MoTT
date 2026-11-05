@@ -177,7 +177,8 @@ def fig3_seeds(recs, methods, size, out, ref="gp_type_aware", lines=(("gp_type_a
     for j, t in enumerate(techs):
         ax_s, ax_c = axes[0, j], axes[1, j]
         rf = recs.get((t, size, ref))
-        names = [f"rung {m[1]}" if m[0] == "r" and m[1].isdigit() else m for m in methods]
+        # only the four ladder rungs are "rung k"; other r2* runs (e.g. the adopted r2pk_rl) keep their name
+        names = [f"rung {m[1]}" if m in ("r0_coord_rl", "r1_modal_rl", "r2_mott_rl", "r3_loop_rl") else m for m in methods]
         ticks = {ax_s: list(names), ax_c: list(names)}
         for i, m in enumerate(methods):
             succ, rel = [], []
