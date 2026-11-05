@@ -1,0 +1,25 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 54 is done. One finished experiment went into RESULTS, PROGRESS.md is updated, and the commit `cd4f7c3` is pushed to `r2e main`. QUEUE.md and the remote had no new instructions.
+
+**Results this round**
+- **The LS16 run on `eval_ip16_0` finished.** It took 7.3 h and is the first 16-cell local-search run to finish since the switch to smaller batches (`--ls_chunk 8`). The pod peaked at 40.6 GiB (limit 45) and nothing was killed.
+  - Success rate was **0.64**, on 25 problems.
+  - Against `modal_rule`, the paired difference is −0.36 [−0.56, −0.16]. On problems both solved, it used 1.09× as many decaps.
+  - Local search only shrinks problems that greedy+prune already solved, so it can't do better than greedy+prune's ip16 result (0.56). Its 9 failures are the leftover greedy+prune failures (about 197 decaps each). This is recorded only; there is no verdict.
+- RESULTS.md was regenerated automatically.
+
+**Running now**
+- **GPU:** The seed-2 Park baseline (`bp_park_s2`) is in its distillation stage and finishes about 21:45 UTC. After its evaluation, the other 5 prior-work reimplementation (B1) runs follow, ending around 11/06 07:45.
+- **CPU:**
+  - The LS16 run on `eval_pcb16_0` started at 20:01. It is running alongside a 16-cell scale evaluation, `r2pk_s2_rl eval_pkg16_1`. The memory-gate script (`side_slot.py`) only checks for a running LS job, so the scale evaluation started in the 4-minute gap between two LS jobs.
+  - Two LS16 runs were killed earlier (round 50) because a 16-cell evaluation was running next to them. This time the evaluation started 4 minutes before the LS job, so its startup memory spike had passed before the LS job started.
+  - **Decision:** I left both running. The pod is at 32 GiB, 13 GiB below the limit. If this LS run is killed, I'll close the gap in that gate script and queue the file again. The reasoning is in PROGRESS.md under "결정:".
+
+**Next round**
+- Record the `bp_park_s2` evaluation, then queue up the next Manoharan seed-2 run.
+- Check whether the pcb16_0 LS run finished or was killed.
+- Write a new DAILY.md after 11/06 00:00 UTC.
+- The deadline for starting new attempts is 11/06 12:00 UTC, and there is no new candidate yet. Once B1 finishes, the default is to leave the GPU idle.
+
+I also added the gate-gap finding to my memory file on 16-cell LS memory problems.

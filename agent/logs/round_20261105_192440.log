@@ -24,3 +24,7 @@ error: Please commit or stash them.
 - 새 수정 시도는 11/6 12:00 UTC까지만 시작할 수 있는데, 지금 근거 있는 후보가 없습니다. 그래서 B1이 끝난 뒤 GPU는 새 학습 없이 두는 것이 기본입니다.
 
 PROGRESS.md와 RESULTS.md, 평가 기록 JSON을 커밋해 `r2e main`에 push했습니다. 메모리의 RL 붕괴 항목에는 "λ 20으로도 seed에 따라 붕괴한다"를 덧붙였습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7d1d381..e472649  main -> main
