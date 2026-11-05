@@ -40,7 +40,7 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start, ls_chunk = args
     import resource
     import numpy as np
     import torch
@@ -88,8 +88,12 @@ def job(args):
         passes, trials = ls_cfg
 
         def fn(bb):
-            g = greedy(bb, cfg)
-            occ = local_search(bb, cfg, g["occ"], g["feasible"], passes=passes, trials=trials)
+            # ls_chunk > 0 (memory only, 11/05 LS16): the starting greedy+prune ls_chunk instances at a time and the
+            # destroy-and-repair copies ls_chunk at a time; every instance / copy is its own env either way
+            step = ls_chunk if ls_chunk > 0 else bb.B
+            gs = [greedy(bb, cfg, inst=torch.arange(i, min(i + step, bb.B))) for i in range(0, bb.B, step)]
+            g = {k: torch.cat([x[k] for x in gs]) for k in ("occ", "feasible")}
+            occ = local_search(bb, cfg, g["occ"], g["feasible"], passes=passes, trials=trials, sub_chunk=ls_chunk)
             inst = torch.arange(bb.B)
             return dict(occ=occ, feasible=torch.from_numpy(grid_worst(bb, inst, occ, cfg) <= FEAS_TOL))
     else:                                         # trained policy: method = "<name>" or "<name>@S"
@@ -183,6 +187,7 @@ def job(args):
                worst=[float(x) for x in info["worst"]], sec_per_inst=box.get("last", float("nan")) / b.B,
                sec_total=time.time() - t0, rounds=int(info["rounds"]), F_final=int(b.freqs.shape[1]),
                ckpt=spec, samples=samples if spec else None, inst_chunk=inst_chunk if spec else None,
+               **({"ls_chunk": ls_chunk} if method == "local_search" and ls_chunk else {}),
                peak_rss_mb=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
                git=git_hash(), time=time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
                occ=r["occ"].cpu().numpy().tolist(), **extra)
@@ -208,6 +213,8 @@ def main():
                     "continues from its placement on the grid + its exact-check failures); records '<method>+repK'")
     ap.add_argument("--start", default="", choices=["", "rule"], help="policy: start from modal_rule's solution and "
                     "let the policy continue (remove / change type / stop); records 'modal_rule><name>'")
+    ap.add_argument("--ls_chunk", type=int, default=0, help="local_search: starting greedy instances and "
+                    "destroy-and-repair copies per batch (memory only; 0 = all at once)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     files = sorted({f for s in a.sets.split(",") for f in glob.glob(os.path.join(a.pool, s + ".pkl"))})
@@ -219,8 +226,8 @@ def main():
         methods.append((n if a.samples <= 1 else f"{n}@{a.samples}", path))
     ls_cfg = tuple(map(int, a.ls.split("x")))
     ga_cfg = tuple(map(int, a.ga.split("x")))
-    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair, a.start)
-            for f in files for m, spec in methods]
+    jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair, a.start,
+             a.ls_chunk) for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()
     # one fresh process per job: a side-16 job's peak stayed resident in the worker into the next job

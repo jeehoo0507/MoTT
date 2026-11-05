@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 06:14 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-05 08:06 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -50,6 +50,7 @@
 | lo_pcb_r2pk_s1_rl | – | 1.00 / 0.74 / 1.00 [50] | – | – | 0.88 / 0.87 / 0.22 [50] | – | – | 0.82 / 0.84 / 0.60 [50] | – | – |
 | lo_pcb_r2pk_s2_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.90 / 0.86 / 0.21 [50] | – | – | 0.76 / 0.87 / 0.61 [50] | – | – |
 | lo_pcb_r2pkdd_rl | – | 1.00 / 0.74 / 1.03 [50] | – | – | 0.84 / 0.90 / 0.21 [50] | – | – | 0.82 / 0.86 / 0.59 [50] | – | – |
+| lo_pcb_r2pkdd_s1_rl | – | 0.98 / 0.74 / 1.01 [50] | – | – | 0.86 / 0.89 / 0.23 [50] | – | – | 0.84 / 0.85 / 0.60 [50] | – | – |
 | lo_pcb_r2s1_rl | – | 1.00 / 0.75 / 1.05 [50] | – | – | 0.86 / 0.86 / 0.23 [50] | – | – | 0.58 / 0.85 / 0.60 [50] | – | – |
 | lo_pcb_r2s2_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.84 / 0.98 / 0.23 [50] | – | – | 0.82 / 0.87 / 0.62 [50] | – | – |
 | lo_pcb_r2t_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.90 / 0.87 / 0.23 [50] | – | – | 0.66 / 0.87 / 0.58 [50] | – | – |
@@ -209,6 +210,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pcb_r2pk_s1_rl | 50 | +0.00 [+0.00, +0.00] | 1.004 [0.983, 1.033] |
 | ip 10 | lo_pcb_r2pk_s2_rl | 50 | +0.00 [+0.00, +0.00] | 1.011 [0.993, 1.037] |
 | ip 10 | lo_pcb_r2pkdd_rl | 50 | +0.00 [+0.00, +0.00] | 1.029 [1.007, 1.055] |
+| ip 10 | lo_pcb_r2pkdd_s1_rl | 50 | -0.02 [-0.06, +0.00] | 1.012 [1.000, 1.027] |
 | ip 10 | lo_pcb_r2s1_rl | 50 | +0.00 [+0.00, +0.00] | 1.054 [1.016, 1.102] |
 | ip 10 | lo_pcb_r2s2_rl | 50 | +0.00 [+0.00, +0.00] | 1.006 [0.996, 1.019] |
 | ip 10 | lo_pcb_r2t_rl | 50 | +0.00 [+0.00, +0.00] | 1.005 [0.989, 1.029] |
@@ -344,6 +346,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pcb_r2pk_s1_rl | 50 | +0.22 [+0.06, +0.38] | 0.215 [0.166, 0.275] |
 | pcb 10 | lo_pcb_r2pk_s2_rl | 50 | +0.24 [+0.08, +0.40] | 0.206 [0.163, 0.254] |
 | pcb 10 | lo_pcb_r2pkdd_rl | 50 | +0.18 [+0.02, +0.34] | 0.213 [0.171, 0.261] |
+| pcb 10 | lo_pcb_r2pkdd_s1_rl | 50 | +0.20 [+0.04, +0.38] | 0.225 [0.178, 0.280] |
 | pcb 10 | lo_pcb_r2s1_rl | 50 | +0.20 [+0.02, +0.36] | 0.233 [0.181, 0.292] |
 | pcb 10 | lo_pcb_r2s2_rl | 50 | +0.18 [+0.00, +0.36] | 0.232 [0.183, 0.293] |
 | pcb 10 | lo_pcb_r2t_rl | 50 | +0.24 [+0.08, +0.38] | 0.231 [0.182, 0.287] |
@@ -483,6 +486,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pcb_r2pk_s1_rl | 50 | +0.00 [-0.14, +0.16] | 0.602 [0.537, 0.668] |
 | pkg 10 | lo_pcb_r2pk_s2_rl | 50 | -0.06 [-0.20, +0.08] | 0.606 [0.535, 0.685] |
 | pkg 10 | lo_pcb_r2pkdd_rl | 50 | +0.00 [-0.16, +0.16] | 0.585 [0.520, 0.653] |
+| pkg 10 | lo_pcb_r2pkdd_s1_rl | 50 | +0.02 [-0.10, +0.14] | 0.601 [0.531, 0.675] |
 | pkg 10 | lo_pcb_r2s1_rl | 50 | -0.24 [-0.40, -0.06] | 0.600 [0.506, 0.702] |
 | pkg 10 | lo_pcb_r2s2_rl | 50 | +0.00 [-0.14, +0.14] | 0.620 [0.553, 0.692] |
 | pkg 10 | lo_pcb_r2t_rl | 50 | -0.16 [-0.32, +0.00] | 0.584 [0.512, 0.663] |
@@ -654,6 +658,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pcb_r2pk_s1_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | lo_pcb_r2pk_s2_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | lo_pcb_r2pkdd_rl | 50 | +0.60 [+0.46, +0.72] | 0.742 [0.586, 0.891] |
+| ip 10 | lo_pcb_r2pkdd_s1_rl | 50 | +0.58 [+0.44, +0.70] | 0.741 [0.585, 0.891] |
 | ip 10 | lo_pcb_r2s1_rl | 50 | +0.60 [+0.46, +0.72] | 0.751 [0.600, 0.896] |
 | ip 10 | lo_pcb_r2s2_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | lo_pcb_r2t_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
@@ -800,6 +805,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pcb_r2pk_s1_rl | 50 | -0.02 [-0.14, +0.10] | 0.874 [0.760, 0.984] |
 | pcb 10 | lo_pcb_r2pk_s2_rl | 50 | +0.00 [-0.10, +0.10] | 0.859 [0.772, 0.941] |
 | pcb 10 | lo_pcb_r2pkdd_rl | 50 | -0.06 [-0.18, +0.06] | 0.902 [0.787, 1.011] |
+| pcb 10 | lo_pcb_r2pkdd_s1_rl | 50 | -0.04 [-0.14, +0.08] | 0.889 [0.772, 1.010] |
 | pcb 10 | lo_pcb_r2s1_rl | 50 | -0.04 [-0.16, +0.08] | 0.865 [0.772, 0.955] |
 | pcb 10 | lo_pcb_r2s2_rl | 50 | -0.06 [-0.18, +0.06] | 0.984 [0.873, 1.093] |
 | pcb 10 | lo_pcb_r2t_rl | 50 | +0.00 [-0.10, +0.10] | 0.870 [0.772, 0.960] |
@@ -950,6 +956,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pcb_r2pk_s1_rl | 50 | -0.08 [-0.22, +0.06] | 0.844 [0.784, 0.914] |
 | pkg 10 | lo_pcb_r2pk_s2_rl | 50 | -0.14 [-0.26, -0.02] | 0.874 [0.814, 0.930] |
 | pkg 10 | lo_pcb_r2pkdd_rl | 50 | -0.08 [-0.22, +0.06] | 0.860 [0.800, 0.917] |
+| pkg 10 | lo_pcb_r2pkdd_s1_rl | 50 | -0.06 [-0.18, +0.06] | 0.848 [0.790, 0.907] |
 | pkg 10 | lo_pcb_r2s1_rl | 50 | -0.32 [-0.48, -0.16] | 0.848 [0.775, 0.921] |
 | pkg 10 | lo_pcb_r2s2_rl | 50 | -0.08 [-0.20, +0.04] | 0.873 [0.809, 0.934] |
 | pkg 10 | lo_pcb_r2t_rl | 50 | -0.24 [-0.38, -0.10] | 0.866 [0.803, 0.934] |
@@ -1623,6 +1630,14 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pcb_r2pkdd_rl | 50 | -0.04 [-0.16, +0.08] | 0.969 [0.890, 1.056] |
 | pkg 10 | lo_pcb_r2pkdd_rl | 50 | +0.02 [-0.12, +0.18] | 1.000 [0.951, 1.050] |
 
+## pcb 빼고 학습 2단 P1 + 고유 주파수 (seed 1, P3): `lo_pcb_r2pkdd_s1_rl` vs P1 `lo_pcb_r2pk_s1_rl` 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
+
+| 판 | 방법 | 문제 수 | 성공률 차 (방법 − 기준) [95% CI] | 개수 비 방법/기준 (둘 다 성공) [95% CI] |
+|---|---|---|---|---|
+| ip 10 | lo_pcb_r2pkdd_s1_rl | 50 | -0.02 [-0.06, +0.00] | 1.012 [0.989, 1.034] |
+| pcb 10 | lo_pcb_r2pkdd_s1_rl | 50 | -0.02 [-0.12, +0.06] | 1.112 [0.969, 1.286] |
+| pkg 10 | lo_pcb_r2pkdd_s1_rl | 50 | +0.02 [-0.08, +0.12] | 1.017 [0.962, 1.074] |
+
 ## 증류만: 2단 P1 + 고유 주파수 (seed 0, P3): `r2pkdd_distill` vs P1 `r2pk_distill` 대비 짝지은 bootstrap 95% CI (같은 문제를 함께 다시 뽑음, 2000회, seed 0)
 
 | 판 | 방법 | 문제 수 | 성공률 차 (방법 − 기준) [95% CI] | 개수 비 방법/기준 (둘 다 성공) [95% CI] |
@@ -1728,6 +1743,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pcb_r2pk_s1_rl | 50 (0, 1) | 1.00 | 8.38 | 0.736 | 1.004 | 0.305 | `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_ip10_0__lo_pcb_r2pk_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_ip10_1__lo_pcb_r2pk_s1_rl.json` |
 | lo_pcb_r2pk_s2_rl | 50 (0, 1) | 1.00 | 8.48 | 0.736 | 1.011 | 0.317 | `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_ip10_0__lo_pcb_r2pk_s2_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_ip10_1__lo_pcb_r2pk_s2_rl.json` |
 | lo_pcb_r2pkdd_rl | 50 (0, 1) | 1.00 | 8.62 | 0.742 | 1.029 | 0.318 | `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_ip10_0__lo_pcb_r2pkdd_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_ip10_1__lo_pcb_r2pkdd_rl.json` |
+| lo_pcb_r2pkdd_s1_rl | 50 (0, 1) | 0.98 | 8.29 | 0.741 | 1.012 | 0.287 | `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_ip10_0__lo_pcb_r2pkdd_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_ip10_1__lo_pcb_r2pkdd_s1_rl.json` |
 | lo_pcb_r2s1_rl | 50 (0, 1) | 1.00 | 8.68 | 0.751 | 1.054 | 0.326 | `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_ip10_0__lo_pcb_r2s1_rl.json`, `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_ip10_1__lo_pcb_r2s1_rl.json` |
 | lo_pcb_r2s2_rl | 50 (0, 1) | 1.00 | 8.38 | 0.736 | 1.006 | 0.307 | `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_ip10_0__lo_pcb_r2s2_rl.json`, `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_ip10_1__lo_pcb_r2s2_rl.json` |
 | lo_pcb_r2t_rl | 50 (0, 1) | 1.00 | 8.40 | 0.736 | 1.005 | 0.314 | `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_ip10_0__lo_pcb_r2t_rl.json`, `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_ip10_1__lo_pcb_r2t_rl.json` |
@@ -1892,6 +1908,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pcb_r2pk_s1_rl | 50 (0, 1) | 0.88 | 7.70 | 0.874 | 0.215 | 0.684 | `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_pcb10_0__lo_pcb_r2pk_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_pcb10_1__lo_pcb_r2pk_s1_rl.json` |
 | lo_pcb_r2pk_s2_rl | 50 (0, 1) | 0.90 | 7.20 | 0.859 | 0.206 | 0.547 | `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_pcb10_0__lo_pcb_r2pk_s2_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_pcb10_1__lo_pcb_r2pk_s2_rl.json` |
 | lo_pcb_r2pkdd_rl | 50 (0, 1) | 0.84 | 7.43 | 0.902 | 0.213 | 0.925 | `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_pcb10_0__lo_pcb_r2pkdd_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_pcb10_1__lo_pcb_r2pkdd_rl.json` |
+| lo_pcb_r2pkdd_s1_rl | 50 (0, 1) | 0.86 | 7.95 | 0.889 | 0.225 | 1.053 | `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_pcb10_0__lo_pcb_r2pkdd_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_pcb10_1__lo_pcb_r2pkdd_s1_rl.json` |
 | lo_pcb_r2s1_rl | 50 (0, 1) | 0.86 | 7.49 | 0.865 | 0.233 | 0.748 | `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_pcb10_0__lo_pcb_r2s1_rl.json`, `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_pcb10_1__lo_pcb_r2s1_rl.json` |
 | lo_pcb_r2s2_rl | 50 (0, 1) | 0.84 | 8.26 | 0.984 | 0.232 | 1.090 | `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_pcb10_0__lo_pcb_r2s2_rl.json`, `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_pcb10_1__lo_pcb_r2s2_rl.json` |
 | lo_pcb_r2t_rl | 50 (0, 1) | 0.90 | 8.07 | 0.870 | 0.231 | 1.004 | `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_pcb10_0__lo_pcb_r2t_rl.json`, `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_pcb10_1__lo_pcb_r2t_rl.json` |
@@ -2060,6 +2077,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pcb_r2pk_s1_rl | 50 (0, 1) | 0.82 | 6.37 | 0.844 | 0.602 | 1.084 | `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_pkg10_0__lo_pcb_r2pk_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s1_rl/eval/eval_pkg10_1__lo_pcb_r2pk_s1_rl.json` |
 | lo_pcb_r2pk_s2_rl | 50 (0, 1) | 0.76 | 6.42 | 0.874 | 0.606 | 0.786 | `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_pkg10_0__lo_pcb_r2pk_s2_rl.json`, `runs/2026-10-29/lo_pcb_r2pk_s2_rl/eval/eval_pkg10_1__lo_pcb_r2pk_s2_rl.json` |
 | lo_pcb_r2pkdd_rl | 50 (0, 1) | 0.82 | 6.39 | 0.860 | 0.585 | 0.664 | `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_pkg10_0__lo_pcb_r2pkdd_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_rl/eval/eval_pkg10_1__lo_pcb_r2pkdd_rl.json` |
+| lo_pcb_r2pkdd_s1_rl | 50 (0, 1) | 0.84 | 6.43 | 0.848 | 0.601 | 0.875 | `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_pkg10_0__lo_pcb_r2pkdd_s1_rl.json`, `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/eval/eval_pkg10_1__lo_pcb_r2pkdd_s1_rl.json` |
 | lo_pcb_r2s1_rl | 50 (0, 1) | 0.58 | 6.21 | 0.848 | 0.600 | 0.790 | `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_pkg10_0__lo_pcb_r2s1_rl.json`, `runs/2026-10-29/lo_pcb_r2s1_rl/eval/eval_pkg10_1__lo_pcb_r2s1_rl.json` |
 | lo_pcb_r2s2_rl | 50 (0, 1) | 0.82 | 6.46 | 0.873 | 0.620 | 0.995 | `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_pkg10_0__lo_pcb_r2s2_rl.json`, `runs/2026-10-29/lo_pcb_r2s2_rl/eval/eval_pkg10_1__lo_pcb_r2s2_rl.json` |
 | lo_pcb_r2t_rl | 50 (0, 1) | 0.66 | 6.18 | 0.866 | 0.584 | 0.664 | `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_pkg10_0__lo_pcb_r2t_rl.json`, `runs/2026-10-29/lo_pcb_r2t_rl/eval/eval_pkg10_1__lo_pcb_r2t_rl.json` |
@@ -2274,6 +2292,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pcb_r2pk_s1_rl | 성공 | 50 | 8.4 | 0.98 | 0.02 | 0.00 |
 | ip 10 | lo_pcb_r2pk_s2_rl | 성공 | 50 | 8.5 | 0.99 | 0.01 | 0.00 |
 | ip 10 | lo_pcb_r2pkdd_rl | 성공 | 50 | 8.6 | 1.00 | 0.00 | 0.00 |
+| ip 10 | lo_pcb_r2pkdd_s1_rl | 성공 | 49 | 8.3 | 0.99 | 0.01 | 0.00 |
+| ip 10 | lo_pcb_r2pkdd_s1_rl | 실패 | 1 | 14.0 | 1.00 | 0.00 | 0.00 |
 | ip 10 | lo_pcb_r2s1_rl | 성공 | 50 | 8.7 | 1.00 | 0.00 | 0.00 |
 | ip 10 | lo_pcb_r2s2_rl | 성공 | 50 | 8.4 | 1.00 | 0.00 | 0.00 |
 | ip 10 | lo_pcb_r2t_rl | 성공 | 50 | 8.4 | 0.99 | 0.01 | 0.00 |
@@ -2500,6 +2520,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pcb_r2pk_s2_rl | 실패 | 5 | 10.0 | 0.16 | 0.10 | 0.74 |
 | pcb 10 | lo_pcb_r2pkdd_rl | 성공 | 42 | 7.4 | 0.06 | 0.21 | 0.72 |
 | pcb 10 | lo_pcb_r2pkdd_rl | 실패 | 8 | 18.2 | 0.05 | 0.10 | 0.85 |
+| pcb 10 | lo_pcb_r2pkdd_s1_rl | 성공 | 43 | 8.0 | 0.09 | 0.22 | 0.69 |
+| pcb 10 | lo_pcb_r2pkdd_s1_rl | 실패 | 7 | 19.6 | 0.04 | 0.12 | 0.83 |
 | pcb 10 | lo_pcb_r2s1_rl | 성공 | 43 | 7.5 | 0.09 | 0.19 | 0.72 |
 | pcb 10 | lo_pcb_r2s1_rl | 실패 | 7 | 9.4 | 0.14 | 0.17 | 0.70 |
 | pcb 10 | lo_pcb_r2s2_rl | 성공 | 42 | 8.3 | 0.15 | 0.21 | 0.64 |
@@ -2789,6 +2811,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pcb_r2pk_s2_rl | 실패 | 12 | 12.6 | 0.60 | 0.05 | 0.35 |
 | pkg 10 | lo_pcb_r2pkdd_rl | 성공 | 41 | 6.4 | 0.18 | 0.17 | 0.65 |
 | pkg 10 | lo_pcb_r2pkdd_rl | 실패 | 9 | 14.3 | 0.67 | 0.05 | 0.27 |
+| pkg 10 | lo_pcb_r2pkdd_s1_rl | 성공 | 42 | 6.4 | 0.17 | 0.16 | 0.67 |
+| pkg 10 | lo_pcb_r2pkdd_s1_rl | 실패 | 8 | 21.1 | 0.72 | 0.12 | 0.16 |
 | pkg 10 | lo_pcb_r2s1_rl | 성공 | 29 | 6.2 | 0.13 | 0.10 | 0.77 |
 | pkg 10 | lo_pcb_r2s1_rl | 실패 | 21 | 11.0 | 0.39 | 0.09 | 0.52 |
 | pkg 10 | lo_pcb_r2s2_rl | 성공 | 41 | 6.5 | 0.22 | 0.13 | 0.65 |
@@ -3813,9 +3837,9 @@ P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격
 | 같은 종류 pcb | +0.06 | +0.04 | +0.050 [-0.010, +0.110] | 100 |
 | 같은 종류 pkg | +0.04 | -0.02 | +0.010 [-0.080, +0.110] | 100 |
 | 같은 종류 ip | +0.00 | +0.00 | +0.000 [+0.000, +0.000] | 100 |
-| 뺀 pcb | -0.04 | – | – | 50 |
+| 뺀 pcb | -0.04 | -0.02 | -0.030 [-0.100, +0.050] | 100 |
 
-판정: seed 0·1 네 run이 다 끝나야 판정. 증류만 pkg: seed -0.16 / -0.12, 묶음 -0.140 [-0.240, -0.030] → D1은 이것으로 설명 안 됨
+판정: 효과 없음. 증류만 pkg: seed -0.16 / -0.12, 묶음 -0.140 [-0.240, -0.030] → D1은 이것으로 설명 안 됨
 
 ## 시도한 수정과 효과 (한눈에; QUEUE 11/03 11:40 KST, 한 번에 하나씩, 판정은 결과 전에 적은 규칙 그대로)
 
@@ -3837,7 +3861,7 @@ P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격
 | D2 | 증류 갱신 횟수를 0단과 맞춤 (진단) | `r2it_rl` vs `r2_mott_rl` | +0.04 [+0.00, +0.10] | +0.00 [+0.00, +0.00] | +0.00 [+0.00, +0.00] | – | 갱신 횟수로는 설명 안 됨 → 버림 | PROPOSALS D2 |
 | P1 | 모드 토큰 피크 보정 입력 `--peak_refine` | `r2pk_rl` vs `r2_mott_rl` | +0.02 [-0.08, +0.12] | +0.06 [-0.08, +0.22] | -0.02 [-0.06, +0.00] | -0.04 [-0.16, +0.08] | **이김 (seed 3개 확인)** (같은 종류 pcb); 뺀 ip·pkg 모두 −0.16 위 → 최종 구조 후보 (확장, seed 0·1·2) | PROPOSALS P1 (확장) |
 | P2 | 중복 없는 모드 토큰 `--dedup_modes` | `r2dd_rl` vs `r2_mott_rl` | +0.04 [-0.08, +0.14] | +0.14 [+0.00, +0.28] | +0.00 [+0.00, +0.00] | -0.08 [-0.20, +0.02] | 효과 없음 (seed 0·1 묶음) | PROPOSALS P2 |
-| P3 | P1 + 고유 이웃 보정 (기준 P1 run) | `r2pkdd_rl` vs `r2pk_rl` | +0.06 [-0.02, +0.14] | +0.04 [-0.10, +0.18] | +0.00 [+0.00, +0.00] | -0.04 [-0.16, +0.08] | seed 0·1 네 run이 다 끝나야 판정 (seed 0·1 묶음) | PROPOSALS P3 |
+| P3 | P1 + 고유 이웃 보정 (기준 P1 run) | `r2pkdd_rl` vs `r2pk_rl` | +0.06 [-0.02, +0.14] | +0.04 [-0.10, +0.18] | +0.00 [+0.00, +0.00] | -0.04 [-0.16, +0.08] | 효과 없음 (seed 0·1 묶음) | PROPOSALS P3 |
 | T2 | 끝에서 고치기 `--repair 4` (모든 방법에 같게) | (평가 단계) | – | – | – | – | R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; R2 같은 고치기에서 규칙과 차이 없음, g+p 대비 ip만 정책이 낫다 | "끝에서 고치기" 절 |
 | T4 | 규칙 해에서 출발해 정책이 다듬기 `--start rule` | (평가 단계) | – | – | – | – | S1 효과 없음 (세 판); S2 0단 pkg 해로움 | "규칙 해에서 출발" 절 |
 | S | 추론 샘플링 best-of-8 | (평가 단계) | – | – | – | – | 규칙이 이김 (pcb) → 넓히지 않음 | "추론 샘플링" 절 |
@@ -4015,6 +4039,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2pk_s1_rl | 161 / 355 | 0.8 | 1.00 | – | 0.88 | 8.7 | 0.82 |
 | lo_pcb_r2pk_s2_rl | 159 / 357 | 0.3 | 1.00 | – | 0.90 | 9.5 | 0.76 |
 | lo_pcb_r2pkdd_rl | 151 / 366 | 0.8 | 1.00 | – | 0.84 | 8.8 | 0.82 |
+| lo_pcb_r2pkdd_s1_rl | 159 / 353 | 0.2 | 0.98 | – | 0.86 | 8.7 | 0.84 |
 | lo_pcb_r2s1_rl | 171 / 358 | 0.6 | 1.00 | – | 0.86 | 10.3 | 0.58 |
 | lo_pcb_r2s2_rl | 142 / 369 | 0.2 | 1.00 | – | 0.84 | 9.2 | 0.82 |
 | lo_pcb_r2t_rl | 163 / 367 | 0.2 | 1.00 | – | 0.90 | 8.9 | 0.66 |
@@ -4140,6 +4165,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pcb_r2pkdd_distill | mott_pkdd / mott | distill | 1683 | 0.76 | val_pkg10_0: 0.98/0.56, val_ip10_0: 0.73/0.31 | `runs/2026-10-29/lo_pcb_r2pkdd_distill/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2pkdd_rl | mott_pkdd / mott | rl | 366 | 1.27 | val_pkg10_0: 0.96/0.56, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pcb_r2pkdd_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2pkdd_s1_distill | mott_pkdd / mott | distill | 1656 | 0.76 | val_pkg10_0: 1.05/0.56, val_ip10_0: 0.80/0.19 | `runs/2026-10-29/lo_pcb_r2pkdd_s1_distill/metrics.json` |
+| runs/2026-10-29/lo_pcb_r2pkdd_s1_rl | mott_pkdd / mott | rl | 353 | 1.27 | val_pkg10_0: 1.00/0.75, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pcb_r2pkdd_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2s1_rl | mott / mott | rl | 358 | 1.27 | val_pkg10_0: 0.93/0.69, val_ip10_0: 0.65/0.19 | `runs/2026-10-29/lo_pcb_r2s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2s2_rl | mott / mott | rl | 369 | 1.26 | val_pkg10_0: 1.00/0.75, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2s2_rl/metrics.json` |
 | runs/2026-10-29/lo_pcb_r2t_rl | mott / mott | rl | 367 | 1.26 | val_pkg10_0: 0.99/0.44, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pcb_r2t_rl/metrics.json` |

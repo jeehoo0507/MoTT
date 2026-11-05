@@ -2268,48 +2268,48 @@
    "log": "runs/2026-10-28/r3_loop_rl/eval.log"
   },
   {
-   "name": "ls16 eval_pcb16_0",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_pcb16_0",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
   },
   {
-   "name": "ls16 eval_pcb16_1",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_pcb16_1",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_1 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_pcb16_1__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
   },
   {
-   "name": "ls16 eval_ip16_0",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_ip16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_ip16_0",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_ip16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_0 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_ip16_0__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
   },
   {
-   "name": "ls16 eval_ip16_1",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_ip16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_ip16_1",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_ip16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip16_1 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_ip16_1__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
   },
   {
-   "name": "ls16 eval_pkg16_0",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pkg16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_pkg16_0",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pkg16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_pkg16_0__local_search.json"
    ],
    "log": "agent/logs/base16_ls.log"
   },
   {
-   "name": "ls16 eval_pkg16_1",
-   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pkg16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_1 --methods ls --workers 1 --out runs/2026-10-28/baselines",
+   "name": "ls16c eval_pkg16_1",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pkg16_1__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_1 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
     "runs/2026-10-28/baselines/eval/eval_pkg16_1__local_search.json"
    ],
