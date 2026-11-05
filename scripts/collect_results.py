@@ -1213,6 +1213,7 @@ def rl_noise_table(recs):
 # (tag, run infix, label, same-kind reference run, held-out reference infix): runs r2{x}*, lo_{t}_r2{x}* vs ref*, lo_{t}_{lref}*
 POOLED_MODS = [("P1", "pk", "`--peak_refine`", "r2_mott", "r2"), ("P2", "dd", "`--dedup_modes`", "r2_mott", "r2"),
                ("P3", "pkdd", "`--peak_refine --dedup_modes` (기준 P1 run)", "r2pk", "r2pk")]
+POOLED_VERDICT = {}   # tag -> verdict line computed by pooled_mod_table (read by tried_mods_table, called after it)
 
 
 def pooled_mod_table(recs):
@@ -1271,6 +1272,7 @@ def pooled_mod_table(recs):
                   + ("**성립** (D1 차이를 일부 설명)" if ci[0] > 0 and min(ps) > 0 else "D1은 이것으로 설명 안 됨"))
         else:
             dv = "증류만 pkg: seed 0·1 평가가 다 있어야 판정"
+        POOLED_VERDICT[tag] = f"{verdict} (seed 0·1 묶음)"
         L += [f"## {tag} {label} seed 0·1 묶음 판정 (PROPOSALS {tag} 규칙, 학습 전에 적음; 판마다 seed 안에서 문제를 다시 뽑는 "
               "bootstrap 2000회)", "",
               "| 판 | seed 0 차 | seed 1 차 | 묶음 차 [95% CI] | 짝 수 |", "|---|---|---|---|---|"] + rows + [
@@ -1307,6 +1309,7 @@ def pooled_mod_table(recs):
                   ("**이김 (seed 3개 확인)** (" + ", ".join(ok3) + ")" if ok3 else "seed 2에서 확인 안 됨")
                   + ("; 뺀 ip·pkg 모두 −0.16 위 → 최종 구조 후보" if ok3 and lo_ok else
                      "; 뺀 ip·pkg 손해 가능 → 범용화 주장은 r2_mott" if ok3 else ""))
+        POOLED_VERDICT[tag] = f"{v3} (확장, seed 0·1·2)"
         L += [f"### {tag} 확장: seed 0·1·2 묶음 + 뺀 ip·pkg (PROPOSALS {tag} 확장 계획, 결과 전에 적음)", "",
               "| 판 | seed 2 차 | seed 0·1·2 묶음 차 [95% CI] | 짝 수 |", "|---|---|---|---|"] + rows3 + [
               "", "| 뺀 종류 (seed 0) | 차 [95% CI] | 짝 수 | d* 기준 |", "|---|---|---|---|"] + rows_lo + [
@@ -1376,6 +1379,80 @@ def scale_curve_table(recs):
         L += ["#### 20칸 모드 토큰 효과 (기록만, 판정 없음): `r2_mott_rl` − `r1_modal_rl` (seed 0, 짝지은 bootstrap)", "",
               "| 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 r2/r1 (둘 다 성공) [95% CI] |", "|---|---|---|---|"] + rows + [""]
     return L
+
+
+# QUEUE 11/03 11:40 KST ("시도한 수정과 효과"를 ABLATIONS에 정직하게): one row per attempted modification of the
+# ladder model / its training. (tag, one change, run, reference, held-out-pcb run, its reference, verdict, where).
+# Numbers are computed here from the eval records (seed 0 pairs); the verdict words are the ones recorded when each
+# pre-registered rule was applied (PROGRESS / PROPOSALS, cited) — P1~P3 come live from pooled_mod_table.
+TRIED_MODS = [
+    ("a", "모드↔decap 주파수 궁합 편향 `--fc_bias` (3단)", "r3a_rl", "r3_loop_rl", None, None,
+     "유의한 차이 없음 (모든 CI 0 포함)", "PROGRESS 10/29"),
+    ("a", "같은 편향 (2단)", "r2a_rl", "r2_mott_rl", "lo_pcb_r2a_rl", "lo_pcb_r2_rl",
+     "같은 종류 pcb·pkg CI 0 밖 (seed 0) → 잠정 후보; 뺀 pcb·ip 효과 없음 (라운드 5 규칙), 뺀 pkg 표만 → 최종 후보는 P1로 바뀜",
+     "PROGRESS 10/29, 11/02 라운드 5·13"),
+    ("c'", "모드 경유 add 점수 `--mode_head` (r2a 위)", "r2am_rl", "r2a_rl", None, None, "효과 없음", "PROGRESS 10/29"),
+    ("3단", "루프 (블록 1개 가중치 공유 R회)", "r3_loop_rl", "r2_mott_rl", "lo_pcb_r3_rl", "lo_pcb_r2_rl",
+     "\"루프가 낫다\"고 쓰지 않음 (QUEUE 10/31 11:40 규칙, seed 3개)", "PROGRESS 11/02"),
+    ("H2", "보상 정확 검사를 모든 샘플에 `--certify 2` (RL만)", "r2c_rl", "r2_mott_rl", "lo_pcb_r2c_rl", "lo_pcb_r2_rl",
+     "같은 종류 효과 없음; 뺀 pcb **해로움**", "PROGRESS 11/02 라운드 2·5"),
+    ("H1", "best.pt 선택 val 종류당 48문제 (RL만)", "r2v_rl", "r2_mott_rl", "lo_pcb_r2v_rl", "lo_pcb_r2_rl",
+     "효과 없음", "PROGRESS 11/02 라운드 2·5"),
+    ("H2'", "보상 성공에 5% 여유 `--feas_margin` (RL만)", "r2m_rl", "r2_mott_rl", "lo_pcb_r2m_rl", "lo_pcb_r2_rl",
+     "효과 없음", "PROGRESS 11/02 라운드 7"),
+    ("H2''", "작업 격자 상한 완화 `--grid_growth 1.0` (RL만)", "r2g_rl", "r2_mott_rl", "lo_pcb_r2g_rl", "lo_pcb_r2_rl",
+     "효과 없음", "PROGRESS 11/03 라운드 14·26"),
+    ("T1", "규칙으로 보강한 선생님 (RL만)", "r2t_rl", "r2_mott_rl", "lo_pcb_r2t_rl", "lo_pcb_r2_rl",
+     "효과 없음 (뺀 run의 pkg는 해로운 방향)", "PROPOSALS T1, PROGRESS 11/03"),
+    ("T1'", "규칙으로 보강한 선생님 (증류+RL 전체)", "r2tf_rl", "r2_mott_rl", "lo_pcb_r2tf_rl", "lo_pcb_r2_rl",
+     "효과 없음 (뺀 run의 pkg는 해로운 방향)", "PROPOSALS T1', PROGRESS 11/03"),
+    ("T3", "어려운 문제 가중 RL `--hard_weight 2` (RL만)", "r2h_rl", "r2_mott_rl", "lo_pcb_r2h_rl", "lo_pcb_r2_rl",
+     "뺀 pcb **해로움**", "PROPOSALS T3, PROGRESS 11/03"),
+    ("D2", "증류 갱신 횟수를 0단과 맞춤 (진단)", "r2it_rl", "r2_mott_rl", None, None,
+     "갱신 횟수로는 설명 안 됨 → 버림", "PROPOSALS D2"),
+    ("P1", "모드 토큰 피크 보정 입력 `--peak_refine`", "r2pk_rl", "r2_mott_rl", "lo_pcb_r2pk_rl", "lo_pcb_r2_rl",
+     None, "PROPOSALS P1 (확장)"),
+    ("P2", "중복 없는 모드 토큰 `--dedup_modes`", "r2dd_rl", "r2_mott_rl", "lo_pcb_r2dd_rl", "lo_pcb_r2_rl",
+     None, "PROPOSALS P2"),
+    ("P3", "P1 + 고유 이웃 보정 (기준 P1 run)", "r2pkdd_rl", "r2pk_rl", "lo_pcb_r2pkdd_rl", "lo_pcb_r2pk_rl",
+     None, "PROPOSALS P3"),
+]
+TRIED_EVAL_ONLY = [   # evaluation-procedure variants, no training change; numbers are in their own sections
+    ("T2", "끝에서 고치기 `--repair 4` (모든 방법에 같게)", "R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; "
+     "R2 같은 고치기에서 규칙과 차이 없음, g+p 대비 ip만 정책이 낫다", "\"끝에서 고치기\" 절"),
+    ("T4", "규칙 해에서 출발해 정책이 다듬기 `--start rule`", "S1 효과 없음 (세 판); S2 0단 pkg 해로움", "\"규칙 해에서 출발\" 절"),
+    ("S", "추론 샘플링 best-of-8", "규칙이 이김 (pcb) → 넓히지 않음", "\"추론 샘플링\" 절"),
+]
+
+
+def tried_mods_table(recs):
+    """One-glance table of every attempted modification (QUEUE 11/03 11:40 KST): seed 0 paired success difference
+    [95% CI] per board vs its reference, and the verdict of its pre-registered rule."""
+    cache = {}
+
+    def cell(var, base, tech):
+        if var is None:
+            return "–"
+        if base not in cache:
+            cache[base] = paired(recs, base)
+        pr = cache[base].get((tech, 10), {}).get(var)
+        if pr is None:
+            return "–"
+        om, orf = pr[0], pr[1]
+        lo, hi = boot_ci(lambda i: om[i].mean() - orf[i].mean(), len(om))
+        return f"{om.mean() - orf.mean():+.2f} [{lo:+.2f}, {hi:+.2f}]"
+    rows = []
+    for tag, what, var, base, lv, lb, verdict, where in TRIED_MODS:
+        v = verdict if verdict is not None else POOLED_VERDICT.get(tag, "판정 대기")
+        cells = [cell(var, base, t) for t in ("pcb", "pkg", "ip")] + [cell(lv, lb, "pcb")]
+        rows.append(f"| {tag} | {what} | `{var}` vs `{base}` | " + " | ".join(cells) + f" | {v} | {where} |")
+    ev = [f"| {tag} | {what} | (평가 단계) | – | – | – | – | {v} | {where} |" for tag, what, v, where in TRIED_EVAL_ONLY]
+    return ["## 시도한 수정과 효과 (한눈에; QUEUE 11/03 11:40 KST, 한 번에 하나씩, 판정은 결과 전에 적은 규칙 그대로)", "",
+            "칸 = 10칸 50문제 seed 0 짝지은 성공률 차 (수정 − 기준) [95% CI], 뺀 pcb = 같은 수정의 pcb 빼고 학습 run의 pcb. "
+            "판정은 seed 묶음·두 평가 설정 등 각 규칙의 전체 조건으로 내린 것이라 이 seed 0 칸만으로 다시 읽지 않는다. "
+            "RL만 다시 돈 수정의 잡음 폭은 \"RL 재현 잡음\" 절 (d*).", "",
+            "| | 한 가지 변경 | 짝 (seed 0) | 같은 종류 pcb | 같은 종류 pkg | 같은 종류 ip | 뺀 pcb | 판정 | 근거 |",
+            "|---|---|---|---|---|---|---|---|---|"] + rows + ev + [""]
 
 
 def loop_r_size_table(recs):
@@ -1577,6 +1654,7 @@ def main():
     lines += distill_mech_table()
     lines += rl_noise_table(recs)
     lines += pooled_mod_table(recs)
+    lines += tried_mods_table(recs)
     lines += scale_curve_table(recs)
     lines += loop_r_size_table(recs)
     lines += repair_ladder_table()
