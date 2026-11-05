@@ -775,18 +775,22 @@ def design_rationale(recs):
     def seeds(t, f):
         v = [f(s) for s in LO_SEEDS]
         return None if any(x is None for x in v) else v
-    verdict, drop = {}, {}
+    verdict, drop, verdict_pk = {}, {}, {}
+
+    def judge(b, c, tag):
+        return ("–" if b is None or c is None else
+                "통과" if all(x > 0 for x in b) and c >= -0.05 else
+                f"실패 (({tag}) seed별 {' / '.join(f'{x:+.2f}' for x in b)}, (c{tag[1:]}) 평균 {c:+.2f})")
     for t in LO_TECHS:
-        b = seeds(t, lambda s: None if rate(t, seed_run(f"lo_{t}_r2", s)) is None or rate(t, seed_run(f"lo_{t}_r0", s)) is None
-                  else rate(t, seed_run(f"lo_{t}_r2", s)) - rate(t, seed_run(f"lo_{t}_r0", s)))
-        for r, full, _ in LO_RUNGS:
+        bs = {r: seeds(t, lambda s: None if rate(t, seed_run(f"lo_{t}_{r}", s)) is None or rate(t, seed_run(f"lo_{t}_r0", s)) is None
+                       else rate(t, seed_run(f"lo_{t}_{r}", s)) - rate(t, seed_run(f"lo_{t}_r0", s))) for r in ("r2", "r2pk")}
+        # adopted structure r2pk (PROPOSALS F1): same rule, its own leave-out runs vs its own full-type runs
+        for r, full, _ in LO_RUNGS + (("r2pk", "r2pk_rl", ""),):
             d = seeds(t, lambda s: None if rate(t, seed_run(f"lo_{t}_{r}", s)) is None or rate(t, seed_run(full[:-3], s)) is None
                       else rate(t, seed_run(f"lo_{t}_{r}", s)) - rate(t, seed_run(full[:-3], s)))
             drop[t, r] = None if d is None else float(np.mean(d))
-        c = drop[t, "r2"]
-        verdict[t] = ("–" if b is None or c is None else
-                      "통과" if all(x > 0 for x in b) and c >= -0.05 else
-                      f"실패 ((b) seed별 {' / '.join(f'{x:+.2f}' for x in b)}, (c) 평균 {c:+.2f})")
+        verdict[t] = judge(bs["r2"], drop[t, "r2"], "b")
+        verdict_pk[t] = judge(bs["r2pk"], drop[t, "r2pk"], "b'")
     if not any(v != "–" for v in verdict.values()):
         return []
     tok = token_transfer_rows()
@@ -800,12 +804,18 @@ def design_rationale(recs):
               "세 종류를 **섞어** 학습. 매 수 정확 Z 갱신과 decap 토큰은 Manoharan 2026에 이미 있음 (기여 아님); Park 2022는 Z를 단계마다 갱신하지 않고 "
               "좌표만 입력 (`research_notes/선행 기준선 재구현 차이 표.md`).", "",
               "2. **학습으로 확인 (한 종류 빼고 학습, 10×10, seed 0·1·2 평균, 뺀 종류의 eval 50문제 성공률):** 뺀 학습 − 전체 학습 (같은 seed)", "",
-              "| 뺀 종류 | 0단 좌표 | 1단 모달 | 2단 MoTT | 10/31 기준 판정 (2단) |", "|---|---|---|---|---|"]
+              "| 뺀 종류 | 0단 좌표 | 1단 모달 | 2단 MoTT | 10/31 기준 판정 (2단) | 채택 구조 r2pk (2단 + P1) | 같은 기준 판정 (r2pk, F1) |",
+              "|---|---|---|---|---|---|---|"]
+    fmt_d = lambda v: "–" if v is None else f"{v:+.2f}"
     for t in LO_TECHS:
-        lines.append(f"| {t} | " + " | ".join("–" if drop[t, r] is None else f"{drop[t, r]:+.2f}" for r, _, _ in LO_RUNGS)
-                     + f" | {verdict[t]} |")
+        lines.append(f"| {t} | " + " | ".join(fmt_d(drop[t, r]) for r, _, _ in LO_RUNGS)
+                     + f" | {verdict[t]} | {fmt_d(drop[t, 'r2pk'])} | {verdict_pk[t] if verdict_pk[t] != '–' else 'seed 3개가 다 나온 뒤'} |")
     ok_t = [t for t in LO_TECHS if verdict[t] == "통과"]
+    ok_pk = [t for t in LO_TECHS if verdict_pk[t] == "통과"]
+    pk_open = [t for t in LO_TECHS if verdict_pk[t] == "–"]
     lines += ["", f"   → 주장할 수 있는 범위: **{', '.join(ok_t) if ok_t else '없음'}** 에서만 \"처음 보는 종류로의 범용화\" (seed 3개). "
+              f"채택 구조 r2pk로는 **{', '.join(ok_pk) if ok_pk else '없음'}**"
+              + (f" (아직 seed가 다 안 나온 종류: {', '.join(pk_open)})" if pk_open else "") + " (위 \"최종 후보 r2pk의 한 종류 빼고 학습\" 표, 같은 기준). "
               "그 밖의 종류는 위 판정 그대로 주장에서 뺀다. 좌표 (0단)가 무너지는 것은 1번 관찰 (좌표가 종류를 넘으면 뒤집힘)과 같은 방향; "
               "pkg는 학습한 두 종류 사이 (decap 라이브러리·맨판 위반이 pcb와 ip 사이, `scripts/type_distance.py`)라 내삽에 가깝다.", "",
               "3. 주장하지 않는 것 (미리 적은 기준 불충족): 루프 > 기본 (\"루프 트랜스포머 vs 기본\" 표), MoTT 개선 시도 `--certify 2`·val 48문제·best-of-8 샘플링·"
@@ -814,7 +824,11 @@ def design_rationale(recs):
               "규칙으로 보강한 선생님 RL만 (r2t·lo_pcb_r2t)·증류+RL 전체 (r2tf·lo_pcb_r2tf) (둘 다 성공률 CI 하한이 0 위인 갈래 없음, "
               "뺀 pcb run의 pkg는 내려감)·규칙 해에서 출발해 정책이 다듬기 (평가만: r2는 규칙 배치를 거의 안 바꾸고, 0단은 pkg를 해침) "
               "(위 ABLATIONS·\"추론 샘플링\" 표), 주파수 궁합 편향 (`--fc_bias`)이 처음 보는 pcb·ip로의 범용화를 돕는다는 것 "
-              "(`lo_<t>_r2a_rl` vs `lo_<t>_r2_rl`, seed 0, ABLATIONS), 학습이 처음 보는 종류에서 `modal_rule`을 이긴다는 것 (\"학습 vs 규칙\" 표에서 판마다 확인).", ""]
+              "(`lo_<t>_r2a_rl` vs `lo_<t>_r2_rl`, seed 0, ABLATIONS), 학습이 처음 보는 종류에서 `modal_rule`을 이긴다는 것 (\"학습 vs 규칙\" 표에서 판마다 확인), "
+              "중복 없는 모드 토큰 `--dedup_modes` (P2)와 P1 위 고유 이웃 보정 (P3) (\"P2·P3 seed 0·1 묶음 판정\" 표: 효과 없음).", "",
+              "4. 채택한 수정 하나: **P1 `--peak_refine`** (모드 토큰마다 세 점 포물선 피크 보정, 입력 표현만) — 관찰: 격자 만족·정확 검사 실패 해의 최악 주파수가 "
+              "모드 토큰 바로 옆이고, 토큰의 피크 수준은 작업 격자 값이라 정확 값보다 낮게 보임 (PROPOSALS P1 근거, D7 H-underres). 판정과 숫자는 \"P1 확장: seed 0·1·2 묶음 + 뺀 ip·pkg\" 표 (같은 종류 판마다, 미리 적은 규칙); "
+              "처음 보는 종류로의 범용화는 위 2번 표의 r2pk 열만 쓴다 (같은 종류 이득을 처음 보는 종류 이득으로 쓰지 않는다).", ""]
     return lines
 
 
