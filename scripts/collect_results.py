@@ -1397,11 +1397,24 @@ def loop_r_size_table(recs):
             rows.append(f"| {tech} {n} | " + " | ".join(cells) + " |")
     if not rows:
         return []
+    # The count column above averages over each R's own solved set; the paired R16 vs R2 rows compare counts only
+    # on instances both solve (same problems), so a count drop is not confounded by a different solved set.
+    p2 = paired(recs, "r3_loop_rl@R2")
+    prow = [f"| {t} {n} | " + ci_cells(*p2[(t, n)]["r3_loop_rl@R16"]) + " |"
+            for n in (10, 16, 20) for t in ("pcb", "pkg", "ip") if "r3_loop_rl@R16" in p2.get((t, n), {})]
+    tail = (["#### R16 − R2 짝지은 비교 (같은 문제, bootstrap 2000회; 기록만)", "",
+             "| 판 | 문제 수 | 성공률 차 R16 − R2 [95% CI] | 개수비 R16/R2 (둘 다 성공) [95% CI] |", "|---|---|---|---|"]
+            + prow + ["",
+                      "읽기 (라운드 44, 미리 적은 읽기 그대로, 16·20칸 18개 평가가 다 끝난 뒤): 16칸은 세 종류 모두 R이 커져도 "
+                      "성공률이 오르지 않고 짝지은 개수비도 1 근처 → \"반복의 이득은 관찰되지 않았다\". 위 표의 pkg 개수 감소는 "
+                      "성공한 문제 집합이 R마다 달라서 생긴 것으로, 같은 문제끼리 짝지으면 사라진다. 20칸 pcb는 R16 − R2 CI가 0 위지만 "
+                      "R 2→4→8→16에서 단조가 아니고 (R8이 R2와 같음) 개수비가 1 위이며 문제 16개 → \"큰 판에서 반복이 쓰인다\"는 "
+                      "주장하지 않고 고찰용 관찰로만 남긴다. 20칸 pkg·ip는 평평.", ""]) if prow else []
     return ["## 루프 반복 수 vs 판 크기 (QUEUE 11/04 18:15 KST, 기록만; `r3_loop_rl` seed 0, R8 = 기본 평가)", "",
             "미리 적은 읽기 (결과 전, 사람): 16·20칸에서 R이 클수록 성공률이 오르거나 개수가 줄면 \"큰 판에서 반복이 쓰인다\"; "
             "평평하면 \"반복의 이득은 관찰되지 않았다\".", "",
             "| 판 | R 2 | R 4 | R 8 | R 16 |", "|---|---|---|---|---|",
-            "| (칸 내용) | 성공률 / 개수 (성공 평균) / 문제당 초 (문제 수) | | | |"] + rows + [""]
+            "| (칸 내용) | 성공률 / 개수 (성공 평균) / 문제당 초 (문제 수) | | | |"] + rows + [""] + tail
 
 
 def repair_ladder_table():

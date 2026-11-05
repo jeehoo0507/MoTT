@@ -29,3 +29,7 @@ This round (43, 19:50 → 00:20 UTC) is wrapped up and everything is pushed to `
 2. Read the 20-cell R sweep once it finishes.
 3. LS16 (6 files) for the LS column of figure 2.
 4. After 11/6 12:00, start no new modifications. Write up the attempted modifications and their effects in RESULTS ABLATIONS.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3983041..4fd4453  main -> main
