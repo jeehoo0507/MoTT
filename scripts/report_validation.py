@@ -28,9 +28,10 @@ from scripts.pkg_guard_study import save,sha,single,memory,stop_own_child
 from scripts.report_model_bundle import receive,fetch_bundle
 
 LEGACY_ROLES=('baseline','robust','frozen','park','manoharan','coord','modal','park_rlonly','manoharan_rlonly')
-ROLES=LEGACY_ROLES+('control','annealed','adaptive')
+ROLES=LEGACY_ROLES+('control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full')
 LABELS={'frozen':'Original MoTT + P1','baseline':'Continued MoTT + P1','robust':'MoTT + P1, reserved training/decoding',
         'control':'Matched original-goal RL','annealed':'Scheduled reserve RL','adaptive':'Certification-gap curriculum RL',
+        'pt_control':'Matched standard RL','pt_feasible':'Stage 1 only','pt_robust':'Stages 1+2','pt_full':'Stages 1+2+3',
         'gp':'Greedy + prune','rule':'Resonance rule','park':'B-Park (adapted AM)',
         'manoharan':'B-Manoharan (adapted, distill + RL)','park_rlonly':'B-Park (adapted, RL only)',
         'manoharan_rlonly':'B-Manoharan (adapted, RL only)','coord':'Coordinate model','modal':'Modal-feature model'}
@@ -114,9 +115,9 @@ def report(a):
     paired=[]
     lines+=['','## 짝 비교','', '| 유형/크기 | 비교 | 시드 | 짝 수 | 성공 차 %p | 구제/악화 | 동시 성공 부품 차 |',
             '|---|---|---:|---:|---:|---:|---:|']
-    for treatment in ('robust','adaptive','annealed'):
+    for treatment in ('robust','adaptive','annealed','pt_feasible','pt_robust','pt_full'):
         for pool in sorted({r['pool'] for r in rows}):
-            for control in ('control','annealed','baseline','frozen','coord','modal','park','manoharan','gp','rule'):
+            for control in ('pt_control','pt_feasible','pt_robust','control','annealed','baseline','frozen','coord','modal','park','manoharan','gp','rule'):
                 if control==treatment:continue
                 for seed in range(3):
                     l={r['index']:r for r in groups.get((pool,treatment,seed),[])}
@@ -137,8 +138,8 @@ def report(a):
     missing=sorted(set(expected)-available)
     errors=json.loads((out/'errors.json').read_text()) if (out/'errors.json').exists() else {}
     cfg=json.loads((out/'config.json').read_text()) if (out/'config.json').exists() else dict(n=a.n,large_n=a.large_n)
-    primary_done=sum(f'{r["role"]}_s{r["seed"]}' in expected and r['role'] in ('frozen','baseline','robust','control','annealed','adaptive') and r['size'] in (10,16) for r in rows)
-    primary_expected=sum(x.rsplit('_s',1)[0] in ('frozen','baseline','robust','control','annealed','adaptive') for x in expected)
+    primary_done=sum(f'{r["role"]}_s{r["seed"]}' in expected and r['role'] in ('frozen','baseline','robust','control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full') and r['size'] in (10,16) for r in rows)
+    primary_expected=sum(x.rsplit('_s',1)[0] in ('frozen','baseline','robust','control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full') for x in expected)
     lines+=['',f'10/16칸 핵심 비교 완료: {primary_done}/{cfg["n"]*6*primary_expected}개 평가. 처리 오류/시간 초과: {len(errors)}개 작업.',
         '미수신 모델: '+(', '.join(missing) or '없음'),'',
         '전체 학습된 체크포인트의 새 보드 평가는 미학습 유형(leave-one-type-out) 실험이 아닙니다.',
@@ -223,7 +224,7 @@ def run(a):
             models=sorted([m for m in manifest['models'] if m['id'] in expected],key=lambda m:(ROLES.index(m['role']),m['seed']))
             chosen=None
             # Finish the main paired comparison before secondary/appendix jobs.
-            primary=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('baseline','robust','frozen','control','annealed','adaptive')]
+            primary=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('baseline','robust','frozen','control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full')]
             paper=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('park','manoharan')]
             internal=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('coord','modal')]
             appendix=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'].endswith('rlonly')]

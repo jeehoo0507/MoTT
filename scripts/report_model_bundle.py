@@ -140,13 +140,13 @@ def receive(archive,dest):
             if key not in incoming or incoming[key]['sha256']!=entry['sha256']:raise ValueError('Previously evaluated model changed/removed')
         import hashlib
         for entry in manifest['models']:
-            if entry['role'] not in ('frozen','baseline','robust','control','annealed','adaptive')+FAMILIES or entry['seed'] not in (0,1,2):raise ValueError('Unknown model')
+            if entry['role'] not in ('frozen','baseline','robust','control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full')+FAMILIES or entry['seed'] not in (0,1,2):raise ValueError('Unknown model')
             if entry['id']!=f"{entry['role']}_s{entry['seed']}" or entry['path']!=f"models/{entry['id']}.pt":raise ValueError('Model path mismatch')
             data=tar.extractfile(entry['path']).read()
             if hashlib.sha256(data).hexdigest()!=entry['sha256']:raise ValueError('Weight hash mismatch')
             target=dest/entry['path'];target.parent.mkdir(exist_ok=True);target.with_suffix('.tmp').write_bytes(data);target.with_suffix('.tmp').replace(target)
         for entry in manifest['models']:
-            if entry['role'] in ('baseline','robust','control','annealed','adaptive'):
+            if entry['role'] in ('baseline','robust','control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full'):
                 frozen=incoming.get(f"frozen_s{entry['seed']}")
                 if not frozen or frozen['source_sha256']!=entry['init_sha256']:raise ValueError('Unmatched MoTT initialization')
         save(dest/'manifest.json',manifest)

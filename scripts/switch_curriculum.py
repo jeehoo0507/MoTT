@@ -12,6 +12,11 @@ from scripts import pkg_guard_study as study
 from scripts import report_model_bundle as bridge
 from scripts.curriculum_campaign import LEGACY,BRANCH
 IDENTITY={}
+CAMPAIGN_SCRIPT='scripts/curriculum_campaign.py'
+NEW_RESULTS='runs/curriculum_validation_v1'
+NEW_INBOX='curriculum.tgz'
+NEW_OFFSET=3000000
+PRIOR_ROOTS=set()
 
 
 def birth(pid):return Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()[19]
@@ -81,6 +86,20 @@ def child(cmd,log):
     if rc:raise RuntimeError(f'Command failed: see {log}')
 
 
+def cancel_prior_training(state):
+    managers=processes('switch_curriculum.py',PRIOR_ROOTS)+processes('curriculum_campaign.py',PRIOR_ROOTS)
+    for pid in managers:send(pid,signal.SIGSTOP)
+    try:
+        for pid in processes('train_reserve_curriculum.py',PRIOR_ROOTS):
+            state('cancelling_superseded_curriculum',pid_to_stop=pid)
+            if alive(pid) and os.getpgid(pid)==pid and birth(pid)==IDENTITY[pid]:os.killpg(pid,signal.SIGTERM)
+            while alive(pid):time.sleep(.5)
+        for pid in reversed(managers):stop_manager(pid)
+    except BaseException:
+        for pid in managers:send(pid,signal.SIGCONT)
+        raise
+
+
 def run(server):
     home=Path.home();out=ROOT/'runs/transition';out.mkdir(parents=True,exist_ok=True)
     with (out/'runner.lock').open('w') as lock:
@@ -89,6 +108,7 @@ def run(server):
             r=dict(stage=stage,pid=os.getpid(),updated=time.time(),**kw);study.save(out/'status.json',r);print(json.dumps(r),flush=True)
         old_follow=home/'R2E-followups'
         if server==1:
+            cancel_prior_training(state)
             # This replaces the explicitly cancelled parallel-repeat scheduler, never the original driver.
             for pid in processes('finish_followup.py',{old_follow}):
                 state('cancelling_parallel_repeat',pid_to_stop=pid);stop_manager(pid)
@@ -105,14 +125,14 @@ def run(server):
                     bridge.export(home/'R2E',oldout,export);bridge.publish(export);break
                 except (OSError,subprocess.SubprocessError) as e:state('legacy_publish_retry',error=str(e));time.sleep(60)
             state('starting_new_training')
-            child([sys.executable,'-u','scripts/curriculum_campaign.py'],out/'campaign.log')
+            child([sys.executable,'-u',CAMPAIGN_SCRIPT],out/'campaign.log')
             state('complete')
         else:
             # Pause only the old follow-up scheduler so it cannot relaunch a migrated runner.
-            supervisors=processes('finish_followup.py',{old_follow})
+            supervisors=processes('finish_followup.py',{old_follow})+processes('switch_curriculum.py',PRIOR_ROOTS)
             for pid in supervisors:send(pid,signal.SIGSTOP)
             try:
-                for pid in processes('report_validation.py',{home/'R2E-report',old_follow}):
+                for pid in processes('report_validation.py',{home/'R2E-report',old_follow}|PRIOR_ROOTS):
                     args=Path(f'/proc/{pid}/cmdline').read_bytes().split(b'\0')
                     if b'run' in args:
                         state('handover_after_current_case',pid_to_stop=pid);stop_between_cases(pid)
@@ -136,10 +156,10 @@ def run(server):
             state('finishing_existing_baseline_comparison')
             finish(cmd,target,out/'legacy_report.log')
             # New independent problem seeds; do not tune from the existing report outcomes.
-            fresh=ROOT/'runs/curriculum_validation_v1'
-            plan=out/'new_plan.json';study.save(plan,dict(from_manifest=True,seed_offset=3000000))
+            fresh=ROOT/NEW_RESULTS
+            plan=out/'new_plan.json';study.save(plan,dict(from_manifest=True,seed_offset=NEW_OFFSET))
             cmd=[sys.executable,'-u','scripts/report_validation.py','run','--finish_all','--out',str(fresh),
-                 '--inbox',str(ROOT/'inbox/curriculum.tgz'),'--plan',str(plan),'--bundle_branch',BRANCH]
+                 '--inbox',str(ROOT/'inbox'/NEW_INBOX),'--plan',str(plan),'--bundle_branch',BRANCH]
             state('validating_new_training_on_fresh_boards')
             finish(cmd,fresh,out/'new_report.log');state('complete')
 

@@ -18,6 +18,8 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'runs/mott_curriculum_v1'
 BRANCH='report-models-mott-curriculum-v1'
 ARMS=('control','annealed','adaptive')
+PROTOCOL='MOTT_CURRICULUM_PROTOCOL.md'
+TRAIN_ARM_HOOK=None
 LEGACY=[f'{role}_s{s}' for role in ('frozen',)+bridge.FAMILIES for s in range(3)]+['baseline_s0','robust_s0']
 
 
@@ -44,7 +46,7 @@ def owned(cmd,tag,gpu=False):
         study.save(OUT/'status.json',dict(stage='running',job=tag,pid=os.getpid(),updated=time.time(),command=cmd))
         with (OUT/'logs'/f'{tag}.log').open('a') as log:
             child=subprocess.Popen(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-            reason=None;last=time.monotonic()
+            reason=None;last=time.monotonic();started=last
             try:
                 while child.poll() is None:
                     if study.memory()>32:reason='memory'
@@ -54,6 +56,8 @@ def owned(cmd,tag,gpu=False):
                     if reason:study.stop_own_child(child);break
                     time.sleep(1)
             except BaseException:study.stop_own_child(child);raise
+        with (OUT/'attempts.jsonl').open('a') as audit:
+            audit.write(json.dumps(dict(job=tag,seconds=time.monotonic()-started,returncode=child.returncode,reason=reason))+'\n')
         if reason:time.sleep(30);continue
         if child.returncode:raise RuntimeError(f'{tag} failed ({child.returncode}); inspect {OUT}/logs/{tag}.log')
         return
@@ -76,7 +80,7 @@ def publish(final=False,seeds=(0,),decision=None):
             if not (folder/'metrics.json').exists():continue
             dest=export/'models'/f'{arm}_s{seed}.pt'
             data=torch.load(ck,map_location='cpu',weights_only=False)
-            if study.sha(data['args']['init'])!=study.sha(src):raise ValueError('Unmatched initialization')
+            if study.sha(data['args'].get('root_init',data['args']['init']))!=study.sha(src):raise ValueError('Unmatched initialization')
             stamp=dest.with_suffix('.json');source_hash=study.sha(ck)
             if dest.exists() and (not stamp.exists() or json.loads(stamp.read_text())['source_sha256']!=source_hash):
                 raise ValueError('Previously exported campaign identity changed')
@@ -85,11 +89,11 @@ def publish(final=False,seeds=(0,),decision=None):
                 study.save(stamp,dict(source_sha256=source_hash))
             metrics=json.loads((folder/'metrics.json').read_text())
             entries.append(dict(id=f'{arm}_s{seed}',role=arm,seed=seed,path=f'models/{dest.name}',sha256=study.sha(dest),
-                source_sha256=study.sha(ck),init_sha256=study.sha(src),training={k:metrics.get(k) for k in ('iters','hours','best_iter','cuda_oom_skipped')}))
+                source_sha256=study.sha(ck),init_sha256=study.sha(src),training={k:metrics.get(k) for k in ('iters','hours','best_iter','cuda_oom_skipped','chain_sha256')}))
     expected=LEGACY+[f'{arm}_s{s}' for s in seeds for arm in ARMS]
     study.save(export/'manifest.json',dict(schema=1,models=entries,expected=expected,
         campaign_final=final,missing=sorted(set(expected)-{e['id'] for e in entries}),
-        expansion=decision,protocol_sha256=study.sha(ROOT/'docs/MOTT_CURRICULUM_PROTOCOL.md')))
+        expansion=decision,protocol_sha256=study.sha(ROOT/'docs'/PROTOCOL)))
     bridge.publish(export,branch=BRANCH)
     study.save(OUT/'publish_status.json',dict(ok=True,updated=time.time(),final=final))
 
@@ -98,6 +102,13 @@ def safe_publish(**kw):
     try:publish(**kw);return True
     except (OSError,subprocess.SubprocessError) as e:
         study.save(OUT/'publish_status.json',dict(ok=False,error=str(e),updated=time.time()));return False
+
+
+def gate_from_models():
+    paths=[OUT/f'models/{arm}_s0/validation_best.json' for arm in ('control','adaptive')]
+    decision=expansion_gate(*(json.loads(p.read_text()) for p in paths))
+    decision['validation_sha256']=[study.sha(p) for p in paths]
+    return decision
 
 
 def run():
@@ -109,7 +120,7 @@ def run():
         if setting.exists():cfg=json.loads(setting.read_text())
         else:
             cfg=dict(workers=workers(),train_hours=.75,arms=list(ARMS),git=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-                     protocol_sha256=study.sha(ROOT/'docs/MOTT_CURRICULUM_PROTOCOL.md'))
+                     protocol_sha256=study.sha(ROOT/'docs'/PROTOCOL))
             study.save(setting,cfg)
         if cfg['git']!=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip():raise ValueError('Changed campaign code; use original commit')
         study.inputs(argparse.Namespace(out=str(OUT),source=str(Path.home()/'R2E'),seeds='0,1,2'))
@@ -123,20 +134,20 @@ def run():
                 if not (folder/'metrics.json').exists():
                     src=OUT/f'inputs/r2pk{"" if seed==0 else "_s"+str(seed)}_rl/best.pt'
                     ck=torch.load(src,map_location='cpu',weights_only=False);a=ck['args']
-                    cmd=[sys.executable,'scripts/train_reserve_curriculum.py','--curriculum',arm,'--certify_workers',str(cfg['workers']),
-                        '--stage','rl','--model','mott','--peak_refine','--init',str(src),'--out',str(folder),
-                        '--pool',str(OUT/'inputs/pool'),'--teacher_dir',str(OUT/'inputs/teacher'),'--seed',str(seed),
-                        '--hours',str(cfg['train_hours']),'--iters','1000000','--B','4','--M','8','--chunk','1','--lr','0.0001',
-                        '--lam','20','--imit','0','--certify','2','--val_every','50','--ckpt_min','5','--max_steps','64']
-                    for key in ('d','layers','heads'):cmd+=['--'+key,str(a[key])]
-                    for flag in ('fc_bias','mode_head'):
-                        if a.get(flag):cmd+=['--'+flag]
-                    owned(cmd,f'{arm}_s{seed}',gpu=True)
+                    if TRAIN_ARM_HOOK is not None:TRAIN_ARM_HOOK(seed,arm,folder,cfg,src,a)
+                    else:
+                        cmd=[sys.executable,'scripts/train_reserve_curriculum.py','--curriculum',arm,'--certify_workers',str(cfg['workers']),
+                            '--stage','rl','--model','mott','--peak_refine','--init',str(src),'--out',str(folder),
+                            '--pool',str(OUT/'inputs/pool'),'--teacher_dir',str(OUT/'inputs/teacher'),'--seed',str(seed),
+                            '--hours',str(cfg['train_hours']),'--iters','1000000','--B','4','--M','8','--chunk','1','--lr','0.0001',
+                            '--lam','20','--imit','0','--certify','2','--val_every','50','--ckpt_min','5','--max_steps','64']
+                        for key in ('d','layers','heads'):cmd+=['--'+key,str(a[key])]
+                        for flag in ('fc_bias','mode_head'):
+                            if a.get(flag):cmd+=['--'+flag]
+                        owned(cmd,f'{arm}_s{seed}',gpu=True)
                 safe_publish(seeds=tuple(seeds),decision=decision)
             if seed==0:
-                paths=[OUT/f'models/{arm}_s0/validation_best.json' for arm in ('control','adaptive')]
-                decision=expansion_gate(*(json.loads(p.read_text()) for p in paths))
-                decision['validation_sha256']=[study.sha(p) for p in paths];study.save(OUT/'expansion.json',decision)
+                decision=gate_from_models();study.save(OUT/'expansion.json',decision)
         while not safe_publish(final=True,seeds=tuple(seeds),decision=decision):time.sleep(60)
         study.save(OUT/'status.json',dict(stage='complete',seeds=seeds,expansion=decision,updated=time.time()))
 
