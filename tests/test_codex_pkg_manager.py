@@ -43,6 +43,9 @@ class ManagerTests(unittest.TestCase):
                 self.assertNotIn('scripts/unrelated.py',published)
                 self.assertEqual(json.loads((original/'agent/CODEX_STATUS.json').read_text())['stage'],'round_done')
                 self.assertTrue((original/'agent/CODEX_PROGRESS.md').exists())
+                status=json.loads((original/'agent/CODEX_STATUS.json').read_text())
+                self.assertEqual(status['model'],'gpt-6.1-sol')
+                self.assertEqual(status['reasoning_effort'],'high')
 
     def test_isolated_round_publishes_only_allowed_paths(self):self.run_round()
     def test_protected_copy_change_blocks_publication(self):self.run_round(True)

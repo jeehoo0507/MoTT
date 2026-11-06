@@ -62,3 +62,8 @@ npm이 없으면 공식 openai/codex Linux musl 실행 파일을 사용자 전�
 서버 Codex 로그인이 필요하면 설치기가 device-auth를 실행하므로 한 번 브라우저에서 로그인한다.
 관리 루프는 `agent/STOP`과 기존 종료 날짜를 존중한다.
 공식 실행/인증 문서: https://developers.openai.com/codex/noninteractive 및 https://developers.openai.com/codex/auth
+
+Codex 관리 모델 기본값은 `gpt-6.1-sol`, reasoning effort는 `high`다.
+서버의 `agent/CODEX_MODEL`, `agent/CODEX_EFFORT` 파일이 있으면 다음 라운드부터 그 값이 우선한다.
+실제 요청 모델/추론 수준은 CODEX_STATUS.json과 codex_loop.log에 기록한다.
+계정에서 요청 모델을 지원하지 않으면 오류를 기록하며 다른 모델로 조용히 대체하지 않는다.

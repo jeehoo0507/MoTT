@@ -54,9 +54,18 @@ def main():
     prompt+='\n이번 라운드는 기존 실험 보호를 지키면서 위 작업을 이어서 실행하라. 결과/검증/미완료를 명확히 남겨라.\n'
     before={str(p.relative_to(WORK)):hashlib.sha256(p.read_bytes()).hexdigest() for name in
             ('decap_loop/pdn.py','decap_loop/sim.py','decap_loop/verify.py','decap_loop/bank.py','train.py','decap_loop/model.py','agent/day2_queue.json') if (p:=WORK/name).exists()}
-    cmd=[a.codex,'--ask-for-approval','never','exec','--sandbox','workspace-write','--cd',str(WORK),'-']
+    model_file=ORIGINAL/'agent/CODEX_MODEL'
+    effort_file=ORIGINAL/'agent/CODEX_EFFORT'
+    model=model_file.read_text().strip() if model_file.exists() else 'gpt-6.1-sol'
+    effort=effort_file.read_text().strip() if effort_file.exists() else 'high'
+    if not model or effort not in ('low','medium','high','xhigh','max','ultra'):
+        raise ValueError('Invalid CODEX_MODEL/CODEX_EFFORT; no model invoked')
+    cmd=[a.codex,'--ask-for-approval','never','exec','--model',model,
+         '--config','model_reasoning_effort='+json.dumps(effort),
+         '--sandbox','workspace-write','--cd',str(WORK),'-']
+    print(f'Codex manager model={model} effort={effort}',flush=True)
     status=ORIGINAL/'agent/CODEX_STATUS.json'
-    status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),worktree=str(WORK),log=str(logfile))))
+    status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),model=model,reasoning_effort=effort,worktree=str(WORK),log=str(logfile))))
     with logfile.open('a') as log:
         try:
             rc=subprocess.run(cmd,input=prompt,text=True,stdout=log,stderr=subprocess.STDOUT,timeout=1500).returncode
@@ -75,7 +84,7 @@ def main():
         publish='pushed '+branch if pushed.returncode==0 else 'push failed: '+pushed.stderr[-400:]
     progress=WORK/'PROGRESS.md'
     if progress.exists():shutil.copyfile(progress,ORIGINAL/'agent/CODEX_PROGRESS.md')
-    status.write_text(json.dumps(dict(stage='round_done',rc=rc,worktree=str(WORK),publish=publish,log=str(logfile)),indent=2))
+    status.write_text(json.dumps(dict(stage='round_done',rc=rc,model=model,reasoning_effort=effort,worktree=str(WORK),publish=publish,log=str(logfile)),indent=2))
     print(f'Codex round rc={rc}; {publish}; log={logfile}',flush=True)
 
 
