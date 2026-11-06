@@ -1,2 +1,17 @@
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+Round 60 finished: nothing has completed since round 59, and there are no new instructions in QUEUE or on the remote, so I left the queue and all settings unchanged.
+
+**Status at 00:54 UTC**
+- **GPU:** the `bp_park_rlonly_s1` RL-only run is at iteration 150 of a roughly 2-hour budget. Checkpoints are saving normally (last at iteration 146). It should end around 01:50, after which the 10-cell evaluation starts on its own.
+- **CPU:** the 16-cell local-search evaluation `eval_pcb16_0` has been running for 4.8 h. Its memory is steady at about 10 GB and it should finish around 03:20.
+- **Memory:** 24.4 of 60 GiB used. The kernel OOM-kill count is still 2, unchanged.
+- **Background helpers:** the main driver was still running. I restarted the results watcher and the resume watcher.
+
+**Decision:** I started no new work, because all 4 concurrent process slots are in use and every job is healthy. This is logged under "결정:" in `PROGRESS.md`.
+
+**What to check next round:**
+1. Results from the 10-cell evaluation of `bp_park_rlonly_s1`.
+2. Whether `eval_pcb16_0` finished or died. If it is done, `pcb16_1` comes next.
+
+RESULTS.md is unchanged because no experiment finished. `PROGRESS.md` and the round log are committed and pushed to `r2e/main`.
