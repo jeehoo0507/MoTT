@@ -1,5 +1,11 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정. **20:15 보충: chunk 판 ip16_0 첫 완주** (7.3 h, mem_guard peak pod 40.6 GiB, 중단 없음) — 남은 5파일도 같은 길.
-# PROGRESS (갱신 2026-11-06 01:12 UTC, 재개 라운드 61 — GPU `bp_park_rlonly_s1` RL 23:48~, CPU LS16 pcb16_0 5.1 h째, pod 23.4 GiB)
+# PROGRESS (갱신 2026-11-06 01:27 UTC, 재개 라운드 62 — GPU `bp_park_rlonly_s1` RL 23:48~, CPU LS16 pcb16_0 5.4 h째, pod 25.4 GiB)
+
+## 재개 라운드 62 (2026-11-06 01:23~ UTC)
+- 상태 (01:26): GPU **B1 `bp_park_rlonly_s1`** RL만 (23:48~, it 200 / 5088 s, val fail pcb 0.94 / pkg 0.81 / ip 0.31, λ 22.39, GPU peak 16.3 GB, resume 체크포인트 it 191 정상; 끝 ~01:50 → side_slot 10칸 평가 자동). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 5.4 h째, worker rss 11.1 GB, 100 % CPU; ~03:20 예상) + 학습 정확 검사 2; 4번째 칸 side_slot 대기. pod 25.4 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
+- 끝난 실험 없음 (라운드 61 뒤 15 분) → RESULTS 변경 없음.
+- 결정: 큐·설정 그대로, 새 작업 띄우지 않음 — 이유: 라운드 58~61과 같음 (동시 4개 한도 꽉 참, 모두 정상, 새 지시·근거 없음).
+- 할 일 (다음): 라운드 58 목록 그대로 — (1) `bp_park_rlonly_s1` 평가 (~01:50~) → 나머지 B1 3 run (자동). (2) LS16 pcb16_0 (~03:20) 끝/죽음 확인 → `ls16r pcb16_1`. (3) LS16 뒤 r2pk_s2 규모 평가. (4) 12:00 UTC 뒤 GPU 새 학습 없음 기본; DAILY 다음 11/07 00:xx UTC.
 
 ## 재개 라운드 61 (2026-11-06 01:07~ UTC)
 - 상태 (01:10): GPU **B1 `bp_park_rlonly_s1`** RL만 (23:48~, it 175 / 4422 s, val fail 0.16, λ 22.21, GPU peak 16.1 GB, resume 체크포인트 it 146 정상; 끝 ~01:50 → side_slot 10칸 평가 자동). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 5.1 h째, worker rss 10.0 GB 평평, 100 % CPU; ~03:20 예상) + 학습 정확 검사 2; 4번째 칸 side_slot 대기. pod 23.4 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).

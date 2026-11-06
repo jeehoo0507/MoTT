@@ -15,3 +15,7 @@ PROGRESS.md를 갱신해 커밋했고 (`2225e14`), `r2e/main`에 push해 원격�
 1. `bp_park_rlonly_s1` 평가 결과를 확인합니다. 나머지 B1 3 run은 자동으로 이어집니다.
 2. LS16 pcb16_0이 끝나거나 죽었는지 확인한 뒤 `ls16r pcb16_1`을 넣습니다.
 3. LS16이 끝나면 r2pk_s2 규모 평가를 돌립니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2225e14..8060d02  main -> main
