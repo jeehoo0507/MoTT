@@ -11,8 +11,36 @@ if command -v codex >/dev/null; then
 else
   codex_bin="$HOME/.local/share/r2e-codex/node_modules/.bin/codex"
   if [ ! -x "$codex_bin" ]; then
-    command -v npm >/dev/null || { echo "npm 또는 Codex CLI가 필요합니다. 기존 관리/실험은 변경하지 않았습니다."; exit 1; }
-    npm install --prefix "$HOME/.local/share/r2e-codex" @openai/codex
+    if command -v npm >/dev/null; then
+      npm install --prefix "$HOME/.local/share/r2e-codex" @openai/codex
+    else
+      echo "npm 없이 공식 Linux Codex 실행 파일을 설치합니다."
+      .venv/bin/python - "$codex_bin" <<'INSTALL_PY'
+import os, platform, shutil, subprocess, sys, tarfile, tempfile, urllib.request
+from pathlib import Path
+if sys.platform!='linux':raise SystemExit('Native fallback is Linux only; nothing switched')
+arch={'x86_64':'x86_64','amd64':'x86_64','aarch64':'aarch64','arm64':'aarch64'}.get(platform.machine().lower())
+if arch is None:raise SystemExit('Unsupported architecture; nothing switched')
+name=f'codex-{arch}-unknown-linux-musl'
+url=f'https://github.com/openai/codex/releases/latest/download/{name}.tar.gz'
+dest=Path(sys.argv[1]);dest.parent.mkdir(parents=True,exist_ok=True)
+with tempfile.TemporaryDirectory(prefix='r2e-codex-install-') as tmp:
+    archive=Path(tmp)/'codex.tar.gz'
+    if shutil.which('curl'):
+        subprocess.run(['curl','-fL','--retry','3','--connect-timeout','20','--max-time','240','-o',str(archive),url],check=True)
+    else:
+        request=urllib.request.Request(url,headers={'User-Agent':'R2E-Codex-Installer'})
+        with urllib.request.urlopen(request,timeout=240) as response,archive.open('wb') as f:shutil.copyfileobj(response,f)
+    with tarfile.open(archive,'r:gz') as tar:
+        matches=[m for m in tar.getmembers() if m.isfile() and Path(m.name).name==name]
+        if len(matches)!=1:raise SystemExit('Official archive binary not found; nothing switched')
+        source=tar.extractfile(matches[0]);assert source is not None
+        staged=dest.with_name(dest.name+'.installing')
+        with staged.open('wb') as f:shutil.copyfileobj(source,f)
+        staged.chmod(0o755);staged.replace(dest)
+print('Installed official Codex binary:',dest)
+INSTALL_PY
+    fi
   fi
 fi
 "$codex_bin" --version

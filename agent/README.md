@@ -58,6 +58,7 @@ tmux kill-session -t agent    # 즉시 종료
 새 코드는 자동 main 병합 없이 전용 branch로 push한다. 원본 Python 실험/큐는 변경하지 않는다.
 코드·데이터 입력은 worktree로 복사하며 원본 runs에 대한 symlink는 만들지 않는다.
 `.venv`만 원본 환경을 읽도록 연결하며 새 환경 설치·업데이트는 에이전트에 금지한다.
+npm이 없으면 공식 openai/codex Linux musl 실행 파일을 사용자 전용 경로에 설치한다.
 서버 Codex 로그인이 필요하면 설치기가 device-auth를 실행하므로 한 번 브라우저에서 로그인한다.
 관리 루프는 `agent/STOP`과 기존 종료 날짜를 존중한다.
 공식 실행/인증 문서: https://developers.openai.com/codex/noninteractive 및 https://developers.openai.com/codex/auth
