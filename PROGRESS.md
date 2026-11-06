@@ -1,5 +1,11 @@
 STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정. **20:15 보충: chunk 판 ip16_0 첫 완주** (7.3 h, mem_guard peak pod 40.6 GiB, 중단 없음) — 남은 5파일도 같은 길.
-# PROGRESS (갱신 2026-11-06 00:05 UTC, 재개 라운드 57 끝 — GPU `bp_park_rlonly_s1` RL 23:50~, CPU LS16 pcb16_0 4 h째, pod 23.5 GiB)
+# PROGRESS (갱신 2026-11-06 00:30 UTC, 재개 라운드 58 — GPU `bp_park_rlonly_s1` RL 23:48~, CPU LS16 pcb16_0 4.3 h째, pod 24.0 GiB)
+
+## 재개 라운드 58 (2026-11-06 00:19~ UTC)
+- 상태 (00:25): GPU **B1 `bp_park_rlonly_s1`** RL만 (23:48~, it 75 / 1717 s, val fail 0.04, λ 21.35, GPU peak 14.2 GB, it 53에서 resume 체크포인트 한 번 — 정상 이어짐; 끝 ~01:50 → side_slot 10칸 평가 자동). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 4.3 h째, worker rss 10.0 GB 평평, 100 % CPU; ip16_0 때 7.3 h → ~03:20 예상) + 학습 정확 검사 2; 4번째 칸 side_slot 대기 (LS16 게이트). pod 24.0 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
+- 끝난 실험 없음 (라운드 57 끝 뒤) → RESULTS 변경 없음.
+- 결정: 큐·설정 그대로, 새 CPU 작업 띄우지 않음 — 이유: 동시 프로세스가 이미 한도 4 (LS 1 + 학습 1 + 정확 검사 2), 도는 작업 모두 정상, 새 지시·새 근거 없음, 11/6 12:00 UTC 새 시도 마감 전 P4 후보 없음 (라운드 57 판단 그대로).
+- 할 일 (다음): (1) `bp_park_rlonly_s1` 평가 (~01:50~) → `bp_park_rlonly_s2` → `bm_manoharan_s1/_s2` (~07:45) → 재구현 seed 표 완성 (자동). (2) LS16 pcb16_0 (~03:20 예상) 끝/죽음 확인 → 다음 `ls16r pcb16_1`. (3) LS16 뒤 r2pk_s2 규모 평가 8파일. (4) 12:00 UTC 뒤 GPU 새 학습 없음 기본; DAILY 다음 11/07 00:xx UTC.
 
 ## 재개 라운드 57 (2026-11-05 20:58~ UTC)
 - 상태 (21:50): GPU **B1 `bm_manoharan_rlonly_l20_s2`** RL만 (21:47~, 끝 ~23:47 → side_slot 평가). `bp_park_s2_rl` 학습 끝 (RL 175 iter / 1.27 h, best it 100 score 2.537, teacher 교체 0, GPU peak 16.2 GB) → side_slot **10칸 평가 21:49~** (seed 1 때 82 분 → ~23:10). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 1 h 50 분째, worker rss 8.9 GB 평평) + 학습 정확 검사 2 + side_slot 평가. pod 25.1 GiB / 60, oom_kill 2. `ensure_running`: report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
