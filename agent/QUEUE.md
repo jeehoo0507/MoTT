@@ -227,3 +227,6 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 - This supersedes the earlier no-overlap instruction only for a **paused** LS16: its memory remains allocated, so start only below 30 GiB; terminate the diagnostic itself above 42 GiB. The pilot replaces LS CPU work rather than adding an active worker.
 - Fixed first four cases from val_pkg10_0 and eval_pkg16_0, seed 0, all four arms, soft budgets 15/30 minutes and hard guards +5 minutes each. Output reports/peak_mask_priority_20261106, separate from the six full queued jobs and main metrics. Partial data are exploratory and may be incomplete; no success claim from missing arms.
 - User must run the provided command on server 1; publishing this file does not mean it has started.
+
+## 2026-11-06 — user: Delta-memory study is SERVER 2 ONLY
+- New docs/DELTA_MEMORY_PROTOCOL.md and scripts/server2_delta* implement a standalone matched study on maskedkd. Do not add these arms to server 1's queues or change its existing GPU schedule. Server-1 peak/mask diagnostics continue separately.
