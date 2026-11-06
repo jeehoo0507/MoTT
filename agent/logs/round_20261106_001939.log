@@ -15,3 +15,7 @@ Round 58 is done. Nothing finished since round 57, so RESULTS.md is unchanged. P
 - After the LS16 run, the remaining LS16 files and 8 more 16/20-cell evals of the final model (`r2pk_s2`).
 - After 12:00 UTC, no new GPU training by default.
 - Next DAILY.md is due 11/07 around 00:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   db4fe5c..09269fa  main -> main
