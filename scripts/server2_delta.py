@@ -401,6 +401,37 @@ def active_old_runner():
     return False
 
 
+def restart_waiting(a):
+    """Stop only this checkout's idle launcher so a new version can be started safely."""
+    status=Path(a.out)/'status.json'
+    info=json.loads(status.read_text())
+    if info.get('stage')!='waiting_existing_server2_run':
+        raise RuntimeError('Launcher is not waiting; no process stopped')
+    pid=int(info['pid']);proc=Path(f'/proc/{pid}')
+    args=[x.decode(errors='replace') for x in (proc/'cmdline').read_bytes().split(b'\0') if x]
+    if (proc/'cwd').resolve()!=ROOT or 'run' not in args or not any(Path(x).name=='server2_delta.py' for x in args):
+        raise RuntimeError('PID identity mismatch; no process stopped')
+    os.kill(pid,signal.SIGSTOP)
+    try:
+        for _ in range(100):
+            state=(proc/'stat').read_text().rsplit(')',1)[1].split()[0]
+            if state=='T':break
+            time.sleep(.02)
+        else:raise RuntimeError('Launcher did not pause; no termination attempted')
+        if json.loads(status.read_text()).get('stage')!='waiting_existing_server2_run' or (proc/f'task/{pid}/children').read_text().strip():
+            raise RuntimeError('Launcher started work; resuming it without termination')
+        os.kill(pid,signal.SIGTERM)
+    finally:
+        os.kill(pid,signal.SIGCONT)
+    for _ in range(100):
+        if not proc.exists():break
+        state=(proc/'stat').read_text().rsplit(')',1)[1].split()[0]
+        if state=='Z':break
+        time.sleep(.05)
+    else:raise RuntimeError('Waiter did not exit; do not launch a duplicate')
+    print(f'Stopped idle Delta launcher {pid} only. Original FRESH runner untouched.',flush=True)
+
+
 def run(a):
     out,_,_=paths(a);(out/'logs').mkdir(exist_ok=True)
     with (out/'runner.lock').open('w') as lock:
@@ -449,7 +480,7 @@ def run(a):
 
 
 def parse():
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['run','prepare','train','evaluate','report','status'])
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['run','prepare','train','evaluate','report','status','restart_waiting'])
     defaults=dict(out='runs/delta_memory_v1',source_pool='',device='cuda',eval_device='cpu',seeds='0,1,2',
         arm='mott',seed=0,d=64,layers=3,heads=4,train_n=6,val_n=4,eval_n=6,max_steps=64,
         bc_updates=300,rl_updates=30,group=4,lr=.0003,aux_weight=.1,tbptt=8,checkpoint_every=25,rl_val_every=15)
