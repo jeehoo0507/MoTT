@@ -425,10 +425,13 @@ def restart_waiting(a):
         os.kill(pid,signal.SIGCONT)
     for _ in range(100):
         if not proc.exists():break
-        state=(proc/'stat').read_text().rsplit(')',1)[1].split()[0]
+        try:state=(proc/'stat').read_text().rsplit(')',1)[1].split()[0]
+        except FileNotFoundError:break
         if state=='Z':break
         time.sleep(.05)
     else:raise RuntimeError('Waiter did not exit; do not launch a duplicate')
+    receipt=ROOT/'agent/logs/s2_delta/runner.pid'
+    if receipt.exists() and receipt.read_text().strip()==str(pid):receipt.unlink()
     print(f'Stopped idle Delta launcher {pid} only. Original FRESH runner untouched.',flush=True)
 
 
