@@ -1,17 +1,8 @@
-이번 라운드는 **실행 도구 장애로 차단**됐습니다. 작업 명령과 최소 명령 `pwd`를 시도했지만, 두 번 모두 셸 실행 전에 같은 오류가 발생했습니다.
+2026-11-06 19:35 KST 기준, 이번 라운드는 **샌드박스 오류로 차단**됐습니다.
 
-```text
-failed to spawn code-mode host
-/home/coder/.local/share/r2e-codex/node_modules/.bin/codex-code-mode-host:
-No such file or directory (os error 2)
-```
+- 셸 명령 `pwd; rg --files …`와 `/bin/sh`의 `pwd` 모두 종료 코드 1: `bwrap: Failed to make / slave: Permission denied`
+- `apply_patch`로 `reports/pkg_base/last_round_sandbox_failure.json` 기록을 시도했으나 쓰기 실패. 저장소 루트의 대체 기록도 실패했습니다.
+- 문서·실험 결과를 읽지 못했고, 현재 GPU/CPU 상태와 큐 완료 여부도 확인하지 못했습니다.
+- 원본 파일·프로세스는 변경하지 않았습니다. 분석표·프로토콜·코드·smoke 검사·pilot은 미완료입니다.
 
-`last_round` 기록:
-
-- 파일 읽기 및 현재 프로세스·GPU·큐 확인: 수행 못함.
-- 원인 분석표, 비교 프로토콜, 코드, smoke 검사, pilot: 미완료.
-- `PROGRESS.md`와 `live_snapshot.json`: 갱신 못함.
-- 기존 실험·큐·파일 변경이나 프로세스 중단: 없음.
-- 새 실험 결과 및 개선을 뒷받침하는 증거: 없음.
-
-재개하려면 바깥 실행기에서 위 code-mode host 경로 또는 실행 환경을 복구해야 합니다. 환경 설치는 시도하지 않았습니다.
+실험 완료나 개선으로 보고하지 않습니다. 허용된 샌드박스 실행기가 복구돼야 증거 수집과 자원 확인부터 이어갈 수 있습니다.
