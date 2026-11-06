@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-06 00:00 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-06 02:15 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -19,6 +19,7 @@
 | bm_manoharan_rlonly_l20_s2_rl | – | 0.96 / 1.23 / 1.73 [50] | – | – | 0.00 / – / – [50] | – | – | 0.08 / 4.17 / 2.65 [50] | – | – |
 | bp_park_rl | – | 0.72 / 0.97 / 1.38 [50] | – | – | 0.46 / 4.86 / 1.13 [50] | – | – | 0.16 / 3.39 / 3.04 [50] | – | – |
 | bp_park_rlonly_rl | – | 0.12 / 6.37 / 9.99 [50] | – | – | 0.86 / 8.14 / 1.76 [50] | – | – | 0.86 / 7.05 / 4.87 [50] | – | – |
+| bp_park_rlonly_s1_rl | – | – | – | – | – | – | – | 0.76 / 6.40 / 4.92 [25] | – | – |
 | bp_park_s1_rl | – | 0.96 / 1.32 / 1.92 [50] | – | – | 0.48 / 4.84 / 1.28 [50] | – | – | 0.74 / 2.96 / 1.98 [50] | – | – |
 | bp_park_s2_rl | – | 0.98 / 1.28 / 1.80 [50] | – | – | 0.02 / 0.86 / 0.50 [50] | – | – | 0.64 / 1.20 / 0.84 [50] | – | – |
 | genetic | – | 0.40 / 1.02 / 2.37 [50] | – | – | 0.78 / 0.96 / 0.35 [50] | – | – | 0.42 / 0.88 / 0.62 [50] | – | – |
@@ -481,6 +482,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bm_manoharan_rlonly_l20_s2_rl | 50 | -0.74 [-0.84, -0.62] | 2.651 [1.727, 4.375] |
 | pkg 10 | bp_park_rl | 50 | -0.66 [-0.78, -0.52] | 3.040 [1.252, 6.016] |
 | pkg 10 | bp_park_rlonly_rl | 50 | +0.04 [-0.06, +0.16] | 4.873 [4.215, 5.672] |
+| pkg 10 | bp_park_rlonly_s1_rl | 25 | -0.04 [-0.24, +0.16] | 4.924 [4.134, 5.734] |
 | pkg 10 | bp_park_s1_rl | 50 | -0.08 [-0.24, +0.10] | 1.982 [1.681, 2.311] |
 | pkg 10 | bp_park_s2_rl | 50 | -0.18 [-0.34, -0.02] | 0.839 [0.646, 1.156] |
 | pkg 10 | genetic | 50 | -0.40 [-0.56, -0.24] | 0.623 [0.512, 0.746] |
@@ -978,6 +980,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bm_manoharan_rlonly_l20_s2_rl | 50 | -0.82 [-0.92, -0.68] | 4.173 [2.375, 7.000] |
 | pkg 10 | bp_park_rl | 50 | -0.74 [-0.84, -0.62] | 3.392 [2.206, 4.938] |
 | pkg 10 | bp_park_rlonly_rl | 50 | -0.04 [-0.14, +0.06] | 7.048 [6.206, 7.918] |
+| pkg 10 | bp_park_rlonly_s1_rl | 25 | -0.12 [-0.32, +0.08] | 6.400 [5.038, 7.893] |
 | pkg 10 | bp_park_s1_rl | 50 | -0.16 [-0.30, -0.02] | 2.964 [2.514, 3.427] |
 | pkg 10 | bp_park_s2_rl | 50 | -0.26 [-0.42, -0.10] | 1.198 [0.937, 1.638] |
 | pkg 10 | genetic | 50 | -0.48 [-0.62, -0.32] | 0.881 [0.789, 0.975] |
@@ -2126,6 +2129,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bm_manoharan_rlonly_l20_s2_rl | 50 (0, 1) | 0.08 | 29.50 | 4.173 | 2.651 | 2.864 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s2_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_s2_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s2_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_s2_rl.json` |
 | bp_park_rl | 50 (0, 1) | 0.16 | 26.38 | 3.392 | 3.040 | 5.519 | `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_0__bp_park_rl.json`, `runs/2026-10-29/bp_park_rl/eval/eval_pkg10_1__bp_park_rl.json` |
 | bp_park_rlonly_rl | 50 (0, 1) | 0.86 | 52.74 | 7.048 | 4.873 | 4.991 | `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pkg10_0__bp_park_rlonly_rl.json`, `runs/2026-10-29/bp_park_rlonly_rl/eval/eval_pkg10_1__bp_park_rlonly_rl.json` |
+| bp_park_rlonly_s1_rl | 25 (1) | 0.76 | 51.79 | 6.400 | 4.924 | 11.150 | `runs/2026-10-29/bp_park_rlonly_s1_rl/eval/eval_pkg10_1__bp_park_rlonly_s1_rl.json` |
 | bp_park_s1_rl | 50 (0, 1) | 0.74 | 24.78 | 2.964 | 1.982 | 9.774 | `runs/2026-10-29/bp_park_s1_rl/eval/eval_pkg10_0__bp_park_s1_rl.json`, `runs/2026-10-29/bp_park_s1_rl/eval/eval_pkg10_1__bp_park_s1_rl.json` |
 | bp_park_s2_rl | 50 (0, 1) | 0.64 | 11.75 | 1.198 | 0.839 | 10.977 | `runs/2026-10-29/bp_park_s2_rl/eval/eval_pkg10_0__bp_park_s2_rl.json`, `runs/2026-10-29/bp_park_s2_rl/eval/eval_pkg10_1__bp_park_s2_rl.json` |
 | genetic | 50 (0, 1) | 0.42 | 7.14 | 0.881 | 0.623 | 31.824 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__genetic.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__genetic.json` |
@@ -2867,6 +2871,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bp_park_rl | 실패 | 42 | 48.7 | 0.00 | 0.00 | 1.00 |
 | pkg 10 | bp_park_rlonly_rl | 성공 | 43 | 52.7 | 0.00 | 1.00 | 0.00 |
 | pkg 10 | bp_park_rlonly_rl | 실패 | 7 | 70.9 | 0.00 | 1.00 | 0.00 |
+| pkg 10 | bp_park_rlonly_s1_rl | 성공 | 19 | 51.8 | 0.10 | 0.00 | 0.90 |
+| pkg 10 | bp_park_rlonly_s1_rl | 실패 | 6 | 66.5 | 0.71 | 0.00 | 0.29 |
 | pkg 10 | bp_park_s1_rl | 성공 | 37 | 24.8 | 0.62 | 0.00 | 0.38 |
 | pkg 10 | bp_park_s1_rl | 실패 | 13 | 32.2 | 0.37 | 0.00 | 0.63 |
 | pkg 10 | bp_park_s2_rl | 성공 | 32 | 11.8 | 0.48 | 0.06 | 0.46 |
@@ -3284,6 +3290,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bp_park_s2_rl | 50 | 0.02 | 0.86 | 0.50 | 10.190 |
 | pkg 10 | bp_park_rl | 50 | 0.16 | 3.39 | 3.04 | 5.519 |
 | pkg 10 | bp_park_rlonly_rl | 50 | 0.86 | 7.05 | 4.87 | 4.991 |
+| pkg 10 | bp_park_rlonly_s1_rl | 25 | 0.76 | 6.40 | 4.92 | 11.150 |
 | pkg 10 | bp_park_s1_rl | 50 | 0.74 | 2.96 | 1.98 | 9.774 |
 | pkg 10 | bp_park_s2_rl | 50 | 0.64 | 1.20 | 0.84 | 10.977 |
 
@@ -3333,7 +3340,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | `bp_park` | 0.16 / 0.74 / 0.64 | 0.51 | +0.62 / +0.14 / +0.16 | +0.307 [+0.213, +0.393] (3 seed) | r2pk 높음 |
 | ip 10 | `bp_park_rlonly` | 0.12 / – / – | – | +0.86 / – / – | +0.860 [+0.760, +0.940] (1 seed) | r2pk 높음 |
 | pcb 10 | `bp_park_rlonly` | 0.86 / – / – | – | +0.04 / – / – | +0.040 [-0.100, +0.180] (1 seed) | 구분 안 됨 |
-| pkg 10 | `bp_park_rlonly` | 0.86 / – / – | – | -0.08 / – / – | -0.080 [-0.220, +0.060] (1 seed) | 구분 안 됨 |
+| pkg 10 | `bp_park_rlonly` | 0.86 / 0.76 / – | – | -0.08 / +0.08 / – | -0.027 [-0.160, +0.093] (2 seed) | 구분 안 됨 |
 | ip 10 | `bm_manoharan` | 0.00 / – / – | – | +0.98 / – / – | +0.980 [+0.940, +1.000] (1 seed) | r2pk 높음 |
 | pcb 10 | `bm_manoharan` | 0.00 / – / – | – | +0.90 / – / – | +0.900 [+0.820, +0.980] (1 seed) | r2pk 높음 |
 | pkg 10 | `bm_manoharan` | 0.00 / – / – | – | +0.78 / – / – | +0.780 [+0.660, +0.880] (1 seed) | r2pk 높음 |
@@ -4184,7 +4191,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | bm_manoharan_rlonly_rl | 0 / – | 0.0 | – | 0.0 | – | 1.2 | – |
 | bp_park_rl | 44 / 199 | 6.0 | 0.72 | 3.0 | 0.46 | 11.8 | 0.16 |
 | bp_park_rlonly_rl | 107 / 296 | 7.3 | 0.12 | 1.0 | 0.86 | 7.7 | 0.86 |
-| bp_park_rlonly_s1_rl | 0 / – | 10.0 | – | – | – | – | – |
+| bp_park_rlonly_s1_rl | 119 / 281 | 7.7 | – | 6.0 | – | 4.6 | 0.76 |
 | bp_park_s1_rl | 43 / 184 | 9.0 | 0.96 | 6.5 | 0.48 | 11.0 | 0.74 |
 | bp_park_s2_rl | 37 / 175 | 10.0 | 0.98 | 6.0 | 0.02 | 9.3 | 0.64 |
 | lo_ip_r0_rl | 187 / 300 | – | 0.56 | 6.8 | 1.00 | 9.9 | 0.76 |
@@ -4291,6 +4298,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/bp_park_distill | coord / park_am | distill | 2210 | 0.77 | val_pcb10_0: 7.99/0.62, val_pkg10_0: 5.67/0.50, val_ip10_0: 0.75/0.25 | `runs/2026-10-29/bp_park_distill/metrics.json` |
 | runs/2026-10-29/bp_park_rl | coord / park_am | rl | 199 | 1.27 | val_pcb10_0: 3.09/0.88, val_pkg10_0: 1.67/0.94, val_ip10_0: 0.65/0.31 | `runs/2026-10-29/bp_park_rl/metrics.json` |
 | runs/2026-10-29/bp_park_rlonly_rl | coord / park_am | rl | 296 | 2.03 | val_pcb10_0: 7.84/0.56, val_pkg10_0: 13.40/0.69, val_ip10_0: –/0.94 | `runs/2026-10-29/bp_park_rlonly_rl/metrics.json` |
+| runs/2026-10-29/bp_park_rlonly_s1_rl | coord / park_am | rl | 281 | 2.02 | val_pcb10_0: 15.33/0.94, val_pkg10_0: 17.56/0.81, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bp_park_rlonly_s1_rl/metrics.json` |
 | runs/2026-10-29/bp_park_s1_distill | coord / park_am | distill | 2200 | 0.77 | val_pcb10_0: 2.41/0.69, val_pkg10_0: 6.07/0.44, val_ip10_0: 0.79/0.12 | `runs/2026-10-29/bp_park_s1_distill/metrics.json` |
 | runs/2026-10-29/bp_park_s1_rl | coord / park_am | rl | 184 | 1.27 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bp_park_s1_rl/metrics.json` |
 | runs/2026-10-29/bp_park_s2_distill | coord / park_am | distill | 2257 | 0.77 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bp_park_s2_distill/metrics.json` |
