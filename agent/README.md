@@ -70,3 +70,8 @@ Codex 관리 모델 기본값은 `gpt-6.1-sol`, reasoning effort는 `high`다.
 
 네이티브 CLI 설치는 같은 release의 `codex-code-mode-host`와 `bwrap`도 함께 설치한다.
 누락된 서버는 `scripts/server1_codex_repair.sh`로 복구하며, 학습/평가가 아닌 누락 오류가 확인된 Codex CLI만 재시작한다.
+
+컨테이너 mount 오류 복구는 `scripts/server1_codex_sandbox_fix.sh`로 진단한다.
+기존 workspace-write 정책 그대로, 원래 실행 및 별도 비특권 user/mount namespace 실행만 시험한다.
+작업 폴더 안 쓰기 성공과 밖 쓰기 차단을 둘 다 확인한 경우에만 backend를 저장하고 Codex를 다시 호출한다.
+호스트가 두 경로 모두 거부하면 API 호출 없이 차단 상태를 유지한다. 호스트 정책 변경이나 기존 작업 중단은 하지 않는다.

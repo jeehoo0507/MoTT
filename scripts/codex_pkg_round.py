@@ -75,6 +75,17 @@ def main():
          '--config','model_reasoning_effort='+json.dumps(effort),
          '--sandbox','workspace-write','--cd',str(WORK),
          '--output-last-message',str(report/'last_round.md'),'-']
+    sandbox_prefix=[]
+    backend=ORIGINAL/'agent/CODEX_SANDBOX_BACKEND.json'
+    if backend.exists():
+        settings=json.loads(backend.read_text())
+        prefix=settings.get('prefix')
+        valid_prefix=(prefix==[] or (isinstance(prefix,list) and len(prefix)==7 and
+            Path(prefix[0]).name=='unshare' and prefix[1:]==['--user','--map-root-user','--mount','--propagation','private','--']))
+        if not settings.get('verified') or settings.get('policy')!='workspace-write' or not valid_prefix:
+            raise ValueError('Invalid/unverified sandbox backend; no model invoked')
+        sandbox_prefix=prefix
+        cmd=prefix+cmd
     print(f'Codex manager model={model} effort={effort}',flush=True)
     status=ORIGINAL/'agent/CODEX_STATUS.json'
     runtime=Path(a.codex).resolve().parent
@@ -82,7 +93,7 @@ def main():
     if not host.is_file() or not os.access(host,os.X_OK):
         status.write_text(json.dumps(dict(stage='blocked_runtime',missing=str(host),model=model)))
         raise RuntimeError('Missing Codex code-mode host; run server1_codex_repair.sh before another API round')
-    status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),model=model,reasoning_effort=effort,worktree=str(WORK),log=str(logfile))))
+    status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),model=model,reasoning_effort=effort,sandbox_prefix=sandbox_prefix,worktree=str(WORK),log=str(logfile))))
     with logfile.open('a') as log:
         try:
             rc=subprocess.run(cmd,input=prompt,text=True,stdout=log,stderr=subprocess.STDOUT,timeout=1500,
@@ -102,7 +113,7 @@ def main():
         publish='pushed '+branch if pushed.returncode==0 else 'push failed: '+pushed.stderr[-400:]
     progress=WORK/'PROGRESS.md'
     if progress.exists():shutil.copyfile(progress,ORIGINAL/'agent/CODEX_PROGRESS.md')
-    status.write_text(json.dumps(dict(stage='round_done',rc=rc,model=model,reasoning_effort=effort,worktree=str(WORK),publish=publish,changed_files=files,log=str(logfile)),indent=2))
+    status.write_text(json.dumps(dict(stage='round_done',rc=rc,model=model,reasoning_effort=effort,sandbox_prefix=sandbox_prefix,worktree=str(WORK),publish=publish,changed_files=files,log=str(logfile)),indent=2))
     print(f'Codex round rc={rc}; {publish}; log={logfile}',flush=True)
 
 
