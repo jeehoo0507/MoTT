@@ -11,3 +11,7 @@ Round 63 finished. Nothing new came in from QUEUE.md or the remote, so the queue
 **Not done:** No experiment produced a result this round, so RESULTS.md is unchanged. I started nothing new because all four concurrent process slots are in use and everything is running normally; this decision is logged in PROGRESS.md.
 
 **Next round:** read the `bp_park_rlonly_s1` eval result and record it in PROGRESS.md. Also check whether `eval_pcb16_0` finished or died. The next DAILY.md is due 11/07 00:xx UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   01e207b..9c7c0d9  main -> main
