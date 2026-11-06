@@ -8,3 +8,7 @@ Round 62 was a status check only. Nothing finished, no new instructions came in,
 - **Records:** RESULTS.md is unchanged because nothing finished. I added a round 62 entry to PROGRESS.md with a "결정:" line explaining why the queue stays as it is. I committed it and pushed to `r2e main` (`96fd83a`). The push printed `gh: not found` errors from the credential helper, but the remote now points at `96fd83a`, so it went through.
 
 Next round: check the evaluation that starts after this training run, and confirm whether `eval_pcb16_0` finished or died. Then the next file in the local-search queue, `eval_pcb16_1`, starts.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   96fd83a..03a6b3d  main -> main
