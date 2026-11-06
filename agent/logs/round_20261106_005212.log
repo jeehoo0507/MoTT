@@ -15,3 +15,7 @@ Round 60 finished: nothing has completed since round 59, and there are no new in
 2. Whether `eval_pcb16_0` finished or died. If it is done, `pcb16_1` comes next.
 
 RESULTS.md is unchanged because no experiment finished. `PROGRESS.md` and the round log are committed and pushed to `r2e/main`.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   03a64f4..f9ca533  main -> main
