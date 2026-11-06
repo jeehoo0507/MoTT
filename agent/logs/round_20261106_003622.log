@@ -17,3 +17,7 @@ Round 59 is done. It's a check-in round with no new results. PROGRESS.md is upda
 2. Check whether the LS16 job finished or died, then run `ls16r pcb16_1`.
 3. After LS16, run the r2pk_s2 scale evaluation.
 4. After 12:00 UTC no new GPU training starts by default. The next DAILY.md is due 11/07 around 00:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ce2fea5..f2bbc97  main -> main
