@@ -32,6 +32,8 @@ class ManagerTests(unittest.TestCase):
             fake=root/'fake_codex'
             fake.write_text('#!'+sys.executable+'\nimport sys\nfrom pathlib import Path\nsys.stdin.read()\nw=Path(sys.argv[sys.argv.index("--cd")+1])\n(w/"PROGRESS.md").write_text("reported status\\n")\n(w/"scripts/pkg_generated.py").write_text("# isolated new module\\n")\n(w/"scripts/unrelated.py").write_text("# excluded from publication\\n")\n'+('(w/"train.py").write_text("changed\\n")\n' if modify_protected else ''))
             fake.chmod(0o755)
+            (root/'codex-code-mode-host').write_text('# test runtime fixture')
+            (root/'codex-code-mode-host').chmod(0o755)
             with patch.object(m,'ROOT',original),patch.object(m,'ORIGINAL',original),patch.object(m,'WORK',work),patch.object(m,'snapshot',return_value={'processes':[]}),patch.object(sys,'argv',['manager','--codex',str(fake)]):
                 if modify_protected:
                     with self.assertRaisesRegex(RuntimeError,'Protected'):m.main()

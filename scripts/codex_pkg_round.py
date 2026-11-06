@@ -67,10 +67,16 @@ def main():
          '--output-last-message',str(report/'last_round.md'),'-']
     print(f'Codex manager model={model} effort={effort}',flush=True)
     status=ORIGINAL/'agent/CODEX_STATUS.json'
+    runtime=Path(a.codex).resolve().parent
+    host=runtime/'codex-code-mode-host'
+    if not host.is_file() or not os.access(host,os.X_OK):
+        status.write_text(json.dumps(dict(stage='blocked_runtime',missing=str(host),model=model)))
+        raise RuntimeError('Missing Codex code-mode host; run server1_codex_repair.sh before another API round')
     status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),model=model,reasoning_effort=effort,worktree=str(WORK),log=str(logfile))))
     with logfile.open('a') as log:
         try:
-            rc=subprocess.run(cmd,input=prompt,text=True,stdout=log,stderr=subprocess.STDOUT,timeout=1500).returncode
+            rc=subprocess.run(cmd,input=prompt,text=True,stdout=log,stderr=subprocess.STDOUT,timeout=1500,
+                env=dict(os.environ,PATH=str(runtime)+os.pathsep+os.environ.get('PATH',''))).returncode
         except subprocess.TimeoutExpired:rc=124
     changed=[name for name,digest in before.items() if not (WORK/name).exists() or hashlib.sha256((WORK/name).read_bytes()).hexdigest()!=digest]
     if changed:raise RuntimeError(f'Protected worktree files changed; publication stopped: {changed}')

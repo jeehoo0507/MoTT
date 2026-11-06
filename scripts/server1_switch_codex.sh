@@ -52,6 +52,9 @@ fi
 # Fetch into a dedicated ref; never rebase, reset, stash, or checkout the live experiment folder.
 git fetch https://github.com/jeehoo0507/R2E.git main:refs/remotes/codex-bootstrap/main
 bootstrap_ref=$(git rev-parse refs/remotes/codex-bootstrap/main)
+git show "$bootstrap_ref:scripts/codex_install_helpers.py" > scripts/codex_install_helpers.py.installing
+mv scripts/codex_install_helpers.py.installing scripts/codex_install_helpers.py
+.venv/bin/python scripts/codex_install_helpers.py --codex "$codex_bin"
 bootstrap_backup="agent/backups/codex_$(date -u +%Y%m%d_%H%M%S)_$$"
 mkdir -p "$bootstrap_backup"
 export R2E_CODEX_BOOTSTRAP_REF="$bootstrap_ref"

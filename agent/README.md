@@ -67,3 +67,6 @@ Codex 관리 모델 기본값은 `gpt-6.1-sol`, reasoning effort는 `high`다.
 서버의 `agent/CODEX_MODEL`, `agent/CODEX_EFFORT` 파일이 있으면 다음 라운드부터 그 값이 우선한다.
 실제 요청 모델/추론 수준은 CODEX_STATUS.json과 codex_loop.log에 기록한다.
 계정에서 요청 모델을 지원하지 않으면 오류를 기록하며 다른 모델로 조용히 대체하지 않는다.
+
+네이티브 CLI 설치는 같은 release의 `codex-code-mode-host`와 `bwrap`도 함께 설치한다.
+누락된 서버는 `scripts/server1_codex_repair.sh`로 복구하며, 학습/평가가 아닌 누락 오류가 확인된 Codex CLI만 재시작한다.
