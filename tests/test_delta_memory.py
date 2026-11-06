@@ -92,5 +92,21 @@ class DeltaTests(unittest.TestCase):
             self.assertEqual(c['per_seed'][0]['joint_success_n'],1)
             self.assertEqual(c['per_seed'][0]['count_difference'],-2.)
 
+    def test_gpu_gate_requires_all_six_valid_training_artifacts(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            names=('r2pk','r2pk_s1','r2pk_s2','r3pk','r3pk_s1','r3pk_s2')
+            for name in names:
+                path=root/'runs/2026-11-05fresh'/f'{name}_rl'
+                path.mkdir(parents=True)
+                (path/'metrics.json').write_text('{}')
+                (path/'best.pt').touch()
+            self.assertTrue(r.old_training_complete(root))
+            (path/'metrics.json').write_text('partial')
+            self.assertFalse(r.old_training_complete(root))
+            (path/'metrics.json').write_text('{}')
+            (path/'best.pt').unlink()
+            self.assertFalse(r.old_training_complete(root))
+
 
 if __name__=='__main__':unittest.main()

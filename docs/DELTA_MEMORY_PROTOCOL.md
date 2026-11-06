@@ -96,8 +96,10 @@ or superiority test for a larger follow-up must be fixed before fresh follow-up 
 ## Run and isolation
 
 Use a separate checkout on maskedkd, not server 1. Launcher rejects the loop server. It waits
-for a live `server2_once.py run` to finish, then requires >=12 GiB GPU headroom; it never kills
-existing jobs. One new GPU run at a time, no new parallel CPU worker pools. Old FRESH results
+for all six original FRESH GPU trainings to have valid metrics and checkpoints, then requires >=12 GiB GPU headroom; it never kills
+existing jobs. Remaining original FRESH CPU evaluations may continue concurrently. Timing during
+that overlap is exploratory; a clean repeated benchmark is required for a speed claim.
+One new GPU run at a time, no new parallel CPU worker pools. Old FRESH results
 are only read for pool definitions. Outputs: runs/delta_memory_v1; archive:
 runs/delta_memory_v1_results.tgz. No automatic Git push or login is required.
 

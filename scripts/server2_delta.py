@@ -377,12 +377,27 @@ def report(a):
     print('REPORT',out/'summary.csv','ARCHIVE',archive,flush=True)
 
 
+def old_training_complete(root):
+    names=('r2pk','r2pk_s1','r2pk_s2','r3pk','r3pk_s1','r3pk_s2')
+    for name in names:
+        folder=Path(root)/'runs/2026-11-05fresh'/f'{name}_rl'
+        try: metrics=json.loads((folder/'metrics.json').read_text())
+        except (OSError,ValueError):return False
+        if not isinstance(metrics,dict) or not (folder/'best.pt').is_file():return False
+    return True
+
+
 def active_old_runner():
     if not Path('/proc').exists():return False
     for p in Path('/proc').glob('[0-9]*/cmdline'):
         try:args=[x.decode(errors='replace') for x in p.read_bytes().split(b'\0') if x]
         except OSError:continue
-        if any(Path(x).name=='server2_once.py' for x in args) and 'run' in args:return True
+        if any(Path(x).name=='server2_once.py' for x in args) and 'run' in args:
+            # Once all six GPU runs have completed, the old runner only schedules CPU evals.
+            # It is safe to release the GPU gate without terminating that runner.
+            try: root=(p.parent/'cwd').resolve(strict=True)
+            except OSError:return True
+            if '--fresh' not in args or not old_training_complete(root):return True
     return False
 
 
@@ -393,7 +408,7 @@ def run(a):
         # Never share the GPU with the original fresh experiment.
         while active_old_runner():
             save_json(out/'status.json',dict(stage='waiting_existing_server2_run',pid=os.getpid()))
-            print('WAIT original server2_once.py runner is active; nothing interrupted',flush=True)
+            print('WAIT original server-2 GPU training not complete; nothing interrupted',flush=True)
             time.sleep(60)
         if a.device.startswith('cuda'):
             if not torch.cuda.is_available():raise RuntimeError('CUDA unavailable')
