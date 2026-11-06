@@ -152,20 +152,31 @@ def run(a):
                  git=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                  protocol_sha256=sha(ROOT/'docs/REPORT_VALIDATION_PROTOCOL.md'))
         p=out/'config.json'
-        if p.exists() and json.loads(p.read_text())!=cfg:raise ValueError('Frozen configuration changed; use another output directory')
-        save(p,cfg)
+        if p.exists():
+            frozen=json.loads(p.read_text())
+            # Completion mode changes scheduling only; preserve the original provenance.
+            keys=('n','large_n','inbox','transport','hours') if a.finish_all else tuple(cfg)
+            if any(frozen.get(k)!=cfg[k] for k in keys):raise ValueError('Frozen configuration changed; use another output directory')
+        else:save(p,cfg)
+        if a.finish_all:
+            save(out/'completion_policy.json',dict(finish_all=True,activated=time.time(),
+                code_sha256=sha(__file__),original_config_sha256=sha(p),case_timeout=None))
         if not (out/'clock.json').exists():save(out/'clock.json',dict(deadline=time.time()+a.hours*3600))
-        deadline=json.loads((out/'clock.json').read_text())['deadline']
+        deadline=None if a.finish_all else json.loads((out/'clock.json').read_text())['deadline']
+        def expired():return deadline is not None and time.time()>=deadline
         errors=json.loads((out/'errors.json').read_text()) if (out/'errors.json').exists() else {}
+        if a.finish_all and errors:
+            with (out/'retry_history.jsonl').open('a') as f:f.write(json.dumps(dict(time=time.time(),errors=errors))+'\n')
+            errors={};save(out/'errors.json',errors)
         received=None;all_cases=cases(a.n,a.large_n);last_fetch=0.
         save(out/'case_plan.json',all_cases)
         def state(stage,**kw):
             save(out/'status.json',dict(stage=stage,pid=os.getpid(),updated=time.time(),deadline=deadline,**kw))
             print(json.dumps(dict(stage=stage,**kw),ensure_ascii=False),flush=True)
         def execute(cmd,key):
-            while memory()>28 and time.time()<deadline:
+            while memory()>28 and not expired():
                 state('waiting_memory',memory_gib=memory());time.sleep(30)
-            if time.time()>=deadline:return False
+            if expired():return False
             state('running',job=key)
             env=dict(os.environ,OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',CERTIFY_WORKERS='1',CUDA_VISIBLE_DEVICES='')
             with (out/'logs'/f'{key}.log').open('a') as log:
@@ -174,14 +185,14 @@ def run(a):
                 try:
                     while child.poll() is None:
                         if memory()>32:reason='memory';stop_own_child(child);break
-                        if time.monotonic()-start>900 or time.time()>deadline:reason='timeout';stop_own_child(child);break
+                        if (not a.finish_all and time.monotonic()-start>900) or expired():reason='timeout';stop_own_child(child);break
                         time.sleep(.5)
                 except BaseException:stop_own_child(child);raise
             if reason=='memory':time.sleep(30);return False
             if child.returncode or reason:
                 errors[key]=dict(rc=child.returncode,reason=reason);save(out/'errors.json',errors)
             report(a);return True
-        while time.time()<deadline:
+        while not expired():
             if a.transport=='git' and time.time()-last_fetch>120:
                 last_fetch=time.time()
                 try:fetch_bundle(out/'download',a.inbox)
@@ -223,6 +234,10 @@ def run(a):
                 if chosen:break
             if chosen:execute(*chosen);continue
             present={m['id'] for m in models};expected={f'{role}_s{s}' for role in ROLES for s in range(3)}
+            if a.finish_all and errors:
+                state('retrying_failed_jobs',failed_jobs=len(errors));report(a)
+                with (out/'retry_history.jsonl').open('a') as f:f.write(json.dumps(dict(time=time.time(),errors=errors))+'\n')
+                time.sleep(60);errors={};save(out/'errors.json',errors);continue
             if expected<=present:
                 state('complete' if not errors else 'finished_with_missing_jobs',failed_jobs=len(errors));report(a);return
             state('waiting_models',missing=sorted(expected-present));report(a);time.sleep(30)
@@ -233,6 +248,7 @@ def parse():
     p=argparse.ArgumentParser();p.add_argument('stage',choices=('run','prepare','evaluate','report','status'))
     for k,v in dict(out=str(ROOT/'runs/report_validation_v1'),inbox=str(ROOT/'inbox/models.tgz'),transport='git',n=20,large_n=8,hours=24.,
                     case='{}',pool='',role='frozen',seed=0,ckpt='',result='').items():p.add_argument('--'+k,type=type(v),default=v)
+    p.add_argument('--finish_all',action='store_true',help='Resume until every planned comparison completes; no wall/case timeout')
     a=p.parse_args()
     if a.n<1 or a.large_n<0 or a.hours<=0 or a.transport not in ('git','manual'):p.error('Invalid settings')
     return a

@@ -130,7 +130,8 @@ def report(a):
     for path in sorted((out/'models').glob('*/metrics.json')):
         d=json.loads(path.read_text());training.append(dict(model=path.parent.name,iterations=d['iters'],
             elapsed_hours=sum(e['seconds'] for e in attempts if e['job']=='train_'+path.parent.name)/3600 if attempts else d['hours'],
-            best_iteration=d['best_iter'],oom_skipped=d.get('cuda_oom_skipped',0)))
+            best_iteration=d['best_iter'],oom_skipped=d.get('cuda_oom_skipped',0),
+            certify_workers=d.get('args',{}).get('certify_workers',1)))
     lines=['# MoTT working-constraint robustness pilot','',
         'Exploratory continued training; no architecture novelty or confirmed gain claimed. Original physical target/certifier unchanged.',
         'Paired results distinguish reserve-only decoding from training. Time includes all restarts and certification.',
@@ -142,10 +143,14 @@ def report(a):
         count=f'{r["count_success"]:.2f}' if r['count_success'] is not None else 'NA'
         lines.append(f'| {r["pool"]} | {r["seed"]} | {r["arm"]} | {r["reserve"]} | {r["n"]} | {r["success_rate"]:.3f} | {count} | {r["mean_seconds"]:.2f} | {r["complete"]} |')
     lines+=['','Training: wall-clock matching does not imply equal optimizer updates.','',
-        '| Model | Updates | Hours incl. loading/validation | Best update | OOM skipped |',
-        '|---|---:|---:|---:|---:|']
+        '| Model | Iterations | Hours incl. loading/validation | Best update | OOM skipped | CPU check workers |',
+        '|---|---:|---:|---:|---:|---:|']
     for d in training:
-        lines.append(f'| {d["model"]} | {d["iterations"]} | {d["elapsed_hours"]:.3f} | {d["best_iteration"]} | {d["oom_skipped"]} |')
+        lines.append(f'| {d["model"]} | {d["iterations"]} | {d["elapsed_hours"]:.3f} | {d["best_iteration"]} | {d["oom_skipped"]} | {d["certify_workers"]} |')
+    profiles=[]
+    for path in sorted((out/'models').glob('*/certify_profile.json')):
+        profiles.append(dict(model=path.parent.name,**json.loads(path.read_text())))
+    if profiles:save(out/'certify_profiles.json',profiles)
     lines+=['','Paired comparisons (treatment minus control; joint count uses boards both solve).','',
         '| Pool | Comparison | Seed | Paired n | Success difference (pp) | Rescued | Harmed | Joint n | Joint count difference |',
         '|---|---|---:|---:|---:|---:|---:|---:|---:|']
@@ -157,7 +162,7 @@ def report(a):
     (out/'REPORT.md').write_text('\n'.join(lines)+'\n')
     archive=out.parent/(out.name+'_results.tgz');temp=archive.with_suffix('.tmp')
     with tarfile.open(temp,'w:gz') as tar:
-        for pattern in ('*.json','*.jsonl','*.csv','*.md','eval/*.json','models/*/metrics.json','models/*/config.json'):
+        for pattern in ('*.json','*.jsonl','*.csv','*.md','eval/*.json','models/*/metrics.json','models/*/config.json','models/*/certify_profile.json'):
             for path in out.glob(pattern):tar.add(path,arcname=str(path.relative_to(out.parent)))
     temp.replace(archive)
 
@@ -227,10 +232,12 @@ def run(a):
     source=Path(a.source)
     if ROOT.resolve()==source.resolve() or out.resolve().is_relative_to(source.resolve()):
         raise ValueError('Run in a separate clone with output outside the original checkout')
+    if a.certify_workers>1 and out.name=='pkg_guard_v1':raise ValueError('Parallel study needs a new output directory')
     with (out/'runner.lock').open('w') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         config={k:v for k,v in vars(a).items() if k not in ('stage','arm','seed','ckpt','pool','result','eval_reserve')}
-        config.update(git=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),protocol_sha256=sha(ROOT/'docs/PKG_GUARD_PROTOCOL.md'))
+        protocol='PKG_GUARD_PARALLEL_PROTOCOL.md' if a.certify_workers>1 else 'PKG_GUARD_PROTOCOL.md'
+        config.update(git=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),protocol_sha256=sha(ROOT/'docs'/protocol))
         configpath=out/'config.json'
         if configpath.exists() and json.loads(configpath.read_text())!=config:raise ValueError('Configuration changed; use another --out')
         save(configpath,config)
@@ -327,6 +334,7 @@ def run(a):
                          '--teacher_dir',str(out/'inputs/teacher'),'--seed',str(seed),'--hours',str(a.train_hours),
                          '--iters','1000000','--B','4','--M','8','--chunk','1','--lr','0.0001','--lam','20',
                          '--imit','0','--certify','2','--val_every','50','--ckpt_min','5','--max_steps',str(a.max_steps)]
+                    cmd+=['--certify_workers',str(a.certify_workers)]
                     for key in ('d','layers','heads'):cmd+=['--'+key,str(args[key])]
                     for flag in ('fc_bias','mode_head'):
                         if args.get(flag):cmd+=['--'+flag]
@@ -351,15 +359,16 @@ def run(a):
         status('complete');report(a)
 
 
-def parse():
+def parse(argv=None):
     p=argparse.ArgumentParser();p.add_argument('stage',choices=('run','evaluate','report','status'))
     defaults=dict(source=str(Path.home()/'R2E'),out=str(ROOT/'runs/pkg_guard_v1'),seeds='0,1,2',reserve=.1,
-        train_hours=.75,wall_hours=12.,eval_n=8,rounds=4,max_steps=64,memory_limit=32.,eval_timeout=2400,
+        train_hours=.75,wall_hours=12.,eval_n=8,rounds=4,max_steps=64,memory_limit=32.,eval_timeout=2400,certify_workers=1,
         arm='frozen',seed=0,ckpt='',pool='',result='',eval_reserve=0.)
     for key,value in defaults.items():p.add_argument('--'+key,type=type(value),default=value)
-    a=p.parse_args()
+    a=p.parse_args(argv)
     if (not 0<a.reserve<=.3 or a.eval_n<1 or a.wall_hours<=0 or a.train_hours<=0
-        or not 28<a.memory_limit<=40 or a.max_steps<1 or a.rounds<0 or a.eval_timeout<1):p.error('Invalid study settings')
+        or not 28<a.memory_limit<=40 or a.max_steps<1 or a.rounds<0 or a.eval_timeout<1
+        or not 1<=a.certify_workers<=4):p.error('Invalid study settings')
     seeds=list(map(int,a.seeds.split(',')))
     if len(set(seeds))!=len(seeds) or any(s not in (0,1,2) for s in seeds):p.error('Use unique source seeds 0,1,2')
     return a
