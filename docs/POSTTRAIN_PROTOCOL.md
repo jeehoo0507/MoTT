@@ -110,3 +110,14 @@ uses no overall/case timeout, retries errors. Permanent errors/missing weights/c
 can still prevent completion. No unattended process can guarantee a wall-clock finish.
 The 11/07 10:00 target concerns the seed-0 training comparison, not all extra seeds
 or the whole independent server-2 baseline table.
+
+## Report-only memory guard correction
+
+Report evaluation discounts inactive_file minus dirty/writeback bytes from cgroup-v2
+memory.current, retaining the existing 28 GiB start / 32 GiB stop working-set bounds.
+It additionally requires 4 GiB raw headroom to start and 2 GiB while running against
+memory.max. Missing statistics fall back to raw usage. This is scheduling only;
+case plans, model weights, success criteria and CPU worker counts are unchanged.
+The server2 reload helper pauses only this clone's supervisor, waits for any active
+report case to finish, then replaces that report runner via its parent's retry loop.
+FRESH/data generation and server1 training are not signalled. No cache is flushed.

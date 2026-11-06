@@ -24,8 +24,9 @@ from decap_loop.rollout import rollout
 from decap_loop.techs import TECHS,DIFFICULTY
 from decap_loop.verify import certify
 from train import make_policy
-from scripts.pkg_guard_study import save,sha,single,memory,stop_own_child
+from scripts.pkg_guard_study import save,sha,single,stop_own_child
 from scripts.report_model_bundle import receive,fetch_bundle
+from scripts.report_memory import snapshot as memory_snapshot, blocked as memory_blocked
 
 LEGACY_ROLES=('baseline','robust','frozen','park','manoharan','coord','modal','park_rlonly','manoharan_rlonly')
 ROLES=LEGACY_ROLES+('control','annealed','adaptive','pt_control','pt_feasible','pt_robust','pt_full')
@@ -189,17 +190,19 @@ def run(a):
             save(out/'status.json',dict(stage=stage,pid=os.getpid(),updated=time.time(),deadline=deadline,**kw))
             print(json.dumps(dict(stage=stage,**kw),ensure_ascii=False),flush=True)
         def execute(cmd,key):
-            while memory()>28 and not expired():
-                state('waiting_memory',memory_gib=memory());time.sleep(30)
+            while not expired():
+                mem=memory_snapshot()
+                if not memory_blocked(mem):break
+                state('waiting_memory',memory=mem);time.sleep(30)
             if expired():return False
-            state('running',job=key)
+            state('running',job=key,memory=memory_snapshot())
             env=dict(os.environ,OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',CERTIFY_WORKERS='1',CUDA_VISIBLE_DEVICES='')
             with (out/'logs'/f'{key}.log').open('a') as log:
                 child=subprocess.Popen(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,env=env,start_new_session=True)
                 start=time.monotonic();reason=None
                 try:
                     while child.poll() is None:
-                        if memory()>32:reason='memory';stop_own_child(child);break
+                        if memory_blocked(memory_snapshot(),running=True):reason='memory';stop_own_child(child);break
                         if (not a.finish_all and time.monotonic()-start>900) or expired():reason='timeout';stop_own_child(child);break
                         time.sleep(.5)
                 except BaseException:stop_own_child(child);raise
