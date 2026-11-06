@@ -24,6 +24,27 @@
       }
     },
     {
+      "id": "baseline_s0",
+      "role": "baseline",
+      "seed": 0,
+      "path": "models/baseline_s0.pt",
+      "sha256": "1e929ffd108bc0cce57cd22f8e3fbc8c238c75bfeaf0c6ce641ec1987bdad931",
+      "source_sha256": "d00550e42effd79289a02ef1103ca8ce94ed82307d50a723bdd5c4f39d27b22a",
+      "init_sha256": "39227496258c79c449ae423af0c50d359e6268e168c2130fe2ca52cedcb9f33a",
+      "training": {
+        "stage": "rl",
+        "hours": 0.75,
+        "B": 4,
+        "M": 8,
+        "lr": 0.0001,
+        "certify": 2,
+        "imit": 0.0,
+        "baseline": "group",
+        "updates": 161,
+        "process_hours": 0.7733055579000049
+      }
+    },
+    {
       "id": "coord_s0",
       "role": "coord",
       "seed": 0,
@@ -445,7 +466,6 @@
     }
   ],
   "missing": [
-    "baseline_s0",
     "robust_s0",
     "baseline_s1",
     "robust_s1",
