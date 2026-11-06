@@ -598,8 +598,59 @@
     "pt_robust_s0",
     "pt_full_s0"
   ],
-  "campaign_final": false,
+  "campaign_final": true,
   "missing": [],
-  "expansion": null,
+  "expansion": {
+    "expand": false,
+    "against_control": {
+      "expand": false,
+      "comparisons": [
+        {
+          "group": "val_pcb10_0",
+          "success_count_difference": 3,
+          "joint_n": 8,
+          "joint_count_ratio": 1.1333333333333333
+        },
+        {
+          "group": "val_pkg10_0",
+          "success_count_difference": 2,
+          "joint_n": 8,
+          "joint_count_ratio": 1.0
+        },
+        {
+          "group": "val_ip10_0",
+          "success_count_difference": 0,
+          "joint_n": 14,
+          "joint_count_ratio": 1.0
+        }
+      ],
+      "rule": "No validation-group success loss; joint count <=1.05; some success gain or >=5% count reduction"
+    },
+    "against_stage12": {
+      "expand": false,
+      "comparisons": [
+        {
+          "group": "val_pcb10_0",
+          "success_count_difference": 3,
+          "joint_n": 6,
+          "joint_count_ratio": 1.0263157894736843
+        },
+        {
+          "group": "val_pkg10_0",
+          "success_count_difference": 2,
+          "joint_n": 6,
+          "joint_count_ratio": 1.0952380952380953
+        },
+        {
+          "group": "val_ip10_0",
+          "success_count_difference": 1,
+          "joint_n": 13,
+          "joint_count_ratio": 1.0
+        }
+      ],
+      "rule": "No validation-group success loss; joint count <=1.05; some success gain or >=5% count reduction"
+    },
+    "refinement_active": true
+  },
   "protocol_sha256": "7dce24949271be705abdd0fac9c7da9de576487a24a38778114f1aedd891f6bb"
 }
