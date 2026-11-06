@@ -1,5 +1,6 @@
 """One Codex research-management round in an isolated worktree; no original job control."""
 import argparse
+import fcntl
 import hashlib
 import json
 import os
@@ -62,7 +63,8 @@ def main():
         raise ValueError('Invalid CODEX_MODEL/CODEX_EFFORT; no model invoked')
     cmd=[a.codex,'--ask-for-approval','never','exec','--model',model,
          '--config','model_reasoning_effort='+json.dumps(effort),
-         '--sandbox','workspace-write','--cd',str(WORK),'-']
+         '--sandbox','workspace-write','--cd',str(WORK),
+         '--output-last-message',str(report/'last_round.md'),'-']
     print(f'Codex manager model={model} effort={effort}',flush=True)
     status=ORIGINAL/'agent/CODEX_STATUS.json'
     status.write_text(json.dumps(dict(stage='running',pid=os.getpid(),model=model,reasoning_effort=effort,worktree=str(WORK),log=str(logfile))))
@@ -84,8 +86,12 @@ def main():
         publish='pushed '+branch if pushed.returncode==0 else 'push failed: '+pushed.stderr[-400:]
     progress=WORK/'PROGRESS.md'
     if progress.exists():shutil.copyfile(progress,ORIGINAL/'agent/CODEX_PROGRESS.md')
-    status.write_text(json.dumps(dict(stage='round_done',rc=rc,model=model,reasoning_effort=effort,worktree=str(WORK),publish=publish,log=str(logfile)),indent=2))
+    status.write_text(json.dumps(dict(stage='round_done',rc=rc,model=model,reasoning_effort=effort,worktree=str(WORK),publish=publish,changed_files=files,log=str(logfile)),indent=2))
     print(f'Codex round rc={rc}; {publish}; log={logfile}',flush=True)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    with (ROOT/'agent/.codex_round.lock').open('w') as lock:
+        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:raise SystemExit('Another Codex round is active; no duplicate started')
+        main()
