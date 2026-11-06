@@ -1,2 +1,13 @@
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+Round 63 finished. Nothing new came in from QUEUE.md or the remote, so the queue and settings stay the same. The commit is pushed to `r2e/main` as `01e207b`.
+
+**What changed**
+- **GPU:** training for `bp_park_rlonly_s1` (the RL-only Park reimplementation, seed 1) finished: 281 iterations in 2.02 h, with the best checkpoint at iteration 100. The driver then started the next one, `bm_manoharan_s1`, at 01:50. Its distillation stage runs first and the full run should end around 03:50.
+- **10-cell eval:** the side slot started the 10-cell eval of `bp_park_rlonly_s1` at 01:50. It has no result yet. The seed 1 Park run's eval took about 82 minutes.
+- **CPU:** the 16-cell local search on `eval_pcb16_0` is 5.8 h in and its memory use is steady at about 10.7 GB. It should finish around 03:20; `eval_pcb16_1` is queued next.
+- **Memory:** the pod is at 24.2 / 60 GiB, and the out-of-memory kill count is unchanged at 2.
+
+**Not done:** No experiment produced a result this round, so RESULTS.md is unchanged. I started nothing new because all four concurrent process slots are in use and everything is running normally; this decision is logged in PROGRESS.md.
+
+**Next round:** read the `bp_park_rlonly_s1` eval result and record it in PROGRESS.md. Also check whether `eval_pcb16_0` finished or died. The next DAILY.md is due 11/07 00:xx UTC.
