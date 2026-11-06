@@ -525,6 +525,27 @@
           "755c7ec73a9a9e8d15f6cb4b6ac1a4a9658a9a1ee7a6d53f3681a34ea712f9e0"
         ]
       }
+    },
+    {
+      "id": "pt_robust_s0",
+      "role": "pt_robust",
+      "seed": 0,
+      "path": "models/pt_robust_s0.pt",
+      "sha256": "48064aa95725d9616cc825f45d74a94b7614e700dc28c82e9d06022d8ce6e934",
+      "source_sha256": "78cf4a2261367fa5e23cb2a90dd4ab7f2ee86b3c9afd5a6696675db6887c9013",
+      "init_sha256": "39227496258c79c449ae423af0c50d359e6268e168c2130fe2ca52cedcb9f33a",
+      "training": {
+        "iters": 358,
+        "hours": 0.8219850573937098,
+        "best_iter": 50,
+        "cuda_oom_skipped": 0,
+        "chain_sha256": [
+          "39227496258c79c449ae423af0c50d359e6268e168c2130fe2ca52cedcb9f33a",
+          "9e4d1b474fc672fd9f4486712d379792b17b7d2212cb532bf5e2caa050845cfd",
+          "c2f3a546c8db6461ff0a40d7107d1644579024ea01bdca531a988a193eeb0e52",
+          "78cf4a2261367fa5e23cb2a90dd4ab7f2ee86b3c9afd5a6696675db6887c9013"
+        ]
+      }
     }
   ],
   "expected": [
@@ -558,8 +579,7 @@
   ],
   "campaign_final": false,
   "missing": [
-    "pt_full_s0",
-    "pt_robust_s0"
+    "pt_full_s0"
   ],
   "expansion": null,
   "protocol_sha256": "7dce24949271be705abdd0fac9c7da9de576487a24a38778114f1aedd891f6bb"
