@@ -27,17 +27,19 @@ from train import make_policy
 from scripts.pkg_guard_study import save,sha,single,memory,stop_own_child
 from scripts.report_model_bundle import receive,fetch_bundle
 
-ROLES=('baseline','robust','frozen','park','manoharan','coord','modal','park_rlonly','manoharan_rlonly')
+LEGACY_ROLES=('baseline','robust','frozen','park','manoharan','coord','modal','park_rlonly','manoharan_rlonly')
+ROLES=LEGACY_ROLES+('control','annealed','adaptive')
 LABELS={'frozen':'Original MoTT + P1','baseline':'Continued MoTT + P1','robust':'MoTT + P1, reserved training/decoding',
+        'control':'Matched original-goal RL','annealed':'Scheduled reserve RL','adaptive':'Certification-gap curriculum RL',
         'gp':'Greedy + prune','rule':'Resonance rule','park':'B-Park (adapted AM)',
         'manoharan':'B-Manoharan (adapted, distill + RL)','park_rlonly':'B-Park (adapted, RL only)',
         'manoharan_rlonly':'B-Manoharan (adapted, RL only)','coord':'Coordinate model','modal':'Modal-feature model'}
 
 
-def cases(n,large_n):
+def cases(n,large_n,seed_offset=0):
     cells=[('pkg',16),('pkg',10),('pcb',10),('ip',10),('pcb',16),('ip',16),('pkg',20),('pcb',20),('ip',20)]
     return [dict(id=f'{tech}{size}_{i:03d}',pool=f'{tech}{size}',tech=tech,size=size,index=i,
-                 problem_seed=9100000+('pcb','pkg','ip').index(tech)*100000+size*1000+i)
+                 problem_seed=9100000+seed_offset+('pcb','pkg','ip').index(tech)*100000+size*1000+i)
             for tech,size in cells for i in range(large_n if size==20 else n)]
 
 
@@ -112,30 +114,35 @@ def report(a):
     paired=[]
     lines+=['','## 짝 비교','', '| 유형/크기 | 비교 | 시드 | 짝 수 | 성공 차 %p | 구제/악화 | 동시 성공 부품 차 |',
             '|---|---|---:|---:|---:|---:|---:|']
-    for pool in sorted({r['pool'] for r in rows}):
-        for control in ('baseline','frozen','coord','modal','park','manoharan','gp','rule'):
-            for seed in range(3):
-                l={r['index']:r for r in groups.get((pool,'robust',seed),[])}
-                rr={r['index']:r for r in groups.get((pool,control,-1 if control in ('gp','rule') else seed),[])}
-                ids=sorted(l.keys()&rr.keys())
-                if not ids:continue
-                if any(l[i]['pool_sha256']!=rr[i]['pool_sha256'] for i in ids):raise ValueError('Unpaired data')
-                joint=[i for i in ids if l[i]['success'] and rr[i]['success']]
-                p=dict(pool=pool,control=control,seed=seed,n=len(ids),success_difference=float(np.mean([int(l[i]['success'])-int(rr[i]['success']) for i in ids])),
-                       rescued=sum(l[i]['success'] and not rr[i]['success'] for i in ids),harmed=sum(rr[i]['success'] and not l[i]['success'] for i in ids),
-                       joint_n=len(joint),joint_count_difference=float(np.mean([l[i]['count']-rr[i]['count'] for i in joint])) if joint else None)
-                paired.append(p);diff='NA' if not joint else f'{p["joint_count_difference"]:.2f}'
-                lines.append(f'| {pool} | robust − {control} | {seed} | {len(ids)} | {100*p["success_difference"]:.1f} | {p["rescued"]}/{p["harmed"]} | {diff} |')
+    for treatment in ('robust','adaptive','annealed'):
+        for pool in sorted({r['pool'] for r in rows}):
+            for control in ('control','annealed','baseline','frozen','coord','modal','park','manoharan','gp','rule'):
+                if control==treatment:continue
+                for seed in range(3):
+                    l={r['index']:r for r in groups.get((pool,treatment,seed),[])}
+                    rr={r['index']:r for r in groups.get((pool,control,-1 if control in ('gp','rule') else seed),[])}
+                    ids=sorted(l.keys()&rr.keys())
+                    if not ids:continue
+                    if any(l[i]['pool_sha256']!=rr[i]['pool_sha256'] for i in ids):raise ValueError('Unpaired data')
+                    joint=[i for i in ids if l[i]['success'] and rr[i]['success']]
+                    p=dict(pool=pool,treatment=treatment,control=control,seed=seed,n=len(ids),success_difference=float(np.mean([int(l[i]['success'])-int(rr[i]['success']) for i in ids])),
+                           rescued=sum(l[i]['success'] and not rr[i]['success'] for i in ids),harmed=sum(rr[i]['success'] and not l[i]['success'] for i in ids),
+                           joint_n=len(joint),joint_count_difference=float(np.mean([l[i]['count']-rr[i]['count'] for i in joint])) if joint else None)
+                    paired.append(p);diff='NA' if not joint else f'{p["joint_count_difference"]:.2f}'
+                    lines.append(f'| {pool} | {treatment} − {control} | {seed} | {len(ids)} | {100*p["success_difference"]:.1f} | {p["rescued"]}/{p["harmed"]} | {diff} |')
     save(out/'paired.json',paired)
     available={m['id'] for m in manifest['models']}
-    missing=[f'{role}_s{s}' for role in ROLES for s in range(3) if f'{role}_s{s}' not in available]
+    plan=json.loads((out/'operational_plan.json').read_text()) if (out/'operational_plan.json').exists() else {}
+    expected=plan.get('expected',manifest.get('expected',[]) if plan.get('from_manifest') else [f'{role}_s{s}' for role in LEGACY_ROLES for s in range(3)])
+    missing=sorted(set(expected)-available)
     errors=json.loads((out/'errors.json').read_text()) if (out/'errors.json').exists() else {}
     cfg=json.loads((out/'config.json').read_text()) if (out/'config.json').exists() else dict(n=a.n,large_n=a.large_n)
-    primary_done=sum(r['role'] in ('frozen','baseline','robust') and r['size'] in (10,16) for r in rows)
-    lines+=['',f'10/16칸 핵심 비교 완료: {primary_done}/{cfg["n"]*6*9}개 평가. 처리 오류/시간 초과: {len(errors)}개 작업.',
+    primary_done=sum(f'{r["role"]}_s{r["seed"]}' in expected and r['role'] in ('frozen','baseline','robust','control','annealed','adaptive') and r['size'] in (10,16) for r in rows)
+    primary_expected=sum(x.rsplit('_s',1)[0] in ('frozen','baseline','robust','control','annealed','adaptive') for x in expected)
+    lines+=['',f'10/16칸 핵심 비교 완료: {primary_done}/{cfg["n"]*6*primary_expected}개 평가. 처리 오류/시간 초과: {len(errors)}개 작업.',
         '미수신 모델: '+(', '.join(missing) or '없음'),'',
         '전체 학습된 체크포인트의 새 보드 평가는 미학습 유형(leave-one-type-out) 실험이 아닙니다.',
-        f'조건당 {cfg["n"]}개(20×20은 {cfg["large_n"]}개)와 시드 3개가 계획값이며, 표의 완료 문제 수가 실제 분모입니다.']
+        f'조건당 {cfg["n"]}개(20×20은 {cfg["large_n"]}개)가 문제 계획값이며, 모델별 시드 계획은 수신 목록을 따릅니다. 표의 완료 문제 수가 실제 분모입니다.']
     (out/'REPORT.md').write_text('\n'.join(lines)+'\n')
     archive=out.parent/(out.name+'_results.tgz')
     with tarfile.open(archive.with_suffix('.tmp'),'w:gz') as tar:
@@ -158,9 +165,14 @@ def run(a):
             keys=('n','large_n','inbox','transport','hours') if a.finish_all else tuple(cfg)
             if any(frozen.get(k)!=cfg[k] for k in keys):raise ValueError('Frozen configuration changed; use another output directory')
         else:save(p,cfg)
+        plan=json.loads(Path(a.plan).read_text()) if getattr(a,'plan','') else {}
+        if plan:
+            planpath=out/'operational_plan.json'
+            if planpath.exists() and json.loads(planpath.read_text())!=plan:raise ValueError('Operational plan changed')
+            save(planpath,plan)
         if a.finish_all:
             save(out/'completion_policy.json',dict(finish_all=True,activated=time.time(),
-                code_sha256=sha(__file__),original_config_sha256=sha(p),case_timeout=None))
+                code_sha256=sha(__file__),original_config_sha256=sha(p),case_timeout=None,plan=plan,bundle_branch=getattr(a,'bundle_branch','report-models-pkg-guard-v1')))
         if not (out/'clock.json').exists():save(out/'clock.json',dict(deadline=time.time()+a.hours*3600))
         deadline=None if a.finish_all else json.loads((out/'clock.json').read_text())['deadline']
         def expired():return deadline is not None and time.time()>=deadline
@@ -168,8 +180,10 @@ def run(a):
         if a.finish_all and errors:
             with (out/'retry_history.jsonl').open('a') as f:f.write(json.dumps(dict(time=time.time(),errors=errors))+'\n')
             errors={};save(out/'errors.json',errors)
-        received=None;all_cases=cases(a.n,a.large_n);last_fetch=0.
-        save(out/'case_plan.json',all_cases)
+        received=None;all_cases=cases(a.n,a.large_n,plan.get('seed_offset',0));last_fetch=0.
+        casepath=out/'case_plan.json'
+        if casepath.exists() and json.loads(casepath.read_text())!=all_cases:raise ValueError('Frozen case plan changed')
+        save(casepath,all_cases)
         def state(stage,**kw):
             save(out/'status.json',dict(stage=stage,pid=os.getpid(),updated=time.time(),deadline=deadline,**kw))
             print(json.dumps(dict(stage=stage,**kw),ensure_ascii=False),flush=True)
@@ -195,7 +209,7 @@ def run(a):
         while not expired():
             if a.transport=='git' and time.time()-last_fetch>120:
                 last_fetch=time.time()
-                try:fetch_bundle(out/'download',a.inbox)
+                try:fetch_bundle(out/'download',a.inbox,branch=getattr(a,'bundle_branch','report-models-pkg-guard-v1'))
                 except (subprocess.SubprocessError,OSError) as e:state('model_fetch_retry',error=str(e))
             inbox=Path(a.inbox)
             if inbox.exists() and sha(inbox)!=received:
@@ -204,10 +218,12 @@ def run(a):
                 except (tarfile.TarError,EOFError,OSError) as e:
                     state('waiting_complete_transfer',error=str(e));time.sleep(30);continue
             mp=out/'artifacts/manifest.json';manifest=json.loads(mp.read_text()) if mp.exists() else {'models':[]}
-            models=sorted(manifest['models'],key=lambda m:(ROLES.index(m['role']),m['seed']))
+            expected=set(plan.get('expected',manifest.get('expected',[]) if plan.get('from_manifest') else [f'{role}_s{s}' for role in LEGACY_ROLES for s in range(3)]))
+            if any(x not in {f'{role}_s{s}' for role in ROLES for s in range(3)} for x in expected):raise ValueError('Unknown planned model')
+            models=sorted([m for m in manifest['models'] if m['id'] in expected],key=lambda m:(ROLES.index(m['role']),m['seed']))
             chosen=None
             # Finish the main paired comparison before secondary/appendix jobs.
-            primary=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('baseline','robust','frozen')]
+            primary=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('baseline','robust','frozen','control','annealed','adaptive')]
             paper=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('park','manoharan')]
             internal=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'] in ('coord','modal')]
             appendix=[(m['role'],m['seed'],out/'artifacts'/m['path']) for m in models if m['role'].endswith('rlonly')]
@@ -233,12 +249,12 @@ def run(a):
                     if chosen:break
                 if chosen:break
             if chosen:execute(*chosen);continue
-            present={m['id'] for m in models};expected={f'{role}_s{s}' for role in ROLES for s in range(3)}
+            present={m['id'] for m in models}
             if a.finish_all and errors:
                 state('retrying_failed_jobs',failed_jobs=len(errors));report(a)
                 with (out/'retry_history.jsonl').open('a') as f:f.write(json.dumps(dict(time=time.time(),errors=errors))+'\n')
                 time.sleep(60);errors={};save(out/'errors.json',errors);continue
-            if expected<=present:
+            if expected<=present and (not plan.get('from_manifest') or manifest.get('campaign_final')):
                 state('complete' if not errors else 'finished_with_missing_jobs',failed_jobs=len(errors));report(a);return
             state('waiting_models',missing=sorted(expected-present));report(a);time.sleep(30)
         state('deadline_partial',failed_jobs=len(errors));report(a)
@@ -248,6 +264,7 @@ def parse():
     p=argparse.ArgumentParser();p.add_argument('stage',choices=('run','prepare','evaluate','report','status'))
     for k,v in dict(out=str(ROOT/'runs/report_validation_v1'),inbox=str(ROOT/'inbox/models.tgz'),transport='git',n=20,large_n=8,hours=24.,
                     case='{}',pool='',role='frozen',seed=0,ckpt='',result='').items():p.add_argument('--'+k,type=type(v),default=v)
+    p.add_argument('--plan',default='');p.add_argument('--bundle_branch',default='report-models-pkg-guard-v1')
     p.add_argument('--finish_all',action='store_true',help='Resume until every planned comparison completes; no wall/case timeout')
     a=p.parse_args()
     if a.n<1 or a.large_n<0 or a.hours<=0 or a.transport not in ('git','manual'):p.error('Invalid settings')

@@ -11,7 +11,7 @@ from decap_loop.safe_verify import certify_parallel
 
 
 def main():
-    ap=argparse.ArgumentParser(add_help=False);ap.add_argument('--reserve_decades',type=float,default=0.)
+    ap=argparse.ArgumentParser(add_help=False,allow_abbrev=False);ap.add_argument('--reserve_decades',type=float,default=0.)
     ap.add_argument('--certify_workers',type=int,default=1)
     extra,rest=ap.parse_known_args();sys.argv=[sys.argv[0]]+rest
     if not 1<=extra.certify_workers<=4:ap.error('certify_workers must be 1..4')

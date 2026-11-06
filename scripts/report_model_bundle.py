@@ -29,12 +29,12 @@ def git(args,cwd):
                           env=dict(os.environ,GIT_TERMINAL_PROMPT='0')).stdout.strip()
 
 
-def publish(out):
+def publish(out,branch=BRANCH):
     out=Path(out);work=out/'publish';work.mkdir(exist_ok=True)
     if not (work/'.git').exists():
-        git(['init','-b',BRANCH],work);git(['remote','add','origin',REPO],work)
-        if git(['ls-remote','--heads','origin',BRANCH],work):
-            git(['fetch','--depth','1','origin',BRANCH],work);git(['checkout','-B',BRANCH,'FETCH_HEAD'],work)
+        git(['init','-b',branch],work);git(['remote','add','origin',REPO],work)
+        if git(['ls-remote','--heads','origin',branch],work):
+            git(['fetch','--depth','1','origin',branch],work);git(['checkout','-B',branch,'FETCH_HEAD'],work)
     manifest=json.loads((out/'manifest.json').read_text())
     for e in manifest['models']:
         src=out/e['path'];dst=work/e['path'];dst.parent.mkdir(exist_ok=True)
@@ -46,17 +46,17 @@ def publish(out):
         git(['-c','user.name=R2E artifact exporter','-c','user.email=r2e-artifacts@users.noreply.github.com',
              'commit','-m','Update completed report checkpoints'],work)
     # Always retry push, including after an earlier authentication/network failure.
-    git(['push','origin',f'HEAD:refs/heads/{BRANCH}'],work)
+    git(['push','origin',f'HEAD:refs/heads/{branch}'],work)
 
 
-def fetch_bundle(cache,archive):
+def fetch_bundle(cache,archive,branch=BRANCH):
     cache=Path(cache);cache.mkdir(parents=True,exist_ok=True)
     if not (cache/'.git').exists():
         git(['init'],cache);git(['remote','add','origin',REPO],cache)
-    if not git(['ls-remote','--heads','origin',BRANCH],cache):return False
+    if not git(['ls-remote','--heads','origin',branch],cache):return False
     try:previous=git(['rev-parse','HEAD'],cache)
     except subprocess.CalledProcessError:previous=None
-    git(['fetch','--depth','1','origin',BRANCH],cache)
+    git(['fetch','--depth','1','origin',branch],cache)
     current=git(['rev-parse','FETCH_HEAD'],cache)
     if previous==current and Path(archive).exists():return True
     git(['checkout','--detach','FETCH_HEAD'],cache)
@@ -140,13 +140,13 @@ def receive(archive,dest):
             if key not in incoming or incoming[key]['sha256']!=entry['sha256']:raise ValueError('Previously evaluated model changed/removed')
         import hashlib
         for entry in manifest['models']:
-            if entry['role'] not in ('frozen','baseline','robust')+FAMILIES or entry['seed'] not in (0,1,2):raise ValueError('Unknown model')
+            if entry['role'] not in ('frozen','baseline','robust','control','annealed','adaptive')+FAMILIES or entry['seed'] not in (0,1,2):raise ValueError('Unknown model')
             if entry['id']!=f"{entry['role']}_s{entry['seed']}" or entry['path']!=f"models/{entry['id']}.pt":raise ValueError('Model path mismatch')
             data=tar.extractfile(entry['path']).read()
             if hashlib.sha256(data).hexdigest()!=entry['sha256']:raise ValueError('Weight hash mismatch')
             target=dest/entry['path'];target.parent.mkdir(exist_ok=True);target.with_suffix('.tmp').write_bytes(data);target.with_suffix('.tmp').replace(target)
         for entry in manifest['models']:
-            if entry['role'] in ('baseline','robust'):
+            if entry['role'] in ('baseline','robust','control','annealed','adaptive'):
                 frozen=incoming.get(f"frozen_s{entry['seed']}")
                 if not frozen or frozen['source_sha256']!=entry['init_sha256']:raise ValueError('Unmatched MoTT initialization')
         save(dest/'manifest.json',manifest)

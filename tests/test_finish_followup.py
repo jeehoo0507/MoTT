@@ -40,6 +40,7 @@ class FollowupTests(unittest.TestCase):
                 self.assertEqual(r.returncode,0,r.stdout+r.stderr)
                 metrics=json.loads((out/'metrics.json').read_text())
                 self.assertEqual(metrics['iters'],1);self.assertEqual(metrics['args']['certify_workers'],2)
+                self.assertEqual(metrics['args']['certify'],2)
                 self.assertGreater(json.loads((out/'certify_profile.json').read_text())['parallel_calls'],0)
 
     def test_spawn_matches_serial_with_repeated_indices(self):
