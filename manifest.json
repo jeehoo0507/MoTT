@@ -45,6 +45,27 @@
       }
     },
     {
+      "id": "robust_s0",
+      "role": "robust",
+      "seed": 0,
+      "path": "models/robust_s0.pt",
+      "sha256": "fa53bcd90ff31679629eea1c6e55f9fe6ac826aec2efea3b88e79280f4100287",
+      "source_sha256": "982cf8c48312a8b2e4961a1e451a8557d7831362ce0c100ab2ee08aa7d724da5",
+      "init_sha256": "39227496258c79c449ae423af0c50d359e6268e168c2130fe2ca52cedcb9f33a",
+      "training": {
+        "stage": "rl",
+        "hours": 0.75,
+        "B": 4,
+        "M": 8,
+        "lr": 0.0001,
+        "certify": 2,
+        "imit": 0.0,
+        "baseline": "group",
+        "updates": 138,
+        "process_hours": 0.776287883453899
+      }
+    },
+    {
       "id": "coord_s0",
       "role": "coord",
       "seed": 0,
@@ -466,7 +487,6 @@
     }
   ],
   "missing": [
-    "robust_s0",
     "baseline_s1",
     "robust_s1",
     "baseline_s2",
