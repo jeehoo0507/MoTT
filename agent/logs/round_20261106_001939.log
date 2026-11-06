@@ -1,2 +1,17 @@
 error: cannot pull with rebase: You have unstaged changes.
 error: Please commit or stash them.
+Round 58 is done. Nothing finished since round 57, so RESULTS.md is unchanged. PROGRESS.md is updated and pushed to `r2e main` (commit `db4fe5c`).
+
+**What's running (00:25 UTC):**
+- **GPU:** prior-work re-implementation seed run `bp_park_rlonly_s1` (RL only). It is at iteration 75 and looks healthy; it resumed once from a checkpoint and carried on. Expected to finish around 01:50, and the 10-cell eval then starts on its own.
+- **CPU:** the 16-cell local-search eval on `eval_pcb16_0` (the chunked LS16 run) is 4.3 h in. Its worker memory is flat at about 10 GB. Going by the `ip16_0` run (7.3 h), it should finish around 03:20.
+- **Memory:** pod at 24.0 / 60 GiB, OOM-kill count unchanged at 2.
+- **Instructions:** no new QUEUE entries and no new remote commits.
+
+**Decision (recorded in PROGRESS.md):** I left the queue and settings as they were and started no new CPU work. Four processes are already running, which is the limit, every job is healthy, and there is still no candidate for a new attempt before today's 12:00 UTC deadline.
+
+**Next:**
+- The four remaining prior-work seed runs (`bp_park_rlonly` seed 2, then `bm_manoharan` seeds 1 and 2) finish around 07:45; they complete the 3-seed re-implementation table.
+- After the LS16 run, the remaining LS16 files and 8 more 16/20-cell evals of the final model (`r2pk_s2`).
+- After 12:00 UTC, no new GPU training by default.
+- Next DAILY.md is due 11/07 around 00:00 UTC.
