@@ -48,6 +48,16 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--codex',required=True);a=p.parse_args()
     if not WORK.is_dir():raise SystemExit('Isolated worktree missing; run the switch installer')
     report=WORK/'reports/pkg_base';report.mkdir(parents=True,exist_ok=True)
+    last=report/'last_round.md'
+    retry=ORIGINAL/'agent/CODEX_RETRY_SANDBOX'
+    if last.exists() and 'bwrap: Failed to make / slave: Permission denied' in last.read_text(errors='replace'):
+        if not retry.exists():
+            (ORIGINAL/'agent/CODEX_STATUS.json').write_text(json.dumps(dict(
+                stage='blocked_sandbox',reason='Container denies required bubblewrap mount operation',
+                model_invoked=False,worktree=str(WORK),last_report=str(last)),indent=2))
+            print('BLOCKED: sandbox permission failure; no API round or experiment launched. Fix host sandbox support before retry.',flush=True)
+            return
+        retry.unlink()
     (report/'live_snapshot.json').write_text(json.dumps(snapshot(),indent=2)+'\n')
     ts=time.strftime('%Y%m%d_%H%M%S',time.gmtime())
     logfile=ORIGINAL/'agent/logs'/f'codex_round_{ts}.log'

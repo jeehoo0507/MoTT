@@ -52,5 +52,16 @@ class ManagerTests(unittest.TestCase):
     def test_isolated_round_publishes_only_allowed_paths(self):self.run_round()
     def test_protected_copy_change_blocks_publication(self):self.run_round(True)
 
+    def test_known_container_sandbox_failure_stops_api_retries(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);live=root/'live';work=root/'work'
+            (live/'agent').mkdir(parents=True);(work/'reports/pkg_base').mkdir(parents=True)
+            (work/'reports/pkg_base/last_round.md').write_text('bwrap: Failed to make / slave: Permission denied')
+            with patch.object(m,'ROOT',live),patch.object(m,'ORIGINAL',live),patch.object(m,'WORK',work),patch.object(sys,'argv',['manager','--codex','/not-invoked']),patch.object(m.subprocess,'run',side_effect=AssertionError('No command should run')):
+                m.main()
+            status=json.loads((live/'agent/CODEX_STATUS.json').read_text())
+            self.assertEqual(status['stage'],'blocked_sandbox')
+            self.assertFalse(status['model_invoked'])
+
 
 if __name__=='__main__':unittest.main()
