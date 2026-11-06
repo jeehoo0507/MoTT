@@ -215,3 +215,9 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 - 서버 1 에이전트는 이 작업을 자신의 GPU/CPU 큐에 추가하지 않는다. F1→B1 및 진행 중인 작업은 유지한다.
 - FRESH는 앞서 제안한 전송형 서버 2 실행을 대체한다. 서버 1 checkpoint를 평가하는 L1의 완료로 집계하지 않으며, 기존 L1/L2 최종 모델 판정을 변경하지 않는다.
 
+
+## 2026-11-06 12:30 KST — user: verify P1 peak/action-mask mismatch today
+- User explicitly authorized coding and queueing this diagnostic on server 1, with interim results by this evening. Apply PROPOSALS "peak/mask mismatch diagnostic"; do not start the earlier pkgfix repair/prefix proposal (not authorized as the new research direction; it was never pushed).
+- Six `peakmask ...` CPU jobs have been prepended to day2_queue.json. Existing running jobs finish normally; prioritize these before the remaining queued LS16/scale jobs. Preserve GPU F1/B1 order and do not schedule anything on maskedkd/server 2.
+- Run on the existing CPU lane only; do not launch an extra worker/side process that exceeds the four-process limit or overlaps a heavy LS16 job. The driver re-reads the queue; verify it picks up the jobs, and record START/PID/completion in PROGRESS. No need for user confirmation. If the CPU lane remains occupied, report the actual delay; do not claim it started.
+- At 19:00 KST summarize whatever is complete from reports/peak_mask_diag_20261106/*.json, including incomplete job data; commit diagnostic results and PROGRESS after each job. Report all four arms and the paired rescued/harmed counts; leave main RESULTS and pre-registered verdicts unchanged. Do not start new model training from this diagnostic alone.
