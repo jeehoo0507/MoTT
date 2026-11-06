@@ -8,6 +8,11 @@
 # RESULTS.md, runs/, git log. Every round must leave those updated.
 set -u
 cd "$(dirname "$0")/.."
+# Local provider switch; the default Claude path remains available for rollback.
+if [ -f agent/PROVIDER ] && [ "$(cat agent/PROVIDER)" = "codex" ]; then
+  bash agent/codex_loop.sh
+  exit $?
+fi
 END_DATE="${END_DATE:-2026-11-11}"     # no new rounds on/after this date (experiments freeze 11/10)
 ROUND_SLEEP="${ROUND_SLEEP:-900}"   # seconds between rounds
 MODEL_DEFAULT="${MODEL:-claude-opus-5-5}"   # routine rounds

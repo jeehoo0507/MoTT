@@ -230,3 +230,8 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 
 ## 2026-11-06 — user: Delta-memory study is SERVER 2 ONLY
 - New docs/DELTA_MEMORY_PROTOCOL.md and scripts/server2_delta* implement a standalone matched study on maskedkd. Do not add these arms to server 1's queues or change its existing GPU schedule. Server-1 peak/mask diagnostics continue separately.
+
+## 2026-11-06 — 사용자: Codex로 기본 MoTT 패키지형 개선, 서버2는 보고서 분석/독립 확인
+- 관리자만 Codex로 전환. 원본의 기존 학습·평가·큐·파일은 유지한다. 새 작업은 ~/R2E-codex 전용 worktree/branch에서 agent/CODEX_PKG_TASK.md와 docs/PKG_BASE_SERVER_PLAN.md를 따른다.
+- 마스크 개방 pilot은 pkg10/pkg16 모두 구제 없음. 마스크 불일치를 주원인으로 확정하지 않는다.
+- 서버2 Delta/GRU 18개 학습 완료. 반복 학습 대신 scripts/pkg_delta_report.py로 분석·보관. 다음 학습은 서버1에서 선정한 단일 개선안과 matched baseline의 독립 검증만.
