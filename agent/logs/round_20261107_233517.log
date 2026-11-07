@@ -9,3 +9,7 @@ Already up to date.
 - **진행 중:** `eval_pcb20_0 r2pk_rl+rep4`가 23:29부터 돌고 있습니다. 남은 것은 11개(pcb20 5개, ip20 6개)입니다. pcb16의 peak 메모리가 22.4 GB였으니 pcb20은 더 클 수 있어, 다음 라운드에 peak를 확인합니다.
 - **결정:** 큐와 플래그는 그대로 두고 GPU 새 학습은 시작하지 않았습니다. 에이전트의 새 시도는 금지되어 있기 때문이며, PROGRESS.md에 기록했습니다.
 - **다음:** DAILY.md는 11/08 01:30 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c58221a..0437d29  main -> main
