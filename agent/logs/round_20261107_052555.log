@@ -47,3 +47,7 @@ G1 후보 `r2pkfc`가 거르기 판정을 통과해서, 사람 지시대로 확�
 - G-inf가 끝나면 C1' 규칙으로 판정합니다.
 - 서버 2 C1 기록이 push되면 병합하고 `c1_screen.py`로 판정합니다.
 - 확인 run이 진행되는지 계속 보고, 7개가 다 끝나면 F1 규칙으로 판정합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   dca403c..8dbf71c  main -> main
