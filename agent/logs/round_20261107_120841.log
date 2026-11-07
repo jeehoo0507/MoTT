@@ -8,3 +8,7 @@ Already up to date.
 - **학습:** G1 확인 7개 중 3번째인 `r2pkfc_s1`이 RL it 225에서 정상으로 돌고 있습니다. OOM은 0회, GPU 최대 16.5 GB, it 200에서 새 best(1.778)가 나왔습니다. 12:30 UTC쯤 끝날 예정입니다.
 - **결과:** 끝난 실험이 없어 RESULTS는 그대로 두었습니다. PROGRESS에는 라운드 91 항목과 "결정: 큐·설정 그대로"를 이유와 함께 적었습니다.
 - **다음:** `r2pkfc_s1`이 끝나면 10칸 평가가 돌고, 그 뒤 `queue_scale_g1s.log`에 "appended 12"가 찍히는지 확인합니다. 이게 찍혀야 16·20칸 평가 12개가 시작됩니다. DAILY는 11/08 01:30 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   74f2101..c61e769  main -> main
