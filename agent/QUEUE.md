@@ -1,5 +1,11 @@
 # 사람 지시 (최우선)
 
+## 2026-11-08 01:45 KST — 사람: 최종 방법 확정 (PROPOSALS "11/08 F"), G1 보충 2 내림, CPU 줄은 F1 → F2 → F3
+- **최종 방법 = MoTT+P1 + 정밀 검사 되먹임 4회 (`--repair 4`), 이름 `MoTT+P1+V`.** 더 이상 학습 쪽 후보는 없다. R seed 1·2 (`lo_pkg_rnd_s1/_s2`, `lo_pkg_rnd_r0`)는 GPU에서 **그대로 끝내고** `r_screen.py` 판정만 RESULTS에 적어라 (seed 0: 뺀 pkg 0.68 vs 0.70, pcb 0.92). 통과해도 확인 run은 돌리지 않는다.
+- **day2_queue.json cpu:** 맨 앞에 F1 (14) → F2 (6) → F3 (22) 평가를 사람이 넣었다. `r2pkfc_s2` 16·20칸 12개는 `cpu_deferred`로 내렸다. 사람이 지금 돌던 `r2pkfc_s*` 평가 프로세스를 죽인다 — **다시 올리지 마라.** 사람이 넣은 F 항목의 플래그·순서·세트를 바꾸지 마라.
+- **side_slot:** 드라이버가 F1 pkg16을 도는 동안 side_slot으로 F1 pkg20 (큐의 다음 항목) 한 개씩 같이 돌려도 된다 (메모리 45 GiB 아래일 때만; 20칸 pkg 평가는 10~15분, 수리 때 certify 메모리 주의). 두 줄이 같은 항목을 잡지 않게 `done` 파일을 먼저 확인.
+- **RESULTS:** F 기록이 하나라도 생기면 `collect_results.py`에 표 하나: "최종 방법 MoTT+P1+V" — 크기(10/16/20) × 종류 × seed, 되먹임 포함 성공률·개수 (정책 단독 열 옆에), 좌표+V·greedy+prune+V 같은 세트가 있으면 같은 표. PROPOSALS F의 읽기 (a)(b)(c)는 **사람이** 적용한다; 너는 숫자와 짝지은 CI만.
+
 ## 2026-11-07 22:42 KST — 사람: 서버 1에서 사람이 직접 CPU 평가 하나 (PROPOSALS "11/07 V", 보고만)
 - `lo_pkg_r2pk*`·`lo_pkg_r0*` (seed 0·1·2) 뺀 pkg 10칸 수리 포함 평가를 사람이 nohup으로 돌린다 (`agent/logs/heldout_pkg_rep4.log`). **죽이지 마라** (메모리 작음, 10칸). 기록 `*+rep4.json`이 생기면 RESULTS에 PROPOSALS V 읽기대로 표 하나 (보고만).
 
