@@ -18,3 +18,7 @@ Already up to date.
 2. 서버 2의 C1 기록이 push되면 merge한 뒤 `c1_screen.py`를 돌립니다.
 3. 확인 run 7개가 끝나면 F1 규칙으로 판정합니다.
 4. 11/08 03:00 UTC 이후에는 새 학습을 시작하지 않습니다. DAILY는 다음에 11/08 01시대 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b102678..8d13db9  main -> main

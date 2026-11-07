@@ -1,5 +1,14 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 06:50 UTC, 라운드 77 — G1 확인 1/7 `lo_pkg_r2pkfc_s1` 증류 중 (06:22~); C1' G-inf 평가 06:24~ (6파일 중 2개 기록); C1 대기 (서버 2로); pod 20.2 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 07:20 UTC, 라운드 78 — **C1' G-inf 탈락** (pkg −0.02); G1 확인 1/7 `lo_pkg_r2pkfc_s1` RL 07:08~; C1 대기 (서버 2로); G-tr 사람 지시 대기; pod 25.6 GiB / 60, oom_kill 2)
+
+## 라운드 78 (2026-11-07 07:08~ UTC)
+- `git fetch r2e`: 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로).
+- G-inf (`ginf eval10 r2pk_rl@mott_pkgate`) 06:23:59~06:58:31 rc 0, 10칸 6파일 기록.
+- **C1' G-inf 판정 (`c1p_screen.py`, PROPOSALS C1' 규칙 그대로, 결과 전에 쓴 스크립트):** `r2pk_rl@mott_pkgate` − `r2pk_rl` (같은 가중치·같은 문제, 50문제): pcb 0.96 vs 0.90 +0.06 [−0.02, +0.14] 개수비 0.992; **pkg 0.76 vs 0.78 −0.02 [−0.14, +0.10]** 개수비 1.016; ip 1.00 vs 0.98 +0.02 [+0.00, +0.06] 개수비 1.003 → (i) **탈락** (−0.02 < +0.10), (ii) 통과, (iii) 통과 → **"추론 게이트만으로 성립" 아님**. 게이트가 pkg 근소 실패를 고치지 못함 (pkg 성공은 오히려 1문제 적음, CI 0 포함). RESULTS TRIED_MODS에 "C1' G-inf" 행 (collect_results), ABLATIONS C1' 짝 절은 자동.
+- G-tr `r2pk_gate`는 **넣지 않음** — QUEUE 14:30 3번: G1 통과면 G1 확인이 먼저, G-tr은 사람 지시 대기. G-inf 탈락은 G-tr 판정을 대신하지 않음 (규칙상 각각 따로).
+- 상태 (07:10): GPU `lo_pkg_r2pkfc_s1` 증류 끝 → RL 단계 07:08 시작 (정상). CPU: side_slot `scale-eval eval_pcb16_0 r2pkfc_rl` 07:01~ (보고만, 큐 순서 그대로 G-inf 다음) + 학습 정확 검사. pod 25.6 GiB / 60, oom_kill 2.
+- 결정: 큐·설정 그대로 — 이유: G1 확인 run 사람 순서대로 진행, C1'은 G-tr 사람 지시 대기, C1은 서버 2.
+- 할 일 (다음): (1) 서버 2 C1 기록 push되면 merge → `c1_screen.py` → RESULTS. (2) 확인 run 진행·10칸 평가 확인 (`lo_pkg_r2pkfc_s1` 끝 ~08:30) → 7개 끝나면 F1 규칙 판정. (3) 11/08 03:00 UTC 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC.
 
 ## 라운드 77 (2026-11-07 06:42~ UTC)
 - 상태 (06:45): GPU `lo_pkg_r2pkfc_s1` 증류 it 625 / 1121 s (cert-bad 0, oom 0, GPU peak 8.9 GB, val에 pkg 없음) 정상. CPU: side_slot `ginf eval10 r2pk_rl@mott_pkgate` 06:23:59~ (`eval_pkg10_1` 06:33, `eval_pcb10_0` 06:41 기록; 파일당 ~8 분 → 끝 ~07:15) + 학습 정확 검사 2. `scale-eval eval_ip20_1 r2pk_s2_rl`은 06:23 기록 생성으로 끝 (side_slot 재시작 때문에 END 줄 없음; 기록 파일로 확인). pod 20.2 GiB / 60, oom_kill 2. `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. `git fetch r2e`: 새 사람 커밋 없음.
