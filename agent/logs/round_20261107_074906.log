@@ -1,3 +1,19 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 80 is done and pushed to `r2e/main` (5c8b1a3).
+
+**Main result:** under the human's fixed rule (F1, applied to G1), r2pkfc can no longer pass held-out pkg generalisation. Confirmation run 1/7, `lo_pkg_r2pkfc_s1`, finished and was evaluated: held-out pkg 0.78, pcb 0.88, ip 0.98. Against the baseline `lo_pkg_r0_s1` (0.84), the held-out pkg check (b') is −0.06 at seed 1. The rule needs it above 0 at all three seeds, so seed 2 cannot change this. The current final structure r2pk had already failed the same check at this seed (0.64).
+
+**What is still open:**
+- Whether to switch the final structure to r2pkfc: this needs all three seeds of same-kind pkg, r2pkfc vs r2pk. With only seed 0 it is +0.06 [−0.06, +0.18].
+- Held-out pcb generalisation, which comes from the later pcb runs.
+
+**What changed:**
+- `scripts/collect_results.py`: added an r2pkfc row to the existing leave-out table, plus a line that checks the structure-switch rule. I wrote it with only 1 of the 7 runs in, and the rule is the human's rule unchanged.
+- The r2pkfc 16- and 20-cell evals (report-only, not used for any verdict) are all in RESULTS. Against r2pk: pkg16 +0.12, pcb16 −0.10, pcb20 −0.12, ip unchanged.
+
+**Running now:** run 2/7, `lo_pkg_r2pkfc_s2`, started on the GPU at about 08:20 UTC. It should finish around 10:25, and side_slot will then run its 10-cell eval.
+
+- **Decision:** keep the queue as the human set it (all 7 runs), because the switch and pcb verdicts are still undecided. All 7 should finish around 21:00 UTC, before the 11/08 12:00 KST training deadline.
+- **Not here yet:** no new human commits, and no C1 results from server 2. G-tr is still waiting for a human instruction.
