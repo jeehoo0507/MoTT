@@ -1,5 +1,11 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 14:25 KST — 사람: 최종 RL 방식 C1 (PROPOSALS "11/07 C1 재개")
+- **G1 판정이 "탈락"이면 (예상):** 서버 1 GPU에 바로 `r2pk_ctl` → `r2pk_vsi` (둘 다 `"init": "runs/2026-10-29/r2pk_rl/best.pt"`, `"rl_hours": 1.0`, seed 0; arm은 PROPOSALS 그대로). 각 10칸 평가는 side_slot. 끝나면 거르기 판정 (PROPOSALS 규칙) → 통과면 확인 4 run (seed 1·2) 바로 큐.
+- **G1이 "통과"면:** G1 확인 7 run이 먼저 (서버 1). C1은 서버 1에 넣지 말고 PROGRESS에 "C1 대기 (서버 2로)"라고만 적어라 — 사람이 서버 2에서 돌린다.
+- `--self_repair` 경로는 11/07 smoke (`runs/analysis/smoke_self_repair.ok`) 그대로. 학습 조건·플래그는 바꾸지 않는다. 같은 1 h에 iter가 적은 것은 그대로 기록.
+- 11/08 12:00 KST 뒤 새 학습 시작 금지.
+
 ## 2026-11-07 13:40 KST — 사람: r2pkfc 16·20칸 평가는 LS16과 동시에 허용 (바로 시작)
 - 13:25 절의 r2pkfc 평가를 **LS16이 살아 있어도 지금 시작**한다 ("LS16 도는 동안 scale-eval 금지" 규칙의 예외, 이 평가만). 순서 `eval_pkg16_0` → `eval_pkg16_1` → `eval_pkg20_0` → `eval_pkg20_1`, **한 번에 하나씩**, `--workers 1 --inst_chunk 5`.
 - 메모리: 기존 `mem_guard`를 그대로 쓴다. pod가 45 GiB를 넘으면 **LS16 쪽을** 멈추고 `.memskip`으로 기록한다 (사람 결정: r2pkfc 평가가 우선, LS16은 부록 기준선). r2pkfc 평가는 죽이지 마라.
