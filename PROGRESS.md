@@ -1,5 +1,14 @@
-STUCK (해제 시도 중, 11/05 08:10; 11/07 01:30 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (12:16 scale-eval 시작과 겹침, 11/06 02:15 GPU 학습 + side_slot 평가와 겹침 — 둘 다 혼자가 아님) → 혼자 돌도록 CPU 줄 맨 끝 `ls16r2 eval_pcb16_0`. 이것도 다른 작업 없이 45 GiB를 넘으면 "메모리로 생략" 확정.
-# PROGRESS (갱신 2026-11-07 01:30 UTC, Claude 복귀 라운드 64 — GPU 비어 있음 (새 학습 없음, 규칙), CPU 드라이버 `ls16c eval_ip16_1` 15.3 h째, pod 22.0 GiB / 60, oom_kill 2)
+STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
+# PROGRESS (갱신 2026-11-07 02:00 UTC, 라운드 65 — GPU **G1 `r2pkfc`** (01:54~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 15.8 h째, pod 22 GiB / 60, oom_kill 2)
+
+## 라운드 65 (2026-11-07 01:34~ UTC) — QUEUE 11/07 방법 탐색 → G1
+- 사람 지시가 라운드 중 세 번 바뀜 (모두 따름): (1) QUEUE 10:45 KST "마지막 방법 탐색" (대조군 + C1~C4) → PROPOSALS `11/07 M`에 규칙을 결과 전에 적고 대조군 `r2pk_ctl` 시작 (01:46). (2) push 때 받은 사람 커밋 a208879 (QUEUE 10:50 KST, G1이 10:45를 대체) → `r2pk_ctl` 중단 (01:51, 약 5 분, 결과 없음), 큐를 사람 G1 순서로. (3) 다시 받은 6a0726d·49cebd8 (루프 후보 철회) → `r3pk` 중단 (01:53:49 시작, 1 분 안, 결과 없음). 지금 G1 = `r2pkfc` → `lo_pkg_r2pkfc` (사람 큐 그대로, 순서 안 바꿈). 남은 부분 파일 `runs/2026-10-29/{r2pk_ctl_rl,r3pk_distill}`은 쓰지 않음 (resume.pt 없음 → 다시 큐에 들어가도 run_rung가 옆으로 치움).
+- 코드 hash: `r2pkfc`는 68b59b3 (= 사람 G1 커밋 + 내 변경). `train.py` 변경은 기본값 꺼진 새 플래그 두 개 (`--kind_weight`, `--self_repair`; 10:45 절 C2·C1용, 이제 안 씀) — 기본 경로는 같은 RNG·같은 손실 (`pi` 뽑기는 플래그 없을 때 `rng.integers` 그대로). smoke: `runs/analysis/smoke_self_repair.ok` (6 iter, 정확 검사 94, 고침 통과 63, 교체 34, ~29 s/iter vs 대조 ~13 s — 기록만, 판정 없음).
+- G1 smoke (QUEUE G1 할 일 1, 새 플래그 조합): `scripts/smoke_r3pk.py [fc]` GPU 증류 30 + RL 3 iter — loop+P1 (`smoke_r3pk.ok`), mott+P1+fc_bias (`smoke_r2pkfc.ok`) 모두 통과.
+- 드라이버: `pipeline_day2.py`에 train 항목 `"rl_hours"` (init 있을 때만; 지금 쓰는 항목 없음). LS16 4항목 → `cpu_deferred` (`scripts/queue_defer.py`). side_slot 대상 = `r2pkfc lo_pkg_r2pkfc` (G1 할 일 2).
+- 거르기 규칙 코드: `scripts/g1_screen.py` (G1 결과 전에 씀; 해석 = 점추정, 개수비는 종류마다 ≤ 1.05, PROPOSALS G1 끝 줄).
+- 결정: 10:45 절의 PROPOSALS `11/07 M` 규칙을 지우지 않고 "하지 않음 (사람이 대체)"로 남김 — 이유: 대조군을 실제로 5 분 돌렸으므로 기록을 남기는 것이 정직함; 판정에는 쓰지 않음.
+- 할 일 (다음): (1) `r2pkfc` 끝 (~03:55) → side_slot 10칸 평가 (~04:15). (2) `lo_pkg_r2pkfc` (~05:56) → 평가 (~06:15) → `g1_screen.py` → 통과면 확인 7 run을 PROPOSALS 순서대로 바로 큐 (+ side_slot 대상 갱신), 아니면 RESULTS ABLATIONS "G1 효과 없음" + LS16 `--restore`. (3) 11/08 03:00 UTC (12:00 KST) 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC.
 
 ## Claude 복귀 라운드 64 (2026-11-07 01:12~ UTC)
 - 사이: 11/06 02:06 ~ 11/07 01:00 UTC 루프 라운드는 사용량 한도로 일을 못 했고, 11/06 10:06 ~ 11/07 00:14 UTC는 Codex가 관리 (사람이 코드 되돌림, QUEUE 11/07 10:20 KST). Codex 기간 드라이버가 돌린 `peakmask …` 진단 8개 (`reports/peak_mask_diag_20261106/`)는 **보고서 근거로 안 씀** (QUEUE). 지금 코드 = f687b21 (+ `scripts/stop_codex.sh`), `git diff` 확인.

@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from collect_results import boot_ci  # noqa: E402
 
 DAY = "runs/2026-10-29"
-CANDS = ("r3pk", "r2pkfc")
+CANDS = ("r2pkfc",)   # G1-L r3pk withdrawn by the human before any G1 run (PROPOSALS G1 수정, 11/07 10:50 KST)
 
 
 def load(run, kind):
