@@ -40,7 +40,7 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start, ls_chunk = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start, ls_chunk, env_feat = args
     import resource
     import numpy as np
     import torch
@@ -57,6 +57,8 @@ def job(args):
     if start == "rule" and spec:                    # trained policies only; baselines in the same call run as usual
         method = f"modal_rule>{method}"
     rec_method = f"{method}+rep{repair}" if repair else method
+    if env_feat and spec:
+        rec_method = f"{rec_method}@{env_feat}"
     dst = os.path.join(out, "eval", f"{name}__{rec_method}.json")
     if os.path.exists(dst):
         return name, method, "exists", None
@@ -98,7 +100,9 @@ def job(args):
             return dict(occ=occ, feasible=torch.from_numpy(grid_worst(bb, inst, occ, cfg) <= FEAS_TOL))
     else:                                         # trained policy: method = "<name>" or "<name>@S"
         ck = torch.load(spec, map_location="cpu", weights_only=False)
-        a = ck["args"]
+        a = dict(ck["args"])
+        if env_feat:
+            a["feat"] = env_feat
         dev = torch.device(device)
         pol = make_policy(cfg, a).to(dev)
         pol.load_state_dict(ck["model"])
@@ -202,6 +206,8 @@ def main():
     ap.add_argument("--sets", default="eval_*", help="glob of pool files (without .pkl), comma-separated for several")
     ap.add_argument("--methods", default="", help="comma list of gp,greedy,ls,modal_rule")
     ap.add_argument("--policy", nargs="*", default=[], help="name=path/to/ckpt.pt")
+    ap.add_argument("--env_feat", default="", help="policy: run the policy in this env feature mode instead of the "
+                    "checkpoint's (11/07 C1': mott_pkgate on a mott_pk checkpoint = inference-only refined-peak gate)")
     ap.add_argument("--samples", type=int, default=1, help="policy: best-of-S sampling (1 = greedy decoding)")
     ap.add_argument("--rounds", type=int, default=4)
     ap.add_argument("--ls", default="4x32")
@@ -227,7 +233,7 @@ def main():
     ls_cfg = tuple(map(int, a.ls.split("x")))
     ga_cfg = tuple(map(int, a.ga.split("x")))
     jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair, a.start,
-             a.ls_chunk) for f in files for m, spec in methods]
+             a.ls_chunk, a.env_feat) for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()
     # one fresh process per job: a side-16 job's peak stayed resident in the worker into the next job
