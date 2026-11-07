@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 19:50 UTC, 라운드 106 — F1 좌표 `r0_coord_rl+rep4` pkg20_0 끝 (1.00, n=8); 드라이버 좌표 pkg20_1 다음; GPU `lo_pkg_rnd_r0` RL it 75)
+# PROGRESS (갱신 2026-11-07 21:10 UTC, 라운드 107 — **F1 14/14 끝** (좌표+V pkg20_1 0.62); F2 서버 2 done → 건너뜀; 드라이버 F3 22개 시작; R 대조군 `lo_pkg_rnd_r0` 끝 (10칸 뺀 pkg 0.74); GPU 빔)
+
+## 라운드 107 (2026-11-07 20:03~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
+- `ensure_running`: 드라이버 alive (1575375), report_watch alive, resume_agent 다시 띄움. `restore_proc_log.py` 드라이버 +430/+98/+273 B, side_slot 그대로. pod 25–27 GiB / 60, oom_kill 2.
+- **F1 마지막 (드라이버):** `eval_pkg20_1 r0_coord_rl+rep4` 19:49–21:02 rc 0 — ok **0.62** (n=8), 개수 12.00, 110.6 s/문제 (정책 단독 기록도 108.8 s/문제 — 이 파일이 원래 느림). 기록 `runs/2026-10-28/r0_coord_rl/eval/eval_pkg20_1__r0_coord_rl+rep4.json`. → **F1 14개 모두 끝.**
+- RESULTS (드라이버 collect_results 21:02–21:05, 1216 기록): "최종 방법" 짝 표 pkg20 좌표+V 두 파일 묶음 — 기준 0.81, MoTT+P1+V 0.958, 차 **+0.15 [+0.02, +0.27]**, 개수비 1.090 [1.006, 1.168] (3 seed × 16 = 48 짝, 작은 표본). 숫자만 — 읽기 (a)(b)(c)는 사람.
+- **R 대조군:** `lo_pkg_rnd_r0` RL 20:38 끝 (349 iter, 1.27 h, best iter 200 score 1.719, oom 0, GPU peak 14.7 GB). side_slot `eval10 lo_pkg_rnd_r0_rl` 20:40–20:58 rc 0. `r_screen.py` 2×2 (seed 0, 보고만): 좌표+rnd `lo_pkg_rnd_r0` vs 좌표 `lo_pkg_r0` 뺀 pkg 0.74 vs 0.78, −0.04 [−0.22, +0.12]; MoTT+rnd vs 좌표+rnd 0.68 vs 0.74, −0.06 [−0.22, +0.10]. R 판정 그대로 **미통과** (RESULTS "R" 절 자동). → R 항목 모두 끝.
+- 드라이버: F2 (서버 2 done) 건너뜀 → **F3 22개** 21:06 시작 (`eval_pcb16_0 r2pk_s1_rl+rep4` 첫 항목). GPU 학습 큐 비어 있음 (사람 항목 끝, 에이전트 새 학습 금지) → GPU 빔.
+- 결정: 큐·플래그·side_slot 그대로, GPU 새 학습 넣지 않음 — 이유: QUEUE 11/08 03:05 KST "에이전트가 스스로 새 학습·시도를 넣는 것은 여전히 금지"; 다음 실험 (B-Manoharan 원문판, B-DevFormer)은 사람이 사전 등록 뒤 넣음.
+- 할 일 (다음): (1) 드라이버 F3 22개 (메모리 확인). (2) 사람 새 QUEUE 항목 fetch (11/08 아침 KST). (3) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 106 머리말: F1 좌표 `r0_coord_rl+rep4` pkg20_0 끝 (1.00, n=8); 드라이버 좌표 pkg20_1 다음; GPU `lo_pkg_rnd_r0` RL it 75
 
 ## 라운드 106 (2026-11-07 19:44~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.

@@ -11,3 +11,7 @@ Already up to date.
 - **결정:** 큐·플래그·side_slot을 그대로 두었습니다. 남은 항목이 모두 사람이 넣은 것이고, 에이전트가 스스로 새 시도를 넣는 것은 여전히 금지이기 때문입니다. PROGRESS에도 같은 내용을 적었습니다.
 
 다음 DAILY는 11/08 01:30 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   97a5886..3daba7d  main -> main
