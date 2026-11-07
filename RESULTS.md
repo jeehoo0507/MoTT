@@ -1,6 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-07 05:08 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-07 05:27 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
+
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 5개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음.
 
 ## 평가 (정확 검사)
 
@@ -143,7 +145,7 @@
 | r2pkdd_rl | – | 0.98 / 0.74 / 1.03 [50] | – | – | 0.96 / 0.83 / 0.20 [50] | – | – | 0.82 / 0.83 / 0.59 [50] | – | – |
 | r2pkdd_s1_distill | – | 0.92 / 0.74 / 1.02 [50] | – | – | 0.84 / 0.80 / 0.20 [50] | – | – | 0.68 / 0.89 / 0.65 [50] | – | – |
 | r2pkdd_s1_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.96 / 0.81 / 0.20 [50] | – | – | 0.86 / 0.85 / 0.58 [50] | – | – |
-| r2pkfc_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.94 / 0.80 / 0.19 [50] | – | – | 0.84 / 0.86 / 0.63 [50] | 0.68 / 0.66 / 0.47 [25] | – |
+| r2pkfc_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.94 / 0.80 / 0.19 [50] | – | – | 0.84 / 0.86 / 0.63 [50] | 0.70 / 0.71 / 0.46 [50] | – |
 | r2s1_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.92 / 0.83 / 0.21 [50] | – | – | 0.80 / 0.83 / 0.57 [50] | – | – |
 | r2s2_rl | – | 0.98 / 0.74 / 1.01 [50] | – | – | 0.88 / 0.83 / 0.20 [50] | – | – | 0.88 / 0.85 / 0.60 [50] | – | – |
 | r2t_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.84 / 0.84 / 0.19 [50] | – | – | 0.66 / 0.85 / 0.60 [50] | – | – |
@@ -656,7 +658,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 16 | r2pk_rl | 50 | -0.22 [-0.40, -0.04] | 0.489 [0.391, 0.594] |
 | pkg 16 | r2pk_s1_rl | 50 | -0.26 [-0.42, -0.10] | 0.456 [0.374, 0.545] |
 | pkg 16 | r2pk_s2_rl | 50 | -0.24 [-0.40, -0.06] | 0.468 [0.380, 0.563] |
-| pkg 16 | r2pkfc_rl | 25 | -0.12 [-0.36, +0.12] | 0.471 [0.340, 0.617] |
+| pkg 16 | r2pkfc_rl | 50 | -0.10 [-0.28, +0.08] | 0.457 [0.370, 0.558] |
 | pkg 16 | r3_loop_rl | 50 | -0.22 [-0.36, -0.08] | 0.458 [0.380, 0.544] |
 | pkg 16 | r3_loop_rl@R16 | 50 | -0.30 [-0.46, -0.12] | 0.396 [0.324, 0.478] |
 | pkg 16 | r3_loop_rl@R2 | 50 | -0.22 [-0.40, -0.04] | 0.514 [0.402, 0.639] |
@@ -1179,7 +1181,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 16 | r2pk_rl | 50 | -0.24 [-0.40, -0.08] | 0.737 [0.589, 0.892] |
 | pkg 16 | r2pk_s1_rl | 50 | -0.28 [-0.46, -0.12] | 0.721 [0.601, 0.847] |
 | pkg 16 | r2pk_s2_rl | 50 | -0.26 [-0.40, -0.10] | 0.723 [0.597, 0.845] |
-| pkg 16 | r2pkfc_rl | 25 | -0.12 [-0.32, +0.08] | 0.658 [0.506, 0.819] |
+| pkg 16 | r2pkfc_rl | 50 | -0.12 [-0.28, +0.04] | 0.707 [0.587, 0.825] |
 | pkg 16 | r3_loop_rl | 50 | -0.24 [-0.40, -0.06] | 0.733 [0.607, 0.855] |
 | pkg 16 | r3_loop_rl@R16 | 50 | -0.32 [-0.48, -0.14] | 0.694 [0.597, 0.791] |
 | pkg 16 | r3_loop_rl@R2 | 50 | -0.24 [-0.38, -0.10] | 0.759 [0.637, 0.876] |
@@ -1827,7 +1829,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | greedy+prune | 50 (0, 1) | 0.40 | 10.30 | 1.000 | 2.034 | 2.944 | `runs/2026-10-28/baselines/eval/eval_ip10_0__greedy+prune.json`, `runs/2026-10-28/baselines/eval/eval_ip10_1__greedy+prune.json` |
 | gp_type_aware | 50 (0, 1) | 1.00 | 8.30 | 0.736 | 1.000 | 11.703 | `runs/2026-10-29/baselines_e0plus/eval/eval_ip10_0__gp_type_aware.json`, `runs/2026-10-29/baselines_e0plus/eval/eval_ip10_1__gp_type_aware.json` |
 | local_search | 50 (0, 1) | 0.40 | 4.15 | 0.751 | 1.040 | 10.774 | `runs/2026-10-28/baselines/eval/eval_ip10_0__local_search.json`, `runs/2026-10-28/baselines/eval/eval_ip10_1__local_search.json` |
-| a1_nogrow_rl | 25 (0) | 1.00 | 8.24 | 0.765 | 1.023 | 0.371 | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_ip10_0__a1_nogrow_rl.json` |
+| a1_nogrow_rl | 25 (0) | 1.00 | 8.24 | 0.765 | 1.023 | – | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_ip10_0__a1_nogrow_rl.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.119 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_ip10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_ip10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.96 | 14.21 | 1.225 | 1.731 | 0.133 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.96 | 14.21 | 1.225 | 1.731 | 0.130 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_ip10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_ip10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2009,7 +2011,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | greedy+prune | 50 (0, 1) | 0.90 | 12.02 | 1.000 | 0.341 | 4.838 | `runs/2026-10-28/baselines/eval/eval_pcb10_0__greedy+prune.json`, `runs/2026-10-28/baselines/eval/eval_pcb10_1__greedy+prune.json` |
 | gp_type_aware | 50 (0, 1) | 0.66 | 45.33 | 4.834 | 1.000 | 24.761 | `runs/2026-10-29/baselines_e0plus/eval/eval_pcb10_0__gp_type_aware.json`, `runs/2026-10-29/baselines_e0plus/eval/eval_pcb10_1__gp_type_aware.json` |
 | local_search | 50 (0, 1) | 0.78 | 7.51 | 0.745 | 0.237 | 25.035 | `runs/2026-10-28/baselines/eval/eval_pcb10_0__local_search.json`, `runs/2026-10-28/baselines/eval/eval_pcb10_1__local_search.json` |
-| a1_nogrow_rl | 50 (0, 1) | 0.92 | 7.22 | 0.865 | 0.206 | 0.566 | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_0__a1_nogrow_rl.json`, `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_1__a1_nogrow_rl.json` |
+| a1_nogrow_rl | 50 (0, 1) | 0.92 | 7.22 | 0.865 | 0.206 | – | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_0__a1_nogrow_rl.json`, `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_1__a1_nogrow_rl.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.237 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_pcb10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_pcb10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.00 | – | – | – | 0.570 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pcb10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pcb10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.00 | – | – | – | 0.207 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pcb10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pcb10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2197,7 +2199,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | greedy+prune | 50 (0, 1) | 0.90 | 8.07 | 1.000 | 0.745 | 3.786 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__greedy+prune.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__greedy+prune.json` |
 | gp_type_aware | 50 (0, 1) | 0.82 | 12.44 | 1.586 | 1.000 | 9.172 | `runs/2026-10-29/baselines_e0plus/eval/eval_pkg10_0__gp_type_aware.json`, `runs/2026-10-29/baselines_e0plus/eval/eval_pkg10_1__gp_type_aware.json` |
 | local_search | 50 (0, 1) | 0.42 | 6.10 | 0.797 | 0.561 | 16.007 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__local_search.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__local_search.json` |
-| a1_nogrow_rl | 50 (0, 1) | 0.88 | 7.32 | 0.986 | 0.669 | 0.678 | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_0__a1_nogrow_rl.json`, `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_1__a1_nogrow_rl.json` |
+| a1_nogrow_rl | 50 (0, 1) | 0.88 | 7.32 | 0.986 | 0.669 | – | `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_0__a1_nogrow_rl.json`, `runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_1__a1_nogrow_rl.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.296 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.88 | 49.86 | 6.589 | 4.627 | 3.566 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.00 | – | – | – | 0.193 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2360,7 +2362,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | r2pk_rl | 50 (0, 1) | 0.58 | 10.41 | 0.737 | 0.489 | 3.276 | `runs/2026-10-29/r2pk_rl/eval/eval_pkg16_0__r2pk_rl.json`, `runs/2026-10-29/r2pk_rl/eval/eval_pkg16_1__r2pk_rl.json` |
 | r2pk_s1_rl | 50 (0, 1) | 0.54 | 9.00 | 0.721 | 0.456 | 3.726 | `runs/2026-10-29/r2pk_s1_rl/eval/eval_pkg16_0__r2pk_s1_rl.json`, `runs/2026-10-29/r2pk_s1_rl/eval/eval_pkg16_1__r2pk_s1_rl.json` |
 | r2pk_s2_rl | 50 (0, 1) | 0.56 | 9.96 | 0.723 | 0.468 | 4.376 | `runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg16_0__r2pk_s2_rl.json`, `runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg16_1__r2pk_s2_rl.json` |
-| r2pkfc_rl | 25 (0) | 0.68 | 10.88 | 0.658 | 0.471 | 4.130 | `runs/2026-10-29/r2pkfc_rl/eval/eval_pkg16_0__r2pkfc_rl.json` |
+| r2pkfc_rl | 50 (0, 1) | 0.70 | 10.40 | 0.707 | 0.457 | 3.549 | `runs/2026-10-29/r2pkfc_rl/eval/eval_pkg16_0__r2pkfc_rl.json`, `runs/2026-10-29/r2pkfc_rl/eval/eval_pkg16_1__r2pkfc_rl.json` |
 | r3_loop_rl | 50 (0, 1) | 0.58 | 9.17 | 0.733 | 0.458 | 3.594 | `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_0__r3_loop_rl.json`, `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_1__r3_loop_rl.json` |
 | r3_loop_rl@R16 | 50 (0, 1) | 0.50 | 8.88 | 0.694 | 0.396 | 6.373 | `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_0__r3_loop_rl@R16.json`, `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_1__r3_loop_rl@R16.json` |
 | r3_loop_rl@R2 | 50 (0, 1) | 0.58 | 11.17 | 0.759 | 0.514 | 3.376 | `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_0__r3_loop_rl@R2.json`, `runs/2026-10-28/r3_loop_rl/eval/eval_pkg16_1__r3_loop_rl@R2.json` |
@@ -3288,8 +3290,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 16 | r2pk_s1_rl | 실패 | 23 | 12.0 | 0.43 | 0.08 | 0.48 |
 | pkg 16 | r2pk_s2_rl | 성공 | 28 | 10.0 | 0.29 | 0.09 | 0.62 |
 | pkg 16 | r2pk_s2_rl | 실패 | 22 | 12.9 | 0.40 | 0.10 | 0.50 |
-| pkg 16 | r2pkfc_rl | 성공 | 17 | 10.9 | 0.32 | 0.10 | 0.57 |
-| pkg 16 | r2pkfc_rl | 실패 | 8 | 13.6 | 0.58 | 0.05 | 0.38 |
+| pkg 16 | r2pkfc_rl | 성공 | 35 | 10.4 | 0.30 | 0.12 | 0.58 |
+| pkg 16 | r2pkfc_rl | 실패 | 15 | 12.5 | 0.52 | 0.06 | 0.42 |
 | pkg 16 | r3_loop_rl | 성공 | 29 | 9.2 | 0.23 | 0.12 | 0.65 |
 | pkg 16 | r3_loop_rl | 실패 | 21 | 12.5 | 0.51 | 0.12 | 0.37 |
 | pkg 16 | r3_loop_rl@R16 | 성공 | 25 | 8.9 | 0.17 | 0.19 | 0.64 |
@@ -4222,7 +4224,7 @@ P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격
 | r2pk_rl | 0.78 / 0.998 / 0.70 s / 50 | 0.58 / 0.983 / 3.28 s / 50 | 0.69 [0.44, 0.88] / 1.138 [0.94, 1.32] / 4.45 s / 16 |
 | r2pk_s1_rl | 0.88 / 0.995 / 0.67 s / 50 | 0.54 / 0.881 / 3.73 s / 50 | 0.44 [0.19, 0.69] / 1.073 [1.00, 1.18] / 5.30 s / 16 |
 | r2pk_s2_rl | 0.80 / 1.026 / 0.89 s / 50 | 0.56 / 0.916 / 4.38 s / 50 | 0.38 [0.12, 0.62] / 1.039 [0.97, 1.12] / 5.74 s / 16 |
-| r2pkfc_rl | 0.84 / 1.039 / 0.66 s / 50 | 0.68 / 0.960 / 4.13 s / 25 | – |
+| r2pkfc_rl | 0.84 / 1.039 / 0.66 s / 50 | 0.70 / 0.930 / 3.55 s / 50 | – |
 
 ### ip
 
@@ -4251,7 +4253,7 @@ P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격
 
 | 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 fc/r2pk (둘 다 성공) [95% CI] |
 |---|---|---|---|
-| pkg 16 | 25 | +0.04 [-0.24, +0.32] | 0.998 [0.886, 1.114] |
+| pkg 16 | 50 | +0.12 [-0.06, +0.30] | 1.004 [0.938, 1.075] |
 
 ## 루프 반복 수 vs 판 크기 (QUEUE 11/04 18:15 KST, 기록만; `r3_loop_rl` seed 0, R8 = 기본 평가)
 
@@ -4405,7 +4407,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pkg_r2pk_rl | 132 / 359 | 0.0 | 1.00 | 4.4 | 0.86 | – | 0.70 |
 | lo_pkg_r2pk_s1_rl | 131 / 342 | 1.0 | 1.00 | 5.7 | 0.90 | – | 0.64 |
 | lo_pkg_r2pk_s2_rl | 127 / 360 | 0.0 | 0.98 | 6.8 | 0.88 | – | 0.78 |
-| lo_pkg_r2pkfc_rl | 14 / – | 1.0 | – | 6.0 | – | – | – |
+| lo_pkg_r2pkfc_rl | 63 / – | 1.0 | – | 5.7 | – | – | – |
 | r0_coord_s1_rl | 167 / 338 | 3.2 | 0.96 | 3.7 | 0.94 | 9.7 | 0.74 |
 | r0_coord_s2_rl | 163 / 349 | 2.6 | 1.00 | 5.8 | 0.98 | 13.0 | 0.76 |
 | r1_modal_s1_rl | 203 / 377 | 1.8 | 0.92 | 3.6 | 0.84 | 9.8 | 0.74 |

@@ -20,3 +20,7 @@ Applied autostash.
 **다음 라운드**
 - `lo_pkg_r2pkfc` RL은 ~05:58에 끝납니다. 그다음 side_slot이 10칸 평가를 먼저 돌리고, `g1_screen.py`로 G1 거르기 판정을 합니다. 통과하면 확인 run 7개를 큐에 넣고, 통과하지 못하면 RESULTS에 "G1 효과 없음"으로 적습니다.
 - 남은 r2pkfc pkg20 평가 두 개, 그다음 pcb·ip 16·20칸 평가는 G1 평가 앞뒤로 이어서 돕니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8edc635..8b8bd3d  main -> main

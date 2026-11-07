@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # replace the server-1 records). L1-L4 use the server-1 pools: kept, but their per-problem seconds come from another
 # CPU and are blanked, and a server-1 record of the same (set, method) always wins over a server-2 duplicate (L3).
 S2_EXCLUDE = ("runs/2026-11-05fresh/", "runs/pool_s2_fresh/")
-S2_PREFIX = ("runs/2026-11-05s2/",)
+S2_PREFIX = ("runs/2026-11-05s2/", "runs/2026-11-07s2/")   # 11/07: A1/A2, C1 + control (scripts/server2_c1.sh)
 S2_L1 = re.compile(r"runs/2026-10-29/(r2_mott|r3_loop)_s[12]_rl/eval/eval_[a-z]+(16|20)_\d__")
 S2_COUNT = {"excluded": 0, "server2": 0, "dup_dropped": 0}
 
@@ -463,6 +463,9 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     ("lo_pcb_r2pkdd_s1_rl", "lo_pcb_r2pk_s1_rl", "pcb 빼고 학습 2단 P1 + 고유 주파수 (seed 1, P3)", "P1"),
     ("r2pkdd_distill", "r2pk_distill", "증류만: 2단 P1 + 고유 주파수 (seed 0, P3)", "P1"),
     ("r2pkdd_s1_distill", "r2pk_s1_distill", "증류만: 2단 P1 + 고유 주파수 (seed 1, P3)", "P1"),
+    # 11/07 round 76 (PROPOSALS 11/07 C1, human, server 2 scripts/server2_c1.sh; written before any C1 record)
+    ("r2pk_vsi_rl", "r2pk_ctl_rl", "C1 검증된 해 따라 하기 (`--self_repair 4`, r2pk_rl/best.pt에서 RL만 1 h, seed 0, 서버 2)",
+     "같은 출발·같은 1 h RL 대조군"),
 ]
 
 
