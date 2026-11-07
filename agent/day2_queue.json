@@ -2300,6 +2300,22 @@
    "log": "agent/logs/base16_ls.log"
   },
   {
+   "name": "ls10 scale-eval eval_ip20_0 r2pk_s2_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip20_0 --policy r2pk_s2_rl=runs/2026-10-29/r2pk_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_rl",
+   "done": [
+    "runs/2026-10-29/r2pk_s2_rl/eval/eval_ip20_0__r2pk_s2_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
+  },
+  {
+   "name": "ls10 scale-eval eval_ip20_1 r2pk_s2_rl",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip20_1 --policy r2pk_s2_rl=runs/2026-10-29/r2pk_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_rl",
+   "done": [
+    "runs/2026-10-29/r2pk_s2_rl/eval/eval_ip20_1__r2pk_s2_rl.json"
+   ],
+   "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
+  },
+  {
    "name": "ls16c eval_pkg16_0",
    "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pkg16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
@@ -2448,20 +2464,12 @@
    "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
   },
   {
-   "name": "ls10 scale-eval eval_ip20_0 r2pk_s2_rl",
-   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip20_0 --policy r2pk_s2_rl=runs/2026-10-29/r2pk_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_rl",
+   "name": "ls16r2 eval_pcb16_0",
+   "cmd": ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --methods ls --ls_chunk 8 --workers 1 --out runs/2026-10-28/baselines",
    "done": [
-    "runs/2026-10-29/r2pk_s2_rl/eval/eval_ip20_0__r2pk_s2_rl.json"
+    "runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json"
    ],
-   "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
-  },
-  {
-   "name": "ls10 scale-eval eval_ip20_1 r2pk_s2_rl",
-   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip20_1 --policy r2pk_s2_rl=runs/2026-10-29/r2pk_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_rl",
-   "done": [
-    "runs/2026-10-29/r2pk_s2_rl/eval/eval_ip20_1__r2pk_s2_rl.json"
-   ],
-   "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
+   "log": "agent/logs/base16_ls.log"
   }
  ],
  "train_removed": [

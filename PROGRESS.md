@@ -1,5 +1,14 @@
-STUCK (해제 시도 중, 11/05 08:10; 14:15 보충): LS16이 메모리 45 GiB를 넘음 — pcb16_0 커널 OOM ×2, pcb16_1·ip16_0·ip16_1 mem_guard 중단. 원인: LS 한 번의 복구가 한 판 사본 max(32, 놓인 개수)개 (~1 GB씩)를 한꺼번에 greedy. 다른 길: `eval_policy.py --ls_chunk 8` (메모리만, ip10_0에서 기록된 LS 해와 비트 단위 같음)로 6파일 다시 (`ls16c …`, 08:10~, mem_guard 그대로). chunk 판 LS worker 자체는 ~10 GB로 평평; pcb16_0·pcb16_1 chunk 판 중단은 **4번째 칸 scale-eval 시작과 겹친 것** (라운드 50) → `ls16r`로 다시. LS가 혼자서 45 GiB를 넘으면 그 파일은 "메모리로 생략" 확정. **20:15 보충: chunk 판 ip16_0 첫 완주** (7.3 h, mem_guard peak pod 40.6 GiB, 중단 없음) — 남은 5파일도 같은 길.
-# PROGRESS (갱신 2026-11-06 01:52 UTC, 재개 라운드 63 — GPU `bm_manoharan_s1` 증류 01:50~, CPU LS16 pcb16_0 5.8 h째 + side_slot `bp_park_rlonly_s1` 10칸 평가 01:50~, pod 24.2 GiB)
+STUCK (해제 시도 중, 11/05 08:10; 11/07 01:30 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (12:16 scale-eval 시작과 겹침, 11/06 02:15 GPU 학습 + side_slot 평가와 겹침 — 둘 다 혼자가 아님) → 혼자 돌도록 CPU 줄 맨 끝 `ls16r2 eval_pcb16_0`. 이것도 다른 작업 없이 45 GiB를 넘으면 "메모리로 생략" 확정.
+# PROGRESS (갱신 2026-11-07 01:30 UTC, Claude 복귀 라운드 64 — GPU 비어 있음 (새 학습 없음, 규칙), CPU 드라이버 `ls16c eval_ip16_1` 15.3 h째, pod 22.0 GiB / 60, oom_kill 2)
+
+## Claude 복귀 라운드 64 (2026-11-07 01:12~ UTC)
+- 사이: 11/06 02:06 ~ 11/07 01:00 UTC 루프 라운드는 사용량 한도로 일을 못 했고, 11/06 10:06 ~ 11/07 00:14 UTC는 Codex가 관리 (사람이 코드 되돌림, QUEUE 11/07 10:20 KST). Codex 기간 드라이버가 돌린 `peakmask …` 진단 8개 (`reports/peak_mask_diag_20261106/`)는 **보고서 근거로 안 씀** (QUEUE). 지금 코드 = f687b21 (+ `scripts/stop_codex.sh`), `git diff` 확인.
+- 코드 hash 확인 (QUEUE 11/07 할 일): 지금 도는 학습 없음. 마지막 학습 `bp_park_rlonly_s2` (git c4514cf)·`bm_manoharan_s2` (1821d63)는 Codex 전 코드. 진행 중 LS16 `eval_ip16_1` (11/06 10:09 UTC 시작)은 `eval_policy.py` — Codex가 바꾸지 않은 파일 (`git diff f687b21 archive/codex-20261107` = `train.py`·`decap_loop/` 새 파일만).
+- 끝난 것 (11/06, 기록만 커밋 안 돼 있었음 → 이번에 `git add -f`): **B1 재구현 seed 1·2 전부** (`bp_park_rlonly_s{1,2}`, `bm_manoharan_s{1,2}` 10칸 평가) → RESULTS "선행 연구 재구현 seed 0·1·2" 표 12행 모두 채워짐. 읽기 (3 seed 묶음 CI): r2pk가 10행에서 높음, **구분 안 됨 2행** = `bp_park_rlonly` pkg (−0.020 [−0.107, +0.067]), `bm_manoharan_rlonly_l20` ip (+0.027 [−0.007, +0.067]). r2pk_s2 규모 평가 ip16 ×2·20칸 ×4 기록도 추가. LS16 pcb16_1 완주 (0.64, 문제당 114.6 s).
+- RESULTS.md: 되돌린 `collect_results.py`로 다시 생성 (01:13) — 차이는 머리 시각뿐 (Codex 내용 없음 확인).
+- 결정: pcb16_0 LS를 CPU 줄 맨 끝 (`ls16c pkg16_0·1` 뒤)에 `ls16r2`로 다시 — 이유: 앞의 두 중단이 모두 다른 작업과 겹친 때라 "혼자서 넘음"이 확인되지 않음; 새 학습이 없으니 이제 혼자 돌 수 있다. 실험이 아니라 기존 기준선 평가 (11/9~10 평가 허용 범위).
+- 결정: GPU는 비워 둠 — 이유: QUEUE 11/03 (11/6 12:00 UTC 뒤 새 시도 없음)·11/07 (새 시도 시작 안 함), 11/8 동결.
+- 할 일 (다음): (1) LS16 ip16_1 → pkg16_0 → pkg16_1 → pcb16_0 (파일당 7~15 h, 11/09 안에 끝날지 불확실 → 못 끝나면 그림 2 캡션에 "LS16 일부 파일"). (2) 보고서용 정리 (11/8 뒤 표·그림만): 그림 2 LS 열, 캡션 메모. (3) DAILY 다음 11/08 01:xx UTC.
 
 ## 재개 라운드 63 (2026-11-06 01:39~ UTC)
 - 상태 (01:51): **B1 `bp_park_rlonly_s1_rl` 학습 끝** (RL만 281 iter / 2.02 h, best it 100 score 12.645, teacher 교체 0, 끝 λ 22.96, GPU peak 16.8 GB) → side_slot **10칸 평가 01:50:53~** (rc 대기; seed 1 Park 때 82 분). GPU: 드라이버가 **`bm_manoharan_s1`** 증류 시작 (01:50~, 0.75 h + RL 1.25 h → 끝 ~03:50). CPU: 드라이버 줄 `ls16r eval_pcb16_0` (20:01~, 5.8 h째, worker rss 10.7 GB, 100 % CPU; ~03:20 예상) + 학습 정확 검사 + side_slot 평가. pod 24.2 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. QUEUE·원격 새 지시 없음 (`git fetch` 새 커밋 0).
