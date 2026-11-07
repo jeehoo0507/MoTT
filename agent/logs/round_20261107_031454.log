@@ -1,3 +1,17 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 70 is done. It was a monitoring round: nothing finished and the queue is unchanged.
+
+- **GPU (G1 `r2pkfc`):** The RL stage is at iteration 125 of the run and healthy: no out-of-memory errors, GPU peak 15.6 GB, and a new best checkpoint (score 1.852) at iteration 100. It should finish around 03:55 UTC. Then the 10-cell eval starts on its own, followed by `lo_pkg_r2pkfc` (the held-out-package run), expected around 05:56 UTC.
+- **CPU:** The LS16 local-search eval `eval_ip16_1` has been running for 17.1 hours. The side slot is waiting for the two G1 runs to finish so it can evaluate them.
+- **Memory:** The pod is at 23.9 of 60 GiB, and the out-of-memory kill count is still 2.
+- **Human instructions:** There are no new human commits, and `agent/QUEUE.md` has not changed since 10:48 KST.
+- **Background helpers:** The driver was alive. I restarted `report_watch` and `resume_agent`.
+- **Records:** I added a round 70 entry to `PROGRESS.md`, with "결정: 큐·설정 그대로" because the human's G1 order is running normally. `RESULTS.md` is unchanged since nothing finished. I committed as `2260155` and pushed to `r2e main`; the local branch matches the remote. The push printed `gh: not found` credential warnings, but the push itself went through.
+
+**Next:**
+1. Run the 10-cell eval once `r2pkfc` finishes.
+2. After `lo_pkg_r2pkfc` is evaluated, run `g1_screen.py` to apply the pre-registered screening rule.
+   - If G1 passes, `g1_confirm_queue.py r2pkfc --apply` adds the 7 confirmation runs.
+   - If it fails, record "G1 효과 없음" in `RESULTS.md` and put the deferred LS16 evals back in the queue.
