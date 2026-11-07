@@ -1595,6 +1595,11 @@ TRIED_MODS = [
      "r2pk_rl@mott_pkgate", "r2pk_rl", None, None,
      "효과 없음 (`c1p_screen.py`): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii)·(iii) 통과 → \"추론 게이트만으로 성립\" 아님. "
      "G-tr `r2pk_gate`는 G1 통과라 돌리지 않음 (사람 지시 대기)", "PROPOSALS 11/07 C1', PROGRESS 11/07 라운드 78"),
+    ("C1", "검증된 해 따라 하기 `--self_repair 4` (`r2pk_rl/best.pt`에서 RL만 1 h, 서버 2)", "r2pk_vsi_rl", "r2pk_ctl_rl",
+     None, None,
+     "기준 미달 (`c1_screen.py`, 사람 확인 QUEUE 19:28 KST): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii) 통과; "
+     "(iii) pcb 개수비 1.071 > 1.05 탈락 → 효과 없음. 참고 (보고만): 대조군 (+1 h RL만) pkg 0.86 vs `r2pk_rl` 0.78, 잡음 범위",
+     "PROPOSALS 11/07 C1, QUEUE 11/07 19:28 KST, PROGRESS 11/07 라운드 86"),
 ]
 TRIED_EVAL_ONLY = [   # evaluation-procedure variants, no training change; numbers are in their own sections
     ("T2", "끝에서 고치기 `--repair 4` (모든 방법에 같게)", "R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; "
