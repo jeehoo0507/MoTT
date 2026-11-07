@@ -1,0 +1,24 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   7c22a98..43ed512  main       -> r2e/main
+Updating 7c22a98..43ed512
+Created autostash: 9d04e83
+Fast-forward
+ PROPOSALS.md                                       |   4 +
+ agent/QUEUE.md                                     |   4 +
+ runs/2026-11-07s2/a1_nogrow_distill/metrics.json   | 193 +++++++++++++++++++++
+ .../eval/eval_ip10_0__a1_nogrow_rl.json            |   1 +
+ .../eval/eval_pcb10_0__a1_nogrow_rl.json           |   1 +
+ .../eval/eval_pcb10_1__a1_nogrow_rl.json           |   1 +
+ .../eval/eval_pkg10_0__a1_nogrow_rl.json           |   1 +
+ .../eval/eval_pkg10_1__a1_nogrow_rl.json           |   1 +
+ runs/2026-11-07s2/a1_nogrow_rl/metrics.json        | 193 +++++++++++++++++++++
+ 9 files changed, 399 insertions(+)
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_distill/metrics.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/eval/eval_ip10_0__a1_nogrow_rl.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_0__a1_nogrow_rl.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pcb10_1__a1_nogrow_rl.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_0__a1_nogrow_rl.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/eval/eval_pkg10_1__a1_nogrow_rl.json
+ create mode 100644 runs/2026-11-07s2/a1_nogrow_rl/metrics.json
+Applied autostash.

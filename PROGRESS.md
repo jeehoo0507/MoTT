@@ -1,5 +1,13 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
-# PROGRESS (갱신 2026-11-07 04:15 UTC, 라운드 73 — G1 `r2pkfc` 끝 + 10칸 평가 끝 (같은 종류 거르기: pkg +0.06 < +0.10, (ii)·(iii) 통과 → 판정은 뺀 pkg에 달림); GPU `lo_pkg_r2pkfc` 증류 (03:57~, 끝 ~05:57), CPU 드라이버 `ls16c eval_ip16_1` 17.9 h째, pod 24.3 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 04:35 UTC, 라운드 74 — 사람 QUEUE 13:25 KST: `r2pkfc_rl` 16·20칸 평가 12파일 (보고만) 큐; GPU `lo_pkg_r2pkfc` 증류 it 1250 (끝 ~05:57), CPU 드라이버 `ls16c eval_ip16_1` 18.3 h째, pod 23.6 GiB / 60, oom_kill 2)
+
+## 라운드 74 (2026-11-07 04:29~ UTC)
+- 새 사람 커밋 43ed512 (13:20 KST): QUEUE 13:25 KST + PROPOSALS "11/07 G1 보충" — `r2pkfc_rl` 16·20칸 평가, **보고만 (G1 판정 아님)**, `lo_pkg_r2pkfc` 10칸 평가가 먼저, 4번째 칸이 비는 대로. 38584c4는 서버 2 A1/A2 기록 (판정·큐 변경 안 함; collect_results가 기록을 자동으로 표에 넣음 — `a1_nogrow_rl`).
+- `scripts/queue_scale_r2pkfc.py` (새, 평가만): `ls10 scale-eval eval_{set} r2pkfc_rl` 12개, 명령은 규모 곡선과 같음 (`--workers 1 --inst_chunk 5`, `--out runs/2026-10-29/r2pkfc_rl`). 순서 사람 그대로: pkg16_0·1, pkg20_0·1을 대기 중인 이전 보충 (`r2pk_s2_rl` ip20_0·1) 앞에, pcb·ip 16·20 8개는 CPU 줄 끝에. side_slot (대상 `r2pkfc lo_pkg_r2pkfc`)이 큐를 매번 다시 읽으므로 재시작 없이 집어감.
+- `collect_results.py`: 규모 곡선 행에 `r2pkfc_rl`, 그리고 "G1 후보 16·20칸 (보고만, G1 판정 아님)" 짝 표 (`r2pkfc_rl` − `r2pk_rl`, 같은 문제 bootstrap 성공률 차·개수비 CI). "좋아졌다" 문구 없음. RESULTS 다시 생성.
+- 결정: 16·20칸 보충 평가는 **LS16 `eval_ip16_1`이 살아 있는 동안 시작하지 않음** (side_slot의 기존 `ls16_alive` 막음 그대로) — 이유: 16칸 평가 peak ~22 GB + 지금 pod ~24 GiB > 45 GiB → mem_guard가 18 h째 LS16을 죽임 (11/05 라운드 50 같은 사고). 사람 지시 "4번째 칸이 비는 대로"를 메모리 규칙 안에서 따름. 그리고 `lo_pkg_r2pkfc` RL 남은 시간 < 1 h이면 보충 없음 (FILL_GAP_S) → G1 판정 평가가 먼저.
+- 상태: `lo_pkg_r2pkfc` 증류 it 1250 / 2128 s (cert-bad 0, oom 0, GPU peak 8.9 GB, val에 pkg 없음) 정상. `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. `git fetch r2e`: 새 커밋 없음.
+- 할 일 (다음): (1) 라운드 73 목록 그대로 (`lo_pkg_r2pkfc` 끝 ~05:57 → 10칸 평가 → `g1_screen.py` → 판정). (2) LS16 ip16_1 끝나면 side_slot이 r2pkfc pkg16·20부터 돌리는지 확인. G1이 통과 못 하면 LS16 `--restore` 전에 r2pkfc 보충 평가 순서를 볼 것 (복원된 LS16이 다시 보충을 막음). (3) 11/08 03:00 UTC 뒤 새 학습 없음.
 
 ## 라운드 73 (2026-11-07 04:02~ UTC)
 - `r2pkfc` 학습 끝 (03:57, rc 0): RL 342 it / 1.27 h, best it 200 (score 1.633), GPU peak 16.7 GB, oom 0. 드라이버가 바로 `lo_pkg_r2pkfc` 시작 (03:57:19, 증류 it 150 / 263 s, 정상). side_slot 10칸 평가 `r2pkfc_rl` 03:58~04:10 rc 0 (정책 단독, `--repair` 0; `rounds`는 cutting-plane 횟수).

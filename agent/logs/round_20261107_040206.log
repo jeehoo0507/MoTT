@@ -16,3 +16,7 @@ Round 73 is done and pushed to `r2e main` (commit d197c04). There are no new hum
 - **Records:** I regenerated RESULTS.md and committed the new eval records. The verdict line for the ablation table waits for the final screen.
 
 **Next round:** run `g1_screen.py` once the second eval lands. If it passes, queue the 7 confirmation runs with `g1_confirm_queue.py r2pkfc --apply`. If not, record "G1 효과 없음" (no G1 effect) in RESULTS and restore the deferred LS16 jobs. No new training starts after 11/08 03:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d197c04..7c22a98  main -> main

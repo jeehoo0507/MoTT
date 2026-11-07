@@ -1408,7 +1408,7 @@ def pooled_mod_table(recs):
 
 
 SCALE_METHODS = ["greedy+prune", TA, "modal_rule", "r0_coord_rl", "r1_modal_rl", "r2_mott_rl", "r2pk_rl", "r2pk_s1_rl",
-                 "r2pk_s2_rl"]
+                 "r2pk_s2_rl", "r2pkfc_rl"]
 
 
 def scale_curve_table(recs):
@@ -1469,6 +1469,14 @@ def scale_curve_table(recs):
     if rows:
         L += ["#### 20칸 모드 토큰 효과 (기록만, 판정 없음): `r2_mott_rl` − `r1_modal_rl` (seed 0, 짝지은 bootstrap)", "",
               "| 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 r2/r1 (둘 다 성공) [95% CI] |", "|---|---|---|---|"] + rows + [""]
+    # QUEUE 11/07 13:25 KST / PROPOSALS "11/07 G1 보충": report only, not part of the G1 verdict (seed 0, post hoc)
+    pk = paired(recs, "r2pk_rl")
+    rows = [f"| {t} {n} | " + ci_cells(*pk[(t, n)]["r2pkfc_rl"]) + " |" for n in (16, 20) for t in ("pcb", "pkg", "ip")
+            if "r2pkfc_rl" in pk.get((t, n), {})]
+    if rows:
+        L += ["#### G1 후보 16·20칸 (보고만, G1 판정 아님): `r2pkfc_rl` − `r2pk_rl` (seed 0, 같은 문제 짝지은 bootstrap; "
+              "seed 1개·사후 평가라 숫자만)", "",
+              "| 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 fc/r2pk (둘 다 성공) [95% CI] |", "|---|---|---|---|"] + rows + [""]
     return L
 
 
