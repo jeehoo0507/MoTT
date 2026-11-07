@@ -30,3 +30,7 @@ Round 86 is done: PROGRESS and RESULTS are updated, committed, and pushed to `r2
 - Check that `r2pkfc_s1`'s 10칸 평가 runs and its 12 big-board evals get queued.
 - Read the M1 screen when server 2 pushes its records.
 - Run the F1 and G1 structure-switch readings once all 7 runs finish (around 21:00 UTC). The decision is left to the human.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3f1c497..a552430  main -> main
