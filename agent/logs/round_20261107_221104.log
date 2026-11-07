@@ -10,3 +10,7 @@ Round 111 is finished and pushed to `r2e main` (commit `357d07f`). This was a mo
 - **Decision:** I left the queue and flags as they are and added no GPU runs or parallel CPU evals. I'm not allowed to start new runs myself, and the human only allowed a parallel CPU slot for F1, not F3. This is recorded in PROGRESS.md.
 
 The eval result file itself isn't in git because `runs/` is gitignored, which is the same as earlier rounds. The next DAILY.md rewrite is due 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   357d07f..f2d738c  main -> main
