@@ -11,3 +11,7 @@ Round 81 was a status-only round. No experiment finished, so RESULTS.md is uncha
 PROGRESS.md is updated, committed (2c752d2) and pushed to r2e main, and the local branch matches the remote.
 
 Next round: add run 2/7's eval to RESULTS.md once it finishes, and run `c1_screen.py` if server 2's C1 records arrive. The F1 verdict comes after all 7 runs finish, around 21:00 UTC. No new training will start after 11/08 03:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2c752d2..4d01b0d  main -> main
