@@ -4,3 +4,21 @@ Already up to date.
 RL 종료 대기는 이미 백그라운드 waiter(b2gqyulux)가 하고 있습니다. 끝나면 알림이 오므로 Monitor는 따로 띄우지 않겠습니다.
 
 The background waiter will notify me when the driver starts F1 (or if eval10 fails).
+
+The human pushed two new instructions in the middle of this round (11/08 01:45 and 01:40 KST), so most of the round went to them. Everything is committed and pushed, and local main matches r2e/main.
+
+**New human instructions**
+- **Final method:** MoTT+P1 plus up to 4 rounds of verifier feedback (`--repair 4`), named `MoTT+P1+V`. No more training-side candidates. The CPU queue now runs the F1 → F2 → F3 repair evals.
+- **Cancelled evals:** the human moved the remaining 11 `r2pkfc_s2` 16/20-cell evals to `cpu_deferred` and killed the one that was running (the rc=-15 at 16:33). I did not restart them.
+- **Server 2's share:** it runs F1 pkg20 (r2pk, 3 seeds) and F2, and pushes each record as it finishes.
+
+**What I did**
+- **Merge helper:** the driver only checks for result files on disk and never pulls, so it would re-run server 2's items. A new background helper, `scripts/pull_s2_records.py`, merges server 2's pushes every 3 minutes. It skips the merge if an incoming file already exists here. 7 of 18 records have merged so far, with no conflicts.
+- **Memory problem with side_slot:** I first let side_slot run the two coordinate pkg20 evals (not server 2's) next to the driver's F1 pkg16. That took the pod to **45.7 GiB**: the pkg16 repair worker alone is 22 GB, and past pkg16 repair runs peaked at 25–28 GB. The human allowed this only below 45 GiB. So I stopped the side job (it had written no record yet) and took F back out of side_slot. Pod is now 26 GiB, and big-board repair evals run one at a time in the driver.
+- **Results table:** `collect_results.py` has a new "최종 방법 MoTT+P1+V" table: size × kind × seed, policy-alone vs with feedback, part-count changes, and paired CIs against coordinate+V and greedy+prune+V. It shows only numbers; the human applies readings (a)(b)(c). It appears once the first F record lands. I checked its layout with a dummy record.
+
+**R (training-distribution experiment)**
+- `lo_pkg_rnd_s1` finished. Its 10-cell scores: held-out pkg 0.82, pcb 0.94, ip 1.00.
+- `r_screen.py` on seeds 0 and 1: held-out pkg 0.75 vs 0.67 for r2pk (+0.08 [−0.03, +0.20]). The verdict is still "waiting" until seed 2 is in; `lo_pkg_rnd_s2` has started training on the GPU.
+
+**Next:** the driver's 6 F1 pkg16 evals (~20–30 min each), then the server-2 items it should skip, then the 2 coordinate pkg20 and 22 F3 evals. DAILY is next due 11/08 01:30 UTC.
