@@ -535,6 +535,26 @@
    "name": "bm_manoharan_s2",
    "arm": "--model manoharan",
    "seed": 2
+  },
+  {
+   "name": "r3pk",
+   "arm": "--model loop --peak_refine",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r3pk",
+   "arm": "--model loop --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
   }
  ],
  "cpu": [
