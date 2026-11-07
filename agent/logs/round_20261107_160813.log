@@ -22,3 +22,7 @@ The human pushed two new instructions in the middle of this round (11/08 01:45 a
 - `r_screen.py` on seeds 0 and 1: held-out pkg 0.75 vs 0.67 for r2pk (+0.08 [−0.03, +0.20]). The verdict is still "waiting" until seed 2 is in; `lo_pkg_rnd_s2` has started training on the GPU.
 
 **Next:** the driver's 6 F1 pkg16 evals (~20–30 min each), then the server-2 items it should skip, then the 2 coordinate pkg20 and 22 F3 evals. DAILY is next due 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f74176f..f977960  main -> main

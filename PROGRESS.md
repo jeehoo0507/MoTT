@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 16:45 UTC, 라운드 99 — **새 사람 지시 2개 (11/08 01:45·01:40 KST): 최종 방법 MoTT+P1+V 확정, CPU 줄 F1 → F2 → F3, 서버 2가 F1 pkg20·F2**; R `lo_pkg_rnd_s1` 학습 끝 → 10칸 평가 중, `lo_pkg_rnd_s2` 시작)
+# PROGRESS (갱신 2026-11-07 17:20 UTC, 라운드 100 — F1 진행: 드라이버 pkg16 수리 평가 1/6 끝 (`r2pk_rl` 0.96), 서버 2 F 기록 14/18 merge; "최종 방법 MoTT+P1+V" 표 생김; R `lo_pkg_rnd_s2` 증류 중)
+
+## 라운드 100 (2026-11-07 17:09~ UTC)
+- `git fetch r2e` (17:09): 새 사람 지시 없음 (QUEUE 마지막 11/08 01:45 KST F). 서버 2 기록은 `pull_s2_records.py`가 merge 중: 16:56–17:08에 `r2pk_s2_rl` pcb·pkg·ip 10칸 6개 + `r2pk_rl` pkg20_0·1 → **14/18** (모두 rc 0, "not merging" 없음). 남은 4 = `r2pk_s1/_s2` pkg20.
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py`: 드라이버·side_slot 복구할 것 없음 (디스크 = live). pod 29.2 GiB (pkg16 수리 중) → 18.8 GiB (끝난 뒤), oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg16_0 r2pk_rl+rep4` 16:51–17:11 rc 0 — ok **0.96**, 평균 개수 10.58, 4.1 s/문제, 되먹임 round 4. pod peak 확인 시점 29.2 GiB (라운드 99의 45.7은 side_slot 좌표 pkg20과 겹친 때). 드라이버 다음 항목 `eval_pkg16_0 r2pk_s1_rl+rep4` 17:15~ (사람 순서 그대로).
+- RESULTS 다시 생성 (1193 기록): **"최종 방법 MoTT+P1+V" 표 처음 채워짐** — 10칸 묶음 (3 seed, 150문제) 정책 단독 → +V: ip 0.99 → 1.000, pcb 0.92 → 1.000, pkg 0.82 → 0.987; seed 0 pcb16 0.90 → 0.98, pkg20 0.69 → 0.94 (16문제). 같은 되먹임 기준 대비 짝 CI (10칸, 150 짝): 좌표+V 대비 pkg +0.07 [+0.03, +0.11] 개수비 1.107, pcb +0.02 개수비 1.073, ip +0.00 개수비 0.773; greedy+prune+V 대비 pkg +0.05, pcb +0.06, ip +0.60, 개수비 0.74–0.86. 숫자만 — 읽기 (a)(b)(c)는 사람.
+- 확인: pkg20 기록 n=8/파일 (세트 크기 그대로, 버그 아님).
+- 결정: side_slot에 F 항목 다시 넣지 않음 — 이유: 라운드 99에서 pkg16 수리 + 좌표 pkg20 동시에 45.7 GiB로 사람 조건 (45 GiB 아래)을 넘었음; 드라이버 한 줄로 순서대로가 보수적. 큐·플래그 그대로.
+- R `lo_pkg_rnd_s2` 증류 it 1275 / 2226 s (cert-bad 0, oom 0, GPU 8.9 GB) 정상 → RL → 끝 ~18:40 → side_slot 10칸 평가 → `r_screen.py` 3 seed 판정 (RESULTS만).
+- 할 일 (다음): (1) 드라이버 F1 pkg16 남은 5개 → 좌표 pkg20 2개 → F2 (서버 2 몫, done이면 건너뜀) → F3 22개. (2) 서버 2 남은 4 기록 merge 확인. (3) `lo_pkg_rnd_s2` 끝 → 10칸 → `r_screen.py`. (4) 라운드마다 `restore_proc_log.py` (드라이버 1575375, side_slot 1710935). DAILY 다음 11/08 01:30 UTC.
+
+# (이전) PROGRESS 라운드 99 머리말: 갱신 2026-11-07 16:45 UTC — 새 사람 지시 2개 (11/08 01:45·01:40 KST): 최종 방법 MoTT+P1+V 확정, CPU 줄 F1 → F2 → F3, 서버 2가 F1 pkg20·F2; R `lo_pkg_rnd_s1` 학습 끝 → 10칸 평가 중, `lo_pkg_rnd_s2` 시작
 
 ## 라운드 99 (2026-11-07 16:08~ UTC)
 - `git fetch r2e` (16:08): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py`: 드라이버 +316 B, side_slot +197 B 복구. pod 18.5 GiB / 60, oom_kill 2.
