@@ -1,5 +1,10 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 13:40 KST — 사람: r2pkfc 16·20칸 평가는 LS16과 동시에 허용 (바로 시작)
+- 13:25 절의 r2pkfc 평가를 **LS16이 살아 있어도 지금 시작**한다 ("LS16 도는 동안 scale-eval 금지" 규칙의 예외, 이 평가만). 순서 `eval_pkg16_0` → `eval_pkg16_1` → `eval_pkg20_0` → `eval_pkg20_1`, **한 번에 하나씩**, `--workers 1 --inst_chunk 5`.
+- 메모리: 기존 `mem_guard`를 그대로 쓴다. pod가 45 GiB를 넘으면 **LS16 쪽을** 멈추고 `.memskip`으로 기록한다 (사람 결정: r2pkfc 평가가 우선, LS16은 부록 기준선). r2pkfc 평가는 죽이지 마라.
+- 우선순위: G1 `lo_pkg_r2pkfc` 10칸 평가가 시작되면 그것이 먼저 (판정용).
+
 ## 2026-11-07 13:25 KST — 사람: r2pkfc 16·20칸 평가 (보고만, CPU, 바로)
 - PROPOSALS "11/07 G1 보충" 그대로. `r2pkfc_rl`을 `eval_pkg16_0`, `eval_pkg16_1`, `eval_pkg20_0`, `eval_pkg20_1` 순서로 평가 (규모 곡선 평가와 같은 명령, `--workers 1 --inst_chunk 5`, `--out runs/2026-10-29/r2pkfc_rl`). 그다음 시간이 되면 pcb·ip 16·20칸.
 - 우선순위: `lo_pkg_r2pkfc` 10칸 평가 (G1 판정)가 먼저. 그 외 4번째 칸이 비는 대로. 판정에는 쓰지 않는다; RESULTS에는 "보고만"으로.
