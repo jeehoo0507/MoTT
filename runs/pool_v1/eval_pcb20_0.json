@@ -1,0 +1,48 @@
+{
+ "name": "eval_pcb20_0",
+ "tech": "pcb",
+ "size": 20,
+ "n": 8,
+ "seed": 9200,
+ "difficulty": [
+  0.02,
+  0.2
+ ],
+ "F": 176,
+ "rounds": 9,
+ "gp_ok": 1.0,
+ "gp_count_mean": 6.375,
+ "gp_count": [
+  5,
+  3,
+  3,
+  4,
+  3,
+  27,
+  2,
+  4
+ ],
+ "shapes": [
+  "holes",
+  "holes",
+  "rect",
+  "L",
+  "L",
+  "L",
+  "holes",
+  "holes"
+ ],
+ "targets": [
+  "flat",
+  "flat",
+  "flat",
+  "flat",
+  "flat",
+  "flat",
+  "step",
+  "step"
+ ],
+ "probes": 1,
+ "t_gen": 330.89696621894836,
+ "t_total": 1309.2335314750671
+}

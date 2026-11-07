@@ -1,0 +1,48 @@
+{
+ "name": "eval_ip20_0",
+ "tech": "ip",
+ "size": 20,
+ "n": 8,
+ "seed": 209200,
+ "difficulty": [
+  0.2,
+  0.5
+ ],
+ "F": 89,
+ "rounds": 4,
+ "gp_ok": 0.625,
+ "gp_count_mean": 73.2,
+ "gp_count": [
+  142,
+  43,
+  28,
+  142,
+  11,
+  276,
+  282,
+  313
+ ],
+ "shapes": [
+  "L",
+  "holes",
+  "L",
+  "holes",
+  "holes",
+  "L",
+  "rect",
+  "rect"
+ ],
+ "targets": [
+  "step",
+  "step",
+  "step",
+  "flat",
+  "flat",
+  "step",
+  "flat",
+  "flat"
+ ],
+ "probes": 2,
+ "t_gen": 331.87455797195435,
+ "t_total": 2847.0174283981323
+}

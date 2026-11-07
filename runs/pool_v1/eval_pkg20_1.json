@@ -1,0 +1,48 @@
+{
+ "name": "eval_pkg20_1",
+ "tech": "pkg",
+ "size": 20,
+ "n": 8,
+ "seed": 109201,
+ "difficulty": [
+  0.02,
+  0.2
+ ],
+ "F": 286,
+ "rounds": 10,
+ "gp_ok": 0.625,
+ "gp_count_mean": 19.4,
+ "gp_count": [
+  54,
+  15,
+  12,
+  10,
+  7,
+  11,
+  15,
+  9
+ ],
+ "shapes": [
+  "holes",
+  "L",
+  "L",
+  "holes",
+  "holes",
+  "L",
+  "holes",
+  "rect"
+ ],
+ "targets": [
+  "flat",
+  "step",
+  "flat",
+  "flat",
+  "step",
+  "step",
+  "step",
+  "flat"
+ ],
+ "probes": 3,
+ "t_gen": 335.2843942642212,
+ "t_total": 20869.631422042847
+}
