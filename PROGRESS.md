@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 18:00 UTC, 라운드 102 — F1 드라이버 pkg16 수리 평가 3/6 `r2pk_s2_rl` 진행; 서버 2 F 기록 17/18 merge; 사람 03:05 KST 새 학습 금지 해제 (사람 항목만); R `lo_pkg_rnd_s2` RL 중)
+# PROGRESS (갱신 2026-11-07 18:45 UTC, 라운드 103 — F1 pkg16_0 3 seed 끝 (묶음 0.933), pkg16_1 2/3 진행; 서버 2 F 기록 18/18 끝 (pkg20 묶음 0.958); R `lo_pkg_rnd_s2` 학습 끝 → side_slot 10칸 평가, GPU `lo_pkg_rnd_r0` 시작)
+
+## 라운드 103 (2026-11-07 18:14~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음 (새 브랜치 `baselines-final`만 — 사람 것, 건드리지 않음). QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만).
+- `ensure_running`: 드라이버 alive (1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py` 드라이버 두 번 (+682 B, +1278 B), side_slot 그대로. pod 26–30 GiB (18:37 순간 40.8 GiB: 수리 평가 + 학습 끝 + 10칸 평가 시작이 겹침), oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg16_0 r2pk_s2_rl+rep4` 17:41–18:08 rc 0 — 정책 단독 0.44 → **0.92**, 개수 11.13. `eval_pkg16_1 r2pk_rl+rep4` 18:12–18:31 rc 0 — 0.52 → **0.96**, 개수 10.38. 다음 `eval_pkg16_1 r2pk_s1_rl+rep4` 18:36~.
+- **서버 2:** `pull_s2_records.py` 18:12 `r2pk_s2_rl` pkg20_1 merge → **18/18 끝** (rc 0, "not merging" 없음).
+- RESULTS 다시 생성 (report_watch 18:17, 1200 기록, 자동 커밋 c1e45f5): "최종 방법" 표 pkg16_0 묶음 3 seed **0.933** (75문제, 정책 단독 0.56), pkg20 묶음 3 seed **0.958** (48문제, 정책 단독 0.50). 짝 CI pkg16: 좌표+V 대비 +0.13 [+0.05, +0.21] 개수비 1.132; greedy+prune+V 대비 −0.03 [−0.07, +0.00] 개수비 0.727. 숫자만 — 읽기는 사람.
+- **R:** `lo_pkg_rnd_s2` RL 18:36 끝 (353 iter, 1.27 h, best iter 100 score 1.567, oom 0). side_slot `eval10 lo_pkg_rnd_s2_rl` 18:37~. 드라이버 GPU 다음 = `lo_pkg_rnd_r0` 18:36~ (사람이 넣은 항목, 좌표 + rnd 대조군; 증류 0.75 h + RL 1.25 h → 끝 ~20:45).
+- 결정: 큐·플래그·side_slot 그대로 — 이유: F 순서·R 항목은 모두 사람 것; 에이전트 새 시도 금지 유지.
+- 할 일 (다음): (1) `lo_pkg_rnd_s2` 10칸 끝 → `r_screen.py` (seed 0·1·2 판정, RESULTS에 표만; 확인 run 없음). (2) 드라이버 F1 pkg16_1 남은 2 → 좌표 pkg20 2 → F2 (서버 2 done → 건너뜀) → F3 22. (3) `lo_pkg_rnd_r0` 끝 → side_slot 10칸 (보고만, 2×2 읽기). (4) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 102 머리말: F1 드라이버 pkg16 수리 평가 3/6 `r2pk_s2_rl` 진행; 서버 2 F 기록 17/18 merge; 사람 03:05 KST 새 학습 금지 해제 (사람 항목만); R `lo_pkg_rnd_s2` RL 중
 
 ## 라운드 102 (2026-11-07 17:58~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음 (새 브랜치 `bm-faithful`만 생김 — 사람 것, 건드리지 않음). 라운드 101 이후 확인한 사람 커밋 d3cec50 (QUEUE 11/08 03:05 KST): "11/08 12:00 KST 새 학습 금지" 해제, **사람이 넣은 항목만**; 에이전트가 스스로 새 학습·시도를 넣는 것은 여전히 금지. 다음 계획 (B-Manoharan 원문판 재실행, B-DevFormer 재구현)은 사람이 11/08 아침에 사전 등록 뒤 큐에 넣음 → 지금 할 것 없음.
