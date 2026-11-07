@@ -117,6 +117,8 @@ def parse():
     p.add_argument("--loop_eval", type=int, default=8, help="loop model: R at validation")
     p.add_argument("--fc_bias", action="store_true", help="mott/loop (day-2 arch a, QUEUE 10/29 03:15): add the "
                    "frequency-match bias -|log f_k - log SRF_t| / tau_h (tau learned per head) to dec_from_mode")
+    p.add_argument("--mm_bias", action="store_true", help="mott (PROPOSALS 11/07 M1, human): add the log-frequency "
+                   "distance bias -|log f_k - log f_k'| / tau_h (tau learned per head) to the mode self-attention")
     p.add_argument("--mode_head", action="store_true", help="mott/loop (day-2 arch c', PROPOSALS 10/29 08:00): add "
                    "a mode-routed add logit sum_k alpha_ik phi(m_k, c_t), zero-init")
     p.add_argument("--peak_gate", action="store_true", help="mott (11/07 C1', PROPOSALS): P1's refined peak level also "
@@ -153,7 +155,7 @@ def make_policy(cfg, a):
         from decap_loop.sim import mott_dims
     if a.get("model") == "mott":
         pol = MoTT(cfg.n_types, K_MODES, mott_dims(cfg.n_types), d=a["d"], layers=a["layers"], heads=a["heads"],
-                   fc=a.get("fc_bias", False), mode_head=a.get("mode_head", False))
+                   fc=a.get("fc_bias", False), mode_head=a.get("mode_head", False), mm=a.get("mm_bias", False))
         pol.use_prior = not a.get("no_prior", False)   # 11/07 A2: learned scores only, no physics prior
         return pol
     if a.get("model") == "loop":

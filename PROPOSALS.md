@@ -305,6 +305,16 @@
 - **보고 (판정 규칙):** 10칸 세 종류 50문제, 정책 단독, ablation − `r2pk_rl` 짝지은 성공률 차와 개수비 (bootstrap 95% CI). 어떤 종류에서든 CI 상한 < 0 **이고** 점추정 ≤ −0.16 (seed 잡음 d*)이면 "그 설계를 빼면 나빠진다"로 쓴다. 아니면 "seed 0에서 차이를 확인하지 못함"으로 쓰고 설계 근거로 쓰지 않는다. seed를 더하지 않는다.
 - 가장 가까운 선행: Residual Policy Learning (A2), cutting plane (A1) / 다른 점: 기여 아님, 우리 RL 설계의 ablation.
 
+## 11/07 M1: 모드↔모드 로그 주파수 거리 편향 (`--mm_bias`, 서버 2) — 사람, 11/07 19:28 KST, 어떤 run도 돌기 전에 고정
+- **왜:** G1 (`r2pkfc`) 거르기 통과 (seed 0 뺀 pkg +0.14, seed 1 +0.14). RL 절차 후보는 전부 실패 (C1 `r2pk_vsi` − `r2pk_ctl` pkg −0.02, C1' G-inf pkg −0.02). MoTT 블록의 attention 연결 네 개 중 셋은 판 불변 물리량으로 편향됨 (셀↔모드 결합도 g, 부품←모드 로그 SRF 거리 G1, 출력 1수 효과); **모드↔모드 self-attention만 편향이 없다.** M1은 그 마지막 연결에 같은 꼴의 편향을 넣어 "모든 연결이 물리로 편향된 MoTT"를 완성한다. 물리 근거: 부품 하나가 한 봉우리를 누르면 가까운 주파수에 새 반공진이 생긴다 (가까운 모드끼리 상호작용). 솔직한 기대: 모드 토큰에 log f가 이미 입력돼 있어 학습이 스스로 배울 수 있으므로 G1보다 이득이 작을 수 있다; 사람 추정 통과 확률 20–30%.
+- **무엇:** `decap_loop/model.py` `MoTT.mm_bias`: mode_self attention 점수에 −|log10 f_k − log10 f_k'| / τ_h, τ_h는 head마다 학습 (log 파라미터, 초기 τ = 1 decade), fc_bias와 같은 꼴. 새 파라미터 8개. `train.py --mm_bias`. CPU smoke `scripts/smoke_mm_bias.py`: τ→∞에서 mm 없는 모델과 로짓 동일, τ=1에서 다름, grad 도달, greedy 롤아웃 통과.
+- **run (같은 예산: 증류 0.75 h + RL 1.25 h, COMMON 그대로, seed 0, 서버 2 `scripts/server2_m1.sh`):** 순서 ① `lo_pkg_r2pkfcm1` = `--model mott --peak_refine --fc_bias --mm_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0` (뺀 pkg 먼저: 범용화 주장에 걸린 칸) ② `r2pkfcm1` = `--model mott --peak_refine --fc_bias --mm_bias`. 바탕 = G1 (P1+G1 위에 M1). 기록 `runs/2026-11-07s2/`.
+- **거르기 (G1 규칙 그대로, 짝만 G1 run):** seed 0, 10칸 50문제, 정책 단독, 같은 문제 짝. 짝 = `r2pkfc_rl` / `lo_pkg_r2pkfc_rl` (서버 1 기록, seed 0). (i) 같은 종류 pkg 차 ≥ +0.10 **또는** 뺀 pkg 차 ≥ +0.10, (ii) 같은 종류 pcb·ip 차 ≥ −0.06, (iii) 같은 종류 둘 다 성공 개수비 ≤ 1.05 (종류마다, `scripts/pair2.py` 읽기). 점추정으로 판정, bootstrap CI 같이 보고. 코드: `scripts/m1_screen.py` (g1_screen.py와 같은 계산, 짝만 바꿈).
+- **통과하면 확인 (11/08, 서버 1·2):** G1 확인과 같은 순서·규칙 (`lo_pkg_X_s1`, `lo_pkg_X_s2`, `X_s1`, `X_s2`, `lo_pcb_X`, `lo_pcb_X_s1`, `lo_pcb_X_s2`). 실패하면 RESULTS "시도한 수정"에 한 줄, 최종 구조는 G1 확인 결과로 정한다.
+- **서버 2 vs 서버 1 짝 비교 전제:** 서버 2 `r2pk_rl+rep4` 기록의 문제별 개수가 서버 1 `r2pk_rl`과 일치 (11/07 사람 확인) → 같은 pool. 학습 하드웨어 둘 다 A5000.
+- 결과를 보고 규칙·seed·평가 세트를 바꾸지 않는다.
+- 가장 가까운 선행: Graphormer/ALiBi식 거리 편향, MatNet / 다른 점: 새 기법 아님. 주장은 "모든 토큰 연결이 판 불변 물리량으로 편향된 설계 원칙"과 그 범용화 증거까지.
+
 ## 11/07 G1 보충 2: `r2pkfc_s1`·`r2pkfc_s2` 16·20칸 평가 — 사람, 11/07 19:14 KST, 두 run의 학습이 끝나기 전에 고정
 - **왜:** seed 0에서 r2pkfc는 16칸 pcb 40/50 vs r2pk 45/50 (−0.10), 20칸 pcb 14/16 vs 16/16 (보고만). G1을 최종 구조로 쓸지 정하려면 큰 판 결과가 seed 3개 필요.
 - **무엇:** `r2pkfc_s1_rl`, `r2pkfc_s2_rl` 각각 `eval_{pcb,pkg,ip}{16,20}_{0,1}` 12개 파일 (규모 곡선 평가와 같은 명령, `--workers 1 --inst_chunk 5`, 정책 단독). 짝 = 이미 있는 `r2pk_s1_rl`·`r2pk_s2_rl` 같은 파일.
