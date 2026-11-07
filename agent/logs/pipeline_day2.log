@@ -1172,3 +1172,9 @@
 [14:44:42] ATTACH eval10 r2pkfc_s2_rl
 [14:53:42] START collect_results | mem 18.4 GiB / 60.0 GiB, oom_kill 2
 [14:53:42] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[14:56:37] END collect_results rc=0 | mem 21.6 GiB / 60.0 GiB, oom_kill 2
+[14:58:07] ATTACH ls10 scale-eval eval_pkg16_1 r2pkfc_s1_rl
+[15:11:07] START collect_results | mem 18.3 GiB / 60.0 GiB, oom_kill 2
+[15:11:07] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[15:14:00] END collect_results rc=0 | mem 29.7 GiB / 60.0 GiB, oom_kill 2
+[15:15:30] ATTACH ls10 scale-eval eval_pkg20_0 r2pkfc_s1_rl
