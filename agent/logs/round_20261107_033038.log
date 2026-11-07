@@ -22,3 +22,15 @@ Fast-forward
  create mode 100644 runs/s2base/eval/eval_pkg10_0__r2pk_rl+rep4.json
  create mode 100644 runs/s2base/eval/eval_pkg10_1__r2pk_rl+rep4.json
 Applied autostash.
+라운드 71 끝. 아무 실험도 끝나지 않아 큐와 설정을 그대로 뒀고, 커밋 `915e8e7`를 `r2e/main`에 push했습니다.
+
+- **GPU:** G1 첫 run `r2pkfc`의 RL이 200번째 반복(it 200)까지 정상으로 돌고 있습니다 (메모리 부족 없음, GPU 최대 16.5 GB). 03:55 UTC쯤 끝나면 그다음 `lo_pkg_r2pkfc`가 05:56쯤까지 돕니다.
+- **CPU:** LS16 `eval_ip16_1`이 17.4시간째 돌고 있습니다. 10칸 평가를 맡을 4번째 칸(side_slot)은 `r2pkfc`·`lo_pkg_r2pkfc`의 학습이 끝나기를 기다리고 있습니다. 파드 메모리 24.3 GiB / 60, OOM 강제 종료 횟수는 2로 그대로입니다.
+- **사람 커밋 `c2b8534`:** 서버 2 비교 기록 8개만 들어 있습니다. 서버 2 일이라 판정하지도, 큐를 바꾸지도 않았습니다. QUEUE에 새 지시는 없습니다.
+- **RESULTS:** 끝난 실험이 없어서 바꾸지 않았습니다.
+- **다음 할 일:**
+  1. `r2pkfc`가 끝나면 10칸 평가를 합니다.
+  2. `lo_pkg_r2pkfc`도 끝나면 평가한 뒤 `g1_screen.py`로 거르기 판정을 합니다.
+  3. 통과하면 확인 run 7개를 큐에 넣고, 통과하지 못하면 RESULTS에 "G1 효과 없음"으로 적고 미뤄 둔 LS16을 되돌립니다.
+
+DAILY는 다음 차례인 11/08 01시대 UTC에 새로 씁니다.
