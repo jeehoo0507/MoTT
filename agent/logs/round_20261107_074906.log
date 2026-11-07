@@ -17,3 +17,7 @@ Round 80 is done and pushed to `r2e/main` (5c8b1a3).
 
 - **Decision:** keep the queue as the human set it (all 7 runs), because the switch and pcb verdicts are still undecided. All 7 should finish around 21:00 UTC, before the 11/08 12:00 KST training deadline.
 - **Not here yet:** no new human commits, and no C1 results from server 2. G-tr is still waiting for a human instruction.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   5c8b1a3..6039a96  main -> main
