@@ -10,3 +10,7 @@ Round 92 was a status check only. Nothing finished this round, so nothing change
 - **Commit:** a65336e is committed and pushed to `r2e/main`. The push printed a "gh not found" credential warning, but the push itself went through.
 
 The next DAILY.md is due at 01:30 UTC on 11/08.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a65336e..3652514  main -> main

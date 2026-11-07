@@ -136,3 +136,5 @@
 [08:38:05] END eval10 lo_pkg_r2pkfc_s1_rl rc=0 | mem 18.1 GiB / 60.0 GiB, oom_kill 2
 [10:28:03] START eval10 lo_pkg_r2pkfc_s2_rl | mem 18.1 GiB / 60.0 GiB, oom_kill 2
 [10:42:37] END eval10 lo_pkg_r2pkfc_s2_rl rc=0 | mem 18.2 GiB / 60.0 GiB, oom_kill 2
+[12:29:23] START eval10 r2pkfc_s1_rl | mem 16.5 GiB / 60.0 GiB, oom_kill 2
+[12:41:41] END eval10 r2pkfc_s1_rl rc=0 | mem 18.3 GiB / 60.0 GiB, oom_kill 2

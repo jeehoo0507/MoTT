@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 12:27 UTC, 라운드 92 — 상태 점검: G1 확인 3/7 `r2pkfc_s1` RL it 325 정상 (best it 200 1.778 그대로); 대기 프로세스가 16·20칸 평가 붙일 준비; 서버 2 M1 기록 아직 없음; G-tr 사람 지시 대기)
+# PROGRESS (갱신 2026-11-07 13:00 UTC, 라운드 93 — G1 확인 3/7 `r2pkfc_s1` 끝 + 10칸 평가 끝 (같은 종류 pcb 0.84 / pkg 0.76 / ip 1.00); 16·20칸 12개 큐에 붙음, pcb16_0 진행; 4/7 `r2pkfc_s2` 학습 중; 서버 2 M1 기록 아직 없음)
+
+## 라운드 93 (2026-11-07 12:40~ UTC)
+- `git fetch r2e` (12:40): 새 사람 커밋 없음 (QUEUE 마지막 19:28 KST 그대로). 서버 2 M1 기록 (`runs/2026-11-07s2/{lo_pkg_r2pkfcm1,r2pkfcm1}_rl`) 아직 없음 → `m1_screen.py` 대기.
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. side_slot (pid 1650473)·`queue_scale_g1s.py --wait` (pid 1650475) alive. pod 19.0 GiB → pcb16 평가 시작 뒤 27.7 GiB / 60, oom_kill 2 (그대로).
+- 3/7 `r2pkfc_s1` 학습 끝 12:29 (rc 0) → 드라이버가 4/7 `r2pkfc_s2` 시작 12:29 (증류 → RL, 끝 ~14:35) → side_slot 10칸 평가 12:29~12:41 rc 0.
+- **끝난 실험 (정책 단독, 10칸 50문제, `r2pkfc_s1_rl`):** pcb 0.84 (10_0 1.00, 10_1 0.68), pkg 0.76 (10_0 0.80, 10_1 0.72), ip 1.00. 같은 seed `r2pk_s1_rl` 0.92 / 0.88 / 1.00 → 같은 종류 차 pcb −0.08, pkg −0.12, ip +0.00 (보고만; G1 확인 판정은 7개 끝난 뒤 PROPOSALS G1 규칙대로, 최종 구조는 사람). RESULTS 다시 생성 (드라이버 collect_results 12:42, 1130 기록).
+- `queue_scale_g1s.log` 12:42 "r2pkfc_s1: appended 12" 확인 → 드라이버 CPU 줄이 collect_results 뒤 `ls10 scale-eval eval_pcb16_0 r2pkfc_s1_rl` 시작 (~12:44, 진행 중). 남은 11개 사람 순서대로 (파일당 4~15 분).
+- 결정: 큐·설정 그대로 — 이유: G1 확인·보충 2 사람 순서대로 정상, 새 사람 지시 없음, 서버 1 M1 금지 (QUEUE 19:28).
+- 할 일 (다음): (0) 서버 2 M1 기록 → `m1_screen.py`. (1) `r2pkfc_s1` 16·20칸 12개 끝 → RESULTS "G1 보충 2" 표 (seed 0·1). (2) `r2pkfc_s2` 끝 ~14:35 → 10칸 평가 → "appended 12" 확인. (3) 5~7/7 (`lo_pcb_r2pkfc*`) 끝 ~21:00 UTC → F1 표·G1 확인 판정 줄 + 보충 2 읽기 줄 → 사람에게. (4) 11/08 03:00 UTC 뒤 새 학습 없음; DAILY 다음 11/08 01:30 UTC.
+
 
 ## 라운드 92 (2026-11-07 12:24~ UTC)
 - `git fetch r2e` (12:24): 새 사람 커밋 없음 (QUEUE 마지막 19:28 KST 그대로). 서버 2 M1 기록 아직 없음 → `m1_screen.py` 대기.
