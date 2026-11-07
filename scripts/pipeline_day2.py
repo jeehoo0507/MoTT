@@ -9,6 +9,8 @@ restarting this process:
             "rl_only": true -> no distill stage, rl from random init for distill + rl hours (B-Manoharan, 11/02).
             "init": path -> no distill stage, rl (rl hours) from that best.pt: a one-change rl re-run of a rung (11/02).
             "rl_hours": h -> with "init": rl for h hours instead of RL_H (QUEUE 11/07 10:45 KST: 1 h continuation).
+            "distill_only": true -> distill stage only for "distill_hours" (default DISTILL_H + RL_H), no rl; the
+            result (done check, side-10 eval) is <name>_distill (B-DevFormer, PROPOSALS_DRAFT_devformer.md).
   "cpu":   [{"name", "cmd", "done": [paths]}]      -> run in order when every "done" path is missing.
 CPU lane (1 worker): first the side-10 certified eval of every finished training in "train" (rl best.pt,
 eval_*10_*, --inst_chunk 5), then the "cpu" entries in order. It waits while an external job named in
@@ -68,8 +70,13 @@ def exists(p):
     return os.path.exists(os.path.join(ROOT, p))
 
 
-def rl_done(name):
-    return exists(f"runs/{DAY}/{name}_rl/metrics.json")
+def final_stage(t):
+    """The stage whose best.pt is the entry's result: rl, or distill for a "distill_only" entry."""
+    return "distill" if t.get("distill_only") else "rl"
+
+
+def rl_done(name, stage="rl"):
+    return exists(f"runs/{DAY}/{name}_{stage}/metrics.json")
 
 
 FAILED = set()
@@ -77,7 +84,7 @@ FAILED = set()
 
 def gpu_lane():
     while True:
-        todo = [t for t in queue()["train"] if not rl_done(t["name"]) and t["name"] not in FAILED
+        todo = [t for t in queue()["train"] if not rl_done(t["name"], final_stage(t)) and t["name"] not in FAILED
                 and (not t.get("after") or exists(t["after"]))]
         if not todo:
             time.sleep(120)
@@ -92,7 +99,8 @@ def gpu_lane():
         else:
             os.makedirs(os.path.join(ROOT, f"runs/{DAY}/{name}"), exist_ok=True)
             # "rl_only": no distillation, rl from random init for the whole budget (same total hours)
-            hours = (f"--distill_hours 0 --rl_hours {DISTILL_H + RL_H} --skip_distill" if t.get("rl_only")
+            hours = (f"--distill_hours {t.get('distill_hours', DISTILL_H + RL_H)} --skip_rl" if t.get("distill_only")
+                     else f"--distill_hours 0 --rl_hours {DISTILL_H + RL_H} --skip_distill" if t.get("rl_only")
                      else f"--distill_hours 0 --rl_hours {t.get('rl_hours', RL_H)} --init_from {t['init']}" if t.get("init")
                      else f"--distill_hours {DISTILL_H} --rl_hours {RL_H}")
             rc = run(f"{PY} scripts/run_rung.py --name {name} --arm '{t['arm']}' --day {DAY} --pool {POOL} "
@@ -108,15 +116,15 @@ def eval_jobs():
     """side-10 certified eval of every finished training, in queue order."""
     jobs = []
     for t in queue()["train"]:
-        n = t["name"]
-        run_dir = f"runs/{DAY}/{n}_rl"
-        if not rl_done(n):
+        n, sg = t["name"], final_stage(t)
+        run_dir = f"runs/{DAY}/{n}_{sg}"
+        if not rl_done(n, sg):
             continue
         sets = sorted(os.path.basename(f)[:-4] for f in glob.glob(os.path.join(ROOT, POOL, SETS10 + ".pkl")))
-        done = [f"{run_dir}/eval/{s}__{n}_rl.json" for s in sets]
-        cmd = (f"{PY} scripts/eval_policy.py --pool {POOL} --sets '{SETS10}' --policy {n}_rl={run_dir}/best.pt "
+        done = [f"{run_dir}/eval/{s}__{n}_{sg}.json" for s in sets]
+        cmd = (f"{PY} scripts/eval_policy.py --pool {POOL} --sets '{SETS10}' --policy {n}_{sg}={run_dir}/best.pt "
                f"--workers 1 --inst_chunk {INST_CHUNK} --out {run_dir}")
-        jobs.append(dict(name=f"eval10 {n}_rl", cmd=cmd, done=done, log=f"{run_dir}/eval.log"))
+        jobs.append(dict(name=f"eval10 {n}_{sg}", cmd=cmd, done=done, log=f"{run_dir}/eval.log"))
     return jobs
 
 

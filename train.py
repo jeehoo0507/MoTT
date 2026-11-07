@@ -84,9 +84,16 @@ def parse():
     p.add_argument("--difficulty", default="0.02-0.2", help="(no pool) target level u (0 = hardest)")
     p.add_argument("--max_steps", type=int, default=64)
     p.add_argument("--feat", choices=["phys", "coord", "mott", "modal", "modal_only", "manoharan"], default="phys")
-    p.add_argument("--model", choices=["grid", "mott", "loop", "park_am", "manoharan"], default="grid",
+    p.add_argument("--model", choices=["grid", "mott", "loop", "park_am", "manoharan", "devformer"], default="grid",
                    help="mott/loop imply --feat mott; park_am (prior-work baseline B-Park, baselines_ml/park_am.py) --feat coord; "
-                   "manoharan (B-Manoharan, baselines_ml/manoharan.py: fixed port order, type-or-skip) --feat manoharan")
+                   "manoharan (B-Manoharan, baselines_ml/manoharan.py: fixed port order, type-or-skip) --feat manoharan; "
+                   "devformer (B-DevFormer, baselines_ml/devformer.py, distill stage only) --feat coord")
+    p.add_argument("--df_perm", type=int, default=0, help="distill (B-DevFormer expert exploitation, PROPOSALS_DRAFT_devformer): "
+                   "also imitate P random permutations of the teacher's add order (paper P = 4); 0 = off")
+    p.add_argument("--df_self", type=float, default=0.0, help="distill (B-DevFormer self-exploitation): weight lambda of "
+                   "the order-bias term on the policy's own samples (log space, baselines_ml/devformer.py); 0 = off")
+    p.add_argument("--df_layers", type=int, default=3, help="devformer: encoder layers (paper L = 3; --layers is left "
+                   "to the other models, run_rung's COMMON sets it to 4)")
     p.add_argument("--baseline", choices=["group", "rollout"], default="group", help="rl advantage: group = normalised "
                    "within the M samples of an instance (POMO, ours); rollout = R - R(greedy rollout of a frozen copy, "
                    "replaced at every new best validation) (Kool 2019 / Park 2022, B-Park)")
@@ -167,6 +174,10 @@ def make_policy(cfg, a):
     if a.get("model") == "manoharan":
         from baselines_ml.manoharan import ManoharanNet
         return ManoharanNet(cfg.n_types, cfg.n_feat_freq, d=a["d"], heads=a["heads"])
+    if a.get("model") == "devformer":
+        from baselines_ml.devformer import DevFormer
+        return DevFormer(feat_dim_any(cfg, a["feat"]), cfg.n_types, d=a["d"], layers=a.get("df_layers", 3),
+                         heads=a["heads"], ff=4 * a["d"])
     if a.get("model") == "park_am":
         from baselines_ml.park_am import ParkAM
         return ParkAM(feat_dim_any(cfg, a["feat"]), cfg.n_types, d=a["d"], layers=a["layers"], heads=a["heads"])
@@ -292,8 +303,12 @@ def main():
         args.feat = ("mott_pkgate" if args.peak_gate else
                      "mott_pkdd" if args.peak_refine and args.dedup_modes else "mott_pk" if args.peak_refine
                      else "mott_dd" if args.dedup_modes else "mott")
-    elif args.model == "park_am":
+    elif args.model in ("park_am", "devformer"):
         args.feat = "coord"
+        if args.model == "devformer" and args.stage != "distill":
+            # the paper trains offline by imitation only; an old pipeline_day2 driver (no "distill_only") would
+            # otherwise follow the distill stage with rl
+            raise SystemExit("B-DevFormer is distill-only (offline imitation, no rl): use --stage distill")
     elif args.model == "manoharan":
         args.feat = "manoharan"
     pin_threads()
@@ -426,6 +441,7 @@ def main():
         w.writerow(["iter", "ratio", "best_ratio", "fail", "lam", "loss", "sec", "replaced"] +
                    [f"val{s}_{m}" for s in val_sets for m in ("ratio", "fail")])
     t_ck = time.time()
+    df_st = {}   # B-DevFormer distill stats of the last step (empty when --df_perm / --df_self are off)
     for it in range(start_it + 1, args.iters + 1):
         if args.hours and time.time() - t0 > args.hours * 3600:
             log(f"time limit reached at iter {it}")
@@ -463,7 +479,11 @@ def main():
         if args.stage == "distill":
             tb = torch.nonzero(teach["feasible"]).squeeze(-1)
             loss, ratio, best_ratio, fail_rate, n_bad, n_margin = 0.0, float("nan"), float("nan"), float("nan"), 0, 0
-            if tb.numel():
+            if tb.numel() and (args.df_perm > 0 or args.df_self > 0):   # B-DevFormer CSE (baselines_ml/devformer.py)
+                from baselines_ml.devformer import distill_step
+                loss, df_st = distill_step(policy, batch, cfg, ib[tb], teach["actions"][tb], args, amp, rng, H, W)
+                ratio = (teach["count"][tb].float() / n_ref[tb]).mean().item()
+            elif tb.numel():
                 tenv = make_env(batch, ib[tb], cfg, args.feat, max_steps=args.max_steps, allow_prune=not args.no_prune)
                 rep = rollout(policy, tenv, forced=teach["actions"][tb], store=True, amp=amp)
                 tsteps = (rep["actions"] >= 0).sum(1).clamp(min=1).float()
@@ -620,7 +640,9 @@ def main():
                 f"{f' margin-fail {n_margin}' if args.feas_margin > 0 else ''} | count/ref {ratio:.3f} "
                 f"best-of-M {best_ratio:.3f} fail {fail_rate:.2f} lam {lam:.2f} | teach ok {teach['feasible'].float().mean():.2f} "
                 f"| loss {loss:.3f} | replaced {n_replaced} | grid capped {n_capped} oom {n_oom} | {time.time()-t0:.0f}s{gpu_peak()}"
-                + (" | self-repair " + " ".join(f"{k} {v}" for k, v in sr_tot.items()) if sr_on else ""))
+                + (" | self-repair " + " ".join(f"{k} {v}" for k, v in sr_tot.items()) if sr_on else "")
+                + (f" | df aug_ok {df_st['aug_ok']:.2f} self {df_st['self_loss']:.3f} self_ok {df_st['self_ok']:.2f}"
+                   if df_st else ""))
         if it % args.val_every == 0 or it == args.iters:
             v = validate(policy, val_sets, args, cfg, dev)
             last_val = v

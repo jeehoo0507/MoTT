@@ -4,6 +4,8 @@ the background, one per rung (several rungs can share the GPU).
 
 Run: .venv/bin/python scripts/run_rung.py --name r1_modal --arm "--feat modal" --day 2026-10-28 \
          --distill_hours 0.75 --rl_hours 1.25 [--common "..."] [--pool runs/pool_v1] [--skip_eval]
+Distill only (B-DevFormer, no rl stage): --distill_hours 2.0 --skip_rl  (--rl_hours 0 is NOT that: train.py --hours 0
+means no time limit).
 """
 import argparse
 import os
@@ -55,6 +57,8 @@ def main():
     ap.add_argument("--eval_workers", type=int, default=6)
     ap.add_argument("--skip_eval", action="store_true")
     ap.add_argument("--skip_distill", action="store_true")
+    ap.add_argument("--skip_rl", action="store_true", help="no rl stage: the distilled best.pt is the result "
+                    "(B-DevFormer, offline imitation only as in the paper)")
     ap.add_argument("--init_from", default="", help="no distill stage; rl starts from this best.pt (an existing distill)")
     a = ap.parse_args()
     base = f"runs/{a.day}/{a.name}"
@@ -87,13 +91,13 @@ def main():
         a.skip_distill = True
     if not a.skip_distill and fresh(dist):
         sh(f"{PY} train.py --stage distill {a.arm} {a.common}{dist_extra} {pools} --hours {a.distill_hours} --out {dist}", log)
-    if fresh(rl):
+    if not a.skip_rl and fresh(rl):
         init = "" if a.skip_distill else f"--init {dist}/best.pt "   # --skip_distill: rl from random init
         if a.init_from:
             init = f"--init {a.init_from} "
         sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} {init}--out {rl}{rl_extra}", log)
     if not a.skip_eval:
-        for tag, run in ((("distill", dist),) if not a.skip_distill else ()) + (("rl", rl),):
+        for tag, run in ((("distill", dist),) if not a.skip_distill else ()) + ((("rl", rl),) if not a.skip_rl else ()):
             sh(f"{PY} scripts/eval_policy.py --pool {a.pool} --sets {a.eval_sets} --policy {a.name}_{tag}={run}/best.pt "
                f"--workers {a.eval_workers} --out {run}", log)
     with open(log, "a") as f:
