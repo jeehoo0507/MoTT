@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 19:35 UTC, 라운드 105 — F1 pkg16 6/6 끝 (`r2pk_s2_rl` pkg16_1 0.96; 3 seed 묶음 150문제 **0.940**); 드라이버 좌표 `r0_coord_rl+rep4` pkg20_0 진행; GPU `lo_pkg_rnd_r0` RL 시작)
+# PROGRESS (갱신 2026-11-07 19:50 UTC, 라운드 106 — F1 좌표 `r0_coord_rl+rep4` pkg20_0 끝 (1.00, n=8); 드라이버 좌표 pkg20_1 다음; GPU `lo_pkg_rnd_r0` RL it 75)
+
+## 라운드 106 (2026-11-07 19:44~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
+- `ensure_running`: 드라이버 alive (1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py` 드라이버 +273 B, side_slot 그대로 (같은 inode). pod 18.7 GiB / 60, oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg20_0 r0_coord_rl+rep4` 19:22–19:44 rc 0 — ok **1.00** (n=8), 개수 9.25, 17.19 s/문제 (수리 351 s 포함), peak RSS 17.1 GB, round 4. 기록 `runs/2026-10-28/r0_coord_rl/eval/eval_pkg20_0__r0_coord_rl+rep4.json`. RESULTS는 드라이버 collect_results (19:44~)가 자동 반영 → "최종 방법" 표 pkg20 좌표+V 짝 CI는 pkg20_1 끝난 뒤 두 파일 묶음으로 (숫자만, 읽기는 사람).
+- 드라이버 다음: `eval_pkg20_1 r0_coord_rl+rep4` → F2 (서버 2 done → 건너뜀) → F3 22.
+- R 대조군 `lo_pkg_rnd_r0` RL it 75 / 1105 s (cert-bad 4, fail 0.03, oom 0, GPU peak 12.1 GB) 정상 → 끝 ~20:45 → side_slot 10칸 (보고만, `r_screen_table` 2×2 자동).
+- 결정: 큐·플래그·side_slot 그대로 — 이유: 남은 항목 모두 사람 것, 에이전트 새 시도 금지 유지 (QUEUE 11/08 03:05 KST).
+- 할 일 (다음): (1) 좌표 pkg20_1 → F3 22 (드라이버). (2) `lo_pkg_rnd_r0` 끝 → 10칸 → 2×2 표 확인. (3) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 105 머리말: F1 pkg16 6/6 끝 (`r2pk_s2_rl` pkg16_1 0.96; 3 seed 묶음 150문제 0.940); 드라이버 좌표 `r0_coord_rl+rep4` pkg20_0 진행; GPU `lo_pkg_rnd_r0` RL 시작
 
 ## 라운드 105 (2026-11-07 19:28~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
