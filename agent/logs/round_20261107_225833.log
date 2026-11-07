@@ -13,3 +13,7 @@ Already up to date.
 - **결정:** GPU에 새 학습을 넣지 않고 F3를 side_slot으로 나눠 돌리지도 않았습니다. QUEUE가 에이전트 스스로의 새 시도를 금지하고 있고, F3에는 side_slot 허용이 없기 때문입니다. 이유는 PROGRESS.md에 "결정:"으로 적었습니다.
 
 DAILY.md는 11/08 01:30 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e992730..1b31b56  main -> main

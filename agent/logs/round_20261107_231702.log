@@ -1,0 +1,19 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 115 is done. The F3 evals are 9 of 22 complete, and the commit (8071f14) is pushed to r2e/main.
+
+- **Human instructions:** no new main commits and no new QUEUE entries. The latest entry is still the 11/08 03:05 KST release.
+- **Processes:** the driver (pid 1575375) is alive. I restarted report_watch and resume_agent. Pod memory is 16.7 GiB of 60, and the OOM-kill count is unchanged at 2.
+- **Driver log:** the loop's autostash cut off `pipeline_day2.log` from the driver again, so I restored it twice: +1036 B, then +349 B after the next item started.
+- **New F3 results (ip16_1, 25 problems each, repair used on none):**
+
+  | Run | Policy alone → with repair | Avg decaps | s/problem | Peak RSS |
+  |---|---|---|---|---|
+  | `r2pk_rl+rep4` | 1.00 → 1.00 | 15.88 | 1.72 | 13.0 GB |
+  | `r2pk_s1_rl+rep4` | 1.00 → 1.00 | 16.24 | 1.82 | 13.0 GB |
+
+  The driver's collect_results added both to RESULTS automatically.
+- **Next:** `r2pk_s2_rl+rep4` on ip16_1 started at 23:17 UTC. After it, 12 F3 items remain (6 pcb20, then 6 ip20). pcb20 needs more memory, so I'll check memory when those start.
+- **Decision (logged in PROGRESS):** I kept the queue and flags as they were. I started no new GPU training and didn't split work onto side_slot, because the agent may not start new experiments and the QUEUE never allowed side_slot for F3.
+- **DAILY.md:** next due 11/08 01:30 UTC.
