@@ -8,11 +8,6 @@
 # RESULTS.md, runs/, git log. Every round must leave those updated.
 set -u
 cd "$(dirname "$0")/.."
-# Local provider switch; the default Claude path remains available for rollback.
-if [ -f agent/PROVIDER ] && [ "$(cat agent/PROVIDER)" = "codex" ]; then
-  bash agent/codex_loop.sh
-  exit $?
-fi
 END_DATE="${END_DATE:-2026-11-11}"     # no new rounds on/after this date (experiments freeze 11/10)
 ROUND_SLEEP="${ROUND_SLEEP:-900}"   # seconds between rounds
 MODEL_DEFAULT="${MODEL:-claude-opus-5-5}"   # routine rounds
@@ -31,6 +26,31 @@ ROUND_PROMPT='이 세션은 무인 실행이다. 사람에게 질문하거나 �
 # Only what the research loop needs. Anything else prompts (and, headless, is refused).
 ALLOWED='Read,Edit,Write,Glob,Grep,Bash(python:*),Bash(python3:*),Bash(.venv/bin/python:*),Bash(.venv/bin/pip:*),Bash(git:*),Bash(ls:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(mkdir:*),Bash(nvidia-smi:*),Bash(date:*)'
 
+
+# 11/07: the round log lives in the repo and is being written during the pull, so a plain
+# `pull --rebase` failed every round ("unstaged changes") and, once another clone pushed, every
+# push was rejected: a day of rounds stayed on the server only. Autostash, clear a stuck rebase,
+# fall back to a merge, and retry a rejected push once after pulling.
+sync_pull() {
+  local log="$1"
+  if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+    echo "[loop] stuck rebase found; aborting it" | tee -a agent/logs/loop.log
+    git rebase --abort >>"$log" 2>&1 || rm -rf .git/rebase-merge .git/rebase-apply
+  fi
+  if ! git pull --rebase --autostash r2e main >>"$log" 2>&1; then
+    git rebase --abort >>"$log" 2>&1 || true
+    echo "[loop] rebase pull failed; merging instead" | tee -a agent/logs/loop.log
+    git pull --no-rebase --autostash --no-edit r2e main >>"$log" 2>&1 \
+      || echo "[loop] pull failed (see $log)" | tee -a agent/logs/loop.log
+  fi
+}
+sync_push() {
+  local log="$1"
+  git push r2e main >>"$log" 2>&1 && return 0
+  sync_pull "$log"
+  git push r2e main >>"$log" 2>&1 || echo "[loop] push failed (see $log)" | tee -a agent/logs/loop.log
+}
+
 round=0
 while true; do
   if [ -f agent/STOP ]; then echo "[loop] STOP file found, exiting"; break; fi
@@ -41,7 +61,7 @@ while true; do
   MODEL="$(pick_model)"
   echo "[loop] round $round start $ts model=$MODEL" | tee -a agent/logs/loop.log
   date +%F > agent/.last_day
-  git pull --rebase r2e main >>"$log" 2>&1 || true
+  sync_pull "$log"
   claude -p "$ROUND_PROMPT" \
     --model "$MODEL" \
     --permission-mode acceptEdits \
@@ -49,9 +69,20 @@ while true; do
     --output-format text >>"$log" 2>&1
   rc=$?; last_rc=$rc
   echo "[loop] round $round end rc=$rc $(date +%Y%m%d_%H%M%S)" | tee -a agent/logs/loop.log
+  # 11/07: on the Claude usage limit every round ended at once for a day (11/06 02:06 UTC ~ 11/07 01:00 UTC).
+  # Do not spin: note it once, push what exists, wait an hour (the driver keeps the GPU/CPU queue going).
+  if grep -qiE "hit your (weekly|daily|usage)? ?limit|usage limit reached" "$log"; then
+    echo "[loop] usage limit hit; waiting ${LIMIT_SLEEP:-3600}s" | tee -a agent/logs/loop.log
+    last_rc=0
+    git add -A . >>"$log" 2>&1
+    git diff --cached --quiet || git commit -q -m "agent: round $round autosave, usage limit ($ts)" >>"$log" 2>&1
+    sync_push "$log"
+    sleep "${LIMIT_SLEEP:-3600}"
+    continue
+  fi
   # safety net: push whatever the round left behind, even if it forgot
   git add -A . >>"$log" 2>&1
   git diff --cached --quiet || git commit -q -m "agent: round $round autosave ($ts)" >>"$log" 2>&1
-  git push r2e main >>"$log" 2>&1 || true
+  sync_push "$log"
   sleep "${ROUND_SLEEP:-900}"   # 15 min between rounds; training runs ~2 h, so status-only rounds just burn usage
 done
