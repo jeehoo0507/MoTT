@@ -1,3 +1,18 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 73 is done and pushed to `r2e main` (commit d197c04). There are no new human commits and QUEUE hasn't changed.
+
+**G1 status:** the `r2pkfc` run finished training at 03:57 with no problems. Its 10-cell eval (policy alone, no repair) finished at 04:10. Success rate per kind, against `r2pk_rl` on 50 problems each:
+
+| kind | r2pkfc | r2pk | diff [95% CI] | count ratio |
+|---|---|---|---|---|
+| pcb | 0.94 | 0.90 | +0.04 [−0.06, +0.12] | 0.981 |
+| pkg | 0.84 | 0.78 | +0.06 [−0.06, +0.18] | 1.029 |
+| ip | 1.00 | 0.98 | +0.02 [+0.00, +0.06] | 1.013 |
+
+- **Screening so far:** the same-kind pkg gain is +0.06, below the +0.10 threshold. pcb and ip don't drop, and the count ratio is ≤ 1.05 for all three kinds, so those two conditions pass. Pass or fail now depends only on the other pkg route: the run trained without pkg problems (`lo_pkg_r2pkfc`) has to beat `lo_pkg_r2pk` on pkg by at least +0.10. I haven't recorded a verdict yet; that follows the rule as written.
+- **Running now:** the GPU is training `lo_pkg_r2pkfc` (distill stage, ends about 05:57). Its eval will start automatically and should finish around 06:10. The 16-cell local-search eval on `ip16_1` is still running on the CPU. Pod memory is 24.3 / 60 GiB and the OOM-kill count is unchanged at 2.
+- **Records:** I regenerated RESULTS.md and committed the new eval records. The verdict line for the ablation table waits for the final screen.
+
+**Next round:** run `g1_screen.py` once the second eval lands. If it passes, queue the 7 confirmation runs with `g1_confirm_queue.py r2pkfc --apply`. If not, record "G1 효과 없음" (no G1 effect) in RESULTS and restore the deferred LS16 jobs. No new training starts after 11/08 03:00 UTC.
