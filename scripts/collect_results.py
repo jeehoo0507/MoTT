@@ -466,6 +466,9 @@ ABLATIONS = [  # QUEUE 10/29 03:15 item 3: one change vs the same rung without i
     # 11/07 round 76 (PROPOSALS 11/07 C1, human, server 2 scripts/server2_c1.sh; written before any C1 record)
     ("r2pk_vsi_rl", "r2pk_ctl_rl", "C1 검증된 해 따라 하기 (`--self_repair 4`, r2pk_rl/best.pt에서 RL만 1 h, seed 0, 서버 2)",
      "같은 출발·같은 1 h RL 대조군"),
+    # 11/07 round 76 (PROPOSALS 11/07 C1' G-inf, human; written before the record): inference-only refined-peak gate
+    ("r2pk_rl@mott_pkgate", "r2pk_rl", "C1' G-inf: 보정 피크 만족 게이트를 추론에만 (`--env_feat mott_pkgate`, 학습 없음, seed 0)",
+     "같은 가중치 게이트 없음"),
 ]
 
 
@@ -1518,6 +1521,10 @@ TRIED_MODS = [
      None, "PROPOSALS P2"),
     ("P3", "P1 + 고유 이웃 보정 (기준 P1 run)", "r2pkdd_rl", "r2pk_rl", "lo_pcb_r2pkdd_rl", "lo_pcb_r2pk_rl",
      None, "PROPOSALS P3"),
+    ("G1", "P1 + 주파수 궁합 편향 `--fc_bias` (기준 P1, 증류+RL 전체)", "r2pkfc_rl", "r2pk_rl", None, None,
+     "거르기 통과 (seed 0, `g1_screen.py`): 뺀 pkg `lo_pkg_r2pkfc_rl` − `lo_pkg_r2pk_rl` +0.14 [−0.02, +0.30] ≥ +0.10 "
+     "(같은 종류 pkg +0.06는 미달), pcb·ip ≥ −0.06, 개수비 셋 다 ≤ 1.05 → 확인 7 run 진행 중 (F1 규칙, seed 3개); "
+     "채택 아님", "PROPOSALS 11/07 G1, PROGRESS 11/07 라운드 76"),
 ]
 TRIED_EVAL_ONLY = [   # evaluation-procedure variants, no training change; numbers are in their own sections
     ("T2", "끝에서 고치기 `--repair 4` (모든 방법에 같게)", "R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; "

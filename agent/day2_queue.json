@@ -545,6 +545,41 @@
    "name": "lo_pkg_r2pkfc",
    "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
    "seed": 0
+  },
+  {
+   "name": "lo_pkg_r2pkfc_s1",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pkg_r2pkfc_s2",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "r2pkfc_s1",
+   "arm": "--model mott --peak_refine --fc_bias",
+   "seed": 1
+  },
+  {
+   "name": "r2pkfc_s2",
+   "arm": "--model mott --peak_refine --fc_bias",
+   "seed": 2
+  },
+  {
+   "name": "lo_pcb_r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pcb_r2pkfc_s1",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pcb_r2pkfc_s2",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2
   }
  ],
  "cpu": [
@@ -2480,6 +2515,19 @@
     "runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg20_1__r2pk_s2_rl.json"
    ],
    "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
+  },
+  {
+   "name": "ls10 ginf eval10 r2pk_rl@mott_pkgate",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --env_feat mott_pkgate --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_rl",
+   "done": [
+    "runs/2026-10-29/r2pk_rl/eval/eval_ip10_0__r2pk_rl@mott_pkgate.json",
+    "runs/2026-10-29/r2pk_rl/eval/eval_ip10_1__r2pk_rl@mott_pkgate.json",
+    "runs/2026-10-29/r2pk_rl/eval/eval_pcb10_0__r2pk_rl@mott_pkgate.json",
+    "runs/2026-10-29/r2pk_rl/eval/eval_pcb10_1__r2pk_rl@mott_pkgate.json",
+    "runs/2026-10-29/r2pk_rl/eval/eval_pkg10_0__r2pk_rl@mott_pkgate.json",
+    "runs/2026-10-29/r2pk_rl/eval/eval_pkg10_1__r2pk_rl@mott_pkgate.json"
+   ],
+   "log": "runs/2026-10-29/r2pk_rl/eval_pkgate.log"
   },
   {
    "name": "ls10 scale-eval eval_pcb16_0 r2pkfc_rl",

@@ -1,0 +1,69 @@
+params: 1.76M  device: cuda  stage: distill  feat: mott_pkgate  model: mott
+  teacher train_ip10_0.npz: teacher file, ok 0.69, count 3.00, g+p 27.31
+  teacher train_ip10_1.npz: teacher file, ok 0.38, count 14.50, g+p 55.25
+  teacher train_ip10_2.npz: teacher file, ok 0.62, count 2.80, g+p 30.06
+  teacher train_ip12_0.npz: teacher file, ok 0.56, count 11.00, g+p 61.75
+  teacher train_ip12_1.npz: teacher file, ok 0.69, count 4.00, g+p 46.88
+  teacher train_ip12_2.npz: teacher file, ok 0.62, count 6.20, g+p 52.19
+  teacher train_ip8_0.npz: teacher file, ok 0.62, count 2.50, g+p 22.06
+  teacher train_ip8_1.npz: teacher file, ok 0.56, count 2.44, g+p 25.19
+  teacher train_ip8_2.npz: teacher file, ok 0.44, count 2.14, g+p 29.56
+  teacher train_pcb10_0.npz: teacher file, ok 1.00, count 4.94, g+p 6.00
+  teacher train_pcb10_1.npz: teacher file, ok 0.81, count 17.92, g+p 21.81
+  teacher train_pcb10_2.npz: teacher file, ok 0.88, count 6.36, g+p 16.50
+  teacher train_pcb12_0.npz: teacher file, ok 0.75, count 11.92, g+p 29.88
+  teacher train_pcb12_1.npz: teacher file, ok 0.75, count 27.08, g+p 41.81
+  teacher train_pcb12_2.npz: teacher file, ok 0.75, count 11.67, g+p 35.19
+  teacher train_pcb8_0.npz: teacher file, ok 1.00, count 3.88, g+p 4.12
+  teacher train_pcb8_1.npz: teacher file, ok 0.94, count 4.40, g+p 6.62
+  teacher train_pcb8_2.npz: teacher file, ok 1.00, count 6.12, g+p 6.88
+  teacher train_pkg10_0.npz: teacher file, ok 0.94, count 9.00, g+p 12.94
+  teacher train_pkg10_1.npz: teacher file, ok 0.38, count 8.67, g+p 22.12
+  teacher train_pkg10_2.npz: teacher file, ok 0.75, count 6.33, g+p 10.75
+  teacher train_pkg12_0.npz: teacher file, ok 0.75, count 3.92, g+p 12.25
+  teacher train_pkg12_1.npz: teacher file, ok 0.44, count 11.00, g+p 24.88
+  teacher train_pkg12_2.npz: teacher file, ok 0.56, count 5.67, g+p 9.44
+  teacher train_pkg8_0.npz: teacher file, ok 0.75, count 5.42, g+p 8.12
+  teacher train_pkg8_1.npz: teacher file, ok 0.81, count 4.15, g+p 7.06
+  teacher train_pkg8_2.npz: teacher file, ok 0.81, count 5.31, g+p 7.94
+pool: 27 train batches, 432 instances; GPU mem 9.53 GB
+it     25 | train_pkg10_1 P=3 F=267 cert-bad 0 | count/ref 0.880 best-of-M nan fail nan lam 1.00 | teach ok 0.81 | loss 4.046 | replaced 0 | grid capped 0 oom 0 | 44s | gpu peak 12.1 GB
+it     30 | train_pcb12_1 P=3 F=251 cert-bad 0 | count/ref 0.833 best-of-M nan fail nan lam 1.00 | teach ok 0.69 | loss 4.345 | replaced 0 | grid capped 0 oom 0 | 57s | gpu peak 12.1 GB
+  val val_pcb10_0: count/greedy+prune=1.814 fail=0.62  val_pkg10_0: count/greedy+prune=1.667 fail=0.69  val_ip10_0: count/greedy+prune=0.757 fail=0.06
+  new best (score 2.329) at iter 30
+done: 30 iters, 0.04 h, best iter 30 score 2.329, replaced 0 | gpu peak 12.1 GB
+init from runs/analysis/smoke_peak_gate_gpu/d/last.pt (iter 30)
+params: 1.76M  device: cuda  stage: rl  feat: mott_pkgate  model: mott
+  teacher train_ip10_0.npz: teacher file, ok 0.69, count 3.00, g+p 27.31
+  teacher train_ip10_1.npz: teacher file, ok 0.38, count 14.50, g+p 55.25
+  teacher train_ip10_2.npz: teacher file, ok 0.62, count 2.80, g+p 30.06
+  teacher train_ip12_0.npz: teacher file, ok 0.56, count 11.00, g+p 61.75
+  teacher train_ip12_1.npz: teacher file, ok 0.69, count 4.00, g+p 46.88
+  teacher train_ip12_2.npz: teacher file, ok 0.62, count 6.20, g+p 52.19
+  teacher train_ip8_0.npz: teacher file, ok 0.62, count 2.50, g+p 22.06
+  teacher train_ip8_1.npz: teacher file, ok 0.56, count 2.44, g+p 25.19
+  teacher train_ip8_2.npz: teacher file, ok 0.44, count 2.14, g+p 29.56
+  teacher train_pcb10_0.npz: teacher file, ok 1.00, count 4.94, g+p 6.00
+  teacher train_pcb10_1.npz: teacher file, ok 0.81, count 17.92, g+p 21.81
+  teacher train_pcb10_2.npz: teacher file, ok 0.88, count 6.36, g+p 16.50
+  teacher train_pcb12_0.npz: teacher file, ok 0.75, count 11.92, g+p 29.88
+  teacher train_pcb12_1.npz: teacher file, ok 0.75, count 27.08, g+p 41.81
+  teacher train_pcb12_2.npz: teacher file, ok 0.75, count 11.67, g+p 35.19
+  teacher train_pcb8_0.npz: teacher file, ok 1.00, count 3.88, g+p 4.12
+  teacher train_pcb8_1.npz: teacher file, ok 0.94, count 4.40, g+p 6.62
+  teacher train_pcb8_2.npz: teacher file, ok 1.00, count 6.12, g+p 6.88
+  teacher train_pkg10_0.npz: teacher file, ok 0.94, count 9.00, g+p 12.94
+  teacher train_pkg10_1.npz: teacher file, ok 0.38, count 8.67, g+p 22.12
+  teacher train_pkg10_2.npz: teacher file, ok 0.75, count 6.33, g+p 10.75
+  teacher train_pkg12_0.npz: teacher file, ok 0.75, count 3.92, g+p 12.25
+  teacher train_pkg12_1.npz: teacher file, ok 0.44, count 11.00, g+p 24.88
+  teacher train_pkg12_2.npz: teacher file, ok 0.56, count 5.67, g+p 9.44
+  teacher train_pkg8_0.npz: teacher file, ok 0.75, count 5.42, g+p 8.12
+  teacher train_pkg8_1.npz: teacher file, ok 0.81, count 4.15, g+p 7.06
+  teacher train_pkg8_2.npz: teacher file, ok 0.81, count 5.31, g+p 7.94
+pool: 27 train batches, 432 instances; GPU mem 9.54 GB
+it      3 | train_pcb12_2 P=3 F=292 cert-bad 6 | count/ref 2.811 best-of-M 1.861 fail 0.31 lam 1.04 | teach ok 0.88 | loss -27.310 | replaced 7 | grid capped 0 oom 0 | 111s | gpu peak 12.4 GB
+  val val_pcb10_0: count/greedy+prune=1.979 fail=0.62  val_pkg10_0: count/greedy+prune=1.083 fail=0.81  val_ip10_0: count/greedy+prune=0.735 fail=0.00
+  new best (score 2.224) at iter 3
+done: 3 iters, 0.05 h, best iter 3 score 2.224, replaced 7 | gpu peak 12.4 GB
+smoke ok
