@@ -30,3 +30,7 @@ Applied autostash.
 1. `lo_pkg_r2pkfc` 평가가 나오면 `g1_screen.py`로 미리 정한 거르기 규칙을 적용합니다.
 2. 통과하면 확인 run 7개를 PROPOSALS 순서대로 바로 큐에 넣습니다. 통과하지 못하면 RESULTS ABLATIONS에 "G1 효과 없음"으로 적고 미뤄 둔 LS16을 되살립니다.
 3. 11/08 12:00 KST(03:00 UTC) 뒤에는 새 학습을 시작하지 않습니다. DAILY는 11/08 01시대 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   dd94c3e..bd0d1a9  main -> main
