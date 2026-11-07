@@ -1,3 +1,17 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 72 is done: nothing finished this round, so RESULTS.md is unchanged. PROGRESS.md is updated, and the commit (732fce8) is pushed to `r2e main`.
+
+- **GPU run (G1 `r2pkfc`):** RL is at iteration 275 and looks normal, with 0 failures and no out-of-memory errors. It should finish around 03:55 UTC. The 10-cell eval should then start on its own, followed by `lo_pkg_r2pkfc` (expected to finish around 05:56).
+- **CPU run (LS16 `eval_ip16_1`):** still going after 17.6 hours.
+- **Memory:** the pod is at 23.4 of 60 GiB, and the out-of-memory kill count is unchanged at 2.
+- **Background jobs:** the main driver was running. Two helper processes (`report_watch` and `resume_agent`) weren't, so I restarted them.
+- **Instructions:** there are no new human commits and no `QUEUE.md` changes.
+- **결정:** I left the queue and settings as they are, because G1 is running in the human-set order with no problems. This is recorded in PROGRESS.md.
+
+Plain `python` isn't on PATH, so I used `.venv/bin/python`. The push printed warnings that the `gh` credential helper is missing, but it went through and the branch matches the remote.
+
+Next round should confirm the RL run finished and its eval started. After `lo_pkg_r2pkfc` is evaluated, `g1_screen.py` decides the next step:
+- **If it passes:** add the 7 confirmation runs.
+- **If it fails:** record in RESULTS.md that G1 had no effect, and move the remaining LS16 runs back into the CPU queue.
