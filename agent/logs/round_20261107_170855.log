@@ -20,3 +20,20 @@ Already up to date.
 - DAILY.md는 11/08 01:30 UTC에 새로 씁니다.
 
 `PROGRESS.md` 첫 줄의 STUCK(LS16이 메모리 45 GiB를 넘는 문제)은 이번 라운드에서 다루지 않아 그대로 남아 있습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/jeehoo0507/R2E.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   0e217b3..88b67c9  main       -> r2e/main
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   88b67c9..fcf8f62  main -> main
