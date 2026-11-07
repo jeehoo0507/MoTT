@@ -1,3 +1,14 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+I finished round 105's bookkeeping and pushed it to `r2e main`. Nothing new needed starting: everything left in the queue was added by the human, and the agent still isn't allowed to start new runs of its own.
+
+- **State check:** no new commits on main, and QUEUE.md still ends with the human's lift of the training freeze for human-added items only. The driver (pid 1575375) is still running. I restarted the two helper scripts (`report_watch` and `resume_agent`) and restored 702 bytes of the driver's log, which the process had kept writing to after the file on disk was replaced. Pod memory is at 25.8 / 60 GiB, and the OOM-kill count is still 2.
+- **F1 pkg16 is done (6/6 repair evals):** `r2pk_s2_rl+rep4` on `eval_pkg16_1` finished at 19:18 with success 0.96 and 10.04 decaps on average. Across the 3 seeds and 150 problems, the final method's success is **0.940** (10.30 decaps).
+  - Against coordinate features + V: +0.14 success [+0.07, +0.21], and 1.131× their decap count.
+  - Against greedy+prune + V: −0.02 success [−0.05, +0.00], and 0.729× their decap count.
+  - These are numbers only; interpreting them is left to the human.
+- **What's running:**
+  - The driver is on `r0_coord_rl+rep4` for `eval_pkg20_0`, then `eval_pkg20_1`. F2 gets skipped because server 2 already finished it, and then the 22 F3 evals run.
+  - On the GPU, the R control run `lo_pkg_rnd_r0` has finished distillation and is in RL, which should end around 20:45 UTC. After that it gets a 10-cell eval on the side slot, and the 2×2 table in RESULTS fills in automatically. That result is report-only.
+- **Recorded in PROGRESS.md:** a "결정:" line explaining that the queue, flags and side slot stay as they are because all remaining items belong to the human. The commit includes the new eval JSON (added with `-f` because `runs/` is gitignored) and the updated RESULTS.md. The next DAILY.md is due 11/08 01:30 UTC.
