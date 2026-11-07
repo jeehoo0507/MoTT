@@ -23,3 +23,7 @@ Already up to date.
 - 서버 2에서 `r2pkfcm1` 기록이 오면 merge하고 `m1_screen.py`로 판정합니다.
 - 결정: 큐와 설정은 그대로 뒀습니다. 사람 순서대로 정상 진행 중이고 새 지시가 없으며, 서버 1에서는 M1을 하지 말라는 QUEUE 지시가 있기 때문입니다.
 - pod 메모리는 27.7 GiB / 60이고, OOM 종료는 2회 그대로입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   51d3f16..01592e1  main -> main
