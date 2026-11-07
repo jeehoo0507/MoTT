@@ -1,1 +1,22 @@
 2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r2pk_rl/eval
+[   239s] eval_pkg10_1   lo_pkg_r2pk_rl+rep4          ok 1.00 count 10.68 1.449s/inst rounds 4
+[   371s] eval_pkg10_0   lo_pkg_r2pk_rl+rep4          ok 1.00 count 6.32 0.464s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r2pk_s1_rl/eval
+[   281s] eval_pkg10_1   lo_pkg_r2pk_s1_rl+rep4       ok 1.00 count 10.44 1.635s/inst rounds 4
+[   473s] eval_pkg10_0   lo_pkg_r2pk_s1_rl+rep4       ok 1.00 count 6.52 0.814s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r2pk_s2_rl/eval
+[   176s] eval_pkg10_1   lo_pkg_r2pk_s2_rl+rep4       ok 0.96 count 9.75 1.056s/inst rounds 4
+[   292s] eval_pkg10_0   lo_pkg_r2pk_s2_rl+rep4       ok 1.00 count 6.16 0.484s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r0_rl/eval
+[   490s] eval_pkg10_1   lo_pkg_r0_rl+rep4            ok 0.84 count 8.05 3.318s/inst rounds 4
+[   863s] eval_pkg10_0   lo_pkg_r0_rl+rep4            ok 0.96 count 8.08 3.033s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r0_s1_rl/eval
+[   322s] eval_pkg10_1   lo_pkg_r0_s1_rl+rep4         ok 0.92 count 6.74 2.073s/inst rounds 4
+[   510s] eval_pkg10_0   lo_pkg_r0_s1_rl+rep4         ok 1.00 count 5.64 1.133s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r0_s2_rl/eval
+[   438s] eval_pkg10_1   lo_pkg_r0_s2_rl+rep4         ok 0.84 count 6.24 2.662s/inst rounds 4

@@ -139,3 +139,6 @@
 [12:29:23] START eval10 r2pkfc_s1_rl | mem 16.5 GiB / 60.0 GiB, oom_kill 2
 [12:41:41] END eval10 r2pkfc_s1_rl rc=0 | mem 18.3 GiB / 60.0 GiB, oom_kill 2
 [13:46:42] START ls10 scale-eval eval_ip16_1 r2pkfc_s1_rl | mem 24.2 GiB / 60.0 GiB, oom_kill 2
+[13:55:06] END ls10 scale-eval eval_ip16_1 r2pkfc_s1_rl rc=0 | mem 24.4 GiB / 60.0 GiB, oom_kill 2
+[13:57:58] START ls10 scale-eval eval_ip20_0 r2pkfc_s1_rl | mem 25.4 GiB / 60.0 GiB, oom_kill 2
+[14:08:53] END ls10 scale-eval eval_ip20_0 r2pkfc_s1_rl rc=0 | mem 27.3 GiB / 60.0 GiB, oom_kill 2

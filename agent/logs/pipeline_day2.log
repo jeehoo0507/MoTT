@@ -1131,3 +1131,37 @@
 [12:32:22] ATTACH eval10 r2pkfc_s1_rl
 [12:42:22] START collect_results | mem 18.3 GiB / 60.0 GiB, oom_kill 2
 [12:42:22] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[12:45:09] END collect_results rc=0 | mem 40.2 GiB / 60.0 GiB, oom_kill 2
+[12:46:39] ATTACH ls10 scale-eval eval_pcb16_0 r2pkfc_s1_rl
+[12:57:39] START collect_results | mem 18.2 GiB / 60.0 GiB, oom_kill 2
+[12:57:39] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[13:00:21] END collect_results rc=0 | mem 39.8 GiB / 60.0 GiB, oom_kill 2
+[13:01:51] ATTACH ls10 scale-eval eval_pcb16_1 r2pkfc_s1_rl
+[13:14:51] START collect_results | mem 18.2 GiB / 60.0 GiB, oom_kill 2
+[13:14:51] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[13:17:44] END collect_results rc=0 | mem 28.6 GiB / 60.0 GiB, oom_kill 2
+[13:19:14] ATTACH ls10 scale-eval eval_pcb20_0 r2pkfc_s1_rl
+[13:26:14] START collect_results | mem 18.2 GiB / 60.0 GiB, oom_kill 2
+[13:26:14] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[13:28:58] END collect_results rc=0 | mem 32.5 GiB / 60.0 GiB, oom_kill 2
+[13:30:28] ATTACH ls10 scale-eval eval_pcb20_1 r2pkfc_s1_rl
+[13:38:28] START collect_results | mem 19.3 GiB / 60.0 GiB, oom_kill 2
+[13:38:28] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[13:41:15] END collect_results rc=0 | mem 24.3 GiB / 60.0 GiB, oom_kill 2
+[13:42:45] START build rnd pool (PROPOSALS 11/07 R) | mem 23.9 GiB / 60.0 GiB, oom_kill 2
+[13:42:45] $ .venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 4 --only train --techs rnd && touch runs/pool_v1/rnd.ok  (log agent/logs/build_rnd.log)
+[14:10:15] END build rnd pool (PROPOSALS 11/07 R) rc=0 | mem 21.9 GiB / 60.0 GiB, oom_kill 2
+[14:10:15] START collect_results | mem 21.9 GiB / 60.0 GiB, oom_kill 2
+[14:10:15] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[14:13:05] END collect_results rc=0 | mem 20.6 GiB / 60.0 GiB, oom_kill 2
+[14:14:35] START ls10 scale-eval eval_ip20_1 r2pkfc_s1_rl | mem 21.0 GiB / 60.0 GiB, oom_kill 2
+[14:14:35] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_ip20_1 --policy r2pkfc_s1_rl=runs/2026-10-29/r2pkfc_s1_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pkfc_s1_rl  (log runs/2026-10-29/r2pkfc_s1_rl/eval.log)
+[14:18:57] END ls10 scale-eval eval_ip20_1 r2pkfc_s1_rl rc=0 | mem 20.8 GiB / 60.0 GiB, oom_kill 2
+[14:18:57] START collect_results | mem 20.8 GiB / 60.0 GiB, oom_kill 2
+[14:18:57] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[14:21:51] END collect_results rc=0 | mem 21.0 GiB / 60.0 GiB, oom_kill 2
+[14:23:21] START ls10 scale-eval eval_pkg16_0 r2pkfc_s1_rl | mem 20.6 GiB / 60.0 GiB, oom_kill 2
+[14:23:21] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pkg16_0 --policy r2pkfc_s1_rl=runs/2026-10-29/r2pkfc_s1_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pkfc_s1_rl  (log runs/2026-10-29/r2pkfc_s1_rl/eval.log)
+[14:32:07] END train r2pkfc_s2 (CERTIFY_WORKERS=2) rc=0 | mem 27.3 GiB / 60.0 GiB, oom_kill 2
+[14:32:07] START train lo_pkg_rnd_s1 (CERTIFY_WORKERS=2) | mem 27.3 GiB / 60.0 GiB, oom_kill 2
+[14:32:07] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_rnd_s1 --arm '--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl' --day 2026-10-29 --pool runs/pool_v1 --seed 1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_rnd_s1/rung_stdout.log)

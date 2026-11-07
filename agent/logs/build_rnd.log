@@ -1,2 +1,11 @@
 9 pool files -> runs/pool_v1, 4 workers
 [   184s] train_rnd12_1    built     181s F=109 rounds 5 g+p ok 1.00 count 6.9375
+[   508s] train_rnd10_1    built     324s F=173 rounds 8 g+p ok 0.88 count 7.285714285714286
+[   604s] train_rnd10_0    built     601s F=177 rounds 10 g+p ok 0.19 count 3.0
+[   634s] train_rnd10_2    built     126s F=138 rounds 7 g+p ok 1.00 count 7.125
+[   637s] train_rnd8_0     built      33s F=86 rounds 4 g+p ok 1.00 count 2.6875
+[   670s] train_rnd8_2     built      33s F=101 rounds 4 g+p ok 1.00 count 7.3125
+[   689s] train_rnd8_1     built      55s F=113 rounds 4 g+p ok 0.88 count 2.4285714285714284
+[  1601s] train_rnd12_0    built    1598s F=171 rounds 10 g+p ok 0.44 count 6.571428571428571
+[  1646s] train_rnd12_2    built    1643s F=179 rounds 10 g+p ok 0.38 count 26.0
+done

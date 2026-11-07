@@ -1,5 +1,5 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 13:55 UTC, 라운드 96 — 사람 QUEUE 22:32/22:37 KST: G1 (b') 미통과·채택 안 함, M1 사람 중단 (기준 미달), 서버 1 GPU → R `lo_pkg_rnd_s1/_s2/_r0`; rnd 풀 생성 중; 4/7 `r2pkfc_s2` RL 중)
+# PROGRESS (갱신 2026-11-07 14:45 UTC, 라운드 96 — 사람 QUEUE 22:32/22:37 KST: G1 (b') 미통과·채택 안 함, M1 사람 중단 (기준 미달); rnd 풀 9개 끝 (14:10), **R `lo_pkg_rnd_s1` 학습 시작 14:32** (증류 → RL ~15:17); `r2pkfc_s2` 학습 끝 14:32 → 10칸 평가 대기)
 
 ## 라운드 96 (2026-11-07 13:42~ UTC)
 - `git pull` (루프, 13:42): **새 사람 커밋 2개** ece1a02 (22:32 KST: R 무작위 물리 학습 `rnd`, G1 확인 종료 (b') 미통과, 서버 1 큐 → `lo_pkg_rnd_s1`, `lo_pkg_rnd_s2`, 대조군 `lo_pkg_rnd_r0` (`after: runs/pool_v1/rnd.ok`), `lo_pcb_r2pkfc*` 3개는 removed) · 549a30d (22:37 KST: M1 `r2pkfcm1` 서버 2에서 사람 중단, 기준 미달).
@@ -8,7 +8,11 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - RESULTS (`collect_results.py` 고침 → 다시 생성 1140 기록): F1 표 아래 "G1 확인 판정 (사람): (b') 미통과 → 채택 안 함, `lo_pcb_r2pkfc*` 못 돌림"; "시도한 수정" G1 행 판정 갱신, **M1 행 추가** (기준 미달, 사람 중단; 뺀 pkg −0.10 [−0.22, +0.02], `r2pkfcm1` 못 돌림). `m1_screen.py` 대기 끝.
 - 상태: 4/7 `r2pkfc_s2` RL 진행 (끝 ~14:35 예상), 드라이버 CPU 줄 `r2pkfc_s1_rl` ip16_0 (G1 보충 2, 남은 것 계속). pod 24.1 GiB / 60, oom_kill 2.
 - 결정: 학습 조건·arm·무작위 범위·큐 순서 그대로 (사람 지시). R 판정은 `r_screen.py`로 3 seed 모인 뒤 RESULTS 표만, 확인 run (`r2pk_rnd` 등)은 사람 지시 대기.
-- 할 일 (다음): (1) `rnd.ok` 생김 확인 (~13:55). (2) `r2pkfc_s2` 끝 → 10칸 평가 (side_slot) → 같은 유형 3 seed 표, G1 구조 교체 줄 seed 3개 완성; `queue_scale_g1s` "appended 12" 확인. (3) `lo_pkg_rnd_s1` 시작 확인 → 첫 RL it에서 rnd 풀 로딩·oom·cert-bad 확인 (새 kind라 처음). (4) 서버 2 R seed 0 기록 push되면 merge. (5) 11/08 03:00 UTC 새 학습 금지는 R 확인 run에 한해 09:00 UTC까지 (사람). DAILY 다음 11/08 01:30 UTC.
+- (14:10) rnd 풀 9 파일 끝 (1646 s, 사람 예상 10분보다 김: 12칸 파일이 각 ~27분) → `rnd.ok`. greedy+prune 성공 파일별: rnd8 1.00/0.88/1.00, rnd10 0.19/0.88/1.00, rnd12 0.44/1.00/0.38 (`train_rnd12_2` count 26.0 — 다른 파일 2.4~7.3보다 큼). 보고만: 무작위 범위는 사람 고정이라 그대로; RL에서 해당 파일 fail·cert-bad를 볼 것.
+- (14:32) `r2pkfc_s2` 학습 끝 rc 0 (RL best it 200 1.748, oom 0) → 드라이버가 **`lo_pkg_rnd_s1` 시작** (arm 사람 것 그대로, `--rl_pool_glob ...train_rnd*.pkl`, seed 1, 증류 0.75 h + RL 1.25 h). 증류 풀 18 batch / 288 문제 = pcb·ip만 (rnd는 RL에만, PROPOSALS 그대로), it 50 정상 (oom 0, GPU 8.9 GB). `r2pkfc_s2` 10칸 평가: side_slot은 드라이버 줄의 ls10 scale-eval (pkg16_0, 14:23~)이 끝나면 시작 (한 번에 하나 규칙).
+- **드라이버 로그 끊김 (원인 찾음):** `agent/logs/pipeline_day2.log`가 디스크에서 12:42에 멈춰 있었음 — `agent/loop.sh` `sync_pull`이 라운드마다 `git pull --rebase --autostash` → 추적되는 로그 파일을 다시 만들어 드라이버는 지워진 inode에 씀 (기억된 함정, 10/30·11/02와 같은 것). 드라이버는 정상. `/proc/<pid>/fd/1`에서 읽어 디스크 파일에 복사 (139 KB, 기존 내용 포함 확인).
+- 결정: `agent/loop.sh`는 고치지 않음 — 이유: 지금 돌고 있는 bash 스크립트라 수정하면 다음 줄을 엉뚱하게 읽을 수 있고, 사람 인프라라 보수적으로. **사람께 제안:** loop.sh를 다시 띄울 때 `sync_pull` 앞에 `git add -A agent/logs && git commit -qm "logs"` (autostash 대신 먼저 커밋), 또는 오래 쓰는 로그 (`pipeline_day2.log`, `side_slot.log`, `report_watch.log`)를 `.gitignore` + `git rm --cached`. 그 전까지 라운드마다 /proc에서 복사.
+- 할 일 (다음): (1) [끝] `rnd.ok` 14:10. (2) `r2pkfc_s2` 끝 → 10칸 평가 (side_slot) → 같은 유형 3 seed 표, G1 구조 교체 줄 seed 3개 완성; `queue_scale_g1s` "appended 12" 확인. (3) [시작 14:32] `lo_pkg_rnd_s1` RL (~15:17~) 첫 it에서 rnd 풀 로딩·oom·cert-bad 확인 (새 kind라 처음). (4) 서버 2 R seed 0 기록 push되면 merge. (5) 11/08 03:00 UTC 새 학습 금지는 R 확인 run에 한해 09:00 UTC까지 (사람). DAILY 다음 11/08 01:30 UTC.
 
 ## 라운드 95 (2026-11-07 13:26~ UTC)
 - `git fetch r2e` (13:26): 새 사람 커밋 없음 (QUEUE 마지막 19:28 KST 그대로). 서버 2 `r2pkfcm1` 기록 아직 없음 → `m1_screen.py` 대기.
