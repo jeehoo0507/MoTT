@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 94 was a routine status check. Nothing broke and I changed no settings.
+
+- **Instructions:** no new human commits; the latest `agent/QUEUE.md` entry is still from 19:28 KST, so the queue is unchanged.
+- **Processes:** the driver, side_slot and the 16/20-cell scale-eval waiter are all running. I restarted report_watch and resume_agent. Pod memory is 27.7 / 60 GiB and the OOM-kill count is still 2.
+- **Training:** run 4/7 `r2pkfc_s2` is at distillation iteration 1400 with no problems and should finish around 14:35 UTC.
+- **Evaluations:** `r2pkfc_s1_rl` scored 0.96 on the first 16-cell pcb set (25 problems), and the driver added it to RESULTS.md. I'll compare it with `r2pk_s1_rl` (0.96 on 50 problems) after the second set (pcb16_1, now running) finishes. Then the 10 other 16/20-cell evals the waiter queued follow in order.
+- **M1 screening:** still waiting for server 2's `r2pkfcm1` records. Only `lo_pkg_r2pkfcm1` has arrived (held-out pkg 0.74 vs 0.84), and the rule doesn't allow a verdict until both are in.
+
+PROGRESS.md has the round 94 entry with "결정: 큐·설정 그대로" ("decision: keep queue and settings as they are"). It is committed and pushed to `r2e main` as 9697e1c.
