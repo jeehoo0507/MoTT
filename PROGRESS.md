@@ -1,5 +1,5 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 18:45 UTC, 라운드 103 — F1 pkg16_0 3 seed 끝 (묶음 0.933), pkg16_1 2/3 진행; 서버 2 F 기록 18/18 끝 (pkg20 묶음 0.958); R `lo_pkg_rnd_s2` 학습 끝 → side_slot 10칸 평가, GPU `lo_pkg_rnd_r0` 시작)
+# PROGRESS (갱신 2026-11-07 18:45 UTC, 라운드 103 — F1 pkg16_0 3 seed 끝 (묶음 0.933), pkg16_1 2/3 진행; 서버 2 F 기록 18/18 끝 (pkg20 묶음 0.958); R 3 seed 판정 **미통과** (뺀 pkg +0.01); GPU `lo_pkg_rnd_r0` 시작)
 
 ## 라운드 103 (2026-11-07 18:14~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음 (새 브랜치 `baselines-final`만 — 사람 것, 건드리지 않음). QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만).
@@ -8,8 +8,9 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - **서버 2:** `pull_s2_records.py` 18:12 `r2pk_s2_rl` pkg20_1 merge → **18/18 끝** (rc 0, "not merging" 없음).
 - RESULTS 다시 생성 (report_watch 18:17, 1200 기록, 자동 커밋 c1e45f5): "최종 방법" 표 pkg16_0 묶음 3 seed **0.933** (75문제, 정책 단독 0.56), pkg20 묶음 3 seed **0.958** (48문제, 정책 단독 0.50). 짝 CI pkg16: 좌표+V 대비 +0.13 [+0.05, +0.21] 개수비 1.132; greedy+prune+V 대비 −0.03 [−0.07, +0.00] 개수비 0.727. 숫자만 — 읽기는 사람.
 - **R:** `lo_pkg_rnd_s2` RL 18:36 끝 (353 iter, 1.27 h, best iter 100 score 1.567, oom 0). side_slot `eval10 lo_pkg_rnd_s2_rl` 18:37~. 드라이버 GPU 다음 = `lo_pkg_rnd_r0` 18:36~ (사람이 넣은 항목, 좌표 + rnd 대조군; 증류 0.75 h + RL 1.25 h → 끝 ~20:45).
+- **R 판정 (`r_screen.py`, side_slot `eval10 lo_pkg_rnd_s2_rl` 18:37–18:49 rc 0 뒤, seed 0·1·2 묶음 150 짝):** 뺀 pkg `lo_pkg_rnd` 0.72 vs `lo_pkg_r2pk` 0.71, +0.01 [−0.08, +0.11] → (i) 미달; pcb +0.05 [−0.02, +0.11], ip +0.01 → (ii) 통과; 개수비 1.020 / 1.034 / 1.002 → (iii) 통과 → **미통과 (효과 없음)**. 보고만: vs 좌표 `lo_pkg_r0` −0.08 [−0.16, +0.00]. 확인 run 없음 (사람 01:45 KST). `collect_results.py`에 `r_screen_table()` ("R" 절, 2×2 대조군 `lo_pkg_rnd_r0`은 끝나면 자동 채움) + "시도한 수정" 표 R 줄 추가.
 - 결정: 큐·플래그·side_slot 그대로 — 이유: F 순서·R 항목은 모두 사람 것; 에이전트 새 시도 금지 유지.
-- 할 일 (다음): (1) `lo_pkg_rnd_s2` 10칸 끝 → `r_screen.py` (seed 0·1·2 판정, RESULTS에 표만; 확인 run 없음). (2) 드라이버 F1 pkg16_1 남은 2 → 좌표 pkg20 2 → F2 (서버 2 done → 건너뜀) → F3 22. (3) `lo_pkg_rnd_r0` 끝 → side_slot 10칸 (보고만, 2×2 읽기). (4) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
+- 할 일 (다음): (1) ~~`lo_pkg_rnd_s2` 10칸 → `r_screen.py`~~ 끝 (미통과). (2) 드라이버 F1 pkg16_1 남은 2 → 좌표 pkg20 2 → F2 (서버 2 done → 건너뜀) → F3 22. (3) `lo_pkg_rnd_r0` 끝 → side_slot 10칸 (보고만, 2×2 읽기). (4) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
 
 # (이전) 라운드 102 머리말: F1 드라이버 pkg16 수리 평가 3/6 `r2pk_s2_rl` 진행; 서버 2 F 기록 17/18 merge; 사람 03:05 KST 새 학습 금지 해제 (사람 항목만); R `lo_pkg_rnd_s2` RL 중
 

@@ -1708,6 +1708,9 @@ TRIED_MODS = [
      "기준 미달 (`c1_screen.py`, 사람 확인 QUEUE 19:28 KST): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii) 통과; "
      "(iii) pcb 개수비 1.071 > 1.05 탈락 → 효과 없음. 참고 (보고만): 대조군 (+1 h RL만) pkg 0.86 vs `r2pk_rl` 0.78, 잡음 범위",
      "PROPOSALS 11/07 C1, QUEUE 11/07 19:28 KST, PROGRESS 11/07 라운드 86"),
+    ("R", "무작위 판을 RL 풀에 섞기 (pkg 빼고 학습끼리; pkg 칸 = 뺀 pkg)", "lo_pkg_rnd_rl", "lo_pkg_r2pk_rl", None, None,
+     "미통과 (`r_screen.py`, seed 0·1·2 묶음): (i) 뺀 pkg +0.01 [−0.08, +0.11] < +0.10 미달; (ii)·(iii) 통과 → 효과 없음; "
+     "확인 run 없음", "PROPOSALS 11/07 R, QUEUE 11/07 22:32 KST, PROGRESS 11/07 라운드 103, \"R\" 절"),
 ]
 TRIED_EVAL_ONLY = [   # evaluation-procedure variants, no training change; numbers are in their own sections
     ("T2", "끝에서 고치기 `--repair 4` (모든 방법에 같게)", "R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; "
@@ -1715,6 +1718,43 @@ TRIED_EVAL_ONLY = [   # evaluation-procedure variants, no training change; numbe
     ("T4", "규칙 해에서 출발해 정책이 다듬기 `--start rule`", "S1 효과 없음 (세 판); S2 0단 pkg 해로움", "\"규칙 해에서 출발\" 절"),
     ("S", "추론 샘플링 best-of-8", "규칙이 이김 (pcb) → 넓히지 않음", "\"추론 샘플링\" 절"),
 ]
+
+
+def r_screen_table():
+    """QUEUE 11/07 22:32 KST (human): R = random-board RL pool (PROPOSALS 11/07 R), verdict by scripts/r_screen.py
+    (rule written before any R run); table only, no confirmation run."""
+    import r_screen
+    rows = [("뺀 pkg", "`lo_pkg_rnd` vs `lo_pkg_r2pk`", r_screen.pooled("lo_pkg_rnd", "lo_pkg_r2pk", "pkg"))]
+    rows += [(f"같이 학습한 {k}", "`lo_pkg_rnd` vs `lo_pkg_r2pk`", r_screen.pooled("lo_pkg_rnd", "lo_pkg_r2pk", k))
+             for k in ("pcb", "ip")]
+    rows += [("뺀 pkg (보고만)", f"`{x}` vs `{y}`", r_screen.pooled(x, y, "pkg"))
+             for x, y in (("lo_pkg_rnd", "lo_pkg_r0"), ("lo_pkg_rnd_r0", "lo_pkg_r0"), ("lo_pkg_rnd", "lo_pkg_rnd_r0"))]
+    if rows[0][2] is None:
+        return []
+    out = []
+    for lab, pair, p in rows:
+        if p is None:
+            out.append(f"| {lab} | {pair} | – | – | 대기 | – | – |")
+            continue
+        out.append(f"| {lab} | {pair} | {', '.join(s.lstrip('_') for s in p['seeds'])} | {p['n']} | "
+                   f"{p['a']:.2f} vs {p['b']:.2f} | {p['diff']:+.2f} [{p['ci'][0]:+.2f}, {p['ci'][1]:+.2f}] | "
+                   f"{p['ratio']:.3f} ({p['n_both']}) |")
+    held, same = rows[0][2], [r[2] for r in rows[1:3]]
+    if len(held["seeds"]) < 3 or any(p is None or len(p["seeds"]) < 3 for p in same):
+        verdict = "판정 대기 (seed 0·1·2 필요)"
+    else:
+        c1 = held["diff"] >= 0.10 - 1e-9
+        c2 = all(p["diff"] >= -0.06 - 1e-9 for p in same)
+        c3 = all(p["ratio"] <= 1.05 for p in (held, *same))
+        verdict = (f"(i) 뺀 pkg 차 ≥ +0.10: {'통과' if c1 else '미달'}; (ii) pcb·ip ≥ −0.06: {'통과' if c2 else '미달'}; "
+                   f"(iii) 개수비 ≤ 1.05: {'통과' if c3 else '미달'} → **{'통과' if c1 and c2 and c3 else '미통과'}** "
+                   "(확인 run 없음, QUEUE 11/08 01:45 KST)")
+    return ["## R: 무작위 판을 RL 풀에 섞기 (PROPOSALS 11/07 R, `scripts/r_screen.py`; 규칙은 R run 전에 적음)", "",
+            "후보 = `lo_pkg_rnd{,_s1,_s2}` (MoTT+P1, RL 풀 pcb+ip+rnd, pkg 한 번도 안 봄), 짝 = `lo_pkg_r2pk{,_s1,_s2}` "
+            "(같은 모델, RL 풀 pcb+ip). 10칸 정책 단독, 같은 문제 짝 → seed 묶음, 짝지은 bootstrap 95% (2000회, seed 0). "
+            "개수비 = 둘 다 성공한 문제. 2×2 대조군 `lo_pkg_rnd_r0`은 seed 0만 사람이 큐에 넣음.", "",
+            "| 판 | 짝 | seed | 문제 짝 수 | 성공률 | 차 [95% CI] | 개수비 (둘 다 성공 수) |",
+            "|---|---|---|---|---|---|---|"] + out + ["", f"판정: {verdict}", ""]
 
 
 def tried_mods_table(recs):
@@ -1946,6 +1986,7 @@ def main():
     lines += repair_table(recs)
     lines += heldout_repair_table(recs)
     lines += final_method_table(recs)
+    lines += r_screen_table()
     lines += rulestart_table(recs)
     lines += count_gap_table()
     lines += distill_seed_table()

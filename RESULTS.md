@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-07 18:31 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-07 18:51 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -95,6 +95,7 @@
 | lo_pkg_r2pkfcm1_rl | – | 1.00 / 0.74 / 1.00 [50] | – | – | 0.84 / 0.85 / 0.22 [50] | – | – | 0.74 / 0.87 / 0.59 [50] | – | – |
 | lo_pkg_rnd_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.92 / 0.86 / 0.21 [50] | – | – | 0.68 / 0.92 / 0.63 [50] | – | – |
 | lo_pkg_rnd_s1_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.94 / 0.83 / 0.22 [50] | – | – | 0.82 / 0.91 / 0.63 [50] | – | – |
+| lo_pkg_rnd_s2_rl | – | 1.00 / 0.74 / 1.01 [50] | – | – | 0.92 / 0.81 / 0.20 [50] | – | – | 0.66 / 0.88 / 0.59 [50] | – | – |
 | modal_rule | 1.00 / 1.17 / 0.98 [50] | 0.94 / 1.10 / 1.56 [50] | 1.00 / 0.48 / 1.59 [50] | 1.00 / 0.44 / – [16] | 1.00 / 0.84 / 0.21 [50] | 1.00 / 0.88 / 0.24 [50] | 1.00 / 1.37 / – [16] | 0.88 / 0.86 / 0.61 [50] | 0.60 / 0.78 / 0.45 [50] | 0.56 / 0.97 / – [16] |
 | modal_rule+rep4 | – | 1.00 / 1.27 / 1.67 [50] | – | – | 1.00 / 0.84 / 0.21 [50] | – | – | 0.98 / 0.86 / 0.60 [50] | 0.90 / 0.79 / 0.50 [50] | – |
 | modal_rule>r0_coord_rl | – | 0.94 / 1.10 / 1.56 [50] | – | – | 0.94 / 0.81 / 0.20 [50] | – | – | 0.70 / 0.79 / 0.55 [50] | – | – |
@@ -283,6 +284,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pkg_r2pkfcm1_rl | 50 | +0.00 [+0.00, +0.00] | 1.003 [0.982, 1.029] |
 | ip 10 | lo_pkg_rnd_rl | 50 | +0.00 [+0.00, +0.00] | 1.007 [0.988, 1.031] |
 | ip 10 | lo_pkg_rnd_s1_rl | 50 | +0.00 [+0.00, +0.00] | 1.013 [0.995, 1.036] |
+| ip 10 | lo_pkg_rnd_s2_rl | 50 | +0.00 [+0.00, +0.00] | 1.008 [0.986, 1.036] |
 | ip 10 | modal_rule | 50 | -0.06 [-0.14, +0.00] | 1.556 [1.424, 1.693] |
 | ip 10 | modal_rule+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.671 [1.491, 1.877] |
 | ip 10 | modal_rule>r0_coord_rl | 50 | -0.06 [-0.14, +0.00] | 1.556 [1.424, 1.693] |
@@ -451,6 +453,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pkg_r2pkfcm1_rl | 50 | +0.18 [-0.00, +0.36] | 0.219 [0.171, 0.274] |
 | pcb 10 | lo_pkg_rnd_rl | 50 | +0.26 [+0.10, +0.40] | 0.208 [0.164, 0.259] |
 | pcb 10 | lo_pkg_rnd_s1_rl | 50 | +0.28 [+0.12, +0.44] | 0.224 [0.177, 0.278] |
+| pcb 10 | lo_pkg_rnd_s2_rl | 50 | +0.26 [+0.10, +0.40] | 0.202 [0.163, 0.245] |
 | pcb 10 | modal_rule | 50 | +0.34 [+0.22, +0.46] | 0.208 [0.167, 0.255] |
 | pcb 10 | modal_rule+rep4 | 50 | +0.34 [+0.22, +0.46] | 0.208 [0.167, 0.255] |
 | pcb 10 | modal_rule>r0_coord_rl | 50 | +0.28 [+0.14, +0.42] | 0.201 [0.159, 0.252] |
@@ -631,6 +634,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_r2pkfcm1_rl | 50 | -0.08 [-0.24, +0.08] | 0.587 [0.515, 0.663] |
 | pkg 10 | lo_pkg_rnd_rl | 50 | -0.14 [-0.28, +0.02] | 0.634 [0.551, 0.717] |
 | pkg 10 | lo_pkg_rnd_s1_rl | 50 | +0.00 [-0.14, +0.12] | 0.626 [0.556, 0.701] |
+| pkg 10 | lo_pkg_rnd_s2_rl | 50 | -0.16 [-0.32, +0.00] | 0.590 [0.526, 0.654] |
 | pkg 10 | modal_rule | 50 | +0.06 [-0.06, +0.18] | 0.605 [0.533, 0.683] |
 | pkg 10 | modal_rule+rep4 | 50 | +0.16 [+0.06, +0.28] | 0.601 [0.533, 0.674] |
 | pkg 10 | modal_rule>r0_coord_rl | 50 | -0.12 [-0.28, +0.04] | 0.550 [0.478, 0.627] |
@@ -837,6 +841,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pkg_r2pkfcm1_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | lo_pkg_rnd_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | lo_pkg_rnd_s1_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
+| ip 10 | lo_pkg_rnd_s2_rl | 50 | +0.60 [+0.46, +0.72] | 0.736 [0.578, 0.887] |
 | ip 10 | modal_rule | 50 | +0.54 [+0.38, +0.68] | 1.102 [0.835, 1.374] |
 | ip 10 | modal_rule+rep4 | 50 | +0.60 [+0.46, +0.72] | 1.272 [0.897, 1.734] |
 | ip 10 | modal_rule>r0_coord_rl | 50 | +0.54 [+0.38, +0.68] | 1.102 [0.835, 1.374] |
@@ -1019,6 +1024,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pkg_r2pkfcm1_rl | 50 | -0.06 [-0.18, +0.06] | 0.853 [0.742, 0.964] |
 | pcb 10 | lo_pkg_rnd_rl | 50 | +0.02 [-0.08, +0.12] | 0.855 [0.756, 0.956] |
 | pcb 10 | lo_pkg_rnd_s1_rl | 50 | +0.04 [-0.04, +0.14] | 0.834 [0.737, 0.926] |
+| pcb 10 | lo_pkg_rnd_s2_rl | 50 | +0.02 [-0.08, +0.12] | 0.810 [0.708, 0.906] |
 | pcb 10 | modal_rule | 50 | +0.10 [+0.02, +0.18] | 0.841 [0.742, 0.938] |
 | pcb 10 | modal_rule+rep4 | 50 | +0.10 [+0.02, +0.18] | 0.841 [0.742, 0.938] |
 | pcb 10 | modal_rule>r0_coord_rl | 50 | +0.04 [-0.06, +0.14] | 0.811 [0.709, 0.908] |
@@ -1213,6 +1219,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_r2pkfcm1_rl | 50 | -0.16 [-0.30, -0.04] | 0.874 [0.818, 0.930] |
 | pkg 10 | lo_pkg_rnd_rl | 50 | -0.22 [-0.36, -0.08] | 0.918 [0.853, 0.988] |
 | pkg 10 | lo_pkg_rnd_s1_rl | 50 | -0.08 [-0.20, +0.04] | 0.911 [0.842, 0.983] |
+| pkg 10 | lo_pkg_rnd_s2_rl | 50 | -0.24 [-0.38, -0.08] | 0.877 [0.798, 0.961] |
 | pkg 10 | modal_rule | 50 | -0.02 [-0.14, +0.08] | 0.863 [0.810, 0.921] |
 | pkg 10 | modal_rule+rep4 | 50 | +0.08 [+0.00, +0.18] | 0.858 [0.809, 0.912] |
 | pkg 10 | modal_rule>r0_coord_rl | 50 | -0.20 [-0.36, -0.04] | 0.793 [0.731, 0.851] |
@@ -2056,6 +2063,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_r2pkfcm1_rl | 50 (0, 1) | 1.00 | 8.36 | 0.736 | 1.003 | – | `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_ip10_0__lo_pkg_r2pkfcm1_rl.json`, `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_ip10_1__lo_pkg_r2pkfcm1_rl.json` |
 | lo_pkg_rnd_rl | 50 (0, 1) | 1.00 | 8.42 | 0.736 | 1.007 | – | `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_ip10_0__lo_pkg_rnd_rl.json`, `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_ip10_1__lo_pkg_rnd_rl.json` |
 | lo_pkg_rnd_s1_rl | 50 (0, 1) | 1.00 | 8.50 | 0.736 | 1.013 | 0.309 | `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_ip10_0__lo_pkg_rnd_s1_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_ip10_1__lo_pkg_rnd_s1_rl.json` |
+| lo_pkg_rnd_s2_rl | 50 (0, 1) | 1.00 | 8.42 | 0.736 | 1.008 | 0.312 | `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_ip10_0__lo_pkg_rnd_s2_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_ip10_1__lo_pkg_rnd_s2_rl.json` |
 | modal_rule | 50 (0, 1) | 0.94 | 12.53 | 1.102 | 1.556 | 0.619 | `runs/2026-10-28/baselines/eval/eval_ip10_0__modal_rule.json`, `runs/2026-10-28/baselines/eval/eval_ip10_1__modal_rule.json` |
 | modal_rule+rep4 | 50 (0, 1) | 1.00 | 13.18 | 1.272 | 1.671 | 0.601 | `runs/repair10/eval/eval_ip10_0__modal_rule+rep4.json`, `runs/repair10/eval/eval_ip10_1__modal_rule+rep4.json` |
 | modal_rule>r0_coord_rl | 50 (0, 1) | 0.94 | 12.53 | 1.102 | 1.556 | 0.756 | `runs/rulestart10/eval/eval_ip10_0__modal_rule>r0_coord_rl.json`, `runs/rulestart10/eval/eval_ip10_1__modal_rule>r0_coord_rl.json` |
@@ -2256,6 +2264,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_r2pkfcm1_rl | 50 (0, 1) | 0.84 | 6.83 | 0.853 | 0.219 | – | `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_pcb10_0__lo_pkg_r2pkfcm1_rl.json`, `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_pcb10_1__lo_pkg_r2pkfcm1_rl.json` |
 | lo_pkg_rnd_rl | 50 (0, 1) | 0.92 | 7.24 | 0.855 | 0.208 | – | `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_pcb10_0__lo_pkg_rnd_rl.json`, `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_pcb10_1__lo_pkg_rnd_rl.json` |
 | lo_pkg_rnd_s1_rl | 50 (0, 1) | 0.94 | 7.51 | 0.834 | 0.224 | 0.503 | `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_pcb10_0__lo_pkg_rnd_s1_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_pcb10_1__lo_pkg_rnd_s1_rl.json` |
+| lo_pkg_rnd_s2_rl | 50 (0, 1) | 0.92 | 7.15 | 0.810 | 0.202 | 0.388 | `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_pcb10_0__lo_pkg_rnd_s2_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_pcb10_1__lo_pkg_rnd_s2_rl.json` |
 | modal_rule | 50 (0, 1) | 1.00 | 7.14 | 0.841 | 0.208 | 0.505 | `runs/2026-10-28/baselines/eval/eval_pcb10_0__modal_rule.json`, `runs/2026-10-28/baselines/eval/eval_pcb10_1__modal_rule.json` |
 | modal_rule+rep4 | 50 (0, 1) | 1.00 | 7.14 | 0.841 | 0.208 | 0.505 | `runs/repair10/eval/eval_pcb10_0__modal_rule+rep4.json`, `runs/repair10/eval/eval_pcb10_1__modal_rule+rep4.json` |
 | modal_rule>r0_coord_rl | 50 (0, 1) | 0.94 | 6.94 | 0.811 | 0.201 | 0.806 | `runs/rulestart10/eval/eval_pcb10_0__modal_rule>r0_coord_rl.json`, `runs/rulestart10/eval/eval_pcb10_1__modal_rule>r0_coord_rl.json` |
@@ -2468,6 +2477,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_r2pkfcm1_rl | 50 (0, 1) | 0.74 | 6.35 | 0.874 | 0.587 | – | `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_pkg10_0__lo_pkg_r2pkfcm1_rl.json`, `runs/2026-11-07s2/lo_pkg_r2pkfcm1_rl/eval/eval_pkg10_1__lo_pkg_r2pkfcm1_rl.json` |
 | lo_pkg_rnd_rl | 50 (0, 1) | 0.68 | 6.59 | 0.918 | 0.634 | – | `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_pkg10_0__lo_pkg_rnd_rl.json`, `runs/2026-11-07s2/lo_pkg_rnd_rl/eval/eval_pkg10_1__lo_pkg_rnd_rl.json` |
 | lo_pkg_rnd_s1_rl | 50 (0, 1) | 0.82 | 7.00 | 0.911 | 0.626 | 0.735 | `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_pkg10_0__lo_pkg_rnd_s1_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s1_rl/eval/eval_pkg10_1__lo_pkg_rnd_s1_rl.json` |
+| lo_pkg_rnd_s2_rl | 50 (0, 1) | 0.66 | 6.48 | 0.877 | 0.590 | 0.844 | `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_pkg10_0__lo_pkg_rnd_s2_rl.json`, `runs/2026-10-29/lo_pkg_rnd_s2_rl/eval/eval_pkg10_1__lo_pkg_rnd_s2_rl.json` |
 | modal_rule | 50 (0, 1) | 0.88 | 6.52 | 0.863 | 0.605 | 2.202 | `runs/2026-10-28/baselines/eval/eval_pkg10_0__modal_rule.json`, `runs/2026-10-28/baselines/eval/eval_pkg10_1__modal_rule.json` |
 | modal_rule+rep4 | 50 (0, 1) | 0.98 | 7.96 | 0.858 | 0.601 | 1.580 | `runs/repair10/eval/eval_pkg10_0__modal_rule+rep4.json`, `runs/repair10/eval/eval_pkg10_1__modal_rule+rep4.json` |
 | modal_rule>r0_coord_rl | 50 (0, 1) | 0.70 | 5.94 | 0.793 | 0.550 | 2.885 | `runs/rulestart10/eval/eval_pkg10_0__modal_rule>r0_coord_rl.json`, `runs/rulestart10/eval/eval_pkg10_1__modal_rule>r0_coord_rl.json` |
@@ -2741,6 +2751,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | lo_pkg_r2pkfcm1_rl | 성공 | 50 | 8.4 | 0.99 | 0.01 | 0.00 |
 | ip 10 | lo_pkg_rnd_rl | 성공 | 50 | 8.4 | 1.00 | 0.00 | 0.00 |
 | ip 10 | lo_pkg_rnd_s1_rl | 성공 | 50 | 8.5 | 0.98 | 0.02 | 0.00 |
+| ip 10 | lo_pkg_rnd_s2_rl | 성공 | 50 | 8.4 | 0.98 | 0.02 | 0.00 |
 | ip 10 | local_search | 성공 | 20 | 4.2 | 0.99 | 0.01 | 0.00 |
 | ip 10 | local_search | 실패 | 30 | 78.6 | 0.08 | 0.02 | 0.90 |
 | ip 10 | modal_rule | 성공 | 47 | 12.5 | 1.00 | 0.00 | 0.00 |
@@ -3032,6 +3043,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | lo_pkg_rnd_rl | 실패 | 4 | 11.2 | 0.24 | 0.16 | 0.60 |
 | pcb 10 | lo_pkg_rnd_s1_rl | 성공 | 47 | 7.5 | 0.08 | 0.18 | 0.74 |
 | pcb 10 | lo_pkg_rnd_s1_rl | 실패 | 3 | 7.0 | 0.14 | 0.24 | 0.62 |
+| pcb 10 | lo_pkg_rnd_s2_rl | 성공 | 46 | 7.2 | 0.09 | 0.17 | 0.74 |
+| pcb 10 | lo_pkg_rnd_s2_rl | 실패 | 4 | 8.8 | 0.06 | 0.11 | 0.83 |
 | pcb 10 | local_search | 성공 | 39 | 7.5 | 0.26 | 0.19 | 0.56 |
 | pcb 10 | local_search | 실패 | 11 | 29.1 | 0.64 | 0.07 | 0.28 |
 | pcb 10 | modal_rule | 성공 | 50 | 7.1 | 0.09 | 0.18 | 0.73 |
@@ -3402,6 +3415,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_rnd_rl | 실패 | 16 | 11.1 | 0.54 | 0.08 | 0.37 |
 | pkg 10 | lo_pkg_rnd_s1_rl | 성공 | 41 | 7.0 | 0.16 | 0.15 | 0.68 |
 | pkg 10 | lo_pkg_rnd_s1_rl | 실패 | 9 | 12.9 | 0.59 | 0.14 | 0.28 |
+| pkg 10 | lo_pkg_rnd_s2_rl | 성공 | 33 | 6.5 | 0.19 | 0.10 | 0.71 |
+| pkg 10 | lo_pkg_rnd_s2_rl | 실패 | 17 | 11.4 | 0.40 | 0.20 | 0.41 |
 | pkg 10 | local_search | 성공 | 21 | 6.1 | 0.16 | 0.16 | 0.69 |
 | pkg 10 | local_search | 실패 | 29 | 12.7 | 0.09 | 0.13 | 0.78 |
 | pkg 10 | modal_rule | 성공 | 44 | 6.5 | 0.16 | 0.15 | 0.70 |
@@ -4282,6 +4297,21 @@ seed 0·1·2 = `r2pk_rl`, `r2pk_s1_rl`, `r2pk_s2_rl` (각 `+rep4` 기록). 정�
 | pkg 16 | 좌표+V `r0_coord_rl+rep4` | 0.80 | 3 | 100 | +0.14 [+0.06, +0.22] | 1.138 [1.096, 1.182] |
 | pkg 16 | greedy+prune+V `greedy+prune+rep4` | 0.96 | 3 | 100 | -0.02 [-0.05, +0.00] | 0.735 [0.668, 0.801] |
 
+## R: 무작위 판을 RL 풀에 섞기 (PROPOSALS 11/07 R, `scripts/r_screen.py`; 규칙은 R run 전에 적음)
+
+후보 = `lo_pkg_rnd{,_s1,_s2}` (MoTT+P1, RL 풀 pcb+ip+rnd, pkg 한 번도 안 봄), 짝 = `lo_pkg_r2pk{,_s1,_s2}` (같은 모델, RL 풀 pcb+ip). 10칸 정책 단독, 같은 문제 짝 → seed 묶음, 짝지은 bootstrap 95% (2000회, seed 0). 개수비 = 둘 다 성공한 문제. 2×2 대조군 `lo_pkg_rnd_r0`은 seed 0만 사람이 큐에 넣음.
+
+| 판 | 짝 | seed | 문제 짝 수 | 성공률 | 차 [95% CI] | 개수비 (둘 다 성공 수) |
+|---|---|---|---|---|---|---|
+| 뺀 pkg | `lo_pkg_rnd` vs `lo_pkg_r2pk` | s0, s1, s2 | 150 | 0.72 vs 0.71 | +0.01 [-0.08, +0.11] | 1.020 (81) |
+| 같이 학습한 pcb | `lo_pkg_rnd` vs `lo_pkg_r2pk` | s0, s1, s2 | 150 | 0.93 vs 0.88 | +0.05 [-0.02, +0.11] | 1.034 (123) |
+| 같이 학습한 ip | `lo_pkg_rnd` vs `lo_pkg_r2pk` | s0, s1, s2 | 150 | 1.00 vs 0.99 | +0.01 [+0.00, +0.02] | 1.002 (149) |
+| 뺀 pkg (보고만) | `lo_pkg_rnd` vs `lo_pkg_r0` | s0, s1, s2 | 150 | 0.72 vs 0.80 | -0.08 [-0.16, +0.00] | 1.050 (94) |
+| 뺀 pkg (보고만) | `lo_pkg_rnd_r0` vs `lo_pkg_r0` | – | – | 대기 | – | – |
+| 뺀 pkg (보고만) | `lo_pkg_rnd` vs `lo_pkg_rnd_r0` | – | – | 대기 | – | – |
+
+판정: (i) 뺀 pkg 차 ≥ +0.10: 미달; (ii) pcb·ip ≥ −0.06: 통과; (iii) 개수비 ≤ 1.05: 통과 → **미통과** (확인 run 없음, QUEUE 11/08 01:45 KST)
+
 ## 규칙 해에서 출발해 정책이 다듬기 (PROPOSALS 11/03 T4, 평가만): cutting-plane 각 round에서 modal_rule 해를 시작 배치로, 정책이 greedy decoding으로 이어 감 (목표 만족 상태라 remove·종류 바꿈·stop만)
 
 판정 규칙은 결과 전에 PROPOSALS 11/03 T4에 적음. 고치기 없음. 정책이 규칙 배치를 바꾼 문제 수는 같은 판의 `modal_rule` 기록 (cutting-plane 마지막 해)과 배치가 다른 문제 (기술용).
@@ -4626,6 +4656,7 @@ P1/P2 같이 보고 (판정 아님): 같은 경로 (eval pkg10 50판, 기본 격
 | M1 | P1+G1 + 모드↔모드 로그 주파수 거리 편향 `--mm_bias` (서버 2) | `r2pkfcm1_rl` vs `r2pkfc_rl` | – | – | – | – | 기준 미달 (사람 중단 11/07 22:37 KST, 거르기 미완료): 뺀 pkg `lo_pkg_r2pkfcm1` 0.74 vs `lo_pkg_r2pkfc` 0.84 −0.10 [−0.22, +0.02] (`m1_screen.py`) → (i)는 같은 유형 pkg ≥ 0.94에만 걸림; `r2pkfcm1` 못 돌림 (사람 중단, 서버 2 GPU를 R로) | PROPOSALS 11/07 M1, QUEUE 11/07 22:37 KST, PROGRESS 11/07 라운드 93·96 |
 | C1' G-inf | 보정 피크 만족 게이트를 추론에만 `--env_feat mott_pkgate` (학습 없음, 같은 가중치) | `r2pk_rl@mott_pkgate` vs `r2pk_rl` | +0.06 [-0.02, +0.14] | -0.02 [-0.14, +0.10] | +0.02 [+0.00, +0.06] | – | 효과 없음 (`c1p_screen.py`): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii)·(iii) 통과 → "추론 게이트만으로 성립" 아님. G-tr `r2pk_gate`는 G1 통과라 돌리지 않음 (사람 지시 대기) | PROPOSALS 11/07 C1', PROGRESS 11/07 라운드 78 |
 | C1 | 검증된 해 따라 하기 `--self_repair 4` (`r2pk_rl/best.pt`에서 RL만 1 h, 서버 2) | `r2pk_vsi_rl` vs `r2pk_ctl_rl` | +0.02 [-0.12, +0.14] | -0.02 [-0.16, +0.10] | +0.02 [+0.00, +0.06] | – | 기준 미달 (`c1_screen.py`, 사람 확인 QUEUE 19:28 KST): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii) 통과; (iii) pcb 개수비 1.071 > 1.05 탈락 → 효과 없음. 참고 (보고만): 대조군 (+1 h RL만) pkg 0.86 vs `r2pk_rl` 0.78, 잡음 범위 | PROPOSALS 11/07 C1, QUEUE 11/07 19:28 KST, PROGRESS 11/07 라운드 86 |
+| R | 무작위 판을 RL 풀에 섞기 (pkg 빼고 학습끼리; pkg 칸 = 뺀 pkg) | `lo_pkg_rnd_rl` vs `lo_pkg_r2pk_rl` | +0.06 [-0.04, +0.16] | -0.02 [-0.18, +0.14] | +0.00 [+0.00, +0.00] | – | 미통과 (`r_screen.py`, seed 0·1·2 묶음): (i) 뺀 pkg +0.01 [−0.08, +0.11] < +0.10 미달; (ii)·(iii) 통과 → 효과 없음; 확인 run 없음 | PROPOSALS 11/07 R, QUEUE 11/07 22:32 KST, PROGRESS 11/07 라운드 103, "R" 절 |
 | T2 | 끝에서 고치기 `--repair 4` (모든 방법에 같게) | (평가 단계) | – | – | – | – | R1 정책을 도움 성립; R3 0단도 같이 오름 → 방법과 무관한 평가 절차 이득; R2 같은 고치기에서 규칙과 차이 없음, g+p 대비 ip만 정책이 낫다 | "끝에서 고치기" 절 |
 | T4 | 규칙 해에서 출발해 정책이 다듬기 `--start rule` | (평가 단계) | – | – | – | – | S1 효과 없음 (세 판); S2 0단 pkg 해로움 | "규칙 해에서 출발" 절 |
 | S | 추론 샘플링 best-of-8 | (평가 단계) | – | – | – | – | 규칙이 이김 (pcb) → 넓히지 않음 | "추론 샘플링" 절 |
@@ -4869,7 +4900,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pkg_r2pkfc_s1_rl | 132 / 337 | 0.8 | 0.98 | 6.0 | 0.88 | – | 0.78 |
 | lo_pkg_r2pkfc_s2_rl | 122 / 348 | 0.2 | 1.00 | 6.8 | 0.88 | – | 0.66 |
 | lo_pkg_rnd_s1_rl | 123 / 348 | 0.5 | 1.00 | 3.7 | 0.94 | – | 0.82 |
-| lo_pkg_rnd_s2_rl | 134 / – | 0.8 | – | 4.6 | – | – | – |
+| lo_pkg_rnd_s2_rl | 146 / 353 | 0.7 | 1.00 | 4.6 | 0.92 | – | 0.66 |
 | r0_coord_s1_rl | 167 / 338 | 3.2 | 0.96 | 3.7 | 0.94 | 9.7 | 0.74 |
 | r0_coord_s2_rl | 163 / 349 | 2.6 | 1.00 | 5.8 | 0.98 | 13.0 | 0.76 |
 | r1_modal_s1_rl | 203 / 377 | 1.8 | 0.92 | 3.6 | 0.84 | 9.8 | 0.74 |
@@ -5041,6 +5072,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pkg_rnd_s1_distill | mott_pk / mott | distill | 1586 | 0.76 | val_pcb10_0: 1.15/0.62, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pkg_rnd_s1_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_rnd_s1_rl | mott_pk / mott | rl | 348 | 1.27 | val_pcb10_0: 0.92/0.75, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/lo_pkg_rnd_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_rnd_s2_distill | mott_pk / mott | distill | 1580 | 0.76 | val_pcb10_0: 0.94/0.62, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pkg_rnd_s2_distill/metrics.json` |
+| runs/2026-10-29/lo_pkg_rnd_s2_rl | mott_pk / mott | rl | 353 | 1.27 | val_pcb10_0: 0.85/0.69, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pkg_rnd_s2_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s1_distill | coord / grid | distill | 2215 | 0.77 | val_pcb10_0: 1.97/0.38, val_pkg10_0: 1.20/0.69, val_ip10_0: 0.83/0.19 | `runs/2026-10-29/r0_coord_s1_distill/metrics.json` |
 | runs/2026-10-29/r0_coord_s1_rl | coord / grid | rl | 338 | 1.27 | val_pcb10_0: 1.13/0.75, val_pkg10_0: 1.04/0.75, val_ip10_0: 0.78/0.38 | `runs/2026-10-29/r0_coord_s1_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s2_distill | coord / grid | distill | 2281 | 0.77 | val_pcb10_0: 2.04/0.50, val_pkg10_0: 1.17/0.75, val_ip10_0: 0.79/0.25 | `runs/2026-10-29/r0_coord_s2_distill/metrics.json` |
