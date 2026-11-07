@@ -28,3 +28,7 @@ This round is done and pushed (`782f84a`). It's the first Claude round since the
 **Open items**
 - The remaining LS16 files (`ip16_1`, `pkg16_0`, `pkg16_1`, then `pcb16_0`) take 7–15 h each. They may not all finish by 11/09. Any that don't will be noted in the figure 2 caption.
 - Results from the Codex period, including the 8 peak-mask diagnostics the driver ran, are kept out of RESULTS and the report, as QUEUE instructs.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   782f84a..b50e440  main -> main
