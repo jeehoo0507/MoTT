@@ -34,3 +34,7 @@ M 절은 지우지 않고 "하지 않음 (사람이 대체)"로 남겼습니다.
 3. 통과하지 못하면 RESULTS ABLATIONS에 "G1 효과 없음"으로 적고 LS16 항목을 되돌립니다.
 
 라운드 중 지시가 바뀐 것을 새 run을 시작한 뒤에야 알았기 때문에, 새 학습을 올리기 직전에 원격 커밋을 먼저 확인하라는 메모를 남겼습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   71aeeae..3df5009  main -> main

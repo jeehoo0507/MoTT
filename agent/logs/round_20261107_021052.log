@@ -1,0 +1,14 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   3df5009..249c7b1  main       -> r2e/main
+Updating 3df5009..249c7b1
+Created autostash: 80469f5
+Fast-forward
+ PROPOSALS.md                |  8 ++++++++
+ decap_loop/loop_model.py    |  2 +-
+ decap_loop/model.py         |  3 ++-
+ scripts/server2_ablation.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ train.py                    |  8 ++++++--
+ 5 files changed, 55 insertions(+), 4 deletions(-)
+ create mode 100755 scripts/server2_ablation.sh
+Applied autostash.

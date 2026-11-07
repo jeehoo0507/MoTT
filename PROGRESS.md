@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
-# PROGRESS (갱신 2026-11-07 02:00 UTC, 라운드 65 — GPU **G1 `r2pkfc`** (01:54~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 15.8 h째, pod 22 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 02:15 UTC, 라운드 66 — GPU **G1 `r2pkfc`** 증류 it 550 (01:54~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 16 h째, pod 23.9 GiB / 60, oom_kill 2)
+
+## 라운드 66 (2026-11-07 02:11~ UTC)
+- 상태 (02:13): GPU `r2pkfc` 증류 it 550 / 922 s (val fail pcb 0.88 / pkg 0.75 / ip 0.19 — 증류 초반, 판정 아님), GPU peak 12.1 GB, 정상. CPU: 드라이버 줄 `ls16c eval_ip16_1` (16 h째, worker rss 6.7 GB) + 학습 정확 검사 2 + side_slot 대기 (`r2pkfc lo_pkg_r2pkfc`). pod 23.9 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버·report_watch alive, resume_agent 다시 띄움.
+- 새 사람 커밋 (7415f04·249c7b1, 11:00 KST): 서버 2 A1·A2 RL 설계 ablation (PROPOSALS 11/07 A1·A2) + `train.py --no_prior`. **서버 2 일이라 큐에 넣거나 판정하지 않음.** 코드 확인: `MoTT.use_prior` 기본 True, 플래그 없을 때 logits 식이 그대로 (파라미터·state_dict 변화 없음) → 지금 도는 `r2pkfc` (68b59b3로 시작)와 다음 `lo_pkg_r2pkfc` (249c7b1로 시작 예정)는 같은 계산 경로.
+- 끝난 실험 없음 → RESULTS 변경 없음.
+- 결정: 큐·설정 그대로 — 이유: G1 사람 큐 순서 그대로 진행 중, 모두 정상, 서버 2 지시는 서버 1 일 아님.
+- 할 일 (다음): 라운드 65 목록 그대로 — (1) `r2pkfc` 끝 (~03:55) → side_slot 10칸 평가. (2) `lo_pkg_r2pkfc` (~05:56) → 평가 → `g1_screen.py` → 통과면 확인 7 run 큐, 아니면 RESULTS ABLATIONS "G1 효과 없음" + LS16 `--restore`. (3) 11/08 03:00 UTC 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC.
 
 ## 라운드 65 (2026-11-07 01:34~ UTC) — QUEUE 11/07 방법 탐색 → G1
 - 사람 지시가 라운드 중 세 번 바뀜 (모두 따름): (1) QUEUE 10:45 KST "마지막 방법 탐색" (대조군 + C1~C4) → PROPOSALS `11/07 M`에 규칙을 결과 전에 적고 대조군 `r2pk_ctl` 시작 (01:46). (2) push 때 받은 사람 커밋 a208879 (QUEUE 10:50 KST, G1이 10:45를 대체) → `r2pk_ctl` 중단 (01:51, 약 5 분, 결과 없음), 큐를 사람 G1 순서로. (3) 다시 받은 6a0726d·49cebd8 (루프 후보 철회) → `r3pk` 중단 (01:53:49 시작, 1 분 안, 결과 없음). 지금 G1 = `r2pkfc` → `lo_pkg_r2pkfc` (사람 큐 그대로, 순서 안 바꿈). 남은 부분 파일 `runs/2026-10-29/{r2pk_ctl_rl,r3pk_distill}`은 쓰지 않음 (resume.pt 없음 → 다시 큐에 들어가도 run_rung가 옆으로 치움).
