@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 09:36 UTC, 라운드 83 — 상태만: G1 확인 2/7 `lo_pkg_r2pkfc_s2` RL it 81 정상 (체크포인트 저장, 1073 s에 it 75); C1 대기 (서버 2 기록 없음); G-tr 사람 지시 대기; pod 18 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 09:52 UTC, 라운드 84 — 상태만: G1 확인 2/7 `lo_pkg_r2pkfc_s2` RL it 150 정상 (2124 s, best it 100 score 1.585); C1 대기 (서버 2 기록 없음); G-tr 사람 지시 대기; pod 18.7 GiB / 60, oom_kill 2)
+
+## 라운드 84 (2026-11-07 09:49~ UTC)
+- `git fetch r2e` (09:49): 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음 (a1_nogrow만).
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. side_slot alive (pid 1614768). pod 18.7 GiB / 60, oom_kill 2.
+- 상태: `lo_pkg_r2pkfc_s2` RL it 150 / 2124 s (cert-bad ≤ 5, oom 0, GPU peak 11.2 GB, best it 100 score 1.585) — 정상, s1 (337 it, 1.26 h) 기준 끝 ~10:30 그대로. 끝난 실험 없음 → RESULTS 그대로.
+- 결정: 큐·설정 그대로 — 이유: G1 확인 run 사람 순서대로 정상, 새 사람 지시 없음.
+- 할 일 (다음): 라운드 81 목록 그대로 ((1) s2 끝 → side_slot 10칸 평가 → RESULTS; (2) 서버 2 C1 기록 → merge → `c1_screen.py`; (3) 7개 끝 ~21:00 UTC → F1 표·교체 판정; (4) 11/08 03:00 UTC 뒤 새 학습 없음; DAILY 다음 11/08 01:xx UTC).
 
 ## 라운드 83 (2026-11-07 09:33~ UTC)
 - `git fetch r2e` (09:33): 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음 (a1_nogrow만).

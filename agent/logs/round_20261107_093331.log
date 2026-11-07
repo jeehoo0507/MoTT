@@ -14,3 +14,7 @@ Already up to date.
 3. 21:00 UTC쯤 확인 run 7개가 모두 끝나면 F1 규칙과 구조 교체를 판정합니다.
 4. 11/08 03:00 UTC 이후에는 새 학습을 시작하지 않습니다.
 5. DAILY는 11/08 01시 UTC대에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   70c8b5e..35e4174  main -> main
