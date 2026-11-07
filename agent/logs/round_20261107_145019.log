@@ -21,3 +21,7 @@ Round 97 is finished and pushed to `r2e main` (commits bd4fd05, d19c970).
 - I left `agent/loop.sh` unchanged because it is running. The fix proposed to the human in PROGRESS still stands.
 
 **Next:** the 10-cell eval for `lo_pkg_rnd_s1`, then `lo_pkg_rnd_s2` and `lo_pkg_rnd_r0`. Once the server 2 seed 0 records are pushed, `r_screen.py` gives the R verdict. The G1 supplement-2 table comes after the 16/20-cell evals finish. The next DAILY.md is due 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d19c970..7fd98de  main -> main

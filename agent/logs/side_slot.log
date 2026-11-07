@@ -147,3 +147,6 @@
 [14:56:28] START ls10 scale-eval eval_pkg16_1 r2pkfc_s1_rl | mem 18.3 GiB / 60.0 GiB, oom_kill 2
 [15:11:00] END ls10 scale-eval eval_pkg16_1 r2pkfc_s1_rl rc=0 | mem 18.2 GiB / 60.0 GiB, oom_kill 2
 [15:13:47] START ls10 scale-eval eval_pkg20_0 r2pkfc_s1_rl | mem 18.3 GiB / 60.0 GiB, oom_kill 2
+[15:35:44] END ls10 scale-eval eval_pkg20_0 r2pkfc_s1_rl rc=0 | mem 18.4 GiB / 60.0 GiB, oom_kill 2
+[15:38:32] START ls10 scale-eval eval_pkg20_1 r2pkfc_s1_rl | mem 18.3 GiB / 60.0 GiB, oom_kill 2
+[15:50:23] END ls10 scale-eval eval_pkg20_1 r2pkfc_s1_rl rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2

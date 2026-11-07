@@ -1,5 +1,13 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 15:05 UTC, 라운드 97 — 사람 QUEUE 22:42 KST V 끝: 뺀 pkg + 수리 3 seed 묶음 MoTT+P1 **0.993** vs 좌표 0.920 → 고정 읽기 "≥ 0.95" 충족 (보고만); R `lo_pkg_rnd_s1` 증류 중 (RL ~15:17~); `r2pkfc_s2` 10칸 평가 side_slot 진행)
+# PROGRESS (갱신 2026-11-07 15:55 UTC, 라운드 98 — 새 사람 지시 없음; R `lo_pkg_rnd_s1` RL 진행 (끝 ~16:35); G1 보충 2 `r2pkfc_s1` 16·20칸 12개 끝, `r2pkfc_s2` 12개 대기; 그림 2 갱신판 (LS16 1파일씩))
+
+## 라운드 98 (2026-11-07 15:51~ UTC)
+- `git fetch r2e` (15:51): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py`: 드라이버 +498 B, side_slot +297 B 복구 (15:51 autostash). pod 18.6 GiB / 60, oom_kill 2.
+- G1 보충 2: `r2pkfc_s1_rl` 16·20칸 12개 모두 끝 (pkg20_1 15:50). 남은 것 `r2pkfc_s2_rl` 12개 (cpu 232–243, 드라이버가 순서대로). 표 읽기는 seed 0·1·2 다 나온 뒤 (RESULTS 자동, 지금 "대기").
+- R `lo_pkg_rnd_s1` RL: it 125 (1722 s), oom 0, GPU peak 13.3 GB, train fail 0.01. 첫 검증 (it 100): val_pcb10_0 fail **0.62** (count/g+p 1.08), val_ip10_0 fail 0.06 → best 1.574. 보고만 (설정은 사람 고정; 판정은 뺀 pkg 평가로 `r_screen.py`). `r_screen.py` 시험 실행: 기록 없어 모든 줄 waiting (정상).
+- 그림 2 갱신판 `reports/fig2_bigboard_r2pk_20261107.png` (새 파일, 옛 초안 그대로; 기록만 읽음, 같은 방법 7개, seed 0): 11/06에 끝난 LS16 pcb16_1·ip16_0이 들어가 LS 16칸 막대가 생김 — pcb 0.64 / 115 s, ip 0.64 / 516 s (각 n=25, 한 파일). 다른 막대 값은 11/05 초안과 같음. 캡션 메모에 "LS 16칸은 파일 하나" 추가.
+- 결정: 설정·큐 그대로 (사람 지시). 새 학습·새 평가 넣지 않음; 그림은 기존 기록만.
+- 할 일 (다음): (1) `lo_pkg_rnd_s1` RL 끝 (~16:35) → side_slot 10칸 평가 (pcb·pkg·ip). (2) 드라이버가 `lo_pkg_rnd_s2` → `lo_pkg_rnd_r0`. (3) 서버 2 R seed 0 push → merge → 3 seed 모이면 `r_screen.py` → RESULTS 표만. (4) `r2pkfc_s2` 16·20칸 12개 → G1 보충 2 읽기. (5) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
 
 ## 라운드 97 (2026-11-07 14:50~ UTC)
 - `git fetch r2e` (14:50): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. side_slot (pid 1680969) `eval10 r2pkfc_s2_rl` 14:41~ (드라이버 ATTACH 14:44). pod 20.4 GiB / 60, oom_kill 2.
