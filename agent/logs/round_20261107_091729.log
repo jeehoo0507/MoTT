@@ -16,3 +16,7 @@ Next round:
 3. Make the F1 and structure-swap calls when all 7 runs finish, around 21:00 UTC.
 
 No new training starts after 11/08 03:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   60cce07..8634ded  main -> main
