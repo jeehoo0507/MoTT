@@ -139,11 +139,12 @@ class MoTTBlock(nn.Module):
         self.mlp_m = nn.Sequential(nn.Linear(d, 2 * d), nn.GELU(), nn.Linear(2 * d, d))
         self.mlp_p = nn.Sequential(nn.Linear(d, 2 * d), nn.GELU(), nn.Linear(2 * d, d))
 
-    def forward(self, m, u, c, bias, ev, mmask, pmask, fcb=None):
+    def forward(self, m, u, c, bias, ev, mmask, pmask, fcb=None, mmb=None):
         """m modes [E,K,d], u ports [E,n,d], c decaps [E,T,d]; bias [E,h,n,K]; ev edge values [E,n,K,d];
-        fcb [E,h,T,K] frequency-match bias on dec_from_mode (QUEUE 10/29 03:15, arch a; None = rung-2 block)."""
+        fcb [E,h,T,K] frequency-match bias on dec_from_mode (QUEUE 10/29 03:15, arch a; None = rung-2 block);
+        mmb [E,h,K,K] log-frequency-distance bias on mode_self (PROPOSALS 11/07 M1; None = no bias)."""
         x = self.nm1(m)
-        m = m + self.mode_self(x, x, kmask=mmask)
+        m = m + self.mode_self(x, x, bias=mmb, kmask=mmask)
         m = m + self.mode_from_port(self.nm2(m), self.np1(u), bias=bias.transpose(-1, -2), kmask=pmask)
         m = m + self.mlp_m(self.nm3(m))
         u = u + self.port_from_mode(self.np1(u), self.nm1(m), bias=bias, kmask=mmask, vadd=ev)
@@ -159,7 +160,7 @@ class MoTT(nn.Module):
     residual, so the untrained policy already behaves like a one-step greedy and learning only
     has to correct it (the proxy experiment showed a free MLP loses the transfer of the physics score)."""
 
-    def __init__(self, n_types, k_modes, dims, d=64, layers=3, heads=4, fc=False, mode_head=False):
+    def __init__(self, n_types, k_modes, dims, d=64, layers=3, heads=4, fc=False, mode_head=False, mm=False):
         super().__init__()
         self.T, self.K = n_types, k_modes
         self.dn, self.dm, self.de, self.dc = dims
@@ -172,6 +173,9 @@ class MoTT(nn.Module):
         # fc (arch a): dec_from_mode gets the bias -|log10 f_k - log10 SRF_t| / tau_h, tau_h learned per head
         # (parametrised as log tau, init tau = 1 decade)
         self.fc_logtau = nn.Parameter(torch.zeros(heads)) if fc else None
+        # mm (PROPOSALS 11/07 M1, human): mode_self gets the bias -|log10 f_k - log10 f_k'| / tau_h, tau_h learned per
+        # head (log-parametrised, init tau = 1 decade) -- same form as fc, on the mode<->mode edge. 8 new parameters.
+        self.mm_logtau = nn.Parameter(torch.zeros(heads)) if mm else None
         self.add_head = nn.Sequential(nn.Linear(3 * d, d), nn.GELU(), nn.Linear(d, 1))
         # mode_head (arch c', PROPOSALS 10/29 08:00): add logit routed through the modes,
         # sum_k alpha_ik * phi(m_k, c_t); alpha = port i's attention over modes, phi = suitability of type t
@@ -197,6 +201,15 @@ class MoTT(nn.Module):
             return None
         dist = (mode[:, None, :, 0] - dec[:, :, None, 0]).abs()                 # [E,T,K]
         return -dist[:, None] / self.fc_logtau.exp()[None, :, None, None]
+
+    def mm_bias(self, mode):
+        """[E,h,K,K] log-frequency distance of mode k and mode k': -|log10(f_k/f_c) - log10(f_k'/f_c)| / tau_h
+        (mode feature 0 of sim.features_mott). None without mm."""
+        if self.mm_logtau is None:
+            return None
+        lf = mode[..., 0]                                                        # [E,K]
+        dist = (lf[:, :, None] - lf[:, None, :]).abs()                           # [E,K,K]
+        return -dist[:, None] / self.mm_logtau.exp()[None, :, None, None]
 
     def mode_add(self, u, m, c, bias, mmask):
         """[E,n,T] mode-routed add logit (0 without mode_head). bias [E,h,n,K] is the port-mode edge bias."""
@@ -225,8 +238,9 @@ class MoTT(nn.Module):
         bias = self.edge_bias(edge).permute(0, 3, 1, 2)          # [E,h,n,K]
         ev = self.edge_val(edge)                                  # [E,n,K,d]
         fcb = self.fc_bias(mode, dec)
+        mmb = self.mm_bias(mode)
         for blk in self.blocks:
-            m, u, c = blk(m, u, c, bias, ev, mmask, valid, fcb)
+            m, u, c = blk(m, u, c, bias, ev, mmask, valid, fcb, mmb)
         uu = u[:, :, None, :].expand(E, n, T, u.shape[-1])
         cc = c[:, None, :, :].expand(E, n, T, c.shape[-1])
         add = self.add_head(torch.cat([uu, cc, uu * cc], -1))[..., 0]          # [E,n,T]

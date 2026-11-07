@@ -1,5 +1,9 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 19:28 KST — 사람: M1 (`--mm_bias`)은 서버 2에서 사람이 돌린다. 서버 1은 건드리지 마라
+- PROPOSALS "11/07 M1" 그대로. 코드 `decap_loop/model.py` (MoTT.mm_bias, 블록 mode_self에 bias), `train.py --mm_bias`, `scripts/smoke_mm_bias.py` (CPU 통과), `scripts/server2_m1.sh`. **서버 1에서는 M1 run을 돌리지 마라** — G1 확인 7 run과 "G1 보충 2" 평가가 먼저. 사람이 서버 2 기록(`runs/2026-11-07s2/{lo_pkg_r2pkfcm1,r2pkfcm1}_rl/eval`)을 push하면 pull해서 `scripts/m1_screen.py`로 거르기 판정만 RESULTS에 적어라 (확인 run 큐는 사람 지시 뒤).
+- C1 판정 (서버 2 기록 push됨, 11/07 19:24): `r2pk_vsi` − `r2pk_ctl` pkg −0.02 [−0.16, +0.12], pcb +0.02, ip +0.02, 개수비 pcb 1.071 → **기준 미달**. RESULTS C1 표에 적어라. 참고: 대조군(+1 h RL만) pkg 0.86 vs `r2pk_rl` 0.78 (잡음 범위, 보고만).
+
 ## 2026-11-07 19:14 KST — 사람: G1 확인 run `r2pkfc_s1`·`r2pkfc_s2` 16·20칸 평가 추가 (CPU, 보고만)
 - PROPOSALS "11/07 G1 보충 2" 그대로. `r2pkfc_s1_rl`의 학습이 끝나고 10칸 평가(판정용)가 끝나면 바로, 같은 방식으로 `r2pkfc_s2_rl`도.
 - 명령 (run마다, **한 번에 한 파일씩**, 규모 곡선 평가와 같음): `eval_policy.py --pool runs/pool_v1 --sets <set> --policy <run>=runs/2026-10-29/<run>/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/<run>` — set 순서 `eval_pcb16_0`, `eval_pcb16_1`, `eval_pcb20_0`, `eval_pcb20_1`, `eval_ip16_0`, `eval_ip16_1`, `eval_ip20_0`, `eval_ip20_1`, `eval_pkg16_0`, `eval_pkg16_1`, `eval_pkg20_0`, `eval_pkg20_1` (pcb 먼저: 이것 때문에 하는 평가).
