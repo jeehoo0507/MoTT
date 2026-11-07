@@ -1,5 +1,13 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
-# PROGRESS (갱신 2026-11-07 03:18 UTC, 라운드 70 — GPU **G1 `r2pkfc`** RL it 125 (02:40~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 17.1 h째, pod 23.9 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 03:33 UTC, 라운드 71 — GPU **G1 `r2pkfc`** RL it 200 (02:40~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 17.4 h째, pod 24.3 GiB / 60, oom_kill 2)
+
+## 라운드 71 (2026-11-07 03:30~ UTC)
+- 상태 (03:32): `r2pkfc` RL it 200 / 2800 s (count/ref 0.797, fail 0.12, cert-bad 5, oom 0, GPU peak 16.5 GB; it 200 new best score 1.633 — 학습 중 val 기록, 판정 아님) 정상. CPU: `ls16c eval_ip16_1` (62 480 s째, worker rss 6.5 GB) + 학습 정확 검사 2 + side_slot 대기 (`r2pkfc lo_pkg_r2pkfc`). pod 24.3 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움.
+- 새 사람 커밋 c2b8534 (03:23 UTC): 서버 2 비교 기록 `runs/s2base/eval/*r2pk_rl+rep4.json` 8개 — **서버 2 일이라 판정·큐 변경 안 함.** `git fetch r2e`: 그 밖에 새 커밋 없음 (QUEUE 변경 없음).
+- 끝난 실험 없음 → RESULTS 변경 없음.
+- 결정: 큐·설정 그대로 — 이유: G1 사람 큐 순서대로 정상 진행, 바꿀 근거 없음.
+- 할 일 (다음): 라운드 67 목록 그대로.
+
 
 ## 라운드 70 (2026-11-07 03:14~ UTC)
 - 상태 (03:17): `r2pkfc` RL it 125 / 1840 s (count/ref 0.977, fail 0.06, cert-bad 8, oom 0, GPU peak 15.6 GB; it 100 new best score 1.852 — val 숫자는 학습 중 기록, 판정 아님) 정상. CPU: `ls16c eval_ip16_1` (61 500 s째, worker rss 6.2 GB) + 학습 정확 검사 2 + side_slot 대기 (`r2pkfc lo_pkg_r2pkfc`). pod 23.9 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. `git fetch r2e`: 새 사람 커밋 없음 (QUEUE 마지막 변경 10:48 KST 그대로).

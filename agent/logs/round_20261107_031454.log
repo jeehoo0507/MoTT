@@ -15,3 +15,7 @@ Round 70 is done. It was a monitoring round: nothing finished and the queue is u
 2. After `lo_pkg_r2pkfc` is evaluated, run `g1_screen.py` to apply the pre-registered screening rule.
    - If G1 passes, `g1_confirm_queue.py r2pkfc --apply` adds the 7 confirmation runs.
    - If it fails, record "G1 효과 없음" in `RESULTS.md` and put the deferred LS16 evals back in the queue.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2260155..56f544f  main -> main
