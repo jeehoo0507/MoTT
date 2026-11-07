@@ -1063,6 +1063,69 @@ def heldout_repair_table(recs):
             "개수 비 MoTT+P1/좌표 (둘 다 성공) [95% CI] |", "|---|---|---|---|---|---|"] + rows + ["", f"읽기 (결과 전 고정): {read}.", ""]
 
 
+F_SEEDS = [("0", "r2pk_rl+rep4"), ("1", "r2pk_s1_rl+rep4"), ("2", "r2pk_s2_rl+rep4")]
+F_REFS = [("좌표+V", "r0_coord_rl+rep4"), ("greedy+prune+V", "greedy+prune+rep4")]
+
+
+def final_method_table(recs):
+    """QUEUE / PROPOSALS 11/08 F: final method MoTT+P1+V (`r2pk*_rl+rep4`), size x kind x seed. Numbers and paired CIs
+    only; the readings (a)(b)(c) are applied by the human. Policy-alone column = `ok_pre` of the same record. A
+    reference (coord+V, greedy+prune+V; seed 0 / deterministic) is paired with each seed on the same problems, then
+    the seeds are pooled (the reference is repeated per seed)."""
+    if not any(re.match(r"runs/2026-10-29/r2pk(_s[12])?_rl/eval/.*\+rep4\.json$", r["_file"]) for r in recs):
+        return []   # no F record yet
+    by = defaultdict(lambda: defaultdict(dict))
+    for r in recs:
+        if "ok_pre" in r:
+            by[(int(r["size"]), r["tech"])][r["method"]][r["set"]] = r
+    rows, ci_rows = [], []
+    for key in sorted(by):
+        ms = by[key]
+        if not any(m in ms for _, m in F_SEEDS):
+            continue
+        pool = defaultdict(list)
+        for s, m in F_SEEDS:
+            if m not in ms:
+                rows.append(f"| {key[1]} {key[0]} | {s} | – | – | – | – | – | – |")
+                continue
+            sets = sorted(ms[m])
+            ok, pre = (np.concatenate([np.asarray(ms[m][x][k], bool) for x in sets]) for k in ("ok", "ok_pre"))
+            cnt, cpre = (np.concatenate([np.asarray(ms[m][x][k], float) for x in sets]) for k in ("count", "count_pre"))
+            for k, v in (("ok", ok), ("pre", pre), ("cnt", cnt), ("cpre", cpre)):
+                pool[k].append(v)
+            fixed = ok & ~pre
+            add = cnt[fixed] - cpre[fixed]
+            used = "/".join(str(ms[m][x].get("repair_used", "–")) for x in sets)
+            rows.append(f"| {key[1]} {key[0]} | {s} | {pre.mean():.2f} | **{ok.mean():.2f}** | {fmt(cnt[ok].mean() if ok.any() else None)} | "
+                        f"{int(fixed.sum())} (−{int((add < 0).sum())} / ={int((add == 0).sum())} / +{int((add > 0).sum())}) | "
+                        f"{used} | {len(ok)} ({len(sets)} 파일) |")
+            for name, ref in F_REFS:
+                common = sorted(set(sets) & set(ms.get(ref, {})))
+                if common:
+                    sel = np.concatenate([np.full(len(ms[m][x]["ok"]), x in common) for x in sets])
+                    pool[ref].append((ok[sel], np.concatenate([np.asarray(ms[ref][x]["ok"], bool) for x in common]),
+                                      cnt[sel], np.concatenate([np.asarray(ms[ref][x]["count"], float) for x in common])))
+        if len(pool["ok"]) > 1:
+            ok, pre, cnt = (np.concatenate(pool[k]) for k in ("ok", "pre", "cnt"))
+            rows.append(f"| {key[1]} {key[0]} | 묶음 ({len(pool['ok'])} seed) | {pre.mean():.2f} | **{ok.mean():.3f}** | "
+                        f"{fmt(cnt[ok].mean() if ok.any() else None)} | | | {len(ok)} |")
+        for name, ref in F_REFS:
+            if pool[ref]:
+                v = [np.concatenate([p[i] for p in pool[ref]]) for i in range(4)]
+                ref_ok = np.concatenate([np.asarray(ms[ref][x]["ok"], bool) for x in sorted(ms[ref])])
+                ci_rows.append(f"| {key[1]} {key[0]} | {name} `{ref}` | {ref_ok.mean():.2f} | {len(pool[ref])} | " + ci_cells(*v) + " |")
+    return ["## 최종 방법 MoTT+P1+V (PROPOSALS 11/08 F): MoTT+P1 정책 + 정밀 검사 되먹임 최대 4회 (`--repair 4`)", "",
+            "seed 0·1·2 = `r2pk_rl`, `r2pk_s1_rl`, `r2pk_s2_rl` (각 `+rep4` 기록). 정책 단독 = 같은 기록 안 `ok_pre` (ablation). "
+            "고친 문제 = 정책 단독 실패 → 되먹임 성공, 괄호는 그 문제들의 부품 수 변화 (줄어듦 / 같음 / 늘어남). "
+            "되먹임 사용 횟수 `repair_used`는 파일마다 기록된 값. 읽기 (a)(b)(c)는 PROPOSALS 11/08 F대로 **사람이** 적용 (여기는 숫자만). "
+            "시간은 공유 CPU라 넣지 않음.", "",
+            "| 판 | seed | 정책 단독 성공률 | MoTT+P1+V 성공률 | 평균 개수 (성공) | 고친 문제 (줄어듦 − / 같음 = / 늘어남 +) | repair_used | 문제 수 |",
+            "|---|---|---|---|---|---|---|---|"] + rows + [
+            "", "같은 되먹임을 준 기준 대비 (기준은 seed 하나: 각 seed와 같은 문제 짝 → seed 묶음; 짝지은 bootstrap 95%, 2000회, seed 0):", "",
+            "| 판 | 기준 | 기준 성공률 | 묶은 seed 수 | 문제 짝 수 | 성공률 차 (MoTT+P1+V − 기준) [95% CI] | 개수 비 (둘 다 성공) [95% CI] |",
+            "|---|---|---|---|---|---|---|"] + (ci_rows or ["| – | 같은 세트의 기준 기록 없음 | | | | | |"]) + [""]
+
+
 def rulestart_table(recs):
     """PROPOSALS 11/03 T4: modal_rule's solution as the start, the policy continues (`modal_rule><policy>`,
     eval_policy.py --start rule). (S1/S2) vs modal_rule, paired on the same problems; descriptive: how often the
@@ -1882,6 +1945,7 @@ def main():
     lines += sampling_table(recs)
     lines += repair_table(recs)
     lines += heldout_repair_table(recs)
+    lines += final_method_table(recs)
     lines += rulestart_table(recs)
     lines += count_gap_table()
     lines += distill_seed_table()

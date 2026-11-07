@@ -1,5 +1,20 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 15:55 UTC, 라운드 98 — 새 사람 지시 없음; R `lo_pkg_rnd_s1` RL 진행 (끝 ~16:35); G1 보충 2 `r2pkfc_s1` 16·20칸 12개 끝, `r2pkfc_s2` 12개 대기; 그림 2 갱신판 (LS16 1파일씩))
+# PROGRESS (갱신 2026-11-07 16:45 UTC, 라운드 99 — **새 사람 지시 2개 (11/08 01:45·01:40 KST): 최종 방법 MoTT+P1+V 확정, CPU 줄 F1 → F2 → F3, 서버 2가 F1 pkg20·F2**; R `lo_pkg_rnd_s1` 학습 끝 → 10칸 평가 중, `lo_pkg_rnd_s2` 시작)
+
+## 라운드 99 (2026-11-07 16:08~ UTC)
+- `git fetch r2e` (16:08): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py`: 드라이버 +316 B, side_slot +197 B 복구. pod 18.5 GiB / 60, oom_kill 2.
+- G1 보충 2: `r2pkfc_s2_rl` eval_pcb16_0 끝 (side_slot 15:53–16:06). 그다음 eval_pcb16_1 (드라이버 16:11~)은 16:33에 rc=−15로 끝남 = 사람이 죽임 (아래 F 지시). 남은 11개는 사람이 `cpu_deferred`로 내림 → **다시 올리지 않음**.
+- **(16:33) 사람 커밋 0242e56 (QUEUE 11/08 01:45 KST, PROPOSALS "11/08 F"):** 최종 방법 = MoTT+P1 + 정밀 검사 되먹임 4회 (`--repair 4`), 이름 `MoTT+P1+V`. 학습 쪽 후보 끝. R seed 1·2·r0는 그대로 끝내고 `r_screen.py` 판정만 (통과해도 확인 run 없음). day2_queue cpu 맨 앞 F1 (14) → F2 (6) → F3 (22). 사람이 이 서버에서 직접 merge (HEAD 0242e56).
+- **(16:37) 사람 커밋 acd4935 (01:40 KST):** 서버 2가 `scripts/server2_f.sh`로 F1 pkg20 (r2pk 3 seed × 2 = 6)과 F2 (6, 파일 12)를 맡아 기록마다 push. → merge.
+- 한 일:
+  - side_slot 다시 띄움 (pid 1708309, 대상 `lo_pkg_rnd_s1 lo_pkg_rnd_s2 lo_pkg_rnd_r0`). 채움 접두어에 **F1 좌표 pkg20 2개만** 추가 (`F1 eval_pkg20_{0,1} r0_coord`): QUEUE가 "드라이버 F1 pkg16 동안 side_slot F1 pkg20 허용"이라 했지만 r2pk pkg20 6개는 서버 2 몫이라 뺐다 (같은 경로 기록이 두 서버에서 생기면 add/add 충돌). 처음엔 F1 pkg20 전체로 띄웠다가 acd4935를 보고 2분 안에 좁혀 다시 띄움 (그 사이 시작한 F 항목 없음). 옛 side_slot이 16:34에 띄운 `eval10 lo_pkg_rnd_s1_rl`은 그대로 돌고 (부모만 바뀜), 드라이버가 16:37 ATTACH.
+  - 새 helper `scripts/pull_s2_records.py` (bg, `agent/logs/pull_s2.log`, .gitignore): 3분마다 fetch → 뒤처졌으면 `git merge --no-edit r2e/main` (stash·rebase 없음); 들어올 경로가 여기 이미 있으면 (추적 안 됨·ignored 포함) merge 안 하고 기록만. 서버 2 기록 18개가 다 오면 끝 (최대 8 h). 이유: 드라이버는 디스크의 `done`만 보고 pull하지 않음 → QUEUE "매 항목 시작 전에 pull 해서 done 확인"을 드라이버를 재시작하지 않고 맞추는 가장 작은 방법.
+  - `collect_results.py`에 `final_method_table` ("최종 방법 MoTT+P1+V"): 크기 × 종류 × seed, 정책 단독 (`ok_pre`) 옆에 되먹임 포함 성공률·평균 개수, 고친 문제의 부품 수 변화 (줄어듦/같음/늘어남), `repair_used`; 좌표+V·greedy+prune+V가 같은 세트에 있으면 seed마다 같은 문제 짝 → 묶음 CI. 읽기 (a)(b)(c)는 사람 몫이라 표에 판정 없음. F 기록 (`runs/2026-10-29/r2pk*_rl/eval/*+rep4.json`)이 하나라도 생기면 나타남 (지금은 없음; 가짜 기록으로 모양 확인: seed 0 10칸·pcb16 기존 기록이 들어감).
+- R: 서버 2 seed 0 기록 (1637c71) 들어옴. `r_screen.py`: seed 0 뺀 pkg rnd 0.68 vs r2pk 0.70 (−0.02 [−0.18, +0.14]), pcb 0.92 vs 0.86, ip 1.00 → 판정 waiting (seed 1·2 필요). `lo_pkg_rnd_s1` 학습 끝 16:34 (rc 0) → 10칸 평가 중; 드라이버 GPU → `lo_pkg_rnd_s2` 16:34 시작 (끝 ~18:40), 그다음 `lo_pkg_rnd_r0`.
+- R `lo_pkg_rnd_s1` RL: it 225 (2943 s / 4500 s), oom 0, GPU peak 13.9 GB, train fail 0.03. 검증 it 200: val_pcb10_0 fail 0.56 (count/g+p 0.875), val_ip10_0 fail 0.12 → best 1.470. 참고: val pcb fail이 높은 것은 이 설정에서 평소와 같음 (`lo_pkg_r2pk_s1` RL val pcb fail 0.44–0.81) → 이상 아님, 보고만.
+- 메모: 로그 복구 뒤 드라이버는 지워진 옛 inode에 계속 씀 → 로그 기다리기는 디스크 경로가 아니라 `/proc/<pid>/fd/1`로 (`wait_log.py /proc/1575375/fd/1 ...`).
+- 결정: F 항목의 플래그·순서·세트, 큐 순서는 그대로 (사람 지시). side_slot F1 pkg20은 서버 2와 겹치지 않는 좌표 2개만 (보수적: 두 서버 같은 기록 방지). 새 학습·평가 넣지 않음.
+- 할 일 (다음): (1) `lo_pkg_rnd_s1` 10칸 평가 끝 → RESULTS 자동. (2) 드라이버 F1 pkg16 6개 → (서버 2 pkg20 r2pk 기록 merge되어 건너뜀) → 좌표 pkg20 (side_slot이 먼저 할 수 있음) → F2 (서버 2) → F3 22개. `pull_s2.log`에서 "not merging"이 나오면 원인 확인. (3) F 기록 생기면 "최종 방법 MoTT+P1+V" 표 확인 (숫자만). (4) R 3 seed 모이면 `r_screen.py` 판정을 RESULTS에. (5) 라운드마다 `restore_proc_log.py` (드라이버 1575375, side_slot 1708309). DAILY 다음 11/08 01:30 UTC.
 
 ## 라운드 98 (2026-11-07 15:51~ UTC)
 - `git fetch r2e` (15:51): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py`: 드라이버 +498 B, side_slot +297 B 복구 (15:51 autostash). pod 18.6 GiB / 60, oom_kill 2.

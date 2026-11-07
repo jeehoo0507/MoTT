@@ -56,6 +56,7 @@ agent/logs/repair16.log
 agent/logs/side_slot6.log
 # 11/03 round 30: T4 rule-start eval jobs (side_slot filler), appended while running
 agent/logs/rulestart10.log
+agent/logs/pull_s2.log
 
 # 11/07: local provider switch / Codex status files are never committed
 agent/PROVIDER*

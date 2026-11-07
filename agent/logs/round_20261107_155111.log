@@ -8,3 +8,7 @@ Already up to date.
 - **G1 보충 2 (16·20칸 평가):** `r2pkfc_s1` 12개가 끝났다. `r2pkfc_s2` 12개는 드라이버 CPU 줄에서 순서를 기다리고 있다. RESULTS의 읽기는 seed 0·1·2가 다 나올 때까지 "대기"다.
 - **그림 2 갱신:** 기존 기록만 읽어 `reports/fig2_bigboard_r2pk_20261107.png`로 다시 그렸다 (옛 초안은 그대로 두었다). 11/06에 끝난 LS16 결과가 새로 들어갔다. pcb는 성공률 0.64에 문제당 115초, ip는 0.64에 516초이고, 둘 다 한 파일(25문제)뿐이다. pkg 16칸과 20칸 LS는 메모리 문제로 생략·연기되어 그림에 없다. 캡션 메모에 "LS 16칸은 파일 하나"라고 적었다. 다른 막대 값은 11/05 초안과 같다.
 - **기타:** loop.sh autostash 때문에 끊긴 드라이버·side_slot 로그를 `/proc`에서 복구했다. 결정은 "설정과 큐는 그대로"이며 PROGRESS.md에 기록했다. 다음 DAILY는 11/08 01:30 UTC에 쓴다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   69b754a..c5c6eed  main -> main

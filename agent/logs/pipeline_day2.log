@@ -1184,3 +1184,19 @@
 [15:40:49] ATTACH ls10 scale-eval eval_pkg20_1 r2pkfc_s1_rl
 [15:50:49] START collect_results | mem 18.4 GiB / 60.0 GiB, oom_kill 2
 [15:50:49] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[15:53:41] END collect_results rc=0 | mem 39.5 GiB / 60.0 GiB, oom_kill 2
+[15:55:11] ATTACH ls10 scale-eval eval_pcb16_0 r2pkfc_s2_rl
+[16:07:11] START collect_results | mem 18.3 GiB / 60.0 GiB, oom_kill 2
+[16:07:11] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[16:10:08] END collect_results rc=0 | mem 19.0 GiB / 60.0 GiB, oom_kill 2
+[16:11:38] START ls10 scale-eval eval_pcb16_1 r2pkfc_s2_rl | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[16:11:38] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_1 --policy r2pkfc_s2_rl=runs/2026-10-29/r2pkfc_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pkfc_s2_rl  (log runs/2026-10-29/r2pkfc_s2_rl/eval.log)
+[16:33:05] END ls10 scale-eval eval_pcb16_1 r2pkfc_s2_rl rc=-15 | mem 27.9 GiB / 60.0 GiB, oom_kill 2
+[16:33:05] ls10 scale-eval eval_pcb16_1 r2pkfc_s2_rl failed rc=-15, skipped until driver restart
+[16:33:05] START collect_results | mem 27.9 GiB / 60.0 GiB, oom_kill 2
+[16:33:05] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[16:34:21] END train lo_pkg_rnd_s1 (CERTIFY_WORKERS=2) rc=0 | mem 16.6 GiB / 60.0 GiB, oom_kill 2
+[16:34:21] START train lo_pkg_rnd_s2 (CERTIFY_WORKERS=2) | mem 16.6 GiB / 60.0 GiB, oom_kill 2
+[16:34:21] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_rnd_s2 --arm '--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl' --day 2026-10-29 --pool runs/pool_v1 --seed 2 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_rnd_s2/rung_stdout.log)
+[16:35:55] END collect_results rc=0 | mem 20.7 GiB / 60.0 GiB, oom_kill 2
+[16:37:25] ATTACH eval10 lo_pkg_rnd_s1_rl
