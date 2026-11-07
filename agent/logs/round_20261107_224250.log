@@ -9,3 +9,7 @@ Already up to date.
 - **다음:** 지금 `r2pk_s2_rl+rep4` ip16_0을 돌리고 있고, 그 뒤 15개가 남았습니다(ip16_1 3개 → pcb20 6개 → ip20 6개).
 - **결정:** 큐와 플래그는 그대로 두고, F3를 side_slot으로 나눠 돌리지 않았습니다. 사람이 side_slot을 허용한 것은 F1뿐이고, 새 시도는 금지돼 있기 때문입니다. `PROGRESS.md`에 "결정:"으로 적었습니다.
 - **기록:** `RESULTS.md`는 드라이버의 `collect_results`가 자동으로 반영했습니다. DAILY는 아직 24시간이 안 돼서 11/08 01:30 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   312b6db..822a3a9  main -> main

@@ -574,3 +574,10 @@ wrote RESULTS.md: 1220 eval records
 wrote RESULTS.md: 1222 eval records
 [2026-11-07 22:29:59] committed 2 eval records + RESULTS.md
 [2026-11-07 22:42:57] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 22:46:02] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1223 eval records
+[2026-11-07 22:46:02] committed 1 eval records + RESULTS.md
+[2026-11-07 22:58:42] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 23:01:41] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1224 eval records
+[2026-11-07 23:01:41] committed 1 eval records + RESULTS.md
