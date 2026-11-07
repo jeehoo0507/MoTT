@@ -10,3 +10,7 @@ I finished round 108, committed it and pushed it to `r2e main` (`ce0463b`). Ther
 - **My mistake:** I first restored the driver log to the wrong filename (`agent/logs/day2_driver.log`). I deleted it straight away, restored to the correct `pipeline_day2.log`, and noted it in PROGRESS.md.
 
 The next DAILY.md is due at 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ce0463b..b4b73b2  main -> main

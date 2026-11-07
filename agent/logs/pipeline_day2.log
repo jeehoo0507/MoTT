@@ -1261,3 +1261,5 @@
 [21:20:31] START collect_results | mem 16.5 GiB / 60.0 GiB, oom_kill 2
 [21:20:31] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
 [21:23:32] END collect_results rc=0 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
+[21:25:02] START F3 eval_pcb16_0 r2pk_s2_rl+rep4 | mem 16.6 GiB / 60.0 GiB, oom_kill 2
+[21:25:02] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb16_0' --policy r2pk_s2_rl=runs/2026-10-29/r2pk_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_s2_rl  (log runs/2026-10-29/r2pk_s2_rl/eval.log)
