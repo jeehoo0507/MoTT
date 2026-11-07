@@ -8,3 +8,7 @@ Already up to date.
 - **프로세스·메모리:** 드라이버, side_slot, `queue_scale_g1s --wait`는 살아 있습니다. report_watch와 resume_agent는 돌고 있지 않아 다시 띄웠습니다. pod 메모리는 18.7 / 60 GiB이고 oom_kill 횟수는 2로 늘지 않았습니다.
 - **기록:** 끝난 실험이 없어 RESULTS는 그대로 두었습니다. PROGRESS에 "결정: 큐·설정 그대로"와 이유를 적었습니다. 이유는 G1 run이 사람이 정한 순서대로 정상 진행 중이고, 새 지시가 없으며, 서버 1에서 M1을 돌리는 것은 금지되어 있기 때문입니다. 커밋 af20166을 `r2e main`에 push했고, 원격과 동기화된 것까지 확인했습니다.
 - **다음 할 일:** DAILY는 11/08 01:30 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   af20166..dbd31e9  main -> main
