@@ -153,3 +153,5 @@
 [15:53:15] START ls10 scale-eval eval_pcb16_0 r2pkfc_s2_rl | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [16:06:19] END ls10 scale-eval eval_pcb16_0 r2pkfc_s2_rl rc=0 | mem 18.3 GiB / 60.0 GiB, oom_kill 2
 [16:48:40] START F1 eval_pkg20_0 r0_coord_rl+rep4 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[18:37:00] START eval10 lo_pkg_rnd_s2_rl | mem 40.8 GiB / 60.0 GiB, oom_kill 2
+[18:49:40] END eval10 lo_pkg_rnd_s2_rl rc=0 | mem 29.4 GiB / 60.0 GiB, oom_kill 2
