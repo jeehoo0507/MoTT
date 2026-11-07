@@ -1,0 +1,17 @@
+[07:45:54] START eval10 lo_pcb_r2t_rl | mem 10.5 GiB / 60.0 GiB, oom_kill 1
+[07:59:18] END eval10 lo_pcb_r2t_rl rc=0 | mem 10.9 GiB / 60.0 GiB, oom_kill 1
+[08:00:34] START ls10 repair modal_rule | mem 5.5 GiB / 60.0 GiB, oom_kill 1
+[08:16:45] END ls10 repair modal_rule rc=0 | mem 6.5 GiB / 60.0 GiB, oom_kill 1
+[08:18:03] START ls10 repair greedy+prune | mem 7.0 GiB / 60.0 GiB, oom_kill 1
+[08:54:37] END ls10 repair greedy+prune rc=0 | mem 6.3 GiB / 60.0 GiB, oom_kill 1
+[09:47:56] START eval10 r2tf_rl | mem 12.5 GiB / 60.0 GiB, oom_kill 1
+[09:58:56] END eval10 r2tf_rl rc=0 | mem 14.9 GiB / 60.0 GiB, oom_kill 1
+[10:00:16] START ls10 repair r0_coord_rl | mem 14.7 GiB / 60.0 GiB, oom_kill 1
+[10:29:11] END ls10 repair r0_coord_rl rc=0 | mem 14.9 GiB / 60.0 GiB, oom_kill 1
+[10:30:35] START ls10 rulestart r2_mott_rl | mem 14.9 GiB / 60.0 GiB, oom_kill 1
+[10:46:46] END ls10 rulestart r2_mott_rl rc=0 | mem 13.3 GiB / 60.0 GiB, oom_kill 1
+[10:48:11] START ls10 rulestart r0_coord_rl | mem 15.8 GiB / 60.0 GiB, oom_kill 1
+[11:09:25] END ls10 rulestart r0_coord_rl rc=0 | mem 12.0 GiB / 60.0 GiB, oom_kill 1
+[11:50:51] START eval10 lo_pcb_r2tf_rl | mem 13.3 GiB / 60.0 GiB, oom_kill 1
+[12:04:01] END eval10 lo_pcb_r2tf_rl rc=0 | mem 14.0 GiB / 60.0 GiB, oom_kill 1
+[12:05:26] START ls10 repair r2_mott_s1_rl | mem 14.3 GiB / 60.0 GiB, oom_kill 1

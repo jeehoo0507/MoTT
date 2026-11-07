@@ -14,3 +14,7 @@ This round (79) was a status check. Nothing new was started, because the current
 Decision: keep the queue and settings unchanged; the reason is recorded in PROGRESS.md.
 
 Next round: check the 10-cell evaluation of `lo_pkg_r2pkfc_s1` once it finishes, and score C1 with `c1_screen.py` if server 2 has pushed its results.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   25a0086..8c1b814  main -> main

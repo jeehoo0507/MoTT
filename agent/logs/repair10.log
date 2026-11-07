@@ -1,0 +1,68 @@
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   412s] eval_pkg10_1   r2_mott_rl+rep4              ok 0.96 count 9.88 3.456s/inst rounds 4
+[   592s] eval_pcb10_0   r2_mott_rl+rep4              ok 1.00 count 7.12 0.623s/inst rounds 4
+[   742s] eval_pkg10_0   r2_mott_rl+rep4              ok 1.00 count 5.96 0.590s/inst rounds 4
+[   930s] eval_pcb10_1   r2_mott_rl+rep4              ok 1.00 count 7.12 0.982s/inst rounds 4
+[  1079s] eval_ip10_0    r2_mott_rl+rep4              ok 1.00 count 8.20 0.736s/inst rounds 4
+[  1158s] eval_ip10_1    r2_mott_rl+rep4              ok 1.00 count 8.88 0.492s/inst rounds 2
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   305s] eval_pkg10_1   modal_rule+rep4              ok 0.96 count 9.96 2.491s/inst rounds 4
+[   414s] eval_pcb10_0   modal_rule+rep4              ok 1.00 count 7.08 0.476s/inst rounds 3
+[   570s] eval_pkg10_0   modal_rule+rep4              ok 1.00 count 6.04 0.668s/inst rounds 4
+[   707s] eval_pcb10_1   modal_rule+rep4              ok 1.00 count 7.20 0.534s/inst rounds 4
+[   859s] eval_ip10_0    modal_rule+rep4              ok 1.00 count 11.84 0.794s/inst rounds 4
+[   970s] eval_ip10_1    modal_rule+rep4              ok 1.00 count 14.52 0.408s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   399s] eval_pkg10_1   greedy+prune+rep4            ok 0.92 count 8.78 2.801s/inst rounds 4
+[   774s] eval_pcb10_0   greedy+prune+rep4            ok 1.00 count 13.84 4.493s/inst rounds 2
+[  1158s] eval_pkg10_0   greedy+prune+rep4            ok 0.96 count 7.25 2.709s/inst rounds 4
+[  1853s] eval_pcb10_1   greedy+prune+rep4            ok 0.88 count 9.59 4.713s/inst rounds 4
+[  2046s] eval_ip10_0    greedy+prune+rep4            ok 0.40 count 11.60 3.719s/inst rounds 0
+[  2194s] eval_ip10_1    greedy+prune+rep4            ok 0.40 count 9.00 2.262s/inst rounds 0
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   532s] eval_pkg10_1   r0_coord_rl+rep4             ok 0.88 count 6.27 3.576s/inst rounds 4
+[   856s] eval_pcb10_0   r0_coord_rl+rep4             ok 0.96 count 6.58 2.473s/inst rounds 3
+[  1105s] eval_pkg10_0   r0_coord_rl+rep4             ok 0.96 count 5.58 1.583s/inst rounds 4
+[  1385s] eval_pcb10_1   r0_coord_rl+rep4             ok 1.00 count 7.12 2.056s/inst rounds 4
+[  1586s] eval_ip10_0    r0_coord_rl+rep4             ok 1.00 count 11.84 1.316s/inst rounds 4
+[  1735s] eval_ip10_1    r0_coord_rl+rep4             ok 1.00 count 12.04 0.868s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   431s] eval_pkg10_1   r2_mott_s1_rl+rep4           ok 0.96 count 7.33 3.025s/inst rounds 4
+[   617s] eval_pcb10_0   r2_mott_s1_rl+rep4           ok 1.00 count 7.80 0.989s/inst rounds 4
+[   728s] eval_pkg10_0   r2_mott_s1_rl+rep4           ok 1.00 count 5.72 0.504s/inst rounds 4
+[   976s] eval_pcb10_1   r2_mott_s1_rl+rep4           ok 1.00 count 7.32 1.638s/inst rounds 4
+[  1092s] eval_ip10_0    r2_mott_s1_rl+rep4           ok 1.00 count 8.16 0.683s/inst rounds 3
+[  1200s] eval_ip10_1    r2_mott_s1_rl+rep4           ok 1.00 count 8.72 0.370s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   315s] eval_pkg10_1   r2_mott_s2_rl+rep4           ok 0.96 count 9.96 2.690s/inst rounds 4
+[   504s] eval_pcb10_0   r2_mott_s2_rl+rep4           ok 1.00 count 7.08 0.731s/inst rounds 4
+[   643s] eval_pkg10_0   r2_mott_s2_rl+rep4           ok 1.00 count 5.92 0.661s/inst rounds 4
+[   814s] eval_pcb10_1   r2_mott_s2_rl+rep4           ok 1.00 count 6.68 0.773s/inst rounds 4
+[   929s] eval_ip10_0    r2_mott_s2_rl+rep4           ok 1.00 count 8.28 0.687s/inst rounds 3
+[  1040s] eval_ip10_1    r2_mott_s2_rl+rep4           ok 1.00 count 8.80 0.399s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   610s] eval_pkg10_1   r0_coord_s1_rl+rep4          ok 0.84 count 6.29 4.451s/inst rounds 4
+[   608s] eval_pkg10_1   r0_coord_s1_rl+rep4          ok 0.84 count 6.29 4.285s/inst rounds 4
+/usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-nelbyahp', '/mp-zywiy9wx', '/mp-bx1459hr', '/mp-7qqfkks2', '/mp-s1tahz2u', '/mp-2omnxvbs'}
+  warnings.warn(
+[  1194s] eval_pcb10_0   r0_coord_s1_rl+rep4          ok 0.88 count 7.27 5.267s/inst rounds 3
+[  1616s] eval_pkg10_0   r0_coord_s1_rl+rep4          ok 1.00 count 8.44 3.137s/inst rounds 4
+[  2235s] eval_pcb10_1   r0_coord_s1_rl+rep4          ok 1.00 count 7.08 6.215s/inst rounds 3
+[  2473s] eval_ip10_0    r0_coord_s1_rl+rep4          ok 1.00 count 11.48 1.638s/inst rounds 4
+[  2612s] eval_ip10_1    r0_coord_s1_rl+rep4          ok 1.00 count 11.60 0.670s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/repair10/eval
+[   490s] eval_pkg10_1   r0_coord_s2_rl+rep4          ok 0.92 count 6.52 3.094s/inst rounds 4
+[   819s] eval_pcb10_0   r0_coord_s2_rl+rep4          ok 1.00 count 6.84 2.241s/inst rounds 4
+[  1057s] eval_pkg10_0   r0_coord_s2_rl+rep4          ok 1.00 count 5.36 1.469s/inst rounds 4
+[  1309s] eval_pcb10_1   r0_coord_s2_rl+rep4          ok 1.00 count 6.88 1.608s/inst rounds 4
+[  1639s] eval_ip10_0    r0_coord_s2_rl+rep4          ok 1.00 count 12.32 2.731s/inst rounds 4
+[  1828s] eval_ip10_1    r0_coord_s2_rl+rep4          ok 1.00 count 12.36 1.370s/inst rounds 4
+done

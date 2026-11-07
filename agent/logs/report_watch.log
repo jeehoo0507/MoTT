@@ -1,0 +1,459 @@
+[2026-10-31 11:06:44] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-10-31 11:06:44] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 11:37:14] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 249 eval records
+[2026-10-31 11:37:15] committed 6 eval records + RESULTS.md
+[2026-10-31 11:37:18] pushed 1 commit(s)
+[2026-10-31 12:07:49] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 250 eval records
+[2026-10-31 12:07:49] committed 1 eval records + RESULTS.md
+[2026-10-31 12:07:52] pushed 1 commit(s)
+[2026-10-31 12:38:23] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 252 eval records
+[2026-10-31 12:38:23] committed 2 eval records + RESULTS.md
+[2026-10-31 12:38:26] pushed 1 commit(s)
+[2026-10-31 13:08:58] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 253 eval records
+[2026-10-31 13:08:58] committed 1 eval records + RESULTS.md
+[2026-10-31 13:09:01] pushed 1 commit(s)
+[2026-10-31 13:39:02] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 14:09:03] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 14:39:36] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 257 eval records
+[2026-10-31 14:39:36] committed 4 eval records + RESULTS.md
+[2026-10-31 14:39:39] pushed 1 commit(s)
+[2026-10-31 15:10:12] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 259 eval records
+[2026-10-31 15:10:12] committed 2 eval records + RESULTS.md
+[2026-10-31 15:10:15] pushed 1 commit(s)
+[2026-10-31 15:40:16] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 16:10:16] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 16:40:17] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 17:10:18] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 17:40:19] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 18:10:19] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 18:40:52] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 261 eval records
+[2026-10-31 18:40:52] committed 2 eval records + RESULTS.md
+[2026-10-31 18:40:55] pushed 1 commit(s)
+[2026-10-31 19:11:30] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 271 eval records
+[2026-10-31 19:11:30] committed 10 eval records + RESULTS.md
+[2026-10-31 19:11:32] pushed 1 commit(s)
+[2026-10-31 19:42:07] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 274 eval records
+[2026-10-31 19:42:07] committed 3 eval records + RESULTS.md
+[2026-10-31 19:42:09] pushed 1 commit(s)
+[2026-10-31 20:12:45] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 279 eval records
+[2026-10-31 20:12:45] committed 5 eval records + RESULTS.md
+[2026-10-31 20:12:48] pushed 1 commit(s)
+[2026-10-31 20:43:24] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 281 eval records
+[2026-10-31 20:43:24] committed 2 eval records + RESULTS.md
+[2026-10-31 20:43:27] pushed 1 commit(s)
+[2026-10-31 21:14:04] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 282 eval records
+[2026-10-31 21:14:04] committed 1 eval records + RESULTS.md
+[2026-10-31 21:14:07] pushed 1 commit(s)
+[2026-10-31 21:44:08] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 22:14:08] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 22:44:09] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 23:14:10] 변화 없음 (no new eval json, nothing to push)
+[2026-10-31 23:44:11] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 00:14:13] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 00:44:14] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 01:14:15] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 01:44:16] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 02:14:17] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 02:44:18] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 03:14:19] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 03:44:55] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 283 eval records
+[2026-11-01 03:44:55] committed 1 eval records + RESULTS.md
+[2026-11-01 03:44:59] pushed 1 commit(s)
+[2026-11-01 04:15:37] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 293 eval records
+[2026-11-01 04:15:37] committed 10 eval records + RESULTS.md
+[2026-11-01 04:15:41] pushed 1 commit(s)
+[2026-11-01 04:46:18] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 298 eval records
+[2026-11-01 04:46:18] committed 5 eval records + RESULTS.md
+[2026-11-01 04:46:22] pushed 1 commit(s)
+[2026-11-01 05:17:00] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 304 eval records
+[2026-11-01 05:17:00] committed 6 eval records + RESULTS.md
+[2026-11-01 05:17:04] pushed 1 commit(s)
+[2026-11-01 05:47:42] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 306 eval records
+[2026-11-01 05:47:42] committed 2 eval records + RESULTS.md
+[2026-11-01 05:47:45] pushed 1 commit(s)
+[2026-11-01 06:17:47] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 06:47:48] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 07:17:49] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 07:47:50] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 08:17:51] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 08:47:52] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 09:17:53] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 09:47:54] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 10:17:55] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 10:47:56] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 11:17:58] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 11:47:59] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 12:18:00] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 12:48:40] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 307 eval records
+[2026-11-01 12:48:40] committed 1 eval records + RESULTS.md
+[2026-11-01 12:48:44] pushed 1 commit(s)
+[2026-11-01 13:19:23] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 315 eval records
+[2026-11-01 13:19:23] committed 8 eval records + RESULTS.md
+[2026-11-01 13:19:27] pushed 1 commit(s)
+[2026-11-01 13:50:06] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 321 eval records
+[2026-11-01 13:50:06] committed 6 eval records + RESULTS.md
+[2026-11-01 13:50:10] pushed 1 commit(s)
+[2026-11-01 14:20:52] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 331 eval records
+[2026-11-01 14:20:52] committed 10 eval records + RESULTS.md
+[2026-11-01 14:20:55] pushed 1 commit(s)
+[2026-11-01 14:51:37] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 336 eval records
+[2026-11-01 14:51:37] committed 5 eval records + RESULTS.md
+[2026-11-01 14:51:41] pushed 1 commit(s)
+[2026-11-01 15:21:42] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 15:51:43] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 16:21:43] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 16:51:44] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 17:22:27] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 337 eval records
+[2026-11-01 17:22:27] committed 1 eval records + RESULTS.md
+[2026-11-01 17:22:30] pushed 1 commit(s)
+[2026-11-01 17:53:14] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 349 eval records
+[2026-11-01 17:53:14] committed 12 eval records + RESULTS.md
+[2026-11-01 17:53:17] pushed 1 commit(s)
+[2026-11-01 18:23:18] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 18:53:19] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 19:24:02] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 350 eval records
+[2026-11-01 19:24:02] committed 1 eval records + RESULTS.md
+[2026-11-01 19:24:05] pushed 1 commit(s)
+[2026-11-01 19:54:06] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 20:24:49] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 352 eval records
+[2026-11-01 20:24:49] committed 2 eval records + RESULTS.md
+[2026-11-01 20:24:52] pushed 1 commit(s)
+[2026-11-01 20:55:34] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 357 eval records
+[2026-11-01 20:55:34] committed 5 eval records + RESULTS.md
+[2026-11-01 20:55:37] pushed 1 commit(s)
+[2026-11-01 21:26:21] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 359 eval records
+[2026-11-01 21:26:21] committed 2 eval records + RESULTS.md
+[2026-11-01 21:26:24] pushed 1 commit(s)
+[2026-11-01 21:56:25] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 22:26:26] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 22:56:26] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 23:26:27] 변화 없음 (no new eval json, nothing to push)
+[2026-11-01 23:56:28] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 00:26:28] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 00:56:29] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 01:26:30] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 01:56:31] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 02:26:32] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 02:56:33] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 03:26:33] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 03:56:34] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 04:26:35] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 04:57:23] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 377 eval records
+[2026-11-02 04:57:23] committed 18 eval records + RESULTS.md
+[2026-11-02 04:57:47] pushed 1 commit(s)
+[2026-11-02 04:57:47] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 06:03:53] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 06:04:43] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0']
+wrote RESULTS.md: 400 eval records
+[2026-11-02 06:04:43] committed 3 eval records + RESULTS.md
+[2026-11-02 06:04:46] pushed 1 commit(s)
+[2026-11-02 06:04:46] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 06:55:04] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 06:55:05] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 06:55:05] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 07:43:42] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 07:43:43] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 07:43:43] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 14:25:16] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 14:26:10] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 436 eval records
+[2026-11-02 14:26:10] committed 3 eval records + RESULTS.md
+[2026-11-02 14:26:14] pushed 1 commit(s)
+[2026-11-02 14:26:14] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 17:36:04] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 17:36:05] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 17:36:05] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 17:57:08] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 17:58:07] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 451 eval records
+[2026-11-02 17:58:07] committed 1 eval records + RESULTS.md
+[2026-11-02 17:58:11] pushed 1 commit(s)
+[2026-11-02 17:58:11] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 18:40:42] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 18:41:41] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 459 eval records
+[2026-11-02 18:41:41] committed 2 eval records + RESULTS.md
+[2026-11-02 18:41:44] pushed 1 commit(s)
+[2026-11-02 18:41:44] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 19:34:38] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 19:35:39] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 465 eval records
+[2026-11-02 19:35:39] committed 6 eval records + RESULTS.md
+[2026-11-02 19:35:42] pushed 1 commit(s)
+[2026-11-02 19:35:42] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 21:07:04] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 21:08:06] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 478 eval records
+[2026-11-02 21:08:06] committed 1 eval records + RESULTS.md
+[2026-11-02 21:08:08] pushed 1 commit(s)
+[2026-11-02 21:08:08] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 21:42:58] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 21:42:59] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 21:42:59] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 22:33:09] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 22:34:11] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 485 eval records
+[2026-11-02 22:34:11] committed 7 eval records + RESULTS.md
+[2026-11-02 22:34:14] pushed 1 commit(s)
+[2026-11-02 22:34:14] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 22:49:54] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 22:49:55] 변화 없음 (no new eval json, nothing to push)
+[2026-11-02 22:49:55] all lo_* rungs evaluated and pushed; exit
+[2026-11-02 23:22:03] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-02 23:23:06] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 486 eval records
+[2026-11-02 23:23:06] committed 1 eval records + RESULTS.md
+[2026-11-02 23:23:08] pushed 1 commit(s)
+[2026-11-02 23:23:08] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 01:22:49] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 01:23:57] collect_results rc=0: type-aware greedy records: ['eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 502 eval records
+[2026-11-03 01:23:57] committed 4 eval records + RESULTS.md
+[2026-11-03 01:24:00] pushed 1 commit(s)
+[2026-11-03 01:24:00] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 02:44:09] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 02:44:10] 변화 없음 (no new eval json, nothing to push)
+[2026-11-03 02:44:10] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 05:33:21] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 05:34:35] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 547 eval records
+[2026-11-03 05:34:35] committed 22 eval records + RESULTS.md
+[2026-11-03 05:34:38] pushed 1 commit(s)
+[2026-11-03 05:34:38] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 07:00:15] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 07:01:31] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 557 eval records
+[2026-11-03 07:01:31] committed 4 eval records + RESULTS.md
+[2026-11-03 07:01:35] pushed 1 commit(s)
+[2026-11-03 07:01:35] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 09:00:08] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 09:01:26] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 577 eval records
+[2026-11-03 09:01:26] committed 6 eval records + RESULTS.md
+[2026-11-03 09:01:29] pushed 1 commit(s)
+[2026-11-03 09:01:29] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 09:16:27] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 09:16:28] 변화 없음 (no new eval json, nothing to push)
+[2026-11-03 09:16:28] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 11:04:52] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 11:06:16] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 601 eval records
+[2026-11-03 11:06:16] committed 5 eval records + RESULTS.md
+[2026-11-03 11:06:19] pushed 1 commit(s)
+[2026-11-03 11:06:19] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 12:26:21] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 12:27:47] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 617 eval records
+[2026-11-03 12:27:47] committed 16 eval records + RESULTS.md
+[2026-11-03 12:27:51] pushed 1 commit(s)
+[2026-11-03 12:27:51] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 16:28:08] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 16:29:46] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 673 eval records
+[2026-11-03 16:29:46] committed 6 eval records + RESULTS.md
+[2026-11-03 16:29:50] pushed 1 commit(s)
+[2026-11-03 16:29:50] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 22:09:54] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 22:11:45] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 724 eval records
+[2026-11-03 22:11:45] committed 7 eval records + RESULTS.md
+[2026-11-03 22:11:48] pushed 1 commit(s)
+[2026-11-03 22:11:48] all lo_* rungs evaluated and pushed; exit
+[2026-11-03 22:25:35] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-03 22:25:36] 변화 없음 (no new eval json, nothing to push)
+[2026-11-03 22:25:36] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 00:23:30] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 00:23:31] 변화 없음 (no new eval json, nothing to push)
+[2026-11-04 00:23:31] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 01:58:10] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 02:00:00] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 742 eval records
+[2026-11-04 02:00:00] committed 12 eval records + RESULTS.md
+[2026-11-04 02:00:04] pushed 1 commit(s)
+[2026-11-04 02:00:04] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 04:37:05] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 04:39:01] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 764 eval records
+[2026-11-04 04:39:01] committed 10 eval records + RESULTS.md
+[2026-11-04 04:39:04] pushed 1 commit(s)
+[2026-11-04 04:39:04] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 08:44:56] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 08:46:59] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 792 eval records
+[2026-11-04 08:46:59] committed 10 eval records + RESULTS.md
+[2026-11-04 08:47:02] pushed 1 commit(s)
+[2026-11-04 08:47:02] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 12:38:27] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 12:40:29] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 829 eval records
+[2026-11-04 12:40:29] committed 37 eval records + RESULTS.md
+[2026-11-04 12:40:32] pushed 1 commit(s)
+[2026-11-04 12:40:32] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 16:40:09] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 16:42:18] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 860 eval records
+[2026-11-04 16:42:19] committed 1 eval records + RESULTS.md
+[2026-11-04 16:42:22] pushed 1 commit(s)
+[2026-11-04 16:42:22] all lo_* rungs evaluated and pushed; exit
+[2026-11-04 19:50:56] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-04 19:53:07] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 881 eval records
+[2026-11-04 19:53:07] committed 1 eval records + RESULTS.md
+[2026-11-04 19:53:10] pushed 1 commit(s)
+[2026-11-04 19:53:10] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 00:29:30] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 00:31:47] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 926 eval records
+[2026-11-05 00:31:48] committed 10 eval records + RESULTS.md
+[2026-11-05 00:31:51] pushed 1 commit(s)
+[2026-11-05 00:31:51] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 04:54:21] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 04:54:22] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 04:54:22] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 08:32:23] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 08:32:24] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 08:32:24] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 10:06:46] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 10:06:47] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 10:06:47] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 12:13:37] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 12:13:38] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 12:13:38] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 14:12:08] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 14:12:08] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 14:12:08] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 14:33:33] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 14:35:57] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 991 eval records
+[2026-11-05 14:35:57] committed 1 eval records + RESULTS.md
+[2026-11-05 14:36:01] pushed 1 commit(s)
+[2026-11-05 14:36:01] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 16:12:51] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 16:12:52] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 16:12:52] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 19:25:01] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 19:25:02] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 19:25:02] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 20:09:31] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 20:12:01] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1010 eval records
+[2026-11-05 20:12:01] committed 1 eval records + RESULTS.md
+[2026-11-05 20:12:04] pushed 1 commit(s)
+[2026-11-05 20:12:04] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 20:26:19] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 20:28:53] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1011 eval records
+[2026-11-05 20:28:53] committed 1 eval records + RESULTS.md
+[2026-11-05 20:28:56] pushed 1 commit(s)
+[2026-11-05 20:28:56] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 20:42:30] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 20:42:31] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 20:42:31] all lo_* rungs evaluated and pushed; exit
+[2026-11-05 20:58:13] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-05 20:58:14] 변화 없음 (no new eval json, nothing to push)
+[2026-11-05 20:58:14] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 00:20:16] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 00:20:17] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 00:20:17] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 00:36:42] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 00:36:43] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 00:36:43] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 00:52:28] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 00:52:29] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 00:52:29] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 01:08:05] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 01:08:06] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 01:08:06] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 01:23:52] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 01:23:53] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 01:23:53] all lo_* rungs evaluated and pushed; exit
+[2026-11-06 01:39:49] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-06 01:39:50] 변화 없음 (no new eval json, nothing to push)
+[2026-11-06 01:39:50] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 01:16:39] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 01:19:12] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1054 eval records
+[2026-11-07 01:19:13] committed 31 eval records + RESULTS.md
+[2026-11-07 01:19:15] pushed 1 commit(s)
+[2026-11-07 01:19:15] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 01:46:25] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 01:46:26] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 01:46:26] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 01:53:49] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 01:53:50] cycle failed: git pull -q rc=128: error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[2026-11-07 02:23:51] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 02:23:51] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 02:27:07] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 02:27:07] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 02:27:07] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 02:59:22] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 02:59:22] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 02:59:22] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 03:15:05] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 03:15:05] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 03:15:05] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 03:30:50] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 03:30:51] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 03:30:51] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 03:46:35] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 03:46:35] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 03:46:35] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 04:02:33] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 04:05:12] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1063 eval records
+[2026-11-07 04:05:12] committed 1 eval records + RESULTS.md
+[2026-11-07 04:05:15] pushed 1 commit(s)
+[2026-11-07 04:05:15] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 04:34:06] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 04:34:07] 변화 없음 (no new eval json, nothing to push)
+[2026-11-07 04:34:07] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 06:42:54] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 06:45:32] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1087 eval records
+[2026-11-07 06:45:32] committed 13 eval records + RESULTS.md
+[2026-11-07 06:45:35] pushed 1 commit(s)
+[2026-11-07 06:45:35] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 07:30:14] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 07:32:50] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1092 eval records
+[2026-11-07 07:32:50] committed 5 eval records + RESULTS.md
+[2026-11-07 07:32:53] pushed 1 commit(s)
+[2026-11-07 07:32:53] all lo_* rungs evaluated and pushed; exit
+[2026-11-07 07:49:30] report_watch start (period 1800 s, waits for 27 lo_* rungs)
+[2026-11-07 07:52:08] collect_results rc=0: type-aware greedy records: ['eval_chip10_0', 'eval_chip10_1', 'eval_ip10_0', 'eval_ip10_1', 'eval_ip16_0', 'eval_ip16_1', 'eval_pcb10_0', 'eval_pcb10_1', 'eval_pcb16_0', 'eval_pcb16_1', 'eval_pkg10_0', 'eval_pkg10_1', 'eval_pkg16_0', 'eval_pkg16_1']
+wrote RESULTS.md: 1095 eval records
+[2026-11-07 07:52:08] committed 3 eval records + RESULTS.md
+[2026-11-07 07:52:11] pushed 1 commit(s)
+[2026-11-07 07:52:11] all lo_* rungs evaluated and pushed; exit

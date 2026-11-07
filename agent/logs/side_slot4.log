@@ -1,0 +1,32 @@
+[22:15:32] START eval10 lo_pkg_r2a_rl | mem 10.0 GiB / 60.0 GiB, oom_kill 0
+[22:28:08] END eval10 lo_pkg_r2a_rl rc=0 | mem 10.2 GiB / 60.0 GiB, oom_kill 0
+[22:29:10] START ga10 eval_pkg10_1 | mem 10.5 GiB / 60.0 GiB, oom_kill 0
+[23:17:06] END ga10 eval_pkg10_1 rc=0 | mem 11.9 GiB / 60.0 GiB, oom_kill 0
+[23:32:10] START eval10 r2m_rl | mem 12.4 GiB / 60.0 GiB, oom_kill 0
+[23:44:38] END eval10 r2m_rl rc=0 | mem 13.3 GiB / 60.0 GiB, oom_kill 0
+[23:45:42] START ls10 ls16-timing smoke | mem 13.0 GiB / 60.0 GiB, oom_kill 0
+[23:58:53] END ls10 ls16-timing smoke rc=0 | mem 12.1 GiB / 60.0 GiB, oom_kill 0
+[00:47:58] START eval10 lo_pcb_r2m_rl | mem 13.1 GiB / 60.0 GiB, oom_kill 0
+[01:01:05] END eval10 lo_pcb_r2m_rl rc=0 | mem 13.7 GiB / 60.0 GiB, oom_kill 0
+[01:02:10] START ls10 zs-chip pool | mem 14.3 GiB / 60.0 GiB, oom_kill 0
+[01:04:44] END ls10 zs-chip pool rc=0 | mem 12.3 GiB / 60.0 GiB, oom_kill 0
+[01:05:48] START ls10 zs-chip gp,modal_rule | mem 15.2 GiB / 60.0 GiB, oom_kill 0
+[01:07:31] END ls10 zs-chip gp,modal_rule rc=0 | mem 13.0 GiB / 60.0 GiB, oom_kill 0
+[02:02:36] START eval10 r2g_rl | mem 13.8 GiB / 60.0 GiB, oom_kill 0
+[02:14:53] END eval10 r2g_rl rc=0 | mem 7.9 GiB / 60.0 GiB, oom_kill 0
+[02:16:01] START ls10 zs-chip ladder s0 | mem 7.8 GiB / 60.0 GiB, oom_kill 0
+[02:25:07] END ls10 zs-chip ladder s0 rc=0 | mem 9.3 GiB / 60.0 GiB, oom_kill 0
+[03:20:16] START eval10 lo_pcb_r2g_rl | mem 13.5 GiB / 60.0 GiB, oom_kill 0
+[03:34:19] END eval10 lo_pcb_r2g_rl rc=0 | mem 17.5 GiB / 60.0 GiB, oom_kill 0
+[03:35:30] START ls10 zs-chip ladder s1 | mem 18.2 GiB / 60.0 GiB, oom_kill 0
+[03:43:02] END ls10 zs-chip ladder s1 rc=0 | mem 19.3 GiB / 60.0 GiB, oom_kill 0
+[03:44:12] START ls10 zs-chip ladder s2 | mem 19.9 GiB / 60.0 GiB, oom_kill 0
+[03:52:09] END ls10 zs-chip ladder s2 rc=0 | mem 19.4 GiB / 60.0 GiB, oom_kill 0
+[03:53:20] START ls10 zs-chip e0plus type0 | mem 19.1 GiB / 60.0 GiB, oom_kill 0
+[03:54:23] END ls10 zs-chip e0plus type0 rc=0 | mem 19.2 GiB / 60.0 GiB, oom_kill 0
+[03:55:34] memory above 45.0 GiB, waiting: mem 50.5 GiB / 60.0 GiB, oom_kill 0
+[03:56:34] START ls10 zs-chip e0plus type1 | mem 7.4 GiB / 60.0 GiB, oom_kill 1
+[03:58:14] END ls10 zs-chip e0plus type1 rc=0 | mem 6.9 GiB / 60.0 GiB, oom_kill 1
+[03:59:27] START ls10 zs-chip e0plus type2 | mem 6.4 GiB / 60.0 GiB, oom_kill 1
+[04:04:54] END ls10 zs-chip e0plus type2 rc=0 | mem 7.7 GiB / 60.0 GiB, oom_kill 1
+[04:06:06] done

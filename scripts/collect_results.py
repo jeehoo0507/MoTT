@@ -643,7 +643,8 @@ def final_leave_out_table(by):
              "| 뺀 종류 | 단 | 뺀 학습 seed 0 / 1 / 2 | 전체 학습 seed 0 / 1 / 2 | (b') 뺀 학습 − 0단 뺀 학습 | (c') 뺀 − 전체 (같은 seed) | 평균 (c') | 판정 |",
              "|---|---|---|---|---|---|---|---|"]
     for t in LO_TECHS:
-        for r, full, desc in (("r2pk", "r2pk", "최종 후보 r2pk"), ("r2", "r2_mott", "2단 MoTT (기존, 같은 규칙)")):
+        for r, full, desc in (("r2pk", "r2pk", "최종 후보 r2pk"), ("r2", "r2_mott", "2단 MoTT (기존, 같은 규칙)"),
+                              ("r2pkfc", "r2pkfc", "G1 후보 r2pkfc (확인 run, 같은 규칙)")):
             lo = [rate(t, seed_run(f"lo_{t}_{r}", s)) for s in LO_SEEDS]
             fu = [rate(t, seed_run(full, s)) for s in LO_SEEDS]
             b = diffs(t, lambda s: seed_run(f"lo_{t}_{r}", s), lambda s: seed_run(f"lo_{t}_r0", s))
@@ -651,7 +652,27 @@ def final_leave_out_table(by):
             cm = "–" if any(x is None for x in c) else f"{np.mean(c):+.2f}"
             lines.append(f"| {t} 10 | {desc} | {fmt3(lo, False)} | {fmt3(fu, False)} | {fmt3(b)} | {fmt3(c)} | {cm} | "
                          f"{verdict(b, c)} |")
-    return lines + [""]
+    return lines + [""] + g1_structure_switch_lines(by)
+
+
+def g1_structure_switch_lines(by):
+    """PROPOSALS 11/07 G1 확인 (human rule, fixed before any G1 run; this code written 11/07 round 80 with only
+    lo_pkg_r2pkfc_s1 of the 7 confirmation runs evaluated): same-kind pkg 10 success of r2pkfc − r2pk, the three
+    seeds pooled (same seed paired, same problems), paired bootstrap 95% CI lower bound > 0 -> final structure = r2pkfc."""
+    ms = by.get(("pkg", 10), {})
+    a = [ms.get(seed_run("r2pkfc", s)) for s in LO_SEEDS]
+    b = [ms.get(seed_run("r2pk", s)) for s in LO_SEEDS]
+    head = "G1 구조 교체 판정 (같은 종류 pkg 10칸, `r2pkfc` − `r2pk`, seed 0·1·2 묶음, 같은 seed·같은 문제 짝지은 bootstrap): "
+    have = [s for s in LO_SEEDS if a[s] is not None and b[s] is not None and a[s]["sets"] == b[s]["sets"]]
+    if not have:
+        return [head + "기록 없음", ""]
+    d = np.concatenate([a[s]["ok"].astype(float) - b[s]["ok"] for s in have])
+    lo, hi = boot_ci(lambda i: d[i].mean(), len(d))
+    seeds = ", ".join(str(s) for s in have)
+    if len(have) < len(LO_SEEDS):
+        return [head + f"seed {seeds}만 ({len(d)}문제) {d.mean():+.2f} [{lo:+.2f}, {hi:+.2f}] — seed 3개가 다 나온 뒤 판정", ""]
+    return [head + f"{len(d)}문제 {d.mean():+.2f} [{lo:+.2f}, {hi:+.2f}] → "
+            + ("**하한 > 0: 최종 구조 r2pkfc로 교체**" if lo > 0 else "하한 ≤ 0: 최종 구조 r2pk 그대로"), ""]
 
 
 def seed_run(base, s):

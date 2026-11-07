@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 07:40 UTC, 라운드 79 — G1 확인 1/7 `lo_pkg_r2pkfc_s1` RL 진행 (it 86 체크포인트); C1' G-inf 탈락 (라운드 78); C1 대기 (서버 2로); G-tr 사람 지시 대기; pod 28.2 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 08:50 UTC, 라운드 80 — G1 확인 1/7 `lo_pkg_r2pkfc_s1` 끝·평가 (뺀 pkg 0.78; F1 (b') seed 1 −0.06 → pkg 범용화 통과 불가), 2/7 `lo_pkg_r2pkfc_s2` 증류 중; r2pkfc 16·20칸 보고만 평가 전부 끝; C1 대기 (서버 2로); G-tr 사람 지시 대기; pod 19 GiB / 60, oom_kill 2)
+
+## 라운드 80 (2026-11-07 07:49~ UTC)
+- `git fetch r2e` (07:49, 08:24): 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음.
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움.
+- `lo_pkg_r2pkfc_s1` RL 끝 (08:2x): 337 iter, 1.26 h, best iter 300 (score 1.520), cert-bad ≤ 8, oom 0, GPU peak 11.5 GB. 코드 = HEAD 8c1b814 (train.py는 라운드 79와 같음). side_slot `eval10 lo_pkg_r2pkfc_s1_rl` 08:25:51~08:38:05 rc 0. 드라이버가 2/7 `lo_pkg_r2pkfc_s2` 08:20 시작 (증류 → RL, 끝 ~10:25).
+- 끝난 실험 (10칸, 정책 단독, 50문제): `lo_pkg_r2pkfc_s1_rl` 뺀 pkg **0.78** (같은 seed `lo_pkg_r2pk_s1` 0.64, `lo_pkg_r0_s1` 0.84), pcb 0.88, ip 0.98.
+- r2pkfc 16·20칸 보고만 평가 (QUEUE 13:25) 전부 끝: pcb20_0·1, ip20_0·1 07:51~08:24 기록. "G1 후보 16·20칸" 표 (`r2pkfc_rl` − `r2pk_rl`): pcb16 −0.10 [−0.24, +0.04], pkg16 +0.12 [−0.06, +0.30], ip16 +0.00, pcb20 −0.12 [−0.31, +0.00] (16문제), pkg20 −0.06 [−0.44, +0.31], ip20 +0.00. 판정에 쓰지 않음.
+- `collect_results.py`: F1 표 ("최종 후보 r2pk의 한 종류 빼고 학습, seed별")에 **"G1 후보 r2pkfc (확인 run, 같은 규칙)"** 행 + "G1 구조 교체 판정" 줄 (PROPOSALS G1 확인: 같은 종류 pkg `r2pkfc` − `r2pk` seed 3개 묶음 CI 하한 > 0이면 교체). **확인 7 run 중 1개만 나온 때 작성** — 규칙은 사람이 고정한 그대로, 코드만.
+- **F1 규칙 중간 상태 (G1 확인):** 뺀 pkg (b') `lo_pkg_r2pkfc` − `lo_pkg_r0`: seed 0 +0.06, **seed 1 −0.06** → "seed 0·1·2 모두 > 0" 조건이 이미 깨짐 → **r2pkfc는 pkg 범용화 "통과" 불가** (seed 2와 상관없음; 표 판정 칸은 규칙대로 seed 3개가 다 나온 뒤 "실패"로 찍힘). 참고: r2pk도 같은 seed에서 0.64 (− 0.84 = −0.20)로 이미 실패였음. 구조 교체 판정 (같은 종류 pkg, seed 3개 묶음)과 뺀 pcb 판정은 남은 run이 정함.
+- 결정: 큐·설정 그대로 (남은 6 run 사람 순서대로 계속) — 이유: QUEUE 10:50 3번이 확인 7 run 전부를 지시했고, 구조 교체 판정·뺀 pcb 판정은 아직 열려 있음. pkg 결과를 보고 run을 빼거나 바꾸지 않는다 (규칙 바꾸기 금지).
+- 할 일 (다음): (1) `lo_pkg_r2pkfc_s2` 끝 (~10:25) → side_slot 10칸 평가 → RESULTS. (2) 서버 2 C1 기록 push되면 merge → `c1_screen.py`. (3) 7개 끝 (~21:00 UTC) → F1 표·교체 판정 줄 읽고 PROGRESS·RESULTS ABLATIONS. (4) 11/08 03:00 UTC 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC. side_slot CPU 칸: r2pkfc 보고만 평가가 다 끝나 비어 있음 (scale-eval 대상 없음) — 새 CPU 일은 넣지 않음 (사람 지시 없음).
 
 ## 라운드 79 (2026-11-07 07:30~ UTC)
 - `git fetch r2e`: 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음 (a1_nogrow만).

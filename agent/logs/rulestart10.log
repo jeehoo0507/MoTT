@@ -1,0 +1,16 @@
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/rulestart10/eval
+[   332s] eval_pkg10_1   modal_rule>r2_mott_rl        ok 0.92 count 6.91 3.001s/inst rounds 4
+[   451s] eval_pcb10_0   modal_rule>r2_mott_rl        ok 1.00 count 7.08 0.594s/inst rounds 3
+[   553s] eval_pkg10_0   modal_rule>r2_mott_rl        ok 0.84 count 6.05 0.504s/inst rounds 4
+[   699s] eval_pcb10_1   modal_rule>r2_mott_rl        ok 1.00 count 7.20 0.575s/inst rounds 4
+[   858s] eval_ip10_0    modal_rule>r2_mott_rl        ok 0.96 count 11.08 0.931s/inst rounds 4
+[   971s] eval_ip10_1    modal_rule>r2_mott_rl        ok 0.92 count 14.04 0.497s/inst rounds 4
+done
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/rulestart10/eval
+[   485s] eval_pkg10_1   modal_rule>r0_coord_rl       ok 0.72 count 6.50 4.718s/inst rounds 4
+[   635s] eval_pcb10_0   modal_rule>r0_coord_rl       ok 0.96 count 6.71 0.685s/inst rounds 4
+[   827s] eval_pkg10_0   modal_rule>r0_coord_rl       ok 0.68 count 5.35 1.051s/inst rounds 4
+[   995s] eval_pcb10_1   modal_rule>r0_coord_rl       ok 0.92 count 7.17 0.928s/inst rounds 4
+[  1160s] eval_ip10_0    modal_rule>r0_coord_rl       ok 0.96 count 11.08 0.997s/inst rounds 4
+[  1273s] eval_ip10_1    modal_rule>r0_coord_rl       ok 0.92 count 14.04 0.514s/inst rounds 4
+done

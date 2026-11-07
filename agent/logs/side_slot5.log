@@ -1,0 +1,4 @@
+[06:28:45] START eval10 r2t_rl | mem 9.3 GiB / 60.0 GiB, oom_kill 1
+[06:42:20] END eval10 r2t_rl rc=0 | mem 11.5 GiB / 60.0 GiB, oom_kill 1
+[06:43:36] START ls10 repair r2_mott_rl | mem 11.9 GiB / 60.0 GiB, oom_kill 1
+[07:02:55] END ls10 repair r2_mott_rl rc=0 | mem 11.8 GiB / 60.0 GiB, oom_kill 1

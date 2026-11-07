@@ -1,0 +1,318 @@
+[2026-10-31 11:16:16] resume_agent start
+[2026-10-31 11:16:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 11:26:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 11:36:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 11:46:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 11:56:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:06:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:16:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:26:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:36:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:46:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 12:56:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 13:06:16] waiting: 18 train entries left (next lo_ip_r0_s1)
+[2026-10-31 13:16:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 13:26:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 13:36:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 13:46:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 13:56:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:06:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:16:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:26:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:36:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:46:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 14:56:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 15:06:16] waiting: 17 train entries left (next lo_ip_r1_s1)
+[2026-10-31 15:16:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 15:26:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 15:36:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 15:46:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 15:56:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:06:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:16:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:26:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:36:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:46:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 16:56:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 17:06:16] waiting: 16 train entries left (next lo_ip_r2_s1)
+[2026-10-31 17:16:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 17:26:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 17:36:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 17:46:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 17:56:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:06:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:16:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:26:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:36:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:46:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 18:56:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 19:06:16] waiting: 15 train entries left (next lo_pcb_r0_s1)
+[2026-10-31 19:16:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 19:26:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 19:36:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 19:46:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 19:56:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:06:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:16:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:26:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:36:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:46:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 20:56:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 21:06:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 21:16:16] waiting: 14 train entries left (next lo_pcb_r1_s1)
+[2026-10-31 21:26:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 21:36:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 21:46:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 21:56:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:06:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:16:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:26:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:36:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:46:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 22:56:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 23:06:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 23:16:16] waiting: 13 train entries left (next lo_pcb_r2_s1)
+[2026-10-31 23:26:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-10-31 23:36:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-10-31 23:46:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-10-31 23:56:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:06:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:16:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:26:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:36:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:46:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 00:56:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 01:06:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 01:16:16] waiting: 12 train entries left (next lo_ip_r0_s2)
+[2026-11-01 01:26:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 01:36:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 01:46:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 01:56:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:06:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:16:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:26:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:36:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:46:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 02:56:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 03:06:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 03:16:16] waiting: 11 train entries left (next lo_ip_r1_s2)
+[2026-11-01 03:26:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 03:36:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 03:46:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 03:56:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:06:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:16:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:26:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:36:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:46:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 04:56:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 05:06:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 05:16:16] waiting: 10 train entries left (next lo_ip_r2_s2)
+[2026-11-01 05:26:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 05:36:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 05:46:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 05:56:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:06:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:16:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:26:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:36:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:46:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 06:56:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 07:06:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 07:16:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 07:26:16] waiting: 9 train entries left (next lo_pcb_r0_s2)
+[2026-11-01 07:36:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 07:46:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 07:56:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:06:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:16:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:26:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:36:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:46:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 08:56:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 09:06:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 09:16:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 09:26:16] waiting: 8 train entries left (next lo_pcb_r1_s2)
+[2026-11-01 09:36:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 09:46:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 09:56:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:06:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:16:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:26:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:36:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:46:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 10:56:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 11:06:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 11:16:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 11:26:16] waiting: 7 train entries left (next lo_pcb_r2_s2)
+[2026-11-01 11:36:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 11:46:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 11:56:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:06:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:16:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:26:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:36:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:46:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 12:56:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 13:06:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 13:16:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 13:26:16] waiting: 6 train entries left (next lo_pkg_r0_s1)
+[2026-11-01 13:36:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 13:46:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 13:56:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:06:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:16:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:26:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:36:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:46:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 14:56:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 15:06:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 15:16:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 15:26:16] waiting: 5 train entries left (next lo_pkg_r1_s1)
+[2026-11-01 15:36:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 15:46:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 15:56:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:06:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:16:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:26:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:36:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:46:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 16:56:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 17:06:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 17:16:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 17:26:16] waiting: 4 train entries left (next lo_pkg_r2_s1)
+[2026-11-01 17:36:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 17:46:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 17:56:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:06:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:16:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:26:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:36:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:46:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 18:56:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 19:06:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 19:16:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 19:26:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 19:36:16] waiting: 3 train entries left (next lo_pkg_r0_s2)
+[2026-11-01 19:46:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 19:56:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:06:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:16:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:26:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:36:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:46:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 20:56:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 21:06:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 21:16:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 21:26:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 21:36:16] waiting: 2 train entries left (next lo_pkg_r1_s2)
+[2026-11-01 21:46:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 21:56:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:06:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:16:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:26:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:36:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:46:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 22:56:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 23:06:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 23:16:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 23:26:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 23:36:16] waiting: 1 train entries left (next lo_pkg_r2_s2)
+[2026-11-01 23:46:19] queue done, agent/STOP removed
+[2026-11-01 23:46:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-01 23:56:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:06:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:16:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:26:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:36:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:46:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 00:56:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:06:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:16:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:26:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:36:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:46:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 01:56:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:06:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:16:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:26:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:36:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:46:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 02:56:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:06:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:16:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:26:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:36:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:46:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 03:56:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 04:06:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 04:16:19] check failed: [Errno 2] No such file or directory: 'tmux'
+[2026-11-02 04:20:49] resume_agent start
+[2026-11-02 04:20:49] agent loop started (pid 547917, logs agent/logs/loop.log and loop_bg.log)
+[2026-11-02 04:21:30] resume_agent start
+[2026-11-02 04:52:50] resume_agent start
+[2026-11-02 06:03:53] resume_agent start
+[2026-11-02 06:55:04] resume_agent start
+[2026-11-02 07:43:42] resume_agent start
+[2026-11-02 14:25:16] resume_agent start
+[2026-11-02 17:36:04] resume_agent start
+[2026-11-02 17:57:09] resume_agent start
+[2026-11-02 18:40:42] resume_agent start
+[2026-11-02 19:34:38] resume_agent start
+[2026-11-02 21:07:04] resume_agent start
+[2026-11-02 21:42:59] resume_agent start
+[2026-11-02 22:33:09] resume_agent start
+[2026-11-02 22:49:54] resume_agent start
+[2026-11-02 23:22:03] resume_agent start
+[2026-11-03 01:22:49] resume_agent start
+[2026-11-03 02:44:09] resume_agent start
+[2026-11-03 05:33:21] resume_agent start
+[2026-11-03 07:00:15] resume_agent start
+[2026-11-03 09:00:08] resume_agent start
+[2026-11-03 09:16:27] resume_agent start
+[2026-11-03 11:04:52] resume_agent start
+[2026-11-03 12:26:21] resume_agent start
+[2026-11-03 16:28:08] resume_agent start
+[2026-11-03 22:09:54] resume_agent start
+[2026-11-03 22:25:35] resume_agent start
+[2026-11-04 00:23:30] resume_agent start
+[2026-11-04 01:58:10] resume_agent start
+[2026-11-04 04:37:05] resume_agent start
+[2026-11-04 08:44:56] resume_agent start
+[2026-11-04 12:38:27] resume_agent start
+[2026-11-04 16:40:09] resume_agent start
+[2026-11-04 19:50:56] resume_agent start
+[2026-11-05 00:29:30] resume_agent start
+[2026-11-05 04:54:21] resume_agent start
+[2026-11-05 08:32:23] resume_agent start
+[2026-11-05 10:06:46] resume_agent start
+[2026-11-05 12:13:37] resume_agent start
+[2026-11-05 14:12:08] resume_agent start
+[2026-11-05 14:33:33] resume_agent start
+[2026-11-05 16:12:51] resume_agent start
+[2026-11-05 19:25:01] resume_agent start
+[2026-11-05 20:09:32] resume_agent start
+[2026-11-05 20:26:19] resume_agent start
+[2026-11-05 20:42:30] resume_agent start
+[2026-11-05 20:58:13] resume_agent start
+[2026-11-06 00:20:16] resume_agent start
+[2026-11-06 00:36:42] resume_agent start
+[2026-11-06 00:52:28] resume_agent start
+[2026-11-06 01:08:05] resume_agent start
+[2026-11-06 01:23:52] resume_agent start
+[2026-11-06 01:39:49] resume_agent start
+[2026-11-07 01:16:39] resume_agent start
+[2026-11-07 01:46:25] resume_agent start
+[2026-11-07 01:53:49] resume_agent start
+[2026-11-07 01:54:31] resume_agent start
+[2026-11-07 02:11:21] resume_agent start
+[2026-11-07 02:27:07] resume_agent start
+[2026-11-07 02:59:22] resume_agent start
+[2026-11-07 03:15:05] resume_agent start
+[2026-11-07 03:30:50] resume_agent start
+[2026-11-07 03:46:35] resume_agent start
+[2026-11-07 04:02:33] resume_agent start
+[2026-11-07 04:34:06] resume_agent start
+[2026-11-07 06:42:54] resume_agent start
+[2026-11-07 07:30:14] resume_agent start
+[2026-11-07 07:49:30] resume_agent start

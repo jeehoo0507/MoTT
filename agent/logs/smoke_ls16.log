@@ -1,0 +1,4 @@
+eval_ip16_0 {'B': 25, 'sec_load': 44.608970642089844, 'sec_gp_inst0': 80.18273305892944, 'sec_ls_inst0': 0.0003364086151123047, 'gp_feasible': False, 'gp_count': 201, 'ls_count': 201, 'peak_rss_mb': 13939.29296875}
+eval_pcb16_0 {'B': 25, 'sec_load': 72.69503998756409, 'sec_gp_inst0': 54.32204747200012, 'sec_ls_inst0': 88.04085230827332, 'gp_feasible': True, 'gp_count': 11, 'ls_count': 7, 'peak_rss_mb': 22676.99609375}
+eval_pkg16_0 {'B': 25, 'sec_load': 70.83902907371521, 'sec_gp_inst0': 145.86525702476501, 'sec_ls_inst0': 229.36097836494446, 'gp_feasible': True, 'gp_count': 42, 'ls_count': 13, 'peak_rss_mb': 22676.99609375}
+done

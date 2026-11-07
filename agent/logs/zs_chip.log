@@ -1,0 +1,52 @@
+2 pool files -> runs/pool_zs, 1 workers
+[    72s] eval_chip10_0    built      70s F=50 rounds 1 g+p ok 1.00 count 5.52
+[   151s] eval_chip10_1    built      79s F=51 rounds 1 g+p ok 0.88 count 3.4545454545454546
+done
+2 sets x 2 methods = 4 jobs, 1 workers -> runs/zs_chip/baselines/eval
+[    23s] eval_chip10_1  greedy+prune                 ok 0.88 count 3.45 0.269s/inst rounds 0
+[    42s] eval_chip10_1  modal_rule                   ok 1.00 count 6.04 0.110s/inst rounds 0
+[    58s] eval_chip10_0  greedy+prune                 ok 1.00 count 5.52 0.047s/inst rounds 0
+[   103s] eval_chip10_0  modal_rule                   ok 1.00 count 6.28 0.071s/inst rounds 2
+done
+2 sets x 5 methods = 10 jobs, 1 workers -> runs/zs_chip/s0/eval
+[    65s] eval_chip10_1  r0_coord_rl                  ok 1.00 count 8.72 0.351s/inst rounds 2
+[   102s] eval_chip10_1  r1_modal_rl                  ok 1.00 count 6.24 0.194s/inst rounds 1
+[   146s] eval_chip10_1  r2_mott_rl                   ok 1.00 count 5.60 0.189s/inst rounds 1
+[   191s] eval_chip10_1  r3_loop_rl                   ok 1.00 count 5.88 0.358s/inst rounds 1
+[   252s] eval_chip10_1  r2a_rl                       ok 1.00 count 7.16 0.282s/inst rounds 2
+[   304s] eval_chip10_0  r0_coord_rl                  ok 1.00 count 11.96 0.507s/inst rounds 1
+[   389s] eval_chip10_0  r1_modal_rl                  ok 1.00 count 6.76 0.356s/inst rounds 3
+[   446s] eval_chip10_0  r2_mott_rl                   ok 1.00 count 6.60 0.217s/inst rounds 2
+[   489s] eval_chip10_0  r3_loop_rl                   ok 1.00 count 6.72 0.317s/inst rounds 1
+[   545s] eval_chip10_0  r2a_rl                       ok 1.00 count 6.64 0.210s/inst rounds 2
+done
+2 sets x 5 methods = 10 jobs, 1 workers -> runs/zs_chip/s1/eval
+[    74s] eval_chip10_1  r0_coord_s1_rl               ok 1.00 count 10.32 0.491s/inst rounds 2
+[   104s] eval_chip10_1  r1_modal_s1_rl               ok 1.00 count 5.96 0.563s/inst rounds 0
+[   143s] eval_chip10_1  r2_mott_s1_rl                ok 1.00 count 5.64 0.242s/inst rounds 1
+[   188s] eval_chip10_1  r3_loop_s1_rl                ok 1.00 count 6.04 0.338s/inst rounds 1
+[   230s] eval_chip10_1  r2a_s1_rl                    ok 1.00 count 6.24 0.275s/inst rounds 1
+[   283s] eval_chip10_0  r0_coord_s1_rl               ok 1.00 count 11.84 0.520s/inst rounds 1
+[   335s] eval_chip10_0  r1_modal_s1_rl               ok 1.00 count 6.48 0.507s/inst rounds 1
+[   373s] eval_chip10_0  r2_mott_s1_rl                ok 1.00 count 6.36 0.193s/inst rounds 1
+[   415s] eval_chip10_0  r3_loop_s1_rl                ok 1.00 count 8.08 0.293s/inst rounds 1
+[   452s] eval_chip10_0  r2a_s1_rl                    ok 1.00 count 7.20 0.195s/inst rounds 1
+done
+2 sets x 5 methods = 10 jobs, 1 workers -> runs/zs_chip/s2/eval
+[    49s] eval_chip10_1  r0_coord_s2_rl               ok 1.00 count 8.88 0.435s/inst rounds 1
+[    85s] eval_chip10_1  r1_modal_s2_rl               ok 1.00 count 6.80 0.176s/inst rounds 1
+[   122s] eval_chip10_1  r2_mott_s2_rl                ok 1.00 count 5.84 0.216s/inst rounds 1
+[   169s] eval_chip10_1  r3_loop_s2_rl                ok 1.00 count 6.44 0.374s/inst rounds 1
+[   225s] eval_chip10_1  r2a_s2_rl                    ok 1.00 count 6.28 0.223s/inst rounds 2
+[   282s] eval_chip10_0  r0_coord_s2_rl               ok 1.00 count 12.12 0.611s/inst rounds 1
+[   359s] eval_chip10_0  r1_modal_s2_rl               ok 1.00 count 7.32 0.269s/inst rounds 3
+[   396s] eval_chip10_0  r2_mott_s2_rl                ok 1.00 count 6.24 0.178s/inst rounds 1
+[   439s] eval_chip10_0  r3_loop_s2_rl                ok 1.00 count 8.20 0.309s/inst rounds 1
+[   477s] eval_chip10_0  r2a_s2_rl                    ok 1.00 count 8.32 0.198s/inst rounds 1
+done
+eval_chip10_0 type 0 ok 1.00 count 8.08 rounds 1 27s
+eval_chip10_1 type 0 ok 1.00 count 5.72 rounds 1 30s
+eval_chip10_0 type 1 ok 0.92 count 18.57 rounds 1 41s
+eval_chip10_1 type 1 ok 0.80 count 11.05 rounds 1 44s
+eval_chip10_0 type 2 ok 0.16 count 10.75 rounds 1 91s
+eval_chip10_1 type 2 ok 0.08 count 42.50 rounds 3 229s

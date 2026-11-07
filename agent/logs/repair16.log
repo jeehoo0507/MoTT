@@ -1,0 +1,16 @@
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/repair16/eval
+[  1412s] eval_pkg16_1   r2_mott_rl+rep4              ok 1.00 count 10.16 5.467s/inst rounds 4
+[  3341s] eval_pkg16_0   r2_mott_rl+rep4              ok 0.88 count 10.23 9.159s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/repair16/eval
+[  1508s] eval_pkg16_1   modal_rule+rep4              ok 0.88 count 11.23 6.815s/inst rounds 4
+[  3323s] eval_pkg16_0   modal_rule+rep4              ok 0.92 count 11.57 10.527s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/repair16/eval
+[  5204s] eval_pkg16_1   r0_coord_rl+rep4             ok 0.80 count 8.90 38.806s/inst rounds 4
+[ 15258s] eval_pkg16_0   r0_coord_rl+rep4             ok 0.80 count 9.70 90.617s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/repair16/eval
+[ 11375s] eval_pkg16_1   greedy+prune+rep4            ok 0.96 count 17.29 98.610s/inst rounds 4
+[ 30072s] eval_pkg16_0   greedy+prune+rep4            ok 0.96 count 21.96 161.817s/inst rounds 4
+done
