@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 18:45 UTC, 라운드 103 — F1 pkg16_0 3 seed 끝 (묶음 0.933), pkg16_1 2/3 진행; 서버 2 F 기록 18/18 끝 (pkg20 묶음 0.958); R 3 seed 판정 **미통과** (뺀 pkg +0.01); GPU `lo_pkg_rnd_r0` 시작)
+# PROGRESS (갱신 2026-11-07 19:15 UTC, 라운드 104 — F1 pkg16_1 `r2pk_s1_rl+rep4` 끝 (0.48 → 0.92), pkg16_1 `r2pk_s2_rl` 진행 (F1 pkg16 마지막); GPU `lo_pkg_rnd_r0` 증류 it 1725)
+
+## 라운드 104 (2026-11-07 19:09~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
+- `ensure_running`: 드라이버 alive (1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py` 드라이버 +697 B, side_slot 그대로 (같은 inode). pod 28.4 GiB / 60, oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg16_1 r2pk_s1_rl+rep4` 18:36–18:55 rc 0 — 정책 단독 0.48 → **0.92**, 2.44 s/문제, peak RSS 24.4 GB. RESULTS 자동 표: `r2pk_s1_rl+rep4` pkg16 50문제 0.92 (개수 9.83). 다음 `eval_pkg16_1 r2pk_s2_rl+rep4` 18:59~ (F1 pkg16 6개 중 마지막) → 좌표 pkg20 2 → F2 (서버 2 done → 건너뜀) → F3 22.
+- R 대조군 `lo_pkg_rnd_r0` 증류 it 1725 / 1980 s (cert-bad 0, oom 0, GPU 8.9 GB) 정상 → RL 1.25 h → 끝 ~20:45 → side_slot 10칸 (보고만, `r_screen_table` 2×2 자동).
+- 결정: 큐·플래그·side_slot 그대로 — 이유: 모든 남은 항목이 사람 것, 에이전트 새 시도 금지 유지.
+- 할 일 (다음): 라운드 103 목록 그대로. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 103 머리말: F1 pkg16_0 3 seed 끝 (묶음 0.933), pkg16_1 2/3 진행; 서버 2 F 기록 18/18 끝 (pkg20 묶음 0.958); R 3 seed 판정 **미통과** (뺀 pkg +0.01); GPU `lo_pkg_rnd_r0` 시작
 
 ## 라운드 103 (2026-11-07 18:14~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음 (새 브랜치 `baselines-final`만 — 사람 것, 건드리지 않음). QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만).
