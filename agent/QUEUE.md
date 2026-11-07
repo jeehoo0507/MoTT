@@ -1,5 +1,8 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 22:37 KST — 사람: M1 중단 (서버 2 `r2pkfcm1` 학습을 사람이 멈춤)
+- M1 판정: **사람이 중단, 기준 미달로 기록.** 근거: 뺀 pkg `lo_pkg_r2pkfcm1` 0.74 vs G1 `lo_pkg_r2pkfc` 0.84 (−0.10 [−0.22, +0.02]) → (i)는 같은 유형 pkg ≥ 0.94에만 걸려 사실상 불가; 서버 2 GPU를 R seed 0에 쓴다. `r2pkfcm1` 기록은 없음 ("못 돌림, 사람 중단"). RESULTS "시도한 수정"에 그렇게 한 줄. `m1_screen.py` 대기는 끝.
+
 ## 2026-11-07 22:32 KST — 사람: G1 확인 종료 (미통과), 남은 GPU는 R (`lo_pkg_rnd` seed 1·2, 대조군 `lo_pkg_rnd_r0`)
 - **G1 판정 (사람, PROPOSALS G1 확인 규칙 (b')):** 뺀 pkg `lo_pkg_r2pkfc` 0.84/0.78/0.66 vs `lo_pkg_r0` 0.78/0.84/0.78 → seed 1·2에서 ≤ 0 → **(b') 미통과, G1 채택 안 함.** RESULTS에 그렇게 적어라. `r2pkfc_s2` (지금 도는 것)는 끝까지 두고 10칸 평가까지 해라 (같은 유형 3 seed 표 완성). 그 뒤 `lo_pcb_r2pkfc`, `lo_pcb_r2pkfc_s1`, `lo_pcb_r2pkfc_s2`는 **돌리지 않는다** — day2_queue.json에서 사람이 뺐다; RESULTS에 "못 돌림 (G1 (b') 미통과로 중단)". "G1 보충 2" 16·20칸 평가(`r2pkfc_s1`, `r2pkfc_s2`)는 CPU라 그대로 끝내라.
 - **R (PROPOSALS "11/07 R" 그대로):** day2_queue.json train 끝에 사람이 `lo_pkg_rnd_s1`, `lo_pkg_rnd_s2`, `lo_pkg_rnd_r0` 를 넣었다 (`after: runs/pool_v1/rnd.ok`). cpu 맨 앞에 풀 생성 항목도 넣었다. **네가 할 일, 지금 바로 (이 라운드):** `.venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 4 --only train --techs rnd && touch runs/pool_v1/rnd.ok` (CPU 4 worker, 약 10분; 서버 2와 같은 파일이 나온다 — 파일별 seed 고정). 풀이 생기면 드라이버가 `r2pkfc_s2` 다음에 rnd run을 올린다. 학습 조건·arm·무작위 범위는 바꾸지 마라.
