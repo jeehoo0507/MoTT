@@ -1,5 +1,11 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
-# PROGRESS (갱신 2026-11-07 02:45 UTC, 라운드 68 — GPU **G1 `r2pkfc`** 증류 끝 → RL (02:40~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 16.6 h째, pod 22.9 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 03:01 UTC, 라운드 69 — GPU **G1 `r2pkfc`** RL it 50 (02:40~, 끝 ~03:55) → `lo_pkg_r2pkfc` (~05:56), CPU 드라이버 `ls16c eval_ip16_1` 16.8 h째, pod 23.8 GiB / 60, oom_kill 2)
+
+## 라운드 69 (2026-11-07 02:59~ UTC)
+- 상태 (03:00): `r2pkfc` RL it 50 / 847 s (count/ref 0.559, fail 0.01, cert-bad 1, oom 0, GPU peak 13.7 GB) 정상. CPU: `ls16c eval_ip16_1` (60 600 s째, worker rss 6.6 GB) + side_slot 대기 (`r2pkfc lo_pkg_r2pkfc`). pod 23.8 GiB / 60, oom_kill 2 (변화 없음). `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. `git fetch r2e`: 새 사람 커밋 없음.
+- 끝난 실험 없음 → RESULTS 변경 없음.
+- 결정: 큐·설정 그대로 — 이유: G1 사람 큐 순서대로 정상 진행, 바꿀 근거 없음.
+- 할 일 (다음): 라운드 67 목록 그대로.
 
 ## 라운드 68 (2026-11-07 02:43~ UTC)
 - 상태 (02:45): `r2pkfc` 증류 끝 (1570 iter, 0.77 h, best it 1000 score 1.918, cert-bad 0, oom 0, GPU peak 12.1 GB). RL 단계 02:40 시작 (풀 27 batch / 432 판 적재, GPU 14.5 GB 사용, 정확 검사 worker 2). CPU: `ls16c eval_ip16_1` (59 600 s째, worker rss 5.2 GB) + side_slot 대기 (`r2pkfc lo_pkg_r2pkfc`). pod 22.9 GiB / 60, oom_kill 2 (변화 없음). `git fetch r2e`: 새 사람 커밋 없음. `g1_screen.py`: 모두 waiting.
