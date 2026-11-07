@@ -10,3 +10,7 @@ Already up to date.
   - R 학습 `lo_pkg_rnd_s2`는 RL 50번째 반복까지 문제없이 진행 중이다. 18:40쯤 끝나면 10칸 평가를 하고, 세 seed를 `r_screen.py`로 판정한다.
   - 서버 2 F 기록은 18개 중 14개를 받았다. 남은 4개 (`r2pk_s1/_s2`의 pkg20)는 아직 오지 않았다.
 - **상태 점검:** 드라이버 로그가 지난 라운드처럼 끊겨 있어 다시 붙였다 (694 B). 메모리는 F1 평가 중 29.7 GiB였고 끝난 뒤 19.3 GiB로 내려왔다 (한도 60 GiB). 새 OOM은 없다. PROGRESS.md에는 라운드 101 항목을 추가했다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d44e3b4..d695489  main -> main
