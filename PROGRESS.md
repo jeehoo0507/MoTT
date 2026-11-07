@@ -1,5 +1,14 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 17:20 UTC, 라운드 100 — F1 진행: 드라이버 pkg16 수리 평가 1/6 끝 (`r2pk_rl` 0.96), 서버 2 F 기록 14/18 merge; "최종 방법 MoTT+P1+V" 표 생김; R `lo_pkg_rnd_s2` 증류 중)
+# PROGRESS (갱신 2026-11-07 17:45 UTC, 라운드 101 — F1 드라이버 pkg16 수리 평가 2/6 끝 (`r2pk_s1_rl` 0.92), 3/6 `r2pk_s2_rl` 진행; 서버 2 F 기록 14/18 그대로; R `lo_pkg_rnd_s2` RL 중)
+
+## 라운드 101 (2026-11-07 17:35~ UTC)
+- `git fetch r2e` (17:35): 새 사람 커밋 없음 (QUEUE 마지막 11/08 01:45 KST F). 서버 2 남은 4 기록 (`r2pk_s1/_s2` pkg20) 아직 안 옴 — `pull_s2.log` 마지막 17:08 merge (14/18), "not merging" 없음.
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. side_slot (1710935)·pull_s2_records (1708311) alive. `restore_proc_log.py`: 드라이버 +694 B 복구, side_slot 그대로. pod 29.7 GiB (pkg16 수리 중) / 60, oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg16_0 r2pk_s1_rl+rep4` 17:15–17:37 rc 0 — 정책 단독 0.60 → 되먹임 **0.92**, 평균 개수 10.39, 4.97 s/문제, round 4. pod 19.3 GiB (끝난 시점). RESULTS 다시 생성 (드라이버 collect_results 17:40): "최종 방법" 표 pkg16 묶음 2 seed 0.62 → **0.940** (50문제). 숫자만.
+- 드라이버 다음 `eval_pkg16_0 r2pk_s2_rl+rep4` 17:41~ (사람 순서 그대로) → pkg16_1 3개 → 좌표 pkg20 2개 → F2 (서버 2, done이면 건너뜀) → F3 22개.
+- R `lo_pkg_rnd_s2` RL it 50 / 753 s (cert-bad 2, fail 0.02, grid capped 1, oom 0, GPU peak 11.9 GB) 정상 → 끝 ~18:40 → side_slot 10칸 평가 → `r_screen.py` 3 seed.
+- 결정: 큐·플래그·side_slot 그대로 — 이유: F 항목은 사람 순서, pkg16 수리 판은 드라이버 한 줄 (라운드 100 결정 유지).
+- 할 일 (다음): 라운드 100 목록 그대로.
 
 ## 라운드 100 (2026-11-07 17:09~ UTC)
 - `git fetch r2e` (17:09): 새 사람 지시 없음 (QUEUE 마지막 11/08 01:45 KST F). 서버 2 기록은 `pull_s2_records.py`가 merge 중: 16:56–17:08에 `r2pk_s2_rl` pcb·pkg·ip 10칸 6개 + `r2pk_rl` pkg20_0·1 → **14/18** (모두 rc 0, "not merging" 없음). 남은 4 = `r2pk_s1/_s2` pkg20.
