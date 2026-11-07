@@ -1,3 +1,18 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 82 was a status check only. Nothing finished this round, so RESULTS.md wasn't touched. PROGRESS.md is updated, and the commit `60cce07` is pushed to `r2e/main` and matches main there. The push printed `gh: not found` credential-helper warnings, but it still went through.
+
+- **New human instructions:** none. The last QUEUE entry is still 14:30 KST.
+- **GPU:** run 2 of the 7 G1 confirmation runs (`lo_pkg_r2pkfc_s2`) finished distillation (1590 iterations, 0.76 h, best at iteration 600). Its RL stage started at 09:12 UTC and looks normal at iteration 25 (no out-of-memory errors, GPU peak 9.0 GB). It should finish around 10:30 UTC, and side_slot will then run the 10-cell eval.
+- **C1:** still waiting, because the server-2 results (`r2pk_vsi`, `r2pk_ctl`) haven't been pushed yet.
+- **C1' G-tr:** not queued. The QUEUE says to wait for the human while G1 confirmation is running.
+- **Processes and memory:** the driver and side_slot are running, and I restarted report_watch and resume_agent. The pod is at 18.1 of 60 GiB.
+- **Decision (logged in PROGRESS):** keep the queue and settings as they are.
+
+Next round:
+1. Record run 2/7's eval in RESULTS.
+2. Run `c1_screen.py` once the server-2 results arrive.
+3. Make the F1 and structure-swap calls when all 7 runs finish, around 21:00 UTC.
+
+No new training starts after 11/08 03:00 UTC.
