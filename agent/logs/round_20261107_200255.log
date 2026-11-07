@@ -1,3 +1,16 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 107 is finished. PROGRESS and RESULTS are updated, and the commit `ce28cba` is pushed to `r2e main`. There were no new instructions in QUEUE.
+
+**Finished this round**
+- **F1 is done (14/14).** The last item was the coordinate baseline with verification feedback on `eval_pkg20_1`. It solved 0.62 of the 8 problems, used 12.00 decaps on average, and took 110.6 s per problem. That set was already slow without feedback (108.8 s per problem).
+- **pkg20 comparison, now over both files:** our final method (MoTT+P1+V) solved 0.958 of 48 problems against 0.81 for the coordinate baseline (coord+V). The difference is +0.15 [+0.02, +0.27]. It used about 9% more decaps (ratio 1.090). This is only 48 problems, so I recorded the numbers and left the reading to you.
+- **R control run `lo_pkg_rnd_r0` finished** (training rc 0, 10-cell eval rc 0). On the held-out pkg boards, coordinates + random boards scored 0.74 against 0.78 for coordinates alone, a difference of −0.04 [−0.22, +0.12]. This is seed 0 only and is reported, not judged. The R verdict is still **fail** because the held-out pkg gain is +0.01, below the +0.10 needed. All R items are now complete.
+
+**Running now**
+- The driver skipped F2 because server 2 had already done it. It started the 22 F3 evals at 21:06, beginning with `eval_pcb16_0 r2pk_s1_rl+rep4`.
+- The GPU is idle. No human-queued training is left, and QUEUE (11/08 03:05 KST) still forbids me from adding training myself. I recorded that as a "결정:" line in PROGRESS.
+- Memory is 25–27 of 60 GiB, with no new OOM kills (still 2).
+
+**Next:** keep F3 running in the driver, check for new QUEUE items from the human on the morning of 11/08 (KST), and write the next DAILY.md at 11/08 01:30 UTC.
