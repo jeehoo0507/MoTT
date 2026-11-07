@@ -15,3 +15,7 @@ Plain `python` isn't on PATH, so I used `.venv/bin/python`. The push printed war
 Next round should confirm the RL run finished and its eval started. After `lo_pkg_r2pkfc` is evaluated, `g1_screen.py` decides the next step:
 - **If it passes:** add the 7 confirmation runs.
 - **If it fails:** record in RESULTS.md that G1 had no effect, and move the remaining LS16 runs back into the CPU queue.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   732fce8..5a937d8  main -> main
