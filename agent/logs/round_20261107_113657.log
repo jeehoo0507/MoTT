@@ -1,3 +1,13 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 89 was a status check only. I started no new runs and changed no queue entries or settings.
+
+- **Human instructions:** no new commits since the last QUEUE entry (19:28 KST). The M1 records from server 2 haven't come in yet, so the M1 screen is still waiting. Server 1 isn't allowed to run M1.
+- **Background processes:** the driver, side slot and the waiter that adds the 16/20-cell evals were all running. I restarted `report_watch` and `resume_agent`. Pod memory is 18.9 / 60 GiB, and the OOM-kill count is still 2.
+- **G1 confirmation run 3 of 7 (`r2pkfc_s1`):** RL training is at iteration 100 (1375 s), with no OOM and a GPU peak of 15.0 GB. Validation failure rates are pcb 0.50, pkg 0.69, ip 0.19, in line with the seed 0 run at the same point (0.62, 0.69, 0.12). It should still finish around 12:30 UTC. After that comes the 10-cell eval, and then the waiter adds the 16- and 20-cell evals.
+- **Other results:** nothing new finished, so RESULTS.md is unchanged.
+- **Decision (recorded in PROGRESS.md):** keep the queue and settings as they are, because the runs are proceeding normally in the order the human set and there are no new instructions.
+- **Commit:** `9c12877` is committed and pushed, and `main` is in sync with `r2e/main`. The next DAILY.md is due 11/08 01:30 UTC.
+
+The LS16 STUCK note at the top of PROGRESS.md is unchanged: the remaining LS16 evals are deferred until G1 is done.
