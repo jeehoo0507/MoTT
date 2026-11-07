@@ -1,5 +1,11 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 19:20 KST — 사람: G1 확인 run `r2pkfc_s1`·`r2pkfc_s2` 16·20칸 평가 추가 (CPU, 보고만)
+- PROPOSALS "11/07 G1 보충 2" 그대로. `r2pkfc_s1_rl`의 학습이 끝나고 10칸 평가(판정용)가 끝나면 바로, 같은 방식으로 `r2pkfc_s2_rl`도.
+- 명령 (run마다, **한 번에 한 파일씩**, 규모 곡선 평가와 같음): `eval_policy.py --pool runs/pool_v1 --sets <set> --policy <run>=runs/2026-10-29/<run>/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/<run>` — set 순서 `eval_pcb16_0`, `eval_pcb16_1`, `eval_pcb20_0`, `eval_pcb20_1`, `eval_ip16_0`, `eval_ip16_1`, `eval_ip20_0`, `eval_ip20_1`, `eval_pkg16_0`, `eval_pkg16_1`, `eval_pkg20_0`, `eval_pkg20_1` (pcb 먼저: 이것 때문에 하는 평가).
+- 우선순위: G1 확인 run의 **10칸 평가(판정용)가 항상 먼저**. 다음 학습(GPU)은 그대로 진행 — 이 평가는 CPU 칸만 쓴다. 메모리: 기존 `mem_guard` 그대로, 45 GiB 넘으면 LS16 쪽을 멈춘다 (13:40 결정과 같음). 이 평가는 죽이지 마라.
+- 끝나면 RESULTS에 PROPOSALS "G1 보충 2" 읽는 규칙대로 표 하나 (seed 0·1·2 묶음, 종류×크기, "큰 판 비용 있음/없음"). 판정은 하지 말고 사람에게 남긴다.
+
 ## 2026-11-07 14:30 KST — 사람: 두 번째 후보 C1' `--peak_gate` (서버 1, G1 탈락일 때 바로)
 - PROPOSALS "11/07 C1'" 그대로. 코드: `decap_loop/pkgate_env.py` (서브클래스, sim.py 안 건드림), `train.py --peak_gate`, `scripts/eval_policy.py --env_feat`, `scripts/smoke_peak_gate.py` (CPU 통과). 네 할 일 순서:
   1. **지금 (CPU 4번째 칸, G1 판정 전이라도):** G-inf = `eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --env_feat mott_pkgate --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_rl` (기록 `*__r2pk_rl@mott_pkgate.json`). r2pkfc 16·20칸 평가보다 **먼저**.
