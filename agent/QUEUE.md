@@ -216,22 +216,9 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 - FRESH는 앞서 제안한 전송형 서버 2 실행을 대체한다. 서버 1 checkpoint를 평가하는 L1의 완료로 집계하지 않으며, 기존 L1/L2 최종 모델 판정을 변경하지 않는다.
 
 
-## 2026-11-06 12:30 KST — user: verify P1 peak/action-mask mismatch today
-- User explicitly authorized coding and queueing this diagnostic on server 1, with interim results by this evening. Apply PROPOSALS "peak/mask mismatch diagnostic"; do not start the earlier pkgfix repair/prefix proposal (not authorized as the new research direction; it was never pushed).
-- Six `peakmask ...` CPU jobs have been prepended to day2_queue.json. Existing running jobs finish normally; prioritize these before the remaining queued LS16/scale jobs. Preserve GPU F1/B1 order and do not schedule anything on maskedkd/server 2.
-- Run on the existing CPU lane only; do not launch an extra worker/side process that exceeds the four-process limit or overlaps a heavy LS16 job. The driver re-reads the queue; verify it picks up the jobs, and record START/PID/completion in PROGRESS. No need for user confirmation. If the CPU lane remains occupied, report the actual delay; do not claim it started.
-- At 19:00 KST summarize whatever is complete from reports/peak_mask_diag_20261106/*.json, including incomplete job data; commit diagnostic results and PROGRESS after each job. Report all four arms and the paired rescued/harmed counts; leave main RESULTS and pre-registered verdicts unchanged. Do not start new model training from this diagnostic alone.
-
-## 2026-11-06 — user: prioritize a diagnostic pilot before this evening
-- The user requested changing priority because waiting for the active LS16 and pending evals is too slow. `scripts/server1_peak_mask_priority.py` is a user-launched, detached pilot runner, not another permanent lane. It temporarily SIGSTOPs only the verified active LS16 mem_guard subtree, then resumes it in finally; the GPU driver and training continue. Do not kill the paused LS16 or start replacement LS jobs.
-- This supersedes the earlier no-overlap instruction only for a **paused** LS16: its memory remains allocated, so start only below 30 GiB; terminate the diagnostic itself above 42 GiB. The pilot replaces LS CPU work rather than adding an active worker.
-- Fixed first four cases from val_pkg10_0 and eval_pkg16_0, seed 0, all four arms, soft budgets 15/30 minutes and hard guards +5 minutes each. Output reports/peak_mask_priority_20261106, separate from the six full queued jobs and main metrics. Partial data are exploratory and may be incomplete; no success claim from missing arms.
-- User must run the provided command on server 1; publishing this file does not mean it has started.
-
-## 2026-11-06 — user: Delta-memory study is SERVER 2 ONLY
-- New docs/DELTA_MEMORY_PROTOCOL.md and scripts/server2_delta* implement a standalone matched study on maskedkd. Do not add these arms to server 1's queues or change its existing GPU schedule. Server-1 peak/mask diagnostics continue separately.
-
-## 2026-11-06 — 사용자: Codex로 기본 MoTT 패키지형 개선, 서버2는 보고서 분석/독립 확인
-- 관리자만 Codex로 전환. 원본의 기존 학습·평가·큐·파일은 유지한다. 새 작업은 ~/R2E-codex 전용 worktree/branch에서 agent/CODEX_PKG_TASK.md와 docs/PKG_BASE_SERVER_PLAN.md를 따른다.
-- 마스크 개방 pilot은 pkg10/pkg16 모두 구제 없음. 마스크 불일치를 주원인으로 확정하지 않는다.
-- 서버2 Delta/GRU 18개 학습 완료. 반복 학습 대신 scripts/pkg_delta_report.py로 분석·보관. 다음 학습은 서버1에서 선정한 단일 개선안과 matched baseline의 독립 검증만.
+## 2026-11-07 10:20 KST — 사람: Codex 관리 기간 되돌림 (최우선)
+- 11/06 19:06 ~ 11/07 09:14 KST에 Codex가 넣은 커밋 21개 (관리자 교체 `agent/PROVIDER`·`agent/codex_loop.sh`, `train.py` hook, `day2_queue.json` peakmask 항목, delta/pkg_guard/curriculum/post-training/reserve/report_validation 연구 스크립트·문서·테스트 57개)를 **되돌렸다.** 코드 상태 = 11/06 12:37 KST (라운드 70, f687b21). 원본은 브랜치 `archive/codex-20261107`에 보존.
+- 이 기간 Codex 연구 (delta memory, pkg guard, curriculum, post-training, reserve, report validation, peak mask 진단)는 **보고서 근거로 쓰지 않는다.** 결과 파일이 서버에 남아 있어도 RESULTS에 넣지 마라. 사람이 따로 판단한다.
+- 서버의 Codex 프로세스는 사람이 `scripts/stop_codex.sh`로 멈춘다. 에이전트 관리자는 Claude (`agent/loop.sh`) 그대로.
+- 11/05 서버 2 실행기 (`server2_once`·`server2_fresh`, PROPOSALS L3·L4·FRESH)는 코드만 남겨 둔다. 결과가 올라와도 판정은 사람이 한다.
+- 다음 할 일 (에이전트): `train.py`가 바뀌었으므로 진행 중인 학습이 있으면 PROGRESS에 어떤 코드로 돌았는지 (git hash) 적어라. 서버 1 드라이버 큐 (F1·B1 남은 것)는 그대로 이어 간다. 새 시도 시작은 하지 않는다 (11/06 12:00 UTC 마감 지남).

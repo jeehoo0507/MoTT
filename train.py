@@ -218,10 +218,6 @@ def load_teacher(path, batch, dev, log):
                 replaced=0)
 
 
-def validation_score(values):
-    return float(np.mean([(r if r == r else 9.0) + 2 * f for r, f in values.values()]))
-
-
 def main():
     args = parse()
     if args.model in ("mott", "loop"):
@@ -317,8 +313,7 @@ def main():
                   cuda_rng=torch.cuda.get_rng_state_all() if dev.type == "cuda" else None,
                   teachers=[{k: (v.cpu() if torch.is_tensor(v) else v) for k, v in t.items()} for t in teachers],
                   pool_freqs=[pb.freqs for pb in pool],
-                  base=base_policy.state_dict() if base_policy is not None else None,
-                  study_state=study_state_hook() if "study_state_hook" in globals() else None)
+                  base=base_policy.state_dict() if base_policy is not None else None)
         torch.save(st, resume_path + ".tmp")
         os.replace(resume_path + ".tmp", resume_path)
 
@@ -341,7 +336,6 @@ def main():
                 pb.add_freqs([list(fr[b, pb.freqs.shape[1]:]) for b in range(pb.B)])
         if base_policy is not None and st.get("base") is not None:
             base_policy.load_state_dict(st["base"])
-        if "study_restore_hook" in globals():study_restore_hook(st.get("study_state"))
         t0 = time.time() - st["elapsed"]
         log(f"resumed from {resume_path}: iter {start_it}, {st['elapsed']/3600:.2f} h used, lam {lam:.2f}, "
             f"best iter {best_iter}, replaced {n_replaced}")
@@ -356,7 +350,6 @@ def main():
             log(f"time limit reached at iter {it}")
             break
         it_done = it
-        if "study_iteration_hook" in globals():study_iteration_hook(it,time.time()-t0)
         if hasattr(policy, "sample_R"):     # loop model: one R per iteration (rollout and backward must agree)
             policy.sample_R(rng)
         if pool:
@@ -447,7 +440,6 @@ def main():
                                 for b, fs in enumerate(add):
                                     adds[b] += fs
                     R = -cnt / n_ref[cb][:, None] - lam * (fail.float() + out["V"].float().view(nb, args.M))
-                    if "study_reward_hook" in globals():R=study_reward_hook(cnt,fail,out,n_ref[cb],lam)
                     if base_policy is None:
                         adv = ((R - R.mean(1, keepdim=True)) / (R.std(1, keepdim=True) + 1e-6)).view(-1)
                     else:   # greedy rollout of the frozen copy; its failure is the working-grid one (not certified)
@@ -537,7 +529,7 @@ def main():
             logf.flush()
             ck = dict(model=policy.state_dict(), **meta, iter=it)
             torch.save(ck, os.path.join(args.out, "last.pt"))
-            score = validation_score(v)
+            score = float(np.mean([(r if r == r else 9.0) + 2 * f for r, f in v.values()]))
             if score < best_val:
                 best_val, best_iter = score, it
                 torch.save(ck, os.path.join(args.out, "best.pt"))
@@ -548,15 +540,14 @@ def main():
             save_resume(it)
             t_ck = time.time()
             log(f"  resume checkpoint at iter {it}")
-    if getattr(args,"force_final_validation",False) or not os.path.exists(os.path.join(args.out, "best.pt")) or not last_val:
+    if not os.path.exists(os.path.join(args.out, "best.pt")) or not last_val:
         v = validate(policy, val_sets, args, cfg, dev)
         last_val = v
         ck = dict(model=policy.state_dict(), **meta, iter=it_done)
         torch.save(ck, os.path.join(args.out, "last.pt"))
-        final_score=validation_score(v)
-        if not os.path.exists(os.path.join(args.out, "best.pt")) or (getattr(args,"force_final_validation",False) and final_score<best_val):
+        if not os.path.exists(os.path.join(args.out, "best.pt")):
             torch.save(ck, os.path.join(args.out, "best.pt"))
-            best_val, best_iter = final_score, it_done
+            best_val, best_iter = float(np.mean([(r if r == r else 9.0) + 2 * f for r, f in v.values()])), it_done
     if pool and args.stage == "rl":
         os.makedirs(os.path.join(args.out, "teacher_final"), exist_ok=True)
         for name, tch in zip(pool_names, teachers):
