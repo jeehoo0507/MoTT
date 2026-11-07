@@ -10,3 +10,7 @@ Round 94 was a routine status check. Nothing broke and I changed no settings.
 - **M1 screening:** still waiting for server 2's `r2pkfcm1` records. Only `lo_pkg_r2pkfcm1` has arrived (held-out pkg 0.74 vs 0.84), and the rule doesn't allow a verdict until both are in.
 
 PROGRESS.md has the round 94 entry with "결정: 큐·설정 그대로" ("decision: keep queue and settings as they are"). It is committed and pushed to `r2e main` as 9697e1c.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   9697e1c..8345b53  main -> main
