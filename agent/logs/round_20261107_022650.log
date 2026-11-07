@@ -1,3 +1,22 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 67 is done and pushed to `r2e main` (commit 392bf19). No experiment finished this round, so RESULTS.md is unchanged.
+
+**Status (02:30 UTC)**
+- **GPU:** the G1 run `r2pkfc` is in distillation at iteration 1100. It set a new best score of 1.918 at iteration 1000, and has no OOM or verification errors. Training should end around 03:55 UTC. Then `lo_pkg_r2pkfc` (the same model trained without pkg boards) runs until about 05:56. This is the order the human set, and I didn't change it.
+- **CPU:** the LS16 evaluation `eval_ip16_1` has been running for about 16 hours. The side_slot evaluator is waiting for the two G1 runs to finish. Pod memory is 22.7 / 60 GiB and the OOM-kill count is still 2.
+- **Instructions:** there are no new human commits on the remote.
+
+**What I did**
+- Restarted the two background helpers (`report_watch`, `resume_agent`). The driver was already running.
+- Ran `g1_screen.py` before any results exist to check it works: it reports "waiting" for every comparison.
+- Added `scripts/g1_confirm_queue.py`. If G1 passes screening, it adds the 7 confirmation runs to the end of the training queue, in the order PROPOSALS gives, changing only the seed. By default it only prints the entries. I ran it that way, and the 7 entries match PROPOSALS and the existing `lo_pkg_r2pkfc` settings. It has not touched the queue.
+- 결정 (logged in PROGRESS.md): the queue and settings stay as they are. Confirmation runs go in only if G1 passes screening.
+
+**Next round**
+1. After `r2pkfc` finishes, side_slot runs its 10-port evaluation.
+2. After `lo_pkg_r2pkfc` is evaluated, run `g1_screen.py`.
+   - **If G1 passes:** run `g1_confirm_queue.py r2pkfc --apply` and add the new runs to side_slot. The 7 runs take about 14 hours, so they start before the 11/08 03:00 UTC cutoff for new training.
+   - **If it fails:** record "G1 효과 없음" in RESULTS ABLATIONS and move the deferred LS16 jobs back into the CPU queue.
+3. The next DAILY.md is due 11/08 around 01:00 UTC.
