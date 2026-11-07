@@ -11,3 +11,7 @@ Already up to date.
 - **기록:** PROGRESS.md에 라운드 87 절을 추가하고 `be4e3f3`으로 커밋해 `r2e/main`에 push했습니다. 원격에 반영된 것까지 확인했습니다.
 
 다음 라운드 할 일은 라운드 86 목록 그대로입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   be4e3f3..90ecf5f  main -> main
