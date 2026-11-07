@@ -1,0 +1,2 @@
+9 pool files -> runs/pool_v1, 4 workers
+[   184s] train_rnd12_1    built     181s F=109 rounds 5 g+p ok 1.00 count 6.9375

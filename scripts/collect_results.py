@@ -652,7 +652,14 @@ def final_leave_out_table(by):
             cm = "–" if any(x is None for x in c) else f"{np.mean(c):+.2f}"
             lines.append(f"| {t} 10 | {desc} | {fmt3(lo, False)} | {fmt3(fu, False)} | {fmt3(b)} | {fmt3(c)} | {cm} | "
                          f"{verdict(b, c)} |")
-    return lines + [""] + g1_structure_switch_lines(by)
+    return lines + ["", G1_HUMAN_VERDICT, ""] + g1_structure_switch_lines(by)
+
+
+# QUEUE 11/07 22:32 KST (human): G1 confirmation verdict by rule (b'), recorded verbatim
+G1_HUMAN_VERDICT = ("**G1 확인 판정 (사람, 11/07 22:32 KST, PROPOSALS G1 확인 규칙 (b')): 미통과 → G1 채택 안 함.** "
+                    "뺀 pkg `lo_pkg_r2pkfc` 0.84 / 0.78 / 0.66 vs `lo_pkg_r0` 0.78 / 0.84 / 0.78 → seed 1·2에서 ≤ 0. "
+                    "`lo_pcb_r2pkfc`, `lo_pcb_r2pkfc_s1`, `lo_pcb_r2pkfc_s2`는 못 돌림 (G1 (b') 미통과로 중단); "
+                    "`r2pkfc_s2`는 같은 유형 3 seed 표를 채우려고 끝까지 돌림, 16·20칸 (G1 보충 2)도 끝까지.")
 
 
 def g1_structure_switch_lines(by):
@@ -1589,8 +1596,13 @@ TRIED_MODS = [
      None, "PROPOSALS P3"),
     ("G1", "P1 + 주파수 궁합 편향 `--fc_bias` (기준 P1, 증류+RL 전체)", "r2pkfc_rl", "r2pk_rl", None, None,
      "거르기 통과 (seed 0, `g1_screen.py`): 뺀 pkg `lo_pkg_r2pkfc_rl` − `lo_pkg_r2pk_rl` +0.14 [−0.02, +0.30] ≥ +0.10 "
-     "(같은 종류 pkg +0.06는 미달), pcb·ip ≥ −0.06, 개수비 셋 다 ≤ 1.05 → 확인 7 run 진행 중 (F1 규칙, seed 3개); "
-     "채택 아님", "PROPOSALS 11/07 G1, PROGRESS 11/07 라운드 76"),
+     "(같은 종류 pkg +0.06는 미달), pcb·ip ≥ −0.06, 개수비 셋 다 ≤ 1.05 → 확인 run (F1 규칙, seed 3개): "
+     "**(b') 미통과 (사람 판정 11/07 22:32 KST; 뺀 pkg seed 1·2에서 `lo_pkg_r0` 이하) → 채택 안 함**; "
+     "뺀 pcb 3 run 못 돌림", "PROPOSALS 11/07 G1, QUEUE 11/07 22:32 KST, PROGRESS 11/07 라운드 76·96"),
+    ("M1", "P1+G1 + 모드↔모드 로그 주파수 거리 편향 `--mm_bias` (서버 2)", "r2pkfcm1_rl", "r2pkfc_rl", None, None,
+     "기준 미달 (사람 중단 11/07 22:37 KST, 거르기 미완료): 뺀 pkg `lo_pkg_r2pkfcm1` 0.74 vs `lo_pkg_r2pkfc` 0.84 "
+     "−0.10 [−0.22, +0.02] (`m1_screen.py`) → (i)는 같은 유형 pkg ≥ 0.94에만 걸림; `r2pkfcm1` 못 돌림 (사람 중단, "
+     "서버 2 GPU를 R로)", "PROPOSALS 11/07 M1, QUEUE 11/07 22:37 KST, PROGRESS 11/07 라운드 93·96"),
     ("C1' G-inf", "보정 피크 만족 게이트를 추론에만 `--env_feat mott_pkgate` (학습 없음, 같은 가중치)",
      "r2pk_rl@mott_pkgate", "r2pk_rl", None, None,
      "효과 없음 (`c1p_screen.py`): (i) 같은 종류 pkg −0.02 < +0.10 탈락; (ii)·(iii) 통과 → \"추론 게이트만으로 성립\" 아님. "

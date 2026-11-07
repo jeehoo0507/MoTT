@@ -1,5 +1,14 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 13:30 UTC, 라운드 95 — G1 확인 3/7 `r2pkfc_s1` pcb16 [50] 끝 (0.92), pcb20_0 끝, pcb20_1 진행; 4/7 `r2pkfc_s2` 증류 끝 → RL 중; 서버 2 `r2pkfcm1` 기록 대기)
+# PROGRESS (갱신 2026-11-07 13:55 UTC, 라운드 96 — 사람 QUEUE 22:32/22:37 KST: G1 (b') 미통과·채택 안 함, M1 사람 중단 (기준 미달), 서버 1 GPU → R `lo_pkg_rnd_s1/_s2/_r0`; rnd 풀 생성 중; 4/7 `r2pkfc_s2` RL 중)
+
+## 라운드 96 (2026-11-07 13:42~ UTC)
+- `git pull` (루프, 13:42): **새 사람 커밋 2개** ece1a02 (22:32 KST: R 무작위 물리 학습 `rnd`, G1 확인 종료 (b') 미통과, 서버 1 큐 → `lo_pkg_rnd_s1`, `lo_pkg_rnd_s2`, 대조군 `lo_pkg_rnd_r0` (`after: runs/pool_v1/rnd.ok`), `lo_pcb_r2pkfc*` 3개는 removed) · 549a30d (22:37 KST: M1 `r2pkfcm1` 서버 2에서 사람 중단, 기준 미달).
+- 풀 생성: QUEUE "지금 바로" 항목 (`build_pools.py --only train --techs rnd && touch rnd.ok`)은 드라이버가 cpu 맨 앞 항목으로 13:42에 이미 시작 (`agent/logs/build_rnd.log`, 9 파일 4 worker) → 내가 따로 돌리지 않음 (같은 파일 두 번 쓰기 방지). 끝나면 `rnd.ok` → 드라이버가 `r2pkfc_s2` 다음에 `lo_pkg_rnd_s1` 시작.
+- side_slot 다시 띄움 (pid 1680969): 이름 목록 `r2pkfc_s2 lo_pkg_rnd_s1 lo_pkg_rnd_s2 lo_pkg_rnd_r0` (옛 목록의 `lo_pcb_r2pkfc*`는 안 돔, rnd run 10칸 평가를 RL 끝나자마자 하려고). 옛 side_slot은 쉬는 중이었음 (마지막 END 12:41).
+- RESULTS (`collect_results.py` 고침 → 다시 생성 1140 기록): F1 표 아래 "G1 확인 판정 (사람): (b') 미통과 → 채택 안 함, `lo_pcb_r2pkfc*` 못 돌림"; "시도한 수정" G1 행 판정 갱신, **M1 행 추가** (기준 미달, 사람 중단; 뺀 pkg −0.10 [−0.22, +0.02], `r2pkfcm1` 못 돌림). `m1_screen.py` 대기 끝.
+- 상태: 4/7 `r2pkfc_s2` RL 진행 (끝 ~14:35 예상), 드라이버 CPU 줄 `r2pkfc_s1_rl` ip16_0 (G1 보충 2, 남은 것 계속). pod 24.1 GiB / 60, oom_kill 2.
+- 결정: 학습 조건·arm·무작위 범위·큐 순서 그대로 (사람 지시). R 판정은 `r_screen.py`로 3 seed 모인 뒤 RESULTS 표만, 확인 run (`r2pk_rnd` 등)은 사람 지시 대기.
+- 할 일 (다음): (1) `rnd.ok` 생김 확인 (~13:55). (2) `r2pkfc_s2` 끝 → 10칸 평가 (side_slot) → 같은 유형 3 seed 표, G1 구조 교체 줄 seed 3개 완성; `queue_scale_g1s` "appended 12" 확인. (3) `lo_pkg_rnd_s1` 시작 확인 → 첫 RL it에서 rnd 풀 로딩·oom·cert-bad 확인 (새 kind라 처음). (4) 서버 2 R seed 0 기록 push되면 merge. (5) 11/08 03:00 UTC 새 학습 금지는 R 확인 run에 한해 09:00 UTC까지 (사람). DAILY 다음 11/08 01:30 UTC.
 
 ## 라운드 95 (2026-11-07 13:26~ UTC)
 - `git fetch r2e` (13:26): 새 사람 커밋 없음 (QUEUE 마지막 19:28 KST 그대로). 서버 2 `r2pkfcm1` 기록 아직 없음 → `m1_screen.py` 대기.
