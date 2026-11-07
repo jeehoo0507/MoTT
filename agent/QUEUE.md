@@ -1,5 +1,12 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 22:32 KST — 사람: G1 확인 종료 (미통과), 남은 GPU는 R (`lo_pkg_rnd` seed 1·2, 대조군 `lo_pkg_rnd_r0`)
+- **G1 판정 (사람, PROPOSALS G1 확인 규칙 (b')):** 뺀 pkg `lo_pkg_r2pkfc` 0.84/0.78/0.66 vs `lo_pkg_r0` 0.78/0.84/0.78 → seed 1·2에서 ≤ 0 → **(b') 미통과, G1 채택 안 함.** RESULTS에 그렇게 적어라. `r2pkfc_s2` (지금 도는 것)는 끝까지 두고 10칸 평가까지 해라 (같은 유형 3 seed 표 완성). 그 뒤 `lo_pcb_r2pkfc`, `lo_pcb_r2pkfc_s1`, `lo_pcb_r2pkfc_s2`는 **돌리지 않는다** — day2_queue.json에서 사람이 뺐다; RESULTS에 "못 돌림 (G1 (b') 미통과로 중단)". "G1 보충 2" 16·20칸 평가(`r2pkfc_s1`, `r2pkfc_s2`)는 CPU라 그대로 끝내라.
+- **R (PROPOSALS "11/07 R" 그대로):** day2_queue.json train 끝에 사람이 `lo_pkg_rnd_s1`, `lo_pkg_rnd_s2`, `lo_pkg_rnd_r0` 를 넣었다 (`after: runs/pool_v1/rnd.ok`). cpu 맨 앞에 풀 생성 항목도 넣었다. **네가 할 일, 지금 바로 (이 라운드):** `.venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 4 --only train --techs rnd && touch runs/pool_v1/rnd.ok` (CPU 4 worker, 약 10분; 서버 2와 같은 파일이 나온다 — 파일별 seed 고정). 풀이 생기면 드라이버가 `r2pkfc_s2` 다음에 rnd run을 올린다. 학습 조건·arm·무작위 범위는 바꾸지 마라.
+- 판정은 `scripts/r_screen.py` (서버 2 seed 0 기록은 사람이 push). 3 seed가 모이면 RESULTS에 표만 적고 **확인 run(r2pk_rnd 등)은 사람 지시를 기다려라.**
+- M1: 서버 2 `r2pkfcm1` 기록이 push되면 `m1_screen.py` 판정을 RESULTS에 적어라 (뺀 pkg −0.10이라 (i)는 같은 유형 pkg ≥ 0.94에만 걸림).
+- 11/08 12:00 KST 새 학습 금지는 R 확인 run에 한해 18:00까지로 늦춘다 (사람 결정, PROPOSALS R).
+
 ## 2026-11-07 19:28 KST — 사람: M1 (`--mm_bias`)은 서버 2에서 사람이 돌린다. 서버 1은 건드리지 마라
 - PROPOSALS "11/07 M1" 그대로. 코드 `decap_loop/model.py` (MoTT.mm_bias, 블록 mode_self에 bias), `train.py --mm_bias`, `scripts/smoke_mm_bias.py` (CPU 통과), `scripts/server2_m1.sh`. **서버 1에서는 M1 run을 돌리지 마라** — G1 확인 7 run과 "G1 보충 2" 평가가 먼저. 사람이 서버 2 기록(`runs/2026-11-07s2/{lo_pkg_r2pkfcm1,r2pkfcm1}_rl/eval`)을 push하면 pull해서 `scripts/m1_screen.py`로 거르기 판정만 RESULTS에 적어라 (확인 run 큐는 사람 지시 뒤).
 - C1 판정 (서버 2 기록 push됨, 11/07 19:24): `r2pk_vsi` − `r2pk_ctl` pkg −0.02 [−0.16, +0.12], pcb +0.02, ip +0.02, 개수비 pcb 1.071 → **기준 미달**. RESULTS C1 표에 적어라. 참고: 대조군(+1 h RL만) pkg 0.86 vs `r2pk_rl` 0.78 (잡음 범위, 보고만).

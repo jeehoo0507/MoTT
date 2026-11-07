@@ -73,6 +73,14 @@ def main():
         dist_extra = f" --iters {int(toks[i + 1])}"
         a.distill_hours = max(a.distill_hours, 3.0)   # the iteration cap ends it, not the clock
         a.arm = " ".join(toks[:i] + toks[i + 2:])
+    # PROPOSALS 11/07 R: an arm token "--rl_pool_glob G" gives the rl stage its own --pool_glob (appended after the
+    # arm, argparse keeps the last value); the distill stage keeps the arm's --pool_glob (teacher pools unchanged)
+    rl_extra = ""
+    toks = a.arm.split()
+    if "--rl_pool_glob" in toks:
+        i = toks.index("--rl_pool_glob")
+        rl_extra = f" --pool_glob {toks[i + 1]}"
+        a.arm = " ".join(toks[:i] + toks[i + 2:])
     pools = f"--pool {a.pool} {tdir}--seed {a.seed}"
     dist, rl = f"{base}_distill", f"{base}_rl"
     if a.init_from:   # 11/02: a one-change rl re-run paired with an existing rung shares its distilled init
@@ -83,7 +91,7 @@ def main():
         init = "" if a.skip_distill else f"--init {dist}/best.pt "   # --skip_distill: rl from random init
         if a.init_from:
             init = f"--init {a.init_from} "
-        sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} {init}--out {rl}", log)
+        sh(f"{PY} train.py --stage rl {a.arm} {a.common} {pools} --hours {a.rl_hours} {init}--out {rl}{rl_extra}", log)
     if not a.skip_eval:
         for tag, run in ((("distill", dist),) if not a.skip_distill else ()) + (("rl", rl),):
             sh(f"{PY} scripts/eval_policy.py --pool {a.pool} --sets {a.eval_sets} --policy {a.name}_{tag}={run}/best.pt "

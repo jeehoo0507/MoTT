@@ -14,6 +14,7 @@ Seeds are fixed per file, so the pools are reproducible. Each worker runs single
 Run: .venv/bin/python scripts/build_pools.py [--out runs/pool_v1] [--workers 14] [--only eval,val,train]
 """
 import argparse
+import dataclasses
 import json
 import os
 import sys
@@ -25,7 +26,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TRAIN_SIZES, TRAIN_K, TRAIN_N = (8, 10, 12), 3, 16
 EVAL_SIZES, EVAL_K, EVAL_N = (10, 16, 20), 2, 25
 VAL_N = 16
-SEED = {"pcb": 0, "pkg": 100000, "ip": 200000, "chip": 300000}   # chip: zero-shot kind, eval only (techs.ZS_TECHS)
+SEED = {"pcb": 0, "pkg": 100000, "ip": 200000, "chip": 300000,   # chip: zero-shot kind, eval only (techs.ZS_TECHS)
+        "rnd": 400000}   # rnd: randomized-physics training kind (techs.sample_rnd; PROPOSALS 11/07 R), train only
 ZS_DIFFICULTY = {"chip": (0.02, 0.2)}   # = techs.HARD; probe 11/03 (scripts/probe_chip.py): g+p 4/4 working grid, 3~14 decaps
 
 
@@ -63,20 +65,24 @@ def build(job):
     path = os.path.join(out, name + ".pkl")
     if os.path.exists(path):
         return name, "exists", 0.0, None
-    cfg = ALL_TECHS[tech]
+    if tech == "rnd":   # one randomized PDNConfig per pool file, seeded by the file (identical on every machine)
+        from decap_loop.techs import sample_rnd
+        cfg, diff = sample_rnd(np.random.default_rng(seed + 1))
+    else:
+        cfg, diff = ALL_TECHS[tech], DIFFICULTY[tech]
     t = time.time()
     torch.manual_seed(seed)
-    batch = sample_batch(n, size, size, cfg, np.random.default_rng(seed), difficulty=DIFFICULTY[tech])
+    batch = sample_batch(n, size, size, cfg, np.random.default_rng(seed), difficulty=diff)
     t_gen = time.time() - t
     r, info = cutting_plane(lambda b: greedy(b, cfg), batch, cfg, max_rounds=10)
     ok = info["worst"] <= np.log10(1.01)
     cnt = (r["occ"] >= 0).sum(1).cpu().numpy()
     res = {"greedy+prune": dict(occ=r["occ"].cpu().numpy(), worst=info["worst"], ok=ok, count=cnt)}
     save_bank(path, batch, res)
-    meta = dict(name=name, tech=tech, size=size, n=n, seed=seed, difficulty=DIFFICULTY[tech], F=int(batch.freqs.shape[1]),
+    meta = dict(name=name, tech=tech, size=size, n=n, seed=seed, difficulty=diff, F=int(batch.freqs.shape[1]),
                 rounds=int(info["rounds"]), gp_ok=float(ok.mean()), gp_count_mean=float(cnt[ok].mean()) if ok.any() else None,
                 gp_count=cnt.tolist(), shapes=batch.shapes, targets=batch.targets, probes=int(batch.P),
-                t_gen=t_gen, t_total=time.time() - t)
+                t_gen=t_gen, t_total=time.time() - t, cfg=dataclasses.asdict(cfg))
     json.dump(meta, open(os.path.join(out, name + ".json"), "w"), indent=1)
     return name, "built", time.time() - t, meta
 
@@ -91,7 +97,8 @@ def main():
     ap.add_argument("--val_k", type=int, default=1, help="val files per kind (val_{tech}10_0 .. _{k-1})")
     ap.add_argument("--eval_n", type=int, default=EVAL_N,
                     help="instances per eval file (20-cell: 8, QUEUE 2026-10-29 03:10 item 5 = PROPOSALS (c))")
-    ap.add_argument("--techs", default="", help="kinds to build (default: techs.TECHS); 'chip' = zero-shot kind, use "
+    ap.add_argument("--techs", default="", help="kinds to build (default: techs.TECHS); 'rnd' = randomized-physics "
+                    "training kind (--only train, same --out as the presets); 'chip' = zero-shot kind, use "
                     "--only eval and a separate --out (runs/pool_zs) so the driver's eval globs never see it")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)

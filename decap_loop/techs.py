@@ -50,6 +50,35 @@ CHIP = dataclasses.replace(
 ZS_TECHS = {"chip": CHIP}
 ALL_TECHS = {**TECHS, **ZS_TECHS}
 
+# Randomized-physics kind "rnd" (PROPOSALS 11/07 R, human): every electrical constant that shapes the resonance
+# structure is drawn log-uniformly between its PCB and IP value, extended by RND_MARGIN of the log-gap on both
+# sides, independently per constant; the decap library is interpolated (log) between the PCB and IP libraries on
+# its own draw `lam` (lam 0 = PCB library, 1 = IP library, outside = extrapolated). The PKG preset is never used,
+# so a policy trained on pcb + ip + rnd has still never seen a package board. Difficulty follows the library
+# (tiny IP-like capacitors only meet easy targets, as techs.DIFFICULTY): HARD when lam < RND_EASY_LAM else EASY.
+RND_MARGIN, RND_EASY_LAM = 0.3, 0.6
+
+
+def sample_rnd(rng):
+    """(PDNConfig, difficulty) for one randomized-physics pool file. rng: numpy Generator (seeded per file)."""
+    import numpy as np
+
+    def lu(a, b, margin=RND_MARGIN):
+        lo, hi = sorted((np.log(a), np.log(b)))
+        g = hi - lo
+        return float(np.exp(rng.uniform(lo - margin * g, hi + margin * g)))
+
+    lam = float(rng.uniform(-RND_MARGIN, 1.0 + RND_MARGIN))
+    lib = tuple(tuple(float(np.exp(np.log(x0) + lam * (np.log(x1) - np.log(x0)))) for x0, x1 in zip(d0, d1))
+                for d0, d1 in zip(PCB.decaps, IP.decaps))
+    cfg = dataclasses.replace(
+        PCB,
+        cell_size=lu(PCB.cell_size, IP.cell_size), diel_thickness=lu(PCB.diel_thickness, IP.diel_thickness),
+        eps_r=float(rng.uniform(3.0, 4.5)), tan_d=lu(0.01, 0.02, 0.0),
+        metal_thickness=lu(PCB.metal_thickness, IP.metal_thickness),
+        vrm_r=lu(3e-3, 5e-3, 0.0), vrm_l=lu(PCB.vrm_l, IP.vrm_l), decaps=lib)
+    return cfg, (HARD if lam < RND_EASY_LAM else EASY)
+
 
 def describe(name):
     cfg = ALL_TECHS[name]

@@ -567,22 +567,33 @@
    "seed": 2
   },
   {
-   "name": "lo_pcb_r2pkfc",
-   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
-   "seed": 0
+   "name": "lo_pkg_rnd_s1",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl",
+   "seed": 1,
+   "after": "runs/pool_v1/rnd.ok"
   },
   {
-   "name": "lo_pcb_r2pkfc_s1",
-   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
-   "seed": 1
+   "name": "lo_pkg_rnd_s2",
+   "arm": "--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl",
+   "seed": 2,
+   "after": "runs/pool_v1/rnd.ok"
   },
   {
-   "name": "lo_pcb_r2pkfc_s2",
-   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
-   "seed": 2
+   "name": "lo_pkg_rnd_r0",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl",
+   "seed": 0,
+   "after": "runs/pool_v1/rnd.ok"
   }
  ],
  "cpu": [
+  {
+   "name": "build rnd pool (PROPOSALS 11/07 R)",
+   "cmd": ".venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 4 --only train --techs rnd && touch runs/pool_v1/rnd.ok",
+   "done": [
+    "runs/pool_v1/rnd.ok"
+   ],
+   "log": "agent/logs/build_rnd.log"
+  },
   {
    "name": "e0plus10 type0",
    "cmd": ".venv/bin/python scripts/analyze_gp_one_type.py --sets eval_pcb10_0,eval_pcb10_1,eval_pkg10_0,eval_pkg10_1,eval_ip10_0,eval_ip10_1 --type 0 --skip_existing --out runs/analysis/gp_one_type",
@@ -2690,6 +2701,24 @@
    "rl_only": true,
    "after": "runs/analysis/smoke_rlonly.ok",
    "removed": "11/02 07:10: collapsed to all-skip (val fail 1.00 it 100/200, loss 0.000 from it 75 = zero advantage); lam0 1 makes 'place nothing and fail' beat a feasible start. Replaced by bm_manoharan_rlonly_l20."
+  },
+  {
+   "name": "lo_pcb_r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 0,
+   "why": "G1 (b') fail, human 11/07 22:32 KST"
+  },
+  {
+   "name": "lo_pcb_r2pkfc_s1",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 1,
+   "why": "G1 (b') fail, human 11/07 22:32 KST"
+  },
+  {
+   "name": "lo_pcb_r2pkfc_s2",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pkg*.pkl,train_ip*.pkl --val_pools val_pkg10_0,val_ip10_0",
+   "seed": 2,
+   "why": "G1 (b') fail, human 11/07 22:32 KST"
   }
  ],
  "cpu_deferred": [
