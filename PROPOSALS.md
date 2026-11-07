@@ -305,6 +305,11 @@
 - **보고 (판정 규칙):** 10칸 세 종류 50문제, 정책 단독, ablation − `r2pk_rl` 짝지은 성공률 차와 개수비 (bootstrap 95% CI). 어떤 종류에서든 CI 상한 < 0 **이고** 점추정 ≤ −0.16 (seed 잡음 d*)이면 "그 설계를 빼면 나빠진다"로 쓴다. 아니면 "seed 0에서 차이를 확인하지 못함"으로 쓰고 설계 근거로 쓰지 않는다. seed를 더하지 않는다.
 - 가장 가까운 선행: Residual Policy Learning (A2), cutting plane (A1) / 다른 점: 기여 아님, 우리 RL 설계의 ablation.
 
+## 11/07 V: 뺀 pkg 수리 포함 평가 (보고만, 학습 없음) — 사람, 11/07 22:42 KST, 평가 전에 고정
+- **왜:** 같은 유형 pkg는 수리 포함 0.78 → 1.00 (실패 대부분 근소). 뺀 pkg에서도 그런지 = "정책 + 정밀 검사 피드백"의 범용화.
+- **무엇 (서버 1, 사람이 직접 실행, CPU):** `lo_pkg_r2pk{,_s1,_s2}_rl`, `lo_pkg_r0{,_s1,_s2}_rl` 각각 `eval_pkg10_0`, `eval_pkg10_1`을 `--repair 4` (기록 `*+rep4`, 각 run 폴더).
+- **읽기 (결과 전에 고정, 보고만):** 3 seed 묶음 성공률. MoTT+P1+수리 ≥ 0.95이면 "정밀 검사 피드백을 붙이면 처음 보는 pkg도 거의 해결"로 쓴다. 좌표+수리와의 차·둘 다 성공 개수비는 숫자만. 최종 구조 결정에는 쓰지 않는다.
+
 ## 11/07 R: 물리 상수 무작위 학습 (randomized-physics kind `rnd`) — 사람, 11/07 22:32 KST, 어떤 run도 돌기 전에 고정
 - **왜 (진단):** 뺀 pkg 3 seed 평균 — 좌표 r0 0.80 > 모달 특징 r1 0.75 > MoTT+P1 0.71 > MoTT 0.62 (pcb는 반대: 0.64 → 0.90). 모달일수록 pkg로 못 옮겨 간다 = 모드 토큰의 **분포 이동**이지 구조 문제가 아니다 (구조 후보 G1·M1, RL 절차 후보 C1·C1' 모두 기준 미달). 학습 판의 물리 상수가 프리셋 2개(pcb·ip)뿐이라 모델이 거기에만 맞는다. 처방 = 학습 분포를 넓히는 domain randomization (기존 기법; 기여 아님). 주장 가능한 것: PDN 공진 구조를 겨냥한 무작위화 설계 + **표현 × 학습 분포 상호작용** (좌표 모델도 같은 무작위 판으로 학습해 2×2로 읽음).
 - **무엇:** `decap_loop/techs.sample_rnd` — 셀 크기·유전체 두께·금속 두께·VRM L을 PCB↔IP 값 사이 log-uniform (양쪽 0.3 log-gap 바깥까지), eps_r U(3.0, 4.5), tan_d·VRM R은 두 프리셋 사이, 부품 라이브러리는 PCB↔IP 라이브러리를 자체 draw λ∈[−0.3, 1.3]로 log 보간. **PKG 프리셋은 쓰지 않는다** (pkg 판은 여전히 한 번도 안 봄). 난이도: λ < 0.6이면 HARD, 아니면 EASY (IP 규칙). 풀 `runs/pool_v1/train_rnd{8,10,12}_{0,1,2}.pkl` (파일마다 다른 상수, seed 400000+, 어느 서버에서 만들어도 동일; `build_pools.py --only train --techs rnd`). 증류는 기존 pcb·ip 선생님 풀 그대로, **RL 단계에만** pcb·ip·rnd 풀 (`run_rung.py` arm 토큰 `--rl_pool_glob`, 비율 1:1:1 파일 수). CPU smoke `scripts/smoke_rnd_pool.py` 통과; 서버 2 RL 2분 smoke는 runner가 먼저 돈다.

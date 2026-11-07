@@ -1,5 +1,8 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 22:42 KST — 사람: 서버 1에서 사람이 직접 CPU 평가 하나 (PROPOSALS "11/07 V", 보고만)
+- `lo_pkg_r2pk*`·`lo_pkg_r0*` (seed 0·1·2) 뺀 pkg 10칸 수리 포함 평가를 사람이 nohup으로 돌린다 (`agent/logs/heldout_pkg_rep4.log`). **죽이지 마라** (메모리 작음, 10칸). 기록 `*+rep4.json`이 생기면 RESULTS에 PROPOSALS V 읽기대로 표 하나 (보고만).
+
 ## 2026-11-07 22:37 KST — 사람: M1 중단 (서버 2 `r2pkfcm1` 학습을 사람이 멈춤)
 - M1 판정: **사람이 중단, 기준 미달로 기록.** 근거: 뺀 pkg `lo_pkg_r2pkfcm1` 0.74 vs G1 `lo_pkg_r2pkfc` 0.84 (−0.10 [−0.22, +0.02]) → (i)는 같은 유형 pkg ≥ 0.94에만 걸려 사실상 불가; 서버 2 GPU를 R seed 0에 쓴다. `r2pkfcm1` 기록은 없음 ("못 돌림, 사람 중단"). RESULTS "시도한 수정"에 그렇게 한 줄. `m1_screen.py` 대기는 끝.
 
