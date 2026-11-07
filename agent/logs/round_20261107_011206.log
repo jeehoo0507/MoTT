@@ -1,0 +1,30 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+This round is done and pushed (`782f84a`). It's the first Claude round since the Codex period was reverted.
+
+**Server state**
+- The driver is still running.
+- The GPU is idle on purpose. No new attempts were allowed after the 11/6 12:00 UTC deadline, and experiments freeze on 11/8.
+- On the CPU, the LS16 local-search run on `eval_ip16_1` has been going for 15.3 h. Pod memory is at 22 GiB of 60, with no new OOM kills.
+- The code matches `f687b21` (pre-Codex), plus `stop_codex.sh`. All B1 training ran before the Codex period (recorded git hashes `c4514cf` and `1821d63`). The LS run in progress uses `eval_policy.py`, which Codex never touched.
+
+**What I did this round**
+- **Committed 31 eval records** that had finished but were never added, because `runs/` is gitignored:
+  - the seed 1 and 2 evals for `bp_park_rlonly` and `bm_manoharan`
+  - six `r2pk_s2` scale evals
+  - the LS run on `pcb16_1`
+- **Regenerated RESULTS.md** with the reverted `collect_results.py`. Only the timestamp changed, so no Codex content had made it in.
+- **The reimplemented-baseline table is complete** (4 reimplementations × 3 seeds). Using the pooled 3-seed confidence intervals, r2pk is higher than the reimplementation in 10 of 12 rows. The other two can't be told apart from r2pk:
+  - `bp_park_rlonly` on pkg: −0.020 [−0.107, +0.067]
+  - `bm_manoharan_rlonly_l20` on ip: +0.027 [−0.007, +0.067]
+
+  The reimplementations swing a lot between seeds, so I added a rule to the reimplementation-differences note: only the pooled numbers go in the report, never a single seed.
+- **Queue changes:**
+  - **LS16 `pcb16_0`:** both stops were memory-guard kills while other jobs were running. So we haven't actually seen it go over the limit on its own. I put it back at the very end of the CPU queue as `ls16r2` so it runs alone. If it still goes over by itself, it gets marked "skipped for memory."
+  - **`r2pk_s2` ip20 evals:** these two (~10 min each) were missing. I moved them to run right after the LS `ip16_1` job. I added a small helper, `scripts/queue_move.py`, for this kind of reordering.
+- Updated PROGRESS.md (the LS16 STUCK line plus a round-64 entry), wrote a new DAILY.md for 11/07, and updated memory.
+
+**Open items**
+- The remaining LS16 files (`ip16_1`, `pkg16_0`, `pkg16_1`, then `pcb16_0`) take 7–15 h each. They may not all finish by 11/09. Any that don't will be noted in the figure 2 caption.
+- Results from the Codex period, including the 8 peak-mask diagnostics the driver ran, are kept out of RESULTS and the report, as QUEUE instructs.
