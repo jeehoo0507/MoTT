@@ -1,0 +1,28 @@
+[
+  {
+    "success": false,
+    "rc": 1,
+    "inside_write_verified": false,
+    "outside_write_denied": true,
+    "stdout": "",
+    "stderr": "bwrap: Failed to make / slave: Permission denied\n",
+    "prefix": []
+  },
+  {
+    "success": false,
+    "rc": 1,
+    "inside_write_verified": false,
+    "outside_write_denied": true,
+    "stdout": "",
+    "stderr": "unshare: cannot change root filesystem propagation: Permission denied\n",
+    "prefix": [
+      "/usr/bin/unshare",
+      "--user",
+      "--map-root-user",
+      "--mount",
+      "--propagation",
+      "private",
+      "--"
+    ]
+  }
+]

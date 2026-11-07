@@ -1,0 +1,7 @@
+{
+  "stage": "blocked_sandbox",
+  "reason": "Container denies required bubblewrap mount operation",
+  "model_invoked": false,
+  "worktree": "/home/coder/R2E-codex",
+  "last_report": "/home/coder/R2E-codex/reports/pkg_base/last_round.md"
+}
