@@ -1,5 +1,15 @@
-STUCK (해제 시도 중, 11/05 08:10; 11/07 02:00 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**, ip16_1 진행 중. **pcb16_0만 chunk 판 2번 중단** (둘 다 다른 작업과 겹침). 남은 LS16 (pcb16_0, pkg16_0·1)은 QUEUE 11/07에 따라 `cpu_deferred`로 G1 뒤로 미룸 (`scripts/queue_defer.py --restore`로 되돌림).
-# PROGRESS (갱신 2026-11-07 04:35 UTC, 라운드 74 — 사람 QUEUE 13:25 KST: `r2pkfc_rl` 16·20칸 평가 12파일 (보고만) 큐; GPU `lo_pkg_r2pkfc` 증류 it 1250 (끝 ~05:57), CPU 드라이버 `ls16c eval_ip16_1` 18.3 h째, pod 23.6 GiB / 60, oom_kill 2)
+STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
+# PROGRESS (갱신 2026-11-07 04:55 UTC, 라운드 75 — 사람 QUEUE 13:40 KST: `r2pkfc_rl` 16·20칸 평가를 LS16과 동시에 시작 (pkg16_0 04:50~); GPU `lo_pkg_r2pkfc` RL (04:43~, 끝 ~05:58), CPU 드라이버 `ls16c eval_ip16_1` 18.7 h째, pod 24.1 GiB / 60, oom_kill 2)
+
+## 라운드 75 (2026-11-07 04:50~ UTC)
+- 새 사람 커밋 f60f969 (13:36 KST): QUEUE 13:40 KST — `r2pkfc_rl` 16·20칸 평가를 **LS16이 살아 있어도 바로** (순서 pkg16_0 → pkg16_1 → pkg20_0 → pkg20_1, 한 번에 하나, `--workers 1 --inst_chunk 5`). 메모리 초과 때는 기존 `mem_guard`가 LS16을 멈추고 `.memskip` (r2pkfc 평가는 죽이지 않음). G1 `lo_pkg_r2pkfc` 10칸 평가가 먼저.
+- `side_slot.py`: (a) `LS16_EXEMPT = ("r2pkfc_rl",)` — 이름에 `r2pkfc_rl`이 있는 scale-eval만 `ls16_alive` 막음에서 뺌 (`r2pk_s2_rl` ip20 등 다른 보충은 그대로 막힘). (b) 보충 시작 간격을 작업별로: scale-eval은 `SCALE_GAP_S = 1800` (지난 scale-eval 7~15 분, side_slot.log 11/06), 다른 보충은 기존 3600. side_slot 다시 띄움 → **04:50:49 `scale-eval eval_pkg16_0 r2pkfc_rl` 시작** (pod 24.0 GiB). r2pkfc 평가 명령은 `mem_guard`로 감싸지 않음 (확인) → pod > 45 GiB 때 죽는 것은 LS16 쪽만 (사람 지시와 같음).
+- 결정: scale-eval 보충은 대상 RL이 30 분 넘게 남았을 때만 시작 (기존 1 h 규칙을 scale-eval에만 30 분으로) — 이유: 사람 지시 "바로 시작" + "G1 10칸 평가가 먼저"를 함께 지키는 가장 작은 변경. side_slot은 작업을 선점하지 않으므로, 평가 1개(≤15 분)가 G1 평가를 막지 않을 만큼만 간격을 둠. `lo_pkg_r2pkfc` RL 끝 ~05:58이므로 pkg16_0 (~05:05) 뒤 pkg16_1 정도까지 들어가고, 나머지는 G1 평가 (~06:00~06:12) 뒤에 이어짐.
+- 상태: `lo_pkg_r2pkfc` 증류 끝, RL it 25 / 350 s (cert-bad 13, oom 0, GPU peak 9.0 GB) 정상. `git fetch r2e`: f60f969 뒤 새 커밋 없음.
+- **LS16 `ls16c eval_ip16_1` 04:51 mem_guard가 멈춤** (pod 45.09 GiB, pkg16_0 평가 시작 1 분 안의 메모리 오름과 겹침; 18.7 h 진행분 버려짐) → `runs/2026-10-28/baselines/eval/eval_ip16_1__local_search.json.memskip`. 사람 지시 (13:40 KST) 그대로의 결과 — r2pkfc 평가는 그대로 돎. 드라이버는 그 항목을 건너뛰고 r2pkfc pkg16_0에 ATTACH (04:56). collect_results가 marker를 "메모리로 생략"으로 표에 넣음. LS16 ip16 기록은 ip16_0 하나 (25문제)만 남음.
+- **보고만 (G1 판정 아님)**: `scale-eval eval_pkg16_0 r2pkfc_rl` 04:50~05:07 rc 0 (25문제, 4.1 s/문제): 성공 0.68 (r2pk_rl 같은 문제 0.64), 성공한 문제 평균 개수 10.88 (r2pk_rl 11.0). 짝 CI는 RESULTS "G1 후보 16·20칸 (보고만)" 표 (collect_results 자동). 05:10 `eval_pkg16_1 r2pkfc_rl` 시작 (pod 18.1 GiB).
+- RESULTS: collect_results 자동 재생성 (pkg16_0 r2pkfc 행, LS16 ip16_1 "메모리로 생략").
+- 할 일 (다음): (1) pkg16·20 r2pkfc 평가 진행·메모리 확인 (LS16 `.memskip` 생기면 PROGRESS·RESULTS에 "메모리로 생략 (사람 결정 13:40 KST)"). (2) 라운드 73 목록 그대로 (`lo_pkg_r2pkfc` 끝 ~05:58 → 10칸 평가 → `g1_screen.py` → 판정). (3) 11/08 03:00 UTC 뒤 새 학습 없음.
 
 ## 라운드 74 (2026-11-07 04:29~ UTC)
 - 새 사람 커밋 43ed512 (13:20 KST): QUEUE 13:25 KST + PROPOSALS "11/07 G1 보충" — `r2pkfc_rl` 16·20칸 평가, **보고만 (G1 판정 아님)**, `lo_pkg_r2pkfc` 10칸 평가가 먼저, 4번째 칸이 비는 대로. 38584c4는 서버 2 A1/A2 기록 (판정·큐 변경 안 함; collect_results가 기록을 자동으로 표에 넣음 — `a1_nogrow_rl`).

@@ -26,6 +26,8 @@ FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this 
 LS16 = ("--methods ls --ls_chunk",)   # 11/05 round 50: a 16/20-cell "scale-eval" filler start (~+22 GiB in 30 s) put the
                                       # pod over 45 GiB and mem_guard killed ls16c pcb16_0 (4 h in) and pcb16_1 -> no
                                       # scale-eval filler while a driver LS16 job is alive
+LS16_EXEMPT = ("r2pkfc_rl",)   # QUEUE 11/07 13:40 KST: these scale-evals run while LS16 is alive; mem_guard stops LS16
+SCALE_GAP_S = 1800   # scale-eval filler takes 7-15 min (side_slot.log 11/06), so a 30 min gap keeps the G1 eval first
 
 
 def ls16_alive():
@@ -84,9 +86,12 @@ while True:
     todo = [evals[f"eval10 {n}_rl"] for n in targets if rl_done(n) and f"eval10 {n}_rl" in evals]
     todo = [j for j in todo if pending(j) and j["name"] not in failed]
     left = [s for s in (rl_left_s(n) for n in targets) if s is not None]
-    if not todo and not any(s < FILL_GAP_S for s in left):   # a filler (<= ~50 min) must not hold a training's eval
+    if not todo:   # a filler (<= ~50 min; scale-eval <= ~15 min) must not hold a training's eval
         todo = [j for j in queue().get("cpu", []) if j["name"].startswith(FILL) and pending(j)
-                and j["name"] not in failed and not ("scale-eval" in j["name"] and ls16_alive())]
+                and j["name"] not in failed
+                and not any(s < (SCALE_GAP_S if "scale-eval" in j["name"] else FILL_GAP_S) for s in left)
+                and not ("scale-eval" in j["name"] and not any(x in j["name"] for x in LS16_EXEMPT)
+                         and ls16_alive())]
     if todo:
         if run(todo[0]) != 0 or not all(exists(p) for p in todo[0]["done"]):
             failed.add(todo[0]["name"])

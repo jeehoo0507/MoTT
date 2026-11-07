@@ -44,3 +44,7 @@ Applied autostash.
 - `lo_pkg_r2pkfc` 끝 → 10칸 평가 → `g1_screen.py`로 G1 판정.
 - G1이 통과하지 못하면 미뤄 둔 LS16 작업을 되돌리게 되는데, 그러면 이 16·20칸 평가가 다시 오래 막힙니다. 되돌리기 전에 순서를 확인해야 합니다.
 - 11/08 03:00 UTC 뒤에는 새 학습을 시작하지 않습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   faf5585..0998393  main -> main
