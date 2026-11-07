@@ -537,33 +537,24 @@
    "seed": 2
   },
   {
-   "name": "r2pk_ctl",
-   "arm": "--model mott --peak_refine",
-   "seed": 0,
-   "init": "runs/2026-10-29/r2pk_rl/best.pt",
-   "rl_hours": 1.0
-  },
-  {
-   "name": "r2pk_kw2",
-   "arm": "--model mott --peak_refine --kind_weight pkg=2",
-   "seed": 0,
-   "init": "runs/2026-10-29/r2pk_rl/best.pt",
-   "rl_hours": 1.0,
-   "after": "runs/analysis/smoke_self_repair.ok"
-  },
-  {
    "name": "r3pk",
    "arm": "--model loop --peak_refine",
-   "seed": 0,
-   "after": "runs/analysis/smoke_r3pk.ok"
+   "seed": 0
   },
   {
-   "name": "r2pk_vsi",
-   "arm": "--model mott --peak_refine --self_repair 4",
-   "seed": 0,
-   "init": "runs/2026-10-29/r2pk_rl/best.pt",
-   "rl_hours": 1.0,
-   "after": "runs/analysis/smoke_self_repair.ok"
+   "name": "lo_pkg_r3pk",
+   "arm": "--model loop --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_r2pkfc",
+   "arm": "--model mott --peak_refine --fc_bias --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
   }
  ],
  "cpu": [

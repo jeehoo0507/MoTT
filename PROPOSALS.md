@@ -273,7 +273,8 @@
 - **보고 (판정 없음, 미리 적음):** 방법마다 성공률, 둘 다 성공한 문제의 개수비 (짝지은 bootstrap 95% CI, vs `modal_rule+rep4`·`greedy+prune+rep4`), repair가 쓰인 문제 비율·repair 전후 개수, 문제당 초 (서버 2 기록끼리만). "MoTT가 낫다"는 CI가 1 밖일 때 그 판에서만 쓴다. 모델 구조 비교 (사다리·루프·P1)는 이 표로 하지 않는다 (정책 단독 표로만).
 - 20칸은 종류당 16문제 (작은 표본) 표시. 시간 비교에서 서버 1 기록과 섞지 않는다.
 
-## 11/07 M: 마지막 방법 탐색 — 정책 단독 pkg (QUEUE 11/07 10:45 KST, 라운드 65 01:50 UTC, 어떤 run도 시작 전에 고정)
+## 11/07 M: 마지막 방법 탐색 — 정책 단독 pkg (QUEUE 11/07 10:45 KST, 라운드 65 01:50 UTC, 어떤 run도 시작 전에 고정) — **하지 않음**
+- **취소 (라운드 65 02:00 UTC):** 사람 QUEUE 11/07 10:50 KST가 이 절 (대조군·C1·C2·C4)을 G1 (아래)로 대체. `r2pk_ctl`은 01:46 UTC 시작 → 약 6 분 뒤 중단 (결과 없음, `runs/2026-10-29/r2pk_ctl_rl` 남은 파일은 쓰지 않음). `train.py --kind_weight`·`--self_repair` 코드와 smoke (`runs/analysis/smoke_self_repair.ok`)는 기본값 꺼짐으로 남음 — 어떤 판정에도 쓰지 않음. 아래 규칙은 기록으로만 둠.
 - **대조군 `r2pk_ctl`:** `r2pk_rl/best.pt` (seed 0)에서 RL만 1.0 h (arm `--model mott --peak_refine`, run_rung COMMON, `data/teacher`, `--seed 0`; λ·선생님 저장소는 기존 RL과 같이 새로 시작). 드라이버 `"init"` + `"rl_hours": 1.0`. 후보 C1·C2·C4는 이것과 **한 가지만** 다름 (같은 init·같은 1 h·같은 seed).
 - **거르기 판정 (seed 0, QUEUE 4번 그대로, 결과 보고 바꾸지 않음):** 평가 = 드라이버 10칸 `eval_*10_*` 6파일 (종류마다 50문제), 정책 단독 (greedy, repair 없음, `--inst_chunk 5`). 후보 − 짝 (C1·C2·C4: `r2pk_ctl_rl`, C3: `r2pk_rl`) 같은 문제 짝지은 성공률 차 **점추정**: pkg ≥ +0.10, pcb ≥ 0, ip ≥ −0.02, 그리고 둘 다 성공한 문제의 개수비 (문제별 비의 평균, `scripts/pair2.py`) **종류마다** ≤ 1.05 (세 종류 모두; 해석: "개수는 늘지 않게"를 가장 엄하게 읽음). 통과한 것 중 pkg 차가 가장 큰 하나 (같으면 세 종류 개수비 평균이 작은 것). 11/08 00:00 UTC (09:00 KST)까지 통과가 없으면 r2pk 그대로 확정.
 - **확인 (고른 후보 하나만):** 후보와 대조군을 seed 1·2로 (`r2pk_s1_rl`·`r2pk_s2_rl` best.pt에서 1 h; C3이면 r3pk seed 1·2 처음부터 2 h, 짝 `r2pk_s1_rl`·`r2pk_s2_rl`). 3 seed 묶음 짝지은 CI = `collect_results.prior_seed_table`과 같은 방법 (seed 안에서 문제를 다시 뽑는 bootstrap 2000회, rng 0). **채택:** pkg 묶음 CI 하한 > 0 그리고 해로움 없음 (pcb·ip 묶음 성공률 차 CI 상한 ≥ 0, 세 종류 묶음 개수비 점추정 ≤ 1.05). 아니면 "seed 0에서만"으로 기록. 채택되면 16·20칸 평가 (`queue_scale_curve` 방식, CPU 줄).
@@ -283,3 +284,14 @@
 - **C2 `r2pk_kw2`:** `--kind_weight pkg=2` = 학습 판 파일 고르기에서 pkg 9파일의 확률 2배 (pkg 0.50, pcb·ip 각 0.25; 다른 것 그대로). 근거: pkg가 세 종류 중 정책 성공률이 가장 낮고 (10칸 seed 평균 0.82) 학습 풀은 종류마다 같은 수. 가장 가까운 선행: 다중 과제 표본 비중 조절 (일반) / 다른 점: 없음, 기여로 쓰지 않음.
 - **C3 `r3pk`:** `--model loop --peak_refine`, 증류 0.75 h + RL 1.25 h 처음부터, seed 0, 짝 `r2pk_rl`. 구조 변경이지만 QUEUE가 명시한 후보 (루프는 사다리 3단, P1은 채택 입력).
 - **C1 `r2pk_vsi` (검증된 해 따라 하기):** `--self_repair 4`. 매 RL 단계, 문제마다 M=8 샘플 중 저장된 해 (기존 선생님 저장소 = archive)보다 개수가 적은 서로 다른 샘플 → 정확 검사 (학습과 같은 tol 1e-3) → 실패는 `eval_policy --repair`와 같은 방식 (실패 주파수를 작업 격자에 넣고 — 기존 `--grid_growth` 한도 안에서 — 정책이 자기 배치에서 greedy로 이어 풀기, 다시 정확 검사, 최대 4번) → 통과한 것 중 가장 적은 것이 저장된 해보다 적으면 교체. 손실은 그대로 RL + imit·(저장된 해 궤적 CE) (기존 `--imit 1`, 기존 expert iteration 교체도 그대로). 즉 대조군과 다른 것은 "고친 해도 archive에 들어감" 하나. 시간 한도: 문제마다 개수가 가장 적은 서로 다른 후보 **2개까지**만 검사 (1 h 예산 안에서 iter 수를 지키려고; smoke 시간을 보고 바꾸지 않음). 가장 가까운 선행: Self-Imitation Learning (Oh 2018), expert iteration (Anthony 2017), 검증-수리 cutting-plane / 다른 점: 고친 해를 모방 대상으로 쓰는 것 — 학습법 수정, 기여로 쓰지 않음.
+
+## 11/07 G1: pkg 범용화를 노린 구조 후보 2개 (서버 1) — 사람, 11/07 10:45 KST, 어떤 run도 돌기 전에 고정
+- **왜:** 최종 구조 r2pk의 범용화 판정 (F1, QUEUE 10/31 기준)은 pcb 통과, pkg 실패 (뺀 pkg − 전체 −0.11, 0단 대비 이득 없음). RL 절차 수정은 지금까지 모두 효과 없음 (RESULTS "시도한 수정"). 그래서 이미 pkg 이득이 보였던 **구조·입력 변경** 두 개만 시험한다. 각각 한 가지만 r2pk에 더한다.
+  - **G1-L `r3pk`** = `--model loop --peak_refine` (루프 + P1). 근거: 루프 vs 기본 10칸 3 seed 묶음 pkg +0.100 [+0.027, +0.180] (사후 계산, 11/05 사람).
+  - **G1-F `r2pkfc`** = `--model mott --peak_refine --fc_bias` (P1 + 주파수 궁합 편향). 근거: `r2a_rl` vs `r2_mott_rl` seed 0 pkg +0.12 [+0.02, +0.24] (뺀 pcb 효과 없음으로 그때 채택 안 함).
+- **run (같은 예산: 증류 0.75 h + RL 1.25 h, COMMON 그대로):** 거르기 4개 = `r3pk`, `lo_pkg_r3pk`, `r2pkfc`, `lo_pkg_r2pkfc` (seed 0; lo_pkg = pcb·ip로만 학습, 기존 `lo_pkg_r2pk` arm과 같은 pool_glob·val_pools).
+- **거르기 (seed 0, 10칸 50문제, 정책 단독, 짝 = `r2pk_rl` / `lo_pkg_r2pk_rl`):** (i) 같은 종류 pkg 차 ≥ +0.10 **또는** 뺀 pkg 차 ≥ +0.10, (ii) 같은 종류 pcb·ip 차 ≥ −0.06, (iii) 같은 종류 둘 다 성공 개수비 ≤ 1.05. 둘 다 통과하면 뺀 pkg 차가 큰 하나. 없으면 G1 끝, 최종 구조 r2pk 그대로 (RESULTS ABLATIONS에 기록).
+- **확인 (고른 X 하나, seed 1·2):** 순서 `lo_pkg_X_s1`, `lo_pkg_X_s2`, `X_s1`, `X_s2`, `lo_pcb_X`, `lo_pcb_X_s1`, `lo_pcb_X_s2`. 판정은 **F1과 같은 규칙** (QUEUE 10/31): 뺀 종류 t마다 (b') `lo_t_X` − `lo_t_r0` 성공률이 seed 0·1·2 모두 > 0, (c') `lo_t_X` − `X` (같은 seed) 평균 ≥ −0.05 → 그 종류 "범용화 통과". 추가로 같은 종류 pkg `X` − `r2pk` seed 3개 묶음 CI 하한 > 0이면 최종 구조를 X로 바꾼다.
+- 결과를 보고 규칙·seed·평가 세트를 바꾸지 않는다. 11/08 12:00 KST 뒤에는 새 학습을 시작하지 않는다 (남은 확인 run은 "못 돌림"으로 기록).
+- 에이전트 해석 (라운드 65 02:00 UTC, G1 결과 전): 차이는 점추정으로 판정 (CI는 같이 보고), (iii) 개수비는 `scripts/pair2.py`와 같은 "둘 다 성공한 문제별 비의 평균"을 pcb·pkg·ip **종류마다** 계산해 셋 모두 ≤ 1.05 (가장 엄한 읽기). 코드: `scripts/g1_screen.py`.
+- 가장 가까운 선행: Universal/Looped Transformer, MatNet식 attention 편향 / 다른 점: 기여 아님, 우리 구조의 ablation.
