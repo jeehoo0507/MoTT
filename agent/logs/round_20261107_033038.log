@@ -34,3 +34,7 @@ Applied autostash.
   3. 통과하면 확인 run 7개를 큐에 넣고, 통과하지 못하면 RESULTS에 "G1 효과 없음"으로 적고 미뤄 둔 LS16을 되돌립니다.
 
 DAILY는 다음 차례인 11/08 01시대 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   915e8e7..419db3b  main -> main
