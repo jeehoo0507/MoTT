@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+I finished round 108, committed it and pushed it to `r2e main` (`ce0463b`). There were no new human instructions in the queue, so nothing needed decisions beyond the routine checks.
+
+- **Status:** the background driver (pid 1575375) is running. I restarted the two monitoring scripts (`report_watch`, `resume_agent`). Memory use is 16.8 GiB of 60, and the out-of-memory kill count is still 2. The side-slot process is gone because all its R targets had finished; that's expected.
+- **Finished this round:** the first of 22 F3 evaluations, `eval_pcb16_0` for the seed-1 model with 4 repair rounds. Success went from 0.92 for the policy alone to **1.00** (25 problems), with an average of 9.00 decaps and repair used on 2 problems. RESULTS.md updated itself: across 2 seeds on pcb16, success is 0.987. I committed the result JSON.
+- **Next:** the driver runs the other 21 F3 evaluations in queue order (pcb16 → ip16 → pcb20 → ip20). I expect them to finish around 06–09 UTC on 11/08. The GPU is idle because the queue rules still forbid the agent from starting training on its own.
+- **결정 (in PROGRESS.md):** I'm not splitting F3 across the side slot. The human only allowed parallel side-slot runs for F1 pkg20, and memory went over 45 GiB the last time two repair evaluations ran at once.
+- **My mistake:** I first restored the driver log to the wrong filename (`agent/logs/day2_driver.log`). I deleted it straight away, restored to the correct `pipeline_day2.log`, and noted it in PROGRESS.md.
+
+The next DAILY.md is due at 11/08 01:30 UTC.
