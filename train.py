@@ -101,6 +101,12 @@ def parse():
     p.add_argument("--hard_weight", type=float, default=0.0, help="rl: weight each instance's loss terms by "
                    "1 + this * (percentile of its g+p count among the loaded training instances of its board kind), "
                    "normalised to mean 1 over the pool (0 = off; sampling unchanged)")
+    p.add_argument("--kind_weight", default="", help="pool-file draw weight per board kind, e.g. 'pkg=2' (other kinds 1; "
+                   "'' = the uniform draw, unchanged RNG stream) (QUEUE 11/07 10:45 KST candidate C2)")
+    p.add_argument("--self_repair", type=int, default=0, help="rl: verified self-imitation (QUEUE 11/07 10:45 KST C1): "
+                   "samples with fewer decaps than the stored solution are exact-checked, failures repaired up to this "
+                   "many times as in eval_policy --repair (failure frequencies onto the grid, the policy continues "
+                   "greedily from its placement); the fewest-decap certified one replaces the stored solution (0 = off)")
     p.add_argument("--prior", action="store_true", help="grid model: add the physics prior (as in MoTT)")
     p.add_argument("--no_prune", action="store_true", help="ablation: no remove / change-type actions")
     p.add_argument("--layers", type=int, default=6)
@@ -218,6 +224,57 @@ def load_teacher(path, batch, dev, log):
                 replaced=0)
 
 
+SR_PER = 2   # --self_repair: distinct candidates exact-checked per instance and step (time bound, PROPOSALS 11/07 M)
+
+
+@torch.no_grad()
+def self_repair(policy, batch, cfg, tch, inst, occ, args, amp, room):
+    """--self_repair (QUEUE 11/07 10:45 KST C1, verified self-imitation): exact-check candidate solutions occ [N, n] of
+    pool instances inst [N] (samples with fewer decaps than the stored solution); each failure gets its exact-check
+    failure frequencies on the working grid (within the --grid_growth room) and the policy continues greedily from its
+    own placement, as eval_policy --repair, up to args.self_repair times; per instance the fewest-decap certified
+    candidate replaces the stored solution if it has fewer decaps. Returns counters."""
+    was_training = policy.training
+    policy.eval()
+    if hasattr(policy, "set_eval_R"):
+        policy.set_eval_R(args.loop_eval)
+    wv, _, add = certify_parallel(batch, inst, occ, cfg)
+    ok = wv <= 1e-3                                   # the training tolerance (as the expert-iteration check)
+    st = dict(checked=len(ok), pass0=int(ok.sum()), repaired=0, replaced=0, no_room=0)
+    for _ in range(args.self_repair):
+        bad = np.flatnonzero(~ok)
+        if not len(bad):
+            break
+        r = room()
+        if r <= 0:                                    # the grid cannot take the failure points: no repair
+            st["no_room"] += len(bad)
+            break
+        batch.add_freqs([a[:r] for a in add])
+        bi = torch.from_numpy(bad).to(inst.device)
+        env = make_env(batch, inst[bi], cfg, args.feat, max_steps=args.max_steps, allow_prune=not args.no_prune,
+                       occ0=occ[bi])
+        occ[bi] = rollout(policy, env, greedy=True, amp=amp)["occ"]
+        env = None
+        wb, _, add = certify_parallel(batch, inst[bi], occ[bi], cfg)
+        ok[bad] = wb <= 1e-3
+        st["repaired"] += int((wb <= 1e-3).sum())
+    if was_training:
+        policy.train()
+    okt = torch.from_numpy(ok).to(inst.device)
+    cnt = (occ >= 0).sum(1)
+    key = cnt.float() + (~okt).float() * 1e6
+    for b in inst.unique():
+        idx = torch.nonzero(inst == b).squeeze(-1)
+        j = idx[key[idx].argmin()]
+        if okt[j] and cnt[j] < tch["count"][b]:
+            tch["occ"][b] = occ[j]
+            tch["count"][b] = cnt[j]
+            tch["ok"][b] = True
+            tch["replaced"] += 1
+            st["replaced"] += 1
+    return st
+
+
 def main():
     args = parse()
     if args.model in ("mott", "loop"):
@@ -300,15 +357,27 @@ def main():
         log(f"hard_weight {args.hard_weight}: instance weights {min(w.min().item() for w in hw):.2f}.."
             f"{max(w.max().item() for w in hw):.2f}")
 
+    pw = None
+    if pool and args.kind_weight:
+        kwt = {k: float(v) for k, v in (s.split("=") for s in args.kind_weight.split(","))}
+        kind = [n.split("_")[1].rstrip("0123456789") for n in pool_names]
+        assert set(kwt) <= set(kind), (kwt, set(kind))
+        pw = np.array([kwt.get(k, 1.0) for k in kind])
+        pw = pw / pw.sum()
+        log("kind_weight " + ", ".join(f"{k} {pw[[i for i, kk in enumerate(kind) if kk == k]].sum():.3f}"
+                                       for k in sorted(set(kind))))
+
     best_val, best_iter, lam, t0 = 1e9, 0, args.lam, time.time()
     last_val, it_done, n_replaced, n_oom, n_capped = {}, 0, 0, 0, 0
+    sr_on = bool(pool) and args.self_repair > 0 and args.stage == "rl"
+    sr_tot = dict(checked=0, pass0=0, repaired=0, replaced=0, no_room=0)
     resume_path = os.path.join(args.out, "resume.pt")
 
     def save_resume(it):
         """Everything needed to continue after a pod restart (QUEUE 2026-10-28: every 20 min)."""
         st = dict(model=policy.state_dict(), opt=opt.state_dict(), iter=it, lam=lam, best_val=best_val,
                   best_iter=best_iter, last_val=last_val, n_replaced=n_replaced, elapsed=time.time() - t0,
-                  n_oom=n_oom, n_capped=n_capped, chunk=args.chunk,
+                  n_oom=n_oom, n_capped=n_capped, chunk=args.chunk, sr_tot=sr_tot,
                   rng=rng.bit_generator.state, torch_rng=torch.get_rng_state(),
                   cuda_rng=torch.cuda.get_rng_state_all() if dev.type == "cuda" else None,
                   teachers=[{k: (v.cpu() if torch.is_tensor(v) else v) for k, v in t.items()} for t in teachers],
@@ -325,6 +394,7 @@ def main():
         start_it, lam, best_val, best_iter = st["iter"], st["lam"], st["best_val"], st["best_iter"]
         last_val, n_replaced, it_done = st["last_val"], st["n_replaced"], st["iter"]
         n_oom, n_capped, args.chunk = st.get("n_oom", 0), st.get("n_capped", 0), st.get("chunk", args.chunk)
+        sr_tot = st.get("sr_tot", sr_tot)
         rng.bit_generator.state = st["rng"]
         torch.set_rng_state(st["torch_rng"].cpu())
         if st["cuda_rng"] is not None and dev.type == "cuda":
@@ -353,7 +423,7 @@ def main():
         if hasattr(policy, "sample_R"):     # loop model: one R per iteration (rollout and backward must agree)
             policy.sample_R(rng)
         if pool:
-            pi = int(rng.integers(len(pool)))
+            pi = int(rng.choice(len(pool), p=pw)) if pw is not None else int(rng.integers(len(pool)))
             batch, tch = pool[pi], teachers[pi]
             H, W = batch.H, batch.W
             cfg = batch.cfg
@@ -395,6 +465,7 @@ def main():
             E, loss, n_bad, cnts, fails = args.B * args.M, 0.0, 0, [], []
             n_margin = 0   # grid-feasible samples turned into failures by --feas_margin
             adds = [[] for _ in range(batch.B)]   # new grid points of this step, added once after all chunks
+            sr_inst, sr_occ = [], []              # --self_repair candidates of this step (checked after it)
             try:
                 for c0 in range(0, args.B, args.chunk or args.B):
                     cb = torch.arange(c0, min(c0 + (args.chunk or args.B), args.B), device=dev)   # positions in ib
@@ -482,6 +553,18 @@ def main():
                                 tch["ok"][ibc[bi]] = True
                                 tch["replaced"] += int(bi.numel())
                                 n_replaced += int(bi.numel())
+                    if sr_on:
+                        # samples with fewer decaps than the stored solution (after this chunk's expert iteration),
+                        # distinct per instance, SR_PER per instance: grid-feasible first, then the lowest counts
+                        cand = torch.nonzero((cnt < tch["count"][ibc].float()[:, None]).view(-1)).squeeze(-1)
+                        if cand.numel():
+                            rows = torch.unique(torch.cat([(cand // args.M)[:, None], fail.view(-1)[cand].long()[:, None],
+                                                           cnt.view(-1)[cand].long()[:, None], out["occ"][cand].long()], 1),
+                                                dim=0)   # sorted (inst, grid fail, count, occ)
+                            for b in rows[:, 0].unique():
+                                rb = rows[rows[:, 0] == b][:SR_PER]
+                                sr_inst.append(ibc[b].repeat(rb.shape[0]))
+                                sr_occ.append(rb[:, 3:])
                     cnts.append(cnt)
                     fails.append(fail)
                     env = out = tenv = rep = None     # free this chunk's trajectories before the next one
@@ -504,6 +587,12 @@ def main():
                     n_capped += 1
                 if room > 0:
                     batch.add_freqs([a[:room] for a in adds])
+            if sr_inst:
+                sr = self_repair(policy, batch, cfg, tch, torch.cat(sr_inst), torch.cat(sr_occ), args, amp,
+                                 room=lambda: int(F0[pi] * (1 + args.grid_growth)) - batch.freqs.shape[1])
+                for k in sr_tot:
+                    sr_tot[k] += sr[k]
+                n_replaced += sr["replaced"]
             cnt, fail = torch.cat(cnts), torch.cat(fails)
             fail_rate = fail.float().mean().item()
             lam = max(0.0, lam + args.lam_lr * (fail_rate - args.fail_target))
@@ -519,7 +608,8 @@ def main():
             log(f"it {it:6d} | {pname} P={batch.P} F={batch.freqs.shape[1]} cert-bad {n_bad}"
                 f"{f' margin-fail {n_margin}' if args.feas_margin > 0 else ''} | count/ref {ratio:.3f} "
                 f"best-of-M {best_ratio:.3f} fail {fail_rate:.2f} lam {lam:.2f} | teach ok {teach['feasible'].float().mean():.2f} "
-                f"| loss {loss:.3f} | replaced {n_replaced} | grid capped {n_capped} oom {n_oom} | {time.time()-t0:.0f}s{gpu_peak()}")
+                f"| loss {loss:.3f} | replaced {n_replaced} | grid capped {n_capped} oom {n_oom} | {time.time()-t0:.0f}s{gpu_peak()}"
+                + (" | self-repair " + " ".join(f"{k} {v}" for k, v in sr_tot.items()) if sr_on else ""))
         if it % args.val_every == 0 or it == args.iters:
             v = validate(policy, val_sets, args, cfg, dev)
             last_val = v
@@ -557,7 +647,7 @@ def main():
     metrics = dict(args=vars(args), git=meta["git"], iters=it_done, hours=(time.time() - t_start) / 3600,
                    final_val={k: list(v) for k, v in last_val.items()}, best_val_score=best_val, best_iter=best_iter,
                    teacher_replaced=n_replaced, lam=lam, cuda_oom_skipped=n_oom, grid_capped_steps=n_capped,
-                   chunk_final=args.chunk, pool_F={n: [f0, pb.freqs.shape[1]] for n, f0, pb in zip(pool_names, F0, pool)}
+                   chunk_final=args.chunk, **({"self_repair": sr_tot} if sr_on else {}), pool_F={n: [f0, pb.freqs.shape[1]] for n, f0, pb in zip(pool_names, F0, pool)}
                    if pool else {})
     json.dump(metrics, open(os.path.join(args.out, "metrics.json"), "w"), indent=2)
     log(f"done: {it_done} iters, {metrics['hours']:.2f} h, best iter {best_iter} score {best_val:.3f}, replaced {n_replaced}"
