@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 21:10 UTC, 라운드 107 — **F1 14/14 끝** (좌표+V pkg20_1 0.62); F2 서버 2 done → 건너뜀; 드라이버 F3 22개 시작; R 대조군 `lo_pkg_rnd_r0` 끝 (10칸 뺀 pkg 0.74); GPU 빔)
+# PROGRESS (갱신 2026-11-07 21:30 UTC, 라운드 108 — 드라이버 F3 1/22 끝 (`r2pk_s1_rl+rep4` pcb16_0 0.92 → 1.00); 나머지 F3 21개 순서대로; GPU 빔 (사람 항목 없음))
+
+## 라운드 108 (2026-11-07 21:23~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
+- `ensure_running`: 드라이버 alive (1575375), report_watch·resume_agent 다시 띄움. side_slot 프로세스 없음 (R 대상 모두 끝나서 스스로 끝남, 정상). pod 16.8 GiB / 60, oom_kill 2.
+- `restore_proc_log.py` 드라이버 +697 B (`agent/logs/pipeline_day2.log`). 처음에 경로를 잘못 줘서 `agent/logs/day2_driver.log`가 생겼다 → 바로 지움 (추적 안 된 새 파일, 다른 영향 없음).
+- **F3 첫 항목 (드라이버):** `eval_pcb16_0 r2pk_s1_rl+rep4` 21:06–21:20 rc 0 — 정책 단독 0.92 → **1.00** (n=25), 성공 평균 개수 9.00, 되먹임 쓴 문제 2, 2.05 s/문제, peak RSS 22.6 GB. 기록 `runs/2026-10-29/r2pk_s1_rl/eval/eval_pcb16_0__r2pk_s1_rl+rep4.json`. RESULTS는 드라이버 collect_results (21:20~)가 자동 반영.
+- 드라이버 다음: F3 나머지 21개 (pcb16 3 → ip16 6 → pcb20 6 → ip20 6). 항목당 15–50분 → 끝 ~11/08 06–09 UTC 예상.
+- 결정: F3를 side_slot으로 나눠 돌리지 않음, GPU 새 학습 넣지 않음 — 이유: QUEUE의 side_slot 허용은 F1 pkg20에만 있었음 (F3는 언급 없음), pkg16 수리 판 동시 실행 때 45.7 GiB를 넘은 적 있음 (라운드 99); 에이전트 새 시도 금지 (11/08 03:05 KST).
+- 할 일 (다음): (1) 드라이버 F3 21개 (메모리 확인). (2) 사람 새 QUEUE 항목 fetch (11/08 아침 KST). (3) 라운드마다 `restore_proc_log.py 1575375 agent/logs/pipeline_day2.log`. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 107 머리말: F1 14/14 끝 (좌표+V pkg20_1 0.62); F2 서버 2 done → 건너뜀; 드라이버 F3 22개 시작; R 대조군 `lo_pkg_rnd_r0` 끝 (10칸 뺀 pkg 0.74); GPU 빔
 
 ## 라운드 107 (2026-11-07 20:03~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.

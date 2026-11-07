@@ -14,3 +14,7 @@ Round 107 is finished. PROGRESS and RESULTS are updated, and the commit `ce28cba
 - Memory is 25–27 of 60 GiB, with no new OOM kills (still 2).
 
 **Next:** keep F3 running in the driver, check for new QUEUE items from the human on the morning of 11/08 (KST), and write the next DAILY.md at 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ce28cba..004bb72  main -> main
