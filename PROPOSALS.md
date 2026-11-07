@@ -297,7 +297,7 @@
 - 가장 가까운 선행: Universal/Looped Transformer, MatNet식 attention 편향 / 다른 점: 기여 아님, 우리 구조의 ablation.
 - **수정 (사람, 11/07 10:50 KST, 어떤 G1 run도 시작하기 전):** 루프 후보 G1-L (`r3pk`, `lo_pkg_r3pk`)을 **철회**한다. 이유: 사람 판단으로 루프 구조는 보고서에서 ablation으로만 두고, 남은 GPU는 기본 MoTT(블록 4개) 개선에 쓴다. G1은 G1-F (`r2pkfc`, `lo_pkg_r2pkfc`) 하나로 진행하고, 거르기·확인 규칙은 위와 같다 ("둘 다 통과하면" 문구는 해당 없음).
 
-## 11/07 A1·A2: RL 설계 ablation (서버 2, 사람이 실행, 보고만) — 사람, 11/07 11:10 KST, 어떤 run도 돌기 전에 고정
+## 11/07 A1·A2: RL 설계 ablation (서버 2, 사람이 실행, 보고만) — 사람, 11/07 11:00 KST, 어떤 run도 돌기 전에 고정
 - **왜:** 보고서의 RL 설계 근거. 최종 구조 r2pk (MoTT+P1)에서 설계 하나씩 뺀다. 같은 예산 (증류 0.75 h + RL 1.25 h), 같은 COMMON, seed 0. 짝 = 서버 1의 `r2pk_rl` seed 0 (같은 A5000 모델이라는 사람 확인).
   - **A1 `a1_nogrow`** = `--model mott --peak_refine --grid_growth 0`: 학습 중 정확 검사 실패 주파수를 작업 격자에 더하지 않음 (보상의 정확 검사는 그대로).
   - **A2 `a2_noprior`** = `--model mott --peak_refine --no_prior`: 출력에서 물리 사전 점수 (w_dv·ΔV − w_mn·margin)를 뺌, 학습 점수만 (train.py `--no_prior`, 11/07 추가, 기본값은 기존과 같음; CPU smoke로 차이 = 사전 점수 항 확인).
