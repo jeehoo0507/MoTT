@@ -1200,3 +1200,8 @@
 [16:34:21] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_rnd_s2 --arm '--model mott --peak_refine --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl' --day 2026-10-29 --pool runs/pool_v1 --seed 2 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_rnd_s2/rung_stdout.log)
 [16:35:55] END collect_results rc=0 | mem 20.7 GiB / 60.0 GiB, oom_kill 2
 [16:37:25] ATTACH eval10 lo_pkg_rnd_s1_rl
+[16:47:25] START collect_results | mem 18.4 GiB / 60.0 GiB, oom_kill 2
+[16:47:25] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[16:50:21] END collect_results rc=0 | mem 23.8 GiB / 60.0 GiB, oom_kill 2
+[16:51:51] START F1 eval_pkg16_0 r2pk_rl+rep4 | mem 25.1 GiB / 60.0 GiB, oom_kill 2
+[16:51:51] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_rl  (log runs/2026-10-29/r2pk_rl/eval.log)

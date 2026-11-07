@@ -20,9 +20,9 @@ from mem import mem_line, wait_mem  # noqa: E402
 from pipeline_day1 import alive  # noqa: E402
 from pipeline_day2 import DAY, ROOT, PY, eval_jobs, exists, queue, rl_done  # noqa: E402
 
-FILL = ("ls10 ", "ga10 ", "samp10 ",   # samp10: best-of-8 policy sampling (PROGRESS 11/02 round 6)
-        "F1 eval_pkg20_0 r0_coord", "F1 eval_pkg20_1 r0_coord")   # QUEUE 11/08 01:45 KST: F1 pkg20 beside the
-        # driver's F1 pkg16 (driver attaches/skips); the r2pk pkg20 ones are server 2's (QUEUE 01:40 KST, server2_f.sh)
+FILL = ("ls10 ", "ga10 ", "samp10 ")   # samp10: best-of-8 policy sampling (PROGRESS 11/02 round 6)
+# 11/07 round 99: F1 coord pkg20 beside the driver's F1 pkg16 (QUEUE 11/08 01:45 KST, allowed below 45 GiB) put the
+# pod at 45.7 GiB (pkg16 repair worker 22 GB) -> not a filler; the driver runs it in queue order
 FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this left (11/02: ls pcb10_1 took the
                     # slot 1 min before bm_manoharan_rlonly_l20 ended)
 LS16 = ("--methods ls --ls_chunk",)   # 11/05 round 50: a 16/20-cell "scale-eval" filler start (~+22 GiB in 30 s) put the

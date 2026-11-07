@@ -2,3 +2,5 @@ From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
 RL 종료 대기는 이미 백그라운드 waiter(b2gqyulux)가 하고 있습니다. 끝나면 알림이 오므로 Monitor는 따로 띄우지 않겠습니다.
+
+The background waiter will notify me when the driver starts F1 (or if eval10 fails).
