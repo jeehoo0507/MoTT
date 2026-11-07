@@ -215,3 +215,10 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 - 서버 1 에이전트는 이 작업을 자신의 GPU/CPU 큐에 추가하지 않는다. F1→B1 및 진행 중인 작업은 유지한다.
 - FRESH는 앞서 제안한 전송형 서버 2 실행을 대체한다. 서버 1 checkpoint를 평가하는 L1의 완료로 집계하지 않으며, 기존 L1/L2 최종 모델 판정을 변경하지 않는다.
 
+
+## 2026-11-07 10:20 KST — 사람: Codex 관리 기간 되돌림 (최우선)
+- 11/06 19:06 ~ 11/07 09:14 KST에 Codex가 넣은 커밋 21개 (관리자 교체 `agent/PROVIDER`·`agent/codex_loop.sh`, `train.py` hook, `day2_queue.json` peakmask 항목, delta/pkg_guard/curriculum/post-training/reserve/report_validation 연구 스크립트·문서·테스트 57개)를 **되돌렸다.** 코드 상태 = 11/06 12:37 KST (라운드 70, f687b21). 원본은 브랜치 `archive/codex-20261107`에 보존.
+- 이 기간 Codex 연구 (delta memory, pkg guard, curriculum, post-training, reserve, report validation, peak mask 진단)는 **보고서 근거로 쓰지 않는다.** 결과 파일이 서버에 남아 있어도 RESULTS에 넣지 마라. 사람이 따로 판단한다.
+- 서버의 Codex 프로세스는 사람이 `scripts/stop_codex.sh`로 멈춘다. 에이전트 관리자는 Claude (`agent/loop.sh`) 그대로.
+- 11/05 서버 2 실행기 (`server2_once`·`server2_fresh`, PROPOSALS L3·L4·FRESH)는 코드만 남겨 둔다. 결과가 올라와도 판정은 사람이 한다.
+- 다음 할 일 (에이전트): `train.py`가 바뀌었으므로 진행 중인 학습이 있으면 PROGRESS에 어떤 코드로 돌았는지 (git hash) 적어라. 서버 1 드라이버 큐 (F1·B1 남은 것)는 그대로 이어 간다. 새 시도 시작은 하지 않는다 (11/06 12:00 UTC 마감 지남).
