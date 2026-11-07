@@ -1,5 +1,14 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 07:20 UTC, 라운드 78 — **C1' G-inf 탈락** (pkg −0.02); G1 확인 1/7 `lo_pkg_r2pkfc_s1` RL 07:08~; C1 대기 (서버 2로); G-tr 사람 지시 대기; pod 25.6 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 07:40 UTC, 라운드 79 — G1 확인 1/7 `lo_pkg_r2pkfc_s1` RL 진행 (it 86 체크포인트); C1' G-inf 탈락 (라운드 78); C1 대기 (서버 2로); G-tr 사람 지시 대기; pod 28.2 GiB / 60, oom_kill 2)
+
+## 라운드 79 (2026-11-07 07:30~ UTC)
+- `git fetch r2e`: 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음 (a1_nogrow만).
+- `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움.
+- 상태 (07:35): GPU `lo_pkg_r2pkfc_s1` RL 07:08~ it 75 (1081 s, cert-bad 4, oom 0, GPU peak 10.5 GB), it 86에서 20분 체크포인트 저장 — 정상. CPU: side_slot `scale-eval eval_pcb16_0 r2pkfc_rl` 07:01~07:14 rc 0 → `eval_pcb16_1` 07:17~ (보고만). pod 28.2 GiB / 60, oom_kill 2.
+- 끝난 실험: r2pkfc pcb16_0 (보고만) → RESULTS 다시 생성 (1092 기록). "G1 후보 16·20칸" 표: pcb16 (25문제, 1파일) `r2pkfc_rl` − `r2pk_rl` −0.08 [−0.28, +0.16], 개수비 1.029 [0.893, 1.185]. G1 판정과 무관 (보고만).
+- 일정 확인: 확인 7 run × ~2.1 h, 1번째 06:22 시작 → 7번째 끝 ~21:00 UTC 11/07. 새 학습 마감 11/08 03:00 UTC (12:00 KST) 전에 모두 시작됨.
+- 결정: 큐·설정 그대로 — 이유: G1 확인 run 사람 순서대로 정상, C1은 서버 2, G-tr은 사람 지시 대기.
+- 할 일 (다음): (1) `lo_pkg_r2pkfc_s1` 끝 (~08:30) → side_slot 10칸 평가 확인. (2) 서버 2 C1 기록 push되면 merge → `c1_screen.py` → RESULTS. (3) 7개 끝나면 F1 규칙 판정. (4) 11/08 03:00 UTC 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC.
 
 ## 라운드 78 (2026-11-07 07:08~ UTC)
 - `git fetch r2e`: 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로).
