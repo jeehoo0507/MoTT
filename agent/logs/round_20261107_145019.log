@@ -1,3 +1,23 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 97 is finished and pushed to `r2e main` (commits bd4fd05, d19c970).
+
+**Human QUEUE item V (22:42 KST, report only): done**
+- All 12 held-out pkg + repair records (`+rep4`) exist and the human's process had already finished, so nothing was killed.
+- I added `heldout_repair_table` to `scripts/collect_results.py` and regenerated RESULTS.md. It follows the pre-registered reading in PROPOSALS V: same problems paired per seed, then the 3 seeds pooled (150 pairs).
+- Pooled result: MoTT+P1 goes from 0.71 (policy alone) to **0.993** with repair. The coordinate model goes from 0.80 to 0.920.
+  - Difference: +0.07 [+0.03, +0.12].
+  - On problems both solve, MoTT+P1 uses about 6% more parts (count ratio 1.064).
+- That passes the fixed ≥ 0.95 threshold. RESULTS now carries the sentence "정밀 검사 피드백을 붙이면 처음 보는 pkg도 거의 해결". As PROPOSALS says, this is not used for the final structure decision.
+
+**Other progress**
+- **`r2pkfc_s2` 10-cell eval finished:** pcb 0.94, pkg 0.88, ip 1.00. The G1 3-seed same-type table is now complete in RESULTS. Its 12 16/20-cell evals are queued on the CPU lane (entries 232–243).
+- **R `lo_pkg_rnd_s1`:** distillation finished (1586 iterations, best at 700) and RL started. This is the first run using the new `rnd` training pool, and it loaded cleanly: 27 batches / 432 problems, an even split across pcb, ip and rnd. At iteration 50 there were no out-of-memory errors and GPU peak was 11.8 GB. RL should end around 16:35 UTC, then the side slot runs its 10-cell eval.
+
+**Driver log**
+- The 14:50 loop pull (`git pull --autostash` in `agent/loop.sh`) cut off the on-disk driver and side_slot logs again. The processes kept running, but their output stopped reaching the files on disk.
+- I added `scripts/restore_proc_log.py <pid> <log>`, which copies the live output back onto the file. Both logs are restored, and it needs to run every round.
+- I left `agent/loop.sh` unchanged because it is running. The fix proposed to the human in PROGRESS still stands.
+
+**Next:** the 10-cell eval for `lo_pkg_rnd_s1`, then `lo_pkg_rnd_s2` and `lo_pkg_rnd_r0`. Once the server 2 seed 0 records are pushed, `r_screen.py` gives the R verdict. The G1 supplement-2 table comes after the 16/20-cell evals finish. The next DAILY.md is due 11/08 01:30 UTC.
