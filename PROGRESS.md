@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 10:08 UTC, 라운드 85 — 상태만: G1 확인 2/7 `lo_pkg_r2pkfc_s2` RL it 225 정상 (3074 s, best it 100 score 1.585); C1 대기 (서버 2 기록 없음); G-tr 사람 지시 대기; pod 18.2 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 10:50 UTC, 라운드 86 — 새 사람 지시 QUEUE 19:14 KST "G1 보충 2" 처리: `r2pkfc_s1`·`s2` 16·20칸 평가 대기 큐 + RESULTS 읽기 표 (결과 전); G1 확인 2/7 `lo_pkg_r2pkfc_s2` 끝 (뺀 pkg 0.66), 3/7 `r2pkfc_s1` 10:26~; C1 대기 (서버 2); G-tr 사람 지시 대기)
+
+## 라운드 86 (2026-11-07 10:21~ UTC)
+- 새 사람 커밋 209f21b·3bb7e73 (19:14 KST): QUEUE 19:14 + PROPOSALS "11/07 G1 보충 2" — `r2pkfc_s1_rl`·`r2pkfc_s2_rl` 각 `eval_{pcb,ip,pkg}{16,20}_{0,1}` 12파일 (규모 곡선 명령 그대로, 한 번에 한 파일, pcb 먼저), 각 run의 10칸 평가(판정용)가 끝난 뒤; 보고만, 읽는 규칙은 결과 전 고정 (종류×크기 seed 0·1·2 묶음 점추정, pcb·ip 16·20 중 하나라도 < −0.06 → "큰 판 비용 있음"; pkg 보고만; 결정은 사람). `git fetch r2e` 10:21: 그 뒤 새 커밋 없음.
+- `scripts/queue_scale_g1s.py` (새, 평가만): run마다 학습 끝 + 10칸 6기록이 다 있을 때만 `ls10 scale-eval eval_<set> <run>_rl` 12개를 CPU 큐 끝에 붙임 (사람 순서 pcb16_0·1, pcb20_0·1, ip16·20, pkg16·20; 명령·`--out runs/2026-10-29/<run>_rl`은 QUEUE 그대로). CPU 큐에는 "after" 문이 없어 미리 넣으면 드라이버가 best.pt 없이 시작해 FAILED로 빠짐 → `--wait`로 120 s마다 확인하는 대기 프로세스 (bg, `agent/logs/queue_scale_g1s.log`, pid 1650475) — 드라이버 재시작 없음. **ensure_running이 다시 띄우지 않음** → pod 재시작 뒤엔 손으로 다시 (`scripts/bg.py agent/logs/queue_scale_g1s.log '.venv/bin/python scripts/queue_scale_g1s.py --wait r2pkfc_s1 r2pkfc_s2'`, 이미 붙은 항목은 건너뜀).
+- `side_slot.py`: `LS16_EXEMPT`에 `r2pkfc_s1_rl`·`r2pkfc_s2_rl` 추가 (QUEUE 19:14 "이 평가는 죽이지 마라, 45 GiB 넘으면 LS16 쪽을 멈춘다") → side_slot 같은 7 대상으로 다시 띄움 (pid 1650473, 일 없을 때). 지금 LS16은 안 돌아서 실제 차이는 없음.
+- 결정: `ls16c eval_ip16_1` 항목을 `cpu`에서 `cpu_deferred`로 (`queue_defer.py`) — 이유: `.memskip`만 있고 기록이 없어 "미완"으로 남아 있었고, 드라이버가 FAILED 기억으로만 건너뜀 → 드라이버가 재시작되면 18 h LS16을 다시 시작해 드라이버 CPU 줄을 막음. 다른 LS16 3개와 같은 자리 (사람 결정 13:40 "메모리로 생략" 그대로, RESULTS 표시 그대로).
+- `collect_results.py`: `g1_big_board_lines` — "G1 보충 2" 표 (seed별 차, 짝 수, 묶음 점추정 + CI 적기만, 읽기 줄). **seed 1·2 큰 판 기록이 하나도 없을 때 작성.** 지금 seed 0만: pcb16 −0.10, pcb20 −0.12, ip16·20 +0.00, pkg16 +0.12, pkg20 −0.06 → "대기".
+- `lo_pkg_r2pkfc_s2` 학습 끝 10:26 (rc 0) → side_slot 10칸 평가 10:28~10:42 rc 0. 끝난 실험 (정책 단독, 50문제): **뺀 pkg 0.66** (같은 seed `lo_pkg_r2pk_s2` 0.78, `lo_pkg_r0_s2` 0.78 → (b') −0.12), pcb 0.88, ip 1.00. F1 표 뺀 pkg r2pkfc: 0.84 / 0.78 / 0.66, (b') +0.06 / −0.06 / −0.12 (라운드 80에서 이미 pkg 범용화 "통과" 불가). RESULTS 다시 생성 (1111 기록).
+- 드라이버가 3/7 `r2pkfc_s1` 10:26 시작 (증류 → RL, 끝 ~12:30) → 10칸 평가 → 대기 프로세스가 16·20칸 12개 붙임. 4/7 `r2pkfc_s2` 끝 ~14:40 → 같은 방식.
+- 할 일 (다음): (1) `r2pkfc_s1` 끝 → 10칸 평가 → `queue_scale_g1s.log` "appended 12" 확인, 16·20칸 평가 진행 (파일당 4~15 분, 드라이버/side_slot 한 번에 하나). (2) 서버 2 C1 기록 → merge → `c1_screen.py`. (3) 7개 끝 ~21:00 UTC → F1 표·G1 교체 판정 줄 + G1 보충 2 읽기 줄 → 사람에게 남김 (최종 구조 결정은 사람). (4) 11/08 03:00 UTC 뒤 새 학습 없음; DAILY 다음 11/08 01:xx UTC.
 
 ## 라운드 85 (2026-11-07 10:05~ UTC)
 - `git fetch r2e` (10:05): 새 사람 커밋 없음 (QUEUE 마지막 14:30 KST 그대로). 서버 2 C1 기록 (`runs/2026-11-07s2/r2pk_{vsi,ctl}_rl`) 아직 없음 (a1_nogrow만).

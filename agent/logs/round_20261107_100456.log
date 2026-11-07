@@ -16,3 +16,7 @@ Round 85 was a status check only. Nothing finished, so RESULTS.md is unchanged.
 4. No new training starts after 03:00 UTC on 11/08.
 
 The next DAILY.md is due around 01:00 UTC on 11/08.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e6ead2d..05e6682  main -> main

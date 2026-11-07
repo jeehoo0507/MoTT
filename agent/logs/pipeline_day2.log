@@ -1118,3 +1118,10 @@
 [08:39:00] START collect_results | mem 18.2 GiB / 60.0 GiB, oom_kill 2
 [08:39:00] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
 [08:41:37] END collect_results rc=0 | mem 18.1 GiB / 60.0 GiB, oom_kill 2
+[10:26:25] END train lo_pkg_r2pkfc_s2 (CERTIFY_WORKERS=2) rc=0 | mem 16.4 GiB / 60.0 GiB, oom_kill 2
+[10:26:25] START train r2pkfc_s1 (CERTIFY_WORKERS=2) | mem 16.4 GiB / 60.0 GiB, oom_kill 2
+[10:26:25] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r2pkfc_s1 --arm '--model mott --peak_refine --fc_bias' --day 2026-10-29 --pool runs/pool_v1 --seed 1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/r2pkfc_s1/rung_stdout.log)
+[10:28:09] ATTACH eval10 lo_pkg_r2pkfc_s2_rl
+[10:43:09] START collect_results | mem 18.2 GiB / 60.0 GiB, oom_kill 2
+[10:43:09] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[10:45:50] END collect_results rc=0 | mem 18.2 GiB / 60.0 GiB, oom_kill 2

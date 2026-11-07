@@ -26,7 +26,8 @@ FILL_GAP_S = 3600   # no filler job when a target's rl stage has less than this 
 LS16 = ("--methods ls --ls_chunk",)   # 11/05 round 50: a 16/20-cell "scale-eval" filler start (~+22 GiB in 30 s) put the
                                       # pod over 45 GiB and mem_guard killed ls16c pcb16_0 (4 h in) and pcb16_1 -> no
                                       # scale-eval filler while a driver LS16 job is alive
-LS16_EXEMPT = ("r2pkfc_rl",)   # QUEUE 11/07 13:40 KST: these scale-evals run while LS16 is alive; mem_guard stops LS16
+LS16_EXEMPT = ("r2pkfc_rl", "r2pkfc_s1_rl", "r2pkfc_s2_rl")   # QUEUE 11/07 13:40 / 19:14 KST: these scale-evals run
+                                                               # while LS16 is alive; mem_guard stops LS16
 SCALE_GAP_S = 1800   # scale-eval filler takes 7-15 min (side_slot.log 11/06), so a 30 min gap keeps the G1 eval first
 
 

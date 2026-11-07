@@ -1504,7 +1504,52 @@ def scale_curve_table(recs):
         L += ["#### G1 후보 16·20칸 (보고만, G1 판정 아님): `r2pkfc_rl` − `r2pk_rl` (seed 0, 같은 문제 짝지은 bootstrap; "
               "seed 1개·사후 평가라 숫자만)", "",
               "| 판 | 문제 수 | 성공률 차 [95% CI] | 개수비 fc/r2pk (둘 다 성공) [95% CI] |", "|---|---|---|---|"] + rows + [""]
-    return L
+    return L + g1_big_board_lines(recs)
+
+
+def g1_big_board_lines(recs):
+    """PROPOSALS "11/07 G1 보충 2" (human, 19:14 KST, rule fixed before the seed 1-2 records; this code written 11/07
+    round 86 before any of them): per kind x size (16, 20), r2pkfc − r2pk success difference with seeds 0, 1, 2 pooled
+    (same seed paired, same problems), point estimate; bootstrap CI (problems resampled within each seed) only listed.
+    pcb or ip at 16 or 20 below −0.06 -> "큰 판 비용 있음". pkg report only. No structure decision (human's)."""
+    cache = {}
+    rows, cells = [], {}
+    for t in ("pcb", "ip", "pkg"):
+        for n in (16, 20):
+            d, have = [], []
+            for s in LO_SEEDS:
+                ref = seed_run("r2pk", s)
+                if ref not in cache:
+                    cache[ref] = paired(recs, ref)
+                v = cache[ref].get((t, n), {}).get(seed_run("r2pkfc", s))
+                if v is not None:
+                    d.append(v[0].astype(float) - v[1].astype(float))
+                    have.append(s)
+            if not d:
+                rows.append(f"| {t} {n} | – | – | – | – |")
+                continue
+            rng = np.random.default_rng(0)
+            bs = [np.mean(np.concatenate([x[rng.integers(0, len(x), len(x))] for x in d])) for _ in range(2000)]
+            lo, hi = np.percentile(bs, [2.5, 97.5])
+            est = float(np.concatenate(d).mean())
+            cells[(t, n)] = (est, len(have) == len(LO_SEEDS))
+            rows.append(f"| {t} {n} | {', '.join(str(s) for s in have)} | "
+                        + " / ".join(f"{x.mean():+.2f}" for x in d) + f" | {sum(map(len, d))} | {est:+.2f} [{lo:+.2f}, {hi:+.2f}] |")
+    if not cells:
+        return []
+    judged = [(t, n) for t in ("pcb", "ip") for n in (16, 20)]
+    bad = [f"{t}{n} {cells[(t, n)][0]:+.2f}" for t, n in judged if (t, n) in cells and cells[(t, n)][1]
+           and cells[(t, n)][0] < -0.06]
+    full = all((t, n) in cells and cells[(t, n)][1] for t, n in judged)
+    read = ("**큰 판 비용 있음** (" + ", ".join(bad) + " < −0.06)" if bad else
+            "큰 판 비용 없음 (pcb·ip 16·20칸 모두 ≥ −0.06)" if full else
+            "대기 — pcb·ip 16·20칸의 seed 0·1·2가 다 나온 뒤 읽음")
+    return ["#### G1 보충 2: 큰 판 16·20칸 `r2pkfc` − `r2pk`, seed 0·1·2 묶음 (PROPOSALS \"11/07 G1 보충 2\", "
+            "결과 전에 고정한 읽는 규칙; 보고만, G1 판정·최종 구조 결정은 사람)", "",
+            "같은 seed끼리 같은 문제 짝. 묶음 차는 점 추정으로 읽고, CI (seed 안에서 문제를 다시 뽑음, 2000회)는 적기만. "
+            "pcb 또는 ip에서 16칸 또는 20칸 묶음 차 < −0.06이면 \"큰 판 비용 있음\". pkg는 보고만.", "",
+            "| 판 | seed | seed별 차 | 짝 수 | 묶음 차 [95% CI] |", "|---|---|---|---|---|"] + rows + [
+            "", f"읽기: {read}.", ""]
 
 
 # QUEUE 11/03 11:40 KST ("시도한 수정과 효과"를 ABLATIONS에 정직하게): one row per attempted modification of the
