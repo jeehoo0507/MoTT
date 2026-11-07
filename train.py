@@ -119,6 +119,8 @@ def parse():
                    "frequency-match bias -|log f_k - log SRF_t| / tau_h (tau learned per head) to dec_from_mode")
     p.add_argument("--mode_head", action="store_true", help="mott/loop (day-2 arch c', PROPOSALS 10/29 08:00): add "
                    "a mode-routed add logit sum_k alpha_ik phi(m_k, c_t), zero-init")
+    p.add_argument("--peak_gate", action="store_true", help="mott (11/07 C1', PROPOSALS): P1's refined peak level also "
+                   "enters the env's target-met test (decap_loop/pkgate_env.py); implies --peak_refine")
     p.add_argument("--no_prior", action="store_true", help="mott (11/07 A2 ablation, PROPOSALS A1/A2): drop the "
                    "physics prior term (w_dv*dV - w_mn*margin) from the logits; the policy learns the scores alone")
     p.add_argument("--peak_refine", action="store_true", help="mott/loop (PROPOSALS 11/03 D7 -> P1): append to each "
@@ -283,7 +285,10 @@ def main():
     args = parse()
     if args.model in ("mott", "loop"):
         # both flags = PROPOSALS 11/04 P3 (P2 tokens on top of P1, compared with the P1 run: still one change)
-        args.feat = ("mott_pkdd" if args.peak_refine and args.dedup_modes else "mott_pk" if args.peak_refine
+        if args.peak_gate:
+            args.peak_refine = True
+        args.feat = ("mott_pkgate" if args.peak_gate else
+                     "mott_pkdd" if args.peak_refine and args.dedup_modes else "mott_pk" if args.peak_refine
                      else "mott_dd" if args.dedup_modes else "mott")
     elif args.model == "park_am":
         args.feat = "coord"

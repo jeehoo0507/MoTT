@@ -1,5 +1,13 @@
 # 사람 지시 (최우선)
 
+## 2026-11-07 14:30 KST — 사람: 두 번째 후보 C1' `--peak_gate` (서버 1, G1 탈락일 때 바로)
+- PROPOSALS "11/07 C1'" 그대로. 코드: `decap_loop/pkgate_env.py` (서브클래스, sim.py 안 건드림), `train.py --peak_gate`, `scripts/eval_policy.py --env_feat`, `scripts/smoke_peak_gate.py` (CPU 통과). 네 할 일 순서:
+  1. **지금 (CPU 4번째 칸, G1 판정 전이라도):** G-inf = `eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --env_feat mott_pkgate --workers 1 --inst_chunk 5 --out runs/2026-10-29/r2pk_rl` (기록 `*__r2pk_rl@mott_pkgate.json`). r2pkfc 16·20칸 평가보다 **먼저**.
+  2. GPU smoke: `scripts/smoke_peak_refine.py`의 3번(증류 30 + RL 3 iter)과 같은 것을 `--model mott --peak_gate`로 (`runs/analysis/smoke_peak_gate_gpu.ok`). 실패하면 원인을 PROGRESS에 적고 G-tr은 하지 마라.
+  3. **G1 탈락이면** GPU: `r2pk_gate` = `"init": "runs/2026-10-29/r2pk_rl/best.pt"`, `"rl_hours": 1.0`, arm `--model mott --peak_gate`, seed 0 → side_slot 10칸 평가 (체크포인트 feat 그대로 = 게이트 포함). G1 통과면 G1 확인이 먼저, G-tr은 사람 지시 대기.
+  4. 판정은 PROPOSALS C1' 규칙으로 (짝 `r2pk_ctl`은 서버 2 기록 `runs/2026-11-07s2/r2pk_ctl_rl/eval` — 사람이 push하면 pull). RESULTS에 C1·C1' 표 (G-inf, G-tr, C1 각각 vs 짝).
+- 11/08 12:00 KST 뒤 새 학습 시작 금지.
+
 ## 2026-11-07 14:15 KST — 사람: 최종 RL 방식 C1 (PROPOSALS "11/07 C1 재개")
 - **변경 (사람, 14:25 KST):** 대조군 `r2pk_ctl`과 C1 `r2pk_vsi`는 **사람이 서버 2에서 돌린다** (`scripts/server2_c1.sh`, 같은 A5000, 서버 1 `r2pk_rl/best.pt`에서 1.0 h). **서버 1에서는 이 둘을 돌리지 마라.** G1 탈락이면 서버 1 GPU는 비워 두고 사람 지시를 기다려라 (두 번째 후보 C1'이 올 수 있음). G1 통과면 G1 확인 7 run 그대로.
 - (아래 원래 문장은 위 변경으로 대체) G1 판정이 "탈락"이면: ~~서버 1 GPU에 바로 `r2pk_ctl` → `r2pk_vsi` (둘 다 `"init": "runs/2026-10-29/r2pk_rl/best.pt"`, `"rl_hours": 1.0`, seed 0; arm은 PROPOSALS 그대로). 각 10칸 평가는 side_slot. 끝나면 거르기 판정 (PROPOSALS 규칙) → 통과면 확인 4 run (seed 1·2) 바로 큐.
