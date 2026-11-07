@@ -1,3 +1,11 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 116을 마쳤고 커밋 `c58221a`를 `r2e main`에 push했습니다(push 때 `gh: not found` 경고가 떴지만 원격 main이 이 커밋과 일치합니다).
+
+- **QUEUE:** 사람의 새 항목이 없습니다. 마지막 항목은 11/08 03:05 KST 해제 그대로입니다.
+- **프로세스:** 드라이버(pid 1575375)는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. pod 메모리 22.4 / 60 GiB, oom_kill 2입니다. 드라이버 로그는 `restore_proc_log.py`로 681 B를 복구했습니다.
+- **F3 10/22 끝:** `eval_ip16_1 r2pk_s2_rl+rep4`가 정상 종료(rc 0)했습니다. 정책 단독 1.00 → 1.00 (n=25), 되먹임 쓴 문제 0, 성공 평균 개수 15.64입니다. 이로써 pcb16·ip16 12개가 모두 끝났습니다. RESULTS.md는 드라이버의 collect_results가 자동으로 반영했습니다.
+- **진행 중:** `eval_pcb20_0 r2pk_rl+rep4`가 23:29부터 돌고 있습니다. 남은 것은 11개(pcb20 5개, ip20 6개)입니다. pcb16의 peak 메모리가 22.4 GB였으니 pcb20은 더 클 수 있어, 다음 라운드에 peak를 확인합니다.
+- **결정:** 큐와 플래그는 그대로 두고 GPU 새 학습은 시작하지 않았습니다. 에이전트의 새 시도는 금지되어 있기 때문이며, PROGRESS.md에 기록했습니다.
+- **다음:** DAILY.md는 11/08 01:30 UTC에 새로 씁니다.
