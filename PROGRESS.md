@@ -1,5 +1,10 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 14:45 UTC, 라운드 96 — 사람 QUEUE 22:32/22:37 KST: G1 (b') 미통과·채택 안 함, M1 사람 중단 (기준 미달); rnd 풀 9개 끝 (14:10), **R `lo_pkg_rnd_s1` 학습 시작 14:32** (증류 → RL ~15:17); `r2pkfc_s2` 학습 끝 14:32 → 10칸 평가 대기)
+# PROGRESS (갱신 2026-11-07 15:05 UTC, 라운드 97 — 사람 QUEUE 22:42 KST V 끝: 뺀 pkg + 수리 3 seed 묶음 MoTT+P1 **0.993** vs 좌표 0.920 → 고정 읽기 "≥ 0.95" 충족 (보고만); R `lo_pkg_rnd_s1` 증류 중 (RL ~15:17~); `r2pkfc_s2` 10칸 평가 side_slot 진행)
+
+## 라운드 97 (2026-11-07 14:50~ UTC)
+- `git fetch r2e` (14:50): 새 사람 커밋 없음 (QUEUE 마지막 22:42 KST V). `ensure_running`: 드라이버 alive (pid 1575375), report_watch·resume_agent 다시 띄움. side_slot (pid 1680969) `eval10 r2pkfc_s2_rl` 14:41~ (드라이버 ATTACH 14:44). pod 20.4 GiB / 60, oom_kill 2.
+- **V (사람 QUEUE 22:42 KST, 보고만) 끝:** 사람 nohup 평가 12 기록 (`lo_pkg_{r2pk,r0}{,_s1,_s2}_rl+rep4`, pkg10_0·1) 모두 있음, 프로세스 끝남 (죽이지 않음). `collect_results.py`에 `heldout_repair_table` 추가 (PROPOSALS V 읽기 그대로, seed마다 같은 문제 짝 + 3 seed 묶음 150 짝, `ok_pre`로 전 → 후). 결과: MoTT+P1 0.71 → **0.993**, 좌표 0.80 → 0.920; 차 +0.07 [+0.03, +0.12]; 둘 다 성공 개수비 1.064 [1.023, 1.107] (MoTT+P1이 6% 더 씀, 숫자만). seed별 1.00/1.00/0.98. → 고정 읽기 "정밀 검사 피드백을 붙이면 처음 보는 pkg도 거의 해결" (RESULTS에 그 문장). 최종 구조 결정에는 안 씀 (PROPOSALS).
+- 드라이버·side_slot 로그 또 끊김 (14:50 loop.sh autostash) → 새 helper `scripts/restore_proc_log.py <pid> <log>` (`/proc/<pid>/fd/1`가 더 길면 복사; 지난 라운드는 손으로 했음). 드라이버 +576 B, side_slot +78 B 복구.
 
 ## 라운드 96 (2026-11-07 13:42~ UTC)
 - `git pull` (루프, 13:42): **새 사람 커밋 2개** ece1a02 (22:32 KST: R 무작위 물리 학습 `rnd`, G1 확인 종료 (b') 미통과, 서버 1 큐 → `lo_pkg_rnd_s1`, `lo_pkg_rnd_s2`, 대조군 `lo_pkg_rnd_r0` (`after: runs/pool_v1/rnd.ok`), `lo_pcb_r2pkfc*` 3개는 removed) · 549a30d (22:37 KST: M1 `r2pkfcm1` 서버 2에서 사람 중단, 기준 미달).

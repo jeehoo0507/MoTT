@@ -1030,6 +1030,39 @@ def repair_table(recs):
     return lines
 
 
+def heldout_repair_table(recs):
+    """PROPOSALS 11/07 V (report only): leave-pkg-out runs with the repair stage (`+rep4`) on eval_pkg10_*, MoTT+P1
+    (`lo_pkg_r2pk*`) vs coord (`lo_pkg_r0*`), seed s paired with seed s on the same problems, then the 3 seeds pooled."""
+    by = defaultdict(dict)
+    for r in recs:
+        if r["tech"] == "pkg" and int(r["size"]) == 10 and r["method"].endswith("+rep4"):
+            by[r["method"]][r["set"]] = r
+    seeds = [("", "0"), ("_s1", "1"), ("_s2", "2")]
+    pairs = [(f"lo_pkg_r2pk{s}_rl+rep4", f"lo_pkg_r0{s}_rl+rep4", n) for s, n in seeds]
+    if not all(a in by and b in by for a, b, _ in pairs):
+        return []
+
+    def cat(m, sets, k, t):
+        return np.concatenate([np.asarray(by[m][s][k], t) for s in sets])
+    rows, pool = [], [[], [], [], [], [], []]
+    for a, b, n in pairs:
+        sets = sorted(set(by[a]) & set(by[b]))
+        v = (cat(a, sets, "ok", bool), cat(b, sets, "ok", bool), cat(a, sets, "count", float), cat(b, sets, "count", float),
+             cat(a, sets, "ok_pre", bool), cat(b, sets, "ok_pre", bool))
+        for p, x in zip(pool, v):
+            p.append(x)
+        rows.append(f"| {n} | {v[4].mean():.2f} → {v[0].mean():.2f} | {v[5].mean():.2f} → {v[1].mean():.2f} | " + ci_cells(*v[:4]) + " |")
+    v = [np.concatenate(p) for p in pool]
+    rows.append(f"| 묶음 | {v[4].mean():.2f} → **{v[0].mean():.3f}** | {v[5].mean():.2f} → {v[1].mean():.3f} | " + ci_cells(*v[:4]) + " |")
+    read = ("**MoTT+P1+수리 ≥ 0.95 → \"정밀 검사 피드백을 붙이면 처음 보는 pkg도 거의 해결\"**" if v[0].mean() >= 0.95
+            else "MoTT+P1+수리 < 0.95 → 고정 문장은 쓰지 않음")
+    return ["## 뺀 pkg + 끝에서 고치기 (PROPOSALS 11/07 V, 보고만, 3 seed, pkg 10칸 50문제×3)", "",
+            "pkg를 한 번도 안 본 run (`lo_pkg_*`)에 같은 고치기 (`--repair 4`). seed마다 같은 문제 짝, CI는 짝지은 bootstrap 95% "
+            "(2000회, seed 0). 성공률 전 → 후 = 같은 기록 안 (`ok_pre`, 정책 단독 → 수리 포함). 최종 구조 결정에는 쓰지 않는다.", "",
+            "| seed | MoTT+P1 `lo_pkg_r2pk` 전 → 후 | 좌표 `lo_pkg_r0` 전 → 후 | 문제 수 | 성공률 차 (MoTT+P1 − 좌표, 둘 다 수리) [95% CI] | "
+            "개수 비 MoTT+P1/좌표 (둘 다 성공) [95% CI] |", "|---|---|---|---|---|---|"] + rows + ["", f"읽기 (결과 전 고정): {read}.", ""]
+
+
 def rulestart_table(recs):
     """PROPOSALS 11/03 T4: modal_rule's solution as the start, the policy continues (`modal_rule><policy>`,
     eval_policy.py --start rule). (S1/S2) vs modal_rule, paired on the same problems; descriptive: how often the
@@ -1848,6 +1881,7 @@ def main():
     lines += design_rationale(recs)
     lines += sampling_table(recs)
     lines += repair_table(recs)
+    lines += heldout_repair_table(recs)
     lines += rulestart_table(recs)
     lines += count_gap_table()
     lines += distill_seed_table()

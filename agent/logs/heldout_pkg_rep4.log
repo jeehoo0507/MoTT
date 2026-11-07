@@ -20,3 +20,5 @@ done
 done
 2 sets x 1 methods = 2 jobs, 1 workers -> runs/2026-10-29/lo_pkg_r0_s2_rl/eval
 [   438s] eval_pkg10_1   lo_pkg_r0_s2_rl+rep4         ok 0.84 count 6.24 2.662s/inst rounds 4
+[   608s] eval_pkg10_0   lo_pkg_r0_s2_rl+rep4         ok 0.96 count 5.50 1.005s/inst rounds 4
+done
