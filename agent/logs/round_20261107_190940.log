@@ -9,3 +9,7 @@ Round 104 is committed and pushed to `r2e/main` (6a02545). It was a routine roun
 - **Housekeeping:** the driver and side_slot are alive, and I restarted report_watch and resume_agent. I recovered 697 B of the driver log that had been orphaned. Pod memory is 28.4 of 60 GiB, with the OOM-kill count unchanged at 2.
 
 The next DAILY.md is due 11/08 01:30 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6a02545..4a6f4f3  main -> main

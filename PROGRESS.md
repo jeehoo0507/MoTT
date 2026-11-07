@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 19:15 UTC, 라운드 104 — F1 pkg16_1 `r2pk_s1_rl+rep4` 끝 (0.48 → 0.92), pkg16_1 `r2pk_s2_rl` 진행 (F1 pkg16 마지막); GPU `lo_pkg_rnd_r0` 증류 it 1725)
+# PROGRESS (갱신 2026-11-07 19:35 UTC, 라운드 105 — F1 pkg16 6/6 끝 (`r2pk_s2_rl` pkg16_1 0.96; 3 seed 묶음 150문제 **0.940**); 드라이버 좌표 `r0_coord_rl+rep4` pkg20_0 진행; GPU `lo_pkg_rnd_r0` RL 시작)
+
+## 라운드 105 (2026-11-07 19:28~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
+- `ensure_running`: 드라이버 alive (1575375), report_watch·resume_agent 다시 띄움. `restore_proc_log.py` 드라이버 +702 B, side_slot 그대로 (같은 inode). pod 25.8 GiB / 60, oom_kill 2.
+- **F1 끝난 것 (드라이버):** `eval_pkg16_1 r2pk_s2_rl+rep4` 18:59–19:18 rc 0 — **0.96**, 개수 10.04, 3.39 s/문제. 이로써 F1 pkg16 수리 평가 6개 (3 seed × 2 파일) 끝. RESULTS 자동 표 (19:18): `r2pk_s2_rl+rep4` pkg16 50문제 0.94 (정책 단독 0.56), "최종 방법" pkg16 묶음 3 seed **0.940** (150문제, 개수 10.30). 짝 CI pkg16 150: 좌표+V 대비 +0.14 [+0.07, +0.21] 개수비 1.131; greedy+prune+V 대비 −0.02 [−0.05, +0.00] 개수비 0.729. 숫자만 — 읽기는 사람.
+- 드라이버 다음: `eval_pkg20_0 r0_coord_rl+rep4` 19:22~ → pkg20_1 → F2 (서버 2 done → 건너뜀) → F3 22.
+- R 대조군 `lo_pkg_rnd_r0`: 증류 끝, RL 19:22경 시작 (GPU 7.7 GB) → 1.25 h → 끝 ~20:45 → side_slot 10칸 (보고만, `r_screen_table` 2×2 자동).
+- 결정: 큐·플래그·side_slot 그대로 — 이유: 남은 항목 모두 사람 것, 에이전트 새 시도 금지 유지.
+- 할 일 (다음): (1) 좌표 pkg20 2 → F3 22 (드라이버). (2) `lo_pkg_rnd_r0` 끝 → 10칸 → 2×2 표 확인. (3) 라운드마다 `restore_proc_log.py`. DAILY 다음 11/08 01:30 UTC.
+
+# (이전) 라운드 104 머리말: F1 pkg16_1 `r2pk_s1_rl+rep4` 끝 (0.48 → 0.92), pkg16_1 `r2pk_s2_rl` 진행 (F1 pkg16 마지막); GPU `lo_pkg_rnd_r0` 증류 it 1725
 
 ## 라운드 104 (2026-11-07 19:09~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.
