@@ -20,3 +20,7 @@ Round 67 is done and pushed to `r2e main` (commit 392bf19). No experiment finish
    - **If G1 passes:** run `g1_confirm_queue.py r2pkfc --apply` and add the new runs to side_slot. The 7 runs take about 14 hours, so they start before the 11/08 03:00 UTC cutoff for new training.
    - **If it fails:** record "G1 효과 없음" in RESULTS ABLATIONS and move the deferred LS16 jobs back into the CPU queue.
 3. The next DAILY.md is due 11/08 around 01:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   392bf19..bba558d  main -> main
