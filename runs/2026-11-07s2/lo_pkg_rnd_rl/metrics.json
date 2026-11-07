@@ -1,0 +1,191 @@
+{
+  "args": {
+    "out": "runs/2026-11-07s2/lo_pkg_rnd_rl",
+    "device": "cuda",
+    "seed": 0,
+    "stage": "rl",
+    "init": "runs/2026-11-07s2/lo_pkg_rnd_distill/best.pt",
+    "iters": 1000000,
+    "B": 16,
+    "M": 8,
+    "chunk": 2,
+    "grid_growth": 0.5,
+    "sizes": "8-12",
+    "shapes": "rect,L,holes",
+    "targets": "flat,step",
+    "n_probe": "1-3",
+    "difficulty": "0.02-0.2",
+    "max_steps": 64,
+    "feat": "mott_pk",
+    "model": "mott",
+    "baseline": "group",
+    "pool": "runs/pool_v1",
+    "pool_glob": "train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl",
+    "val_pools": "val_pcb10_0,val_ip10_0",
+    "teacher_dir": "data/teacher",
+    "hours": 1.25,
+    "certify": 1,
+    "feas_margin": 0.0,
+    "hard_weight": 0.0,
+    "kind_weight": "",
+    "self_repair": 0,
+    "prior": false,
+    "no_prune": false,
+    "layers": 4,
+    "glob": false,
+    "d": 128,
+    "heads": 8,
+    "loop_train": "2-8",
+    "loop_eval": 8,
+    "fc_bias": false,
+    "mm_bias": false,
+    "mode_head": false,
+    "peak_gate": false,
+    "no_prior": false,
+    "peak_refine": true,
+    "dedup_modes": false,
+    "lr": 0.0003,
+    "imit": 1.0,
+    "teacher": "gp",
+    "lam": 1.0,
+    "lam_lr": 0.05,
+    "fail_target": 0.02,
+    "clip": 1.0,
+    "no_amp": false,
+    "grad_ckpt": false,
+    "val_every": 100,
+    "val_sizes": "10,20",
+    "val_n": 16,
+    "ckpt_min": 20
+  },
+  "git": "ece1a02",
+  "iters": 347,
+  "hours": 1.2720535278982585,
+  "final_val": {
+    "val_pcb10_0": [
+      0.996180534362793,
+      0.5
+    ],
+    "val_ip10_0": [
+      0.6905350089073181,
+      0.0625
+    ]
+  },
+  "best_val_score": 1.4058577716350555,
+  "best_iter": 300,
+  "teacher_replaced": 280,
+  "lam": 1.316671875000015,
+  "cuda_oom_skipped": 0,
+  "grid_capped_steps": 123,
+  "chunk_final": 2,
+  "pool_F": {
+    "train_ip10_0": [
+      140,
+      176
+    ],
+    "train_ip10_1": [
+      177,
+      220
+    ],
+    "train_ip10_2": [
+      107,
+      152
+    ],
+    "train_ip12_0": [
+      135,
+      174
+    ],
+    "train_ip12_1": [
+      117,
+      160
+    ],
+    "train_ip12_2": [
+      135,
+      198
+    ],
+    "train_ip8_0": [
+      83,
+      124
+    ],
+    "train_ip8_1": [
+      177,
+      199
+    ],
+    "train_ip8_2": [
+      107,
+      143
+    ],
+    "train_pcb10_0": [
+      205,
+      307
+    ],
+    "train_pcb10_1": [
+      262,
+      393
+    ],
+    "train_pcb10_2": [
+      216,
+      324
+    ],
+    "train_pcb12_0": [
+      280,
+      420
+    ],
+    "train_pcb12_1": [
+      251,
+      376
+    ],
+    "train_pcb12_2": [
+      257,
+      385
+    ],
+    "train_pcb8_0": [
+      187,
+      280
+    ],
+    "train_pcb8_1": [
+      243,
+      364
+    ],
+    "train_pcb8_2": [
+      213,
+      319
+    ],
+    "train_rnd10_0": [
+      177,
+      235
+    ],
+    "train_rnd10_1": [
+      173,
+      259
+    ],
+    "train_rnd10_2": [
+      138,
+      207
+    ],
+    "train_rnd12_0": [
+      171,
+      256
+    ],
+    "train_rnd12_1": [
+      109,
+      163
+    ],
+    "train_rnd12_2": [
+      179,
+      252
+    ],
+    "train_rnd8_0": [
+      86,
+      129
+    ],
+    "train_rnd8_1": [
+      113,
+      169
+    ],
+    "train_rnd8_2": [
+      101,
+      151
+    ]
+  }
+}
