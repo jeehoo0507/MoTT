@@ -1,7 +1,8 @@
 # 사람 지시 (최우선)
 
 ## 2026-11-07 14:15 KST — 사람: 최종 RL 방식 C1 (PROPOSALS "11/07 C1 재개")
-- **G1 판정이 "탈락"이면 (예상):** 서버 1 GPU에 바로 `r2pk_ctl` → `r2pk_vsi` (둘 다 `"init": "runs/2026-10-29/r2pk_rl/best.pt"`, `"rl_hours": 1.0`, seed 0; arm은 PROPOSALS 그대로). 각 10칸 평가는 side_slot. 끝나면 거르기 판정 (PROPOSALS 규칙) → 통과면 확인 4 run (seed 1·2) 바로 큐.
+- **변경 (사람, 14:25 KST):** 대조군 `r2pk_ctl`과 C1 `r2pk_vsi`는 **사람이 서버 2에서 돌린다** (`scripts/server2_c1.sh`, 같은 A5000, 서버 1 `r2pk_rl/best.pt`에서 1.0 h). **서버 1에서는 이 둘을 돌리지 마라.** G1 탈락이면 서버 1 GPU는 비워 두고 사람 지시를 기다려라 (두 번째 후보 C1'이 올 수 있음). G1 통과면 G1 확인 7 run 그대로.
+- (아래 원래 문장은 위 변경으로 대체) G1 판정이 "탈락"이면: ~~서버 1 GPU에 바로 `r2pk_ctl` → `r2pk_vsi` (둘 다 `"init": "runs/2026-10-29/r2pk_rl/best.pt"`, `"rl_hours": 1.0`, seed 0; arm은 PROPOSALS 그대로). 각 10칸 평가는 side_slot. 끝나면 거르기 판정 (PROPOSALS 규칙) → 통과면 확인 4 run (seed 1·2) 바로 큐.
 - **G1이 "통과"면:** G1 확인 7 run이 먼저 (서버 1). C1은 서버 1에 넣지 말고 PROGRESS에 "C1 대기 (서버 2로)"라고만 적어라 — 사람이 서버 2에서 돌린다.
 - `--self_repair` 경로는 11/07 smoke (`runs/analysis/smoke_self_repair.ok`) 그대로. 학습 조건·플래그는 바꾸지 않는다. 같은 1 h에 iter가 적은 것은 그대로 기록.
 - 11/08 12:00 KST 뒤 새 학습 시작 금지.
