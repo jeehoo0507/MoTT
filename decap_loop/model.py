@@ -188,6 +188,7 @@ class MoTT(nn.Module):
         self.w_dv = nn.Parameter(torch.full((T + 1,), 20.0))       # prior: violation reduction
         self.w_mn = nn.Parameter(torch.full((T + 1,), 3.0))        # prior: worst margin after
         self.grad_ckpt = False
+        self.use_prior = True   # 11/07 A2 ablation (--no_prior): False drops the physics prior term
 
     def fc_bias(self, mode, dec):
         """[E,h,T,K] frequency match of decap type t and mode k: -|log10(f_k/f_c) - log10(SRF_t/f_c)| / tau_h
@@ -233,7 +234,7 @@ class MoTT(nn.Module):
         rm = self.rm_head(u)                                                    # [E,n,1]
         nb = 4 + T + 3
         dV, mn = node[..., nb:nb + T + 1], node[..., nb + T + 1:nb + 2 * (T + 1)]
-        prior = self.w_dv * dV - self.w_mn * mn
+        prior = (self.w_dv * dV - self.w_mn * mn) if self.use_prior else 0.0
         logits = torch.cat([add, rm], -1) + prior
         vm = valid[..., None].to(u.dtype)
         g = (u * vm).sum(1) / vm.sum(1).clamp(min=1)

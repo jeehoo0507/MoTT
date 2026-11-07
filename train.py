@@ -119,6 +119,8 @@ def parse():
                    "frequency-match bias -|log f_k - log SRF_t| / tau_h (tau learned per head) to dec_from_mode")
     p.add_argument("--mode_head", action="store_true", help="mott/loop (day-2 arch c', PROPOSALS 10/29 08:00): add "
                    "a mode-routed add logit sum_k alpha_ik phi(m_k, c_t), zero-init")
+    p.add_argument("--no_prior", action="store_true", help="mott (11/07 A2 ablation, PROPOSALS A1/A2): drop the "
+                   "physics prior term (w_dv*dV - w_mn*margin) from the logits; the policy learns the scores alone")
     p.add_argument("--peak_refine", action="store_true", help="mott/loop (PROPOSALS 11/03 D7 -> P1): append to each "
                    "mode token the parabolic-vertex excess of its peak level over the working grid and its violating "
                    "flag (--feat mott_pk, decap_loop/peak_env.py)")
@@ -148,8 +150,10 @@ def make_policy(cfg, a):
     else:
         from decap_loop.sim import mott_dims
     if a.get("model") == "mott":
-        return MoTT(cfg.n_types, K_MODES, mott_dims(cfg.n_types), d=a["d"], layers=a["layers"], heads=a["heads"],
-                    fc=a.get("fc_bias", False), mode_head=a.get("mode_head", False))
+        pol = MoTT(cfg.n_types, K_MODES, mott_dims(cfg.n_types), d=a["d"], layers=a["layers"], heads=a["heads"],
+                   fc=a.get("fc_bias", False), mode_head=a.get("mode_head", False))
+        pol.use_prior = not a.get("no_prior", False)   # 11/07 A2: learned scores only, no physics prior
+        return pol
     if a.get("model") == "loop":
         from decap_loop.loop_model import LoopMoTT
         lo, hi = rng_range(a.get("loop_train", "2-8"))

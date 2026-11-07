@@ -53,7 +53,7 @@ class LoopMoTT(MoTT):
         rm = self.rm_head(u)
         nb = 4 + T + 3
         dV, mn = node[..., nb:nb + T + 1], node[..., nb + T + 1:nb + 2 * (T + 1)]
-        prior = self.w_dv * dV - self.w_mn * mn
+        prior = (self.w_dv * dV - self.w_mn * mn) if getattr(self, "use_prior", True) else 0.0
         logits = torch.cat([add, rm], -1) + prior
         vm = valid[..., None].to(u.dtype)
         g = (u * vm).sum(1) / vm.sum(1).clamp(min=1)
