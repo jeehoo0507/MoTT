@@ -1,5 +1,12 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-07 06:35 UTC, 라운드 76 — **G1 거르기 통과 (r2pkfc)** → 확인 7 run 큐 (GPU `lo_pkg_r2pkfc_s1` 06:22~); C1·대조군은 사람이 서버 2 (C1 대기 (서버 2로)); C1' GPU smoke 통과, G-inf CPU 평가 큐 (r2pkfc 16·20칸보다 먼저); pod ~20 GiB / 60, oom_kill 2)
+# PROGRESS (갱신 2026-11-07 06:50 UTC, 라운드 77 — G1 확인 1/7 `lo_pkg_r2pkfc_s1` 증류 중 (06:22~); C1' G-inf 평가 06:24~ (6파일 중 2개 기록); C1 대기 (서버 2로); pod 20.2 GiB / 60, oom_kill 2)
+
+## 라운드 77 (2026-11-07 06:42~ UTC)
+- 상태 (06:45): GPU `lo_pkg_r2pkfc_s1` 증류 it 625 / 1121 s (cert-bad 0, oom 0, GPU peak 8.9 GB, val에 pkg 없음) 정상. CPU: side_slot `ginf eval10 r2pk_rl@mott_pkgate` 06:23:59~ (`eval_pkg10_1` 06:33, `eval_pcb10_0` 06:41 기록; 파일당 ~8 분 → 끝 ~07:15) + 학습 정확 검사 2. `scale-eval eval_ip20_1 r2pk_s2_rl`은 06:23 기록 생성으로 끝 (side_slot 재시작 때문에 END 줄 없음; 기록 파일로 확인). pod 20.2 GiB / 60, oom_kill 2. `ensure_running`: 드라이버 alive, report_watch·resume_agent 다시 띄움. `git fetch r2e`: 새 사람 커밋 없음.
+- `scripts/c1p_screen.py` (새, **G-inf 기록이 다 나오기 전에** 작성): PROPOSALS C1' 규칙 그대로 `r2pk_rl@mott_pkgate` vs `r2pk_rl` 10칸 짝 (pkg ≥ +0.10, pcb·ip ≥ −0.06, 종류마다 개수비 ≤ 1.05, 점추정 판정·CI 같이). `g1_screen.pair` 재사용. 지금 "waiting" (종류마다 2파일 필요).
+- 끝난 실험: `r2pk_s2_rl` ip20_1 (규모 곡선 보충) → RESULTS 다시 생성.
+- 결정: 큐·설정 그대로 — 이유: G1 확인 run 사람 순서대로 정상 진행, G-inf는 QUEUE 14:30 1번 그대로 도는 중, G-tr은 G1 통과라 사람 지시 대기.
+- 할 일 (다음): (1) G-inf 끝 (~07:15) → `c1p_screen.py` → 판정 줄 PROGRESS·RESULTS (TRIED_MODS/ABLATIONS 자동 절). (2) 서버 2 C1 기록 push되면 merge → `c1_screen.py`. (3) 확인 run 진행·10칸 평가 확인 → 7개 끝나면 F1 규칙 판정. (4) 11/08 03:00 UTC 뒤 새 학습 없음. DAILY 다음 11/08 01:xx UTC.
 
 ## 라운드 76 (2026-11-07 05:26~ UTC)
 - 새 사람 커밋: fb1e316·394305f·cb491df (14:16~14:22 KST, QUEUE 14:15 + 14:25 변경: 최종 RL 방식 C1 `r2pk_vsi` + 대조군 `r2pk_ctl`은 **사람이 서버 2에서** `scripts/server2_c1.sh`; 서버 1에서는 돌리지 않음), dab9694 (14:28 KST, QUEUE 14:30: 두 번째 후보 C1' `--peak_gate`, G-inf CPU 평가는 지금, GPU smoke, G-tr은 G1 탈락일 때만). `git merge r2e/main` 충돌 없음.
