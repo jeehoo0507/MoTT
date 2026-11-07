@@ -282,3 +282,4 @@
 - **확인 (고른 X 하나, seed 1·2):** 순서 `lo_pkg_X_s1`, `lo_pkg_X_s2`, `X_s1`, `X_s2`, `lo_pcb_X`, `lo_pcb_X_s1`, `lo_pcb_X_s2`. 판정은 **F1과 같은 규칙** (QUEUE 10/31): 뺀 종류 t마다 (b') `lo_t_X` − `lo_t_r0` 성공률이 seed 0·1·2 모두 > 0, (c') `lo_t_X` − `X` (같은 seed) 평균 ≥ −0.05 → 그 종류 "범용화 통과". 추가로 같은 종류 pkg `X` − `r2pk` seed 3개 묶음 CI 하한 > 0이면 최종 구조를 X로 바꾼다.
 - 결과를 보고 규칙·seed·평가 세트를 바꾸지 않는다. 11/08 12:00 KST 뒤에는 새 학습을 시작하지 않는다 (남은 확인 run은 "못 돌림"으로 기록).
 - 가장 가까운 선행: Universal/Looped Transformer, MatNet식 attention 편향 / 다른 점: 기여 아님, 우리 구조의 ablation.
+- **수정 (사람, 11/07 10:50 KST, 어떤 G1 run도 시작하기 전):** 루프 후보 G1-L (`r3pk`, `lo_pkg_r3pk`)을 **철회**한다. 이유: 사람 판단으로 루프 구조는 보고서에서 ablation으로만 두고, 남은 GPU는 기본 MoTT(블록 4개) 개선에 쓴다. G1은 G1-F (`r2pkfc`, `lo_pkg_r2pkfc`) 하나로 진행하고, 거르기·확인 규칙은 위와 같다 ("둘 다 통과하면" 문구는 해당 없음).

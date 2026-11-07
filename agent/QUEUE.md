@@ -1,12 +1,12 @@
 # 사람 지시 (최우선)
 
 ## 2026-11-07 10:50 KST — 사람: 범용화 후보 G1 (최우선, 바로 아래 10:45 "마지막 방법 탐색" 절을 대체)
-- 10:45 절의 대조군·C1·C2·C4는 **하지 않는다** (RL 절차 수정은 지금까지 모두 효과 없음). 대신 PROPOSALS **11/07 G1** 그대로: 구조 후보 2개 `r3pk`(루프+P1)·`r2pkfc`(P1+주파수 궁합 편향)와 각각의 pkg 빼고 학습 run.
-- **사람이 이미 `agent/day2_queue.json` train 끝에 4개를 넣었다:** `r3pk` → `lo_pkg_r3pk` → `r2pkfc` → `lo_pkg_r2pkfc` (seed 0). 드라이버가 순서대로 GPU에 올린다. 너는 큐 순서를 바꾸지 마라.
+- 10:45 절의 대조군·C1·C2·C4는 **하지 않는다** (RL 절차 수정은 지금까지 모두 효과 없음). 대신 PROPOSALS **11/07 G1** 그대로 (수정 반영): 기본 MoTT 개선 후보 `r2pkfc`(P1+주파수 궁합 편향)와 그 pkg 빼고 학습 run.
+- **사람이 `agent/day2_queue.json` train 끝에 2개를 넣었다:** `r2pkfc` → `lo_pkg_r2pkfc` (seed 0). 루프 후보 `r3pk`·`lo_pkg_r3pk`는 결과 전에 철회했다 (PROPOSALS G1 수정) — 루프는 더 학습하지 않는다. 드라이버가 순서대로 GPU에 올린다. 너는 큐 순서를 바꾸지 마라.
 - 할 일:
-  1. 첫 학습이 바로 실패하면 (새 플래그 조합: loop+peak_refine, mott+peak_refine+fc_bias) 원인을 고치고 작은 smoke를 통과시킨 뒤 같은 이름으로 다시 큐. 모델 구조·학습 조건은 바꾸지 않는다.
+  1. 첫 학습이 바로 실패하면 (새 플래그 조합: mott+peak_refine+fc_bias) 원인을 고치고 작은 smoke를 통과시킨 뒤 같은 이름으로 다시 큐. 모델 구조·학습 조건은 바꾸지 않는다.
   2. 네 run의 10칸 평가가 밀리지 않게 side_slot 대상에 넣어라 (드라이버 CPU 줄은 LS16이 막고 있음). LS16은 G1 뒤로 미룬다.
-  3. 거르기 판정 (PROPOSALS G1 규칙 그대로) → 통과한 X가 있으면 **확인 7 run을 PROPOSALS 순서대로 바로 큐** (`lo_pkg_X_s1`, `lo_pkg_X_s2`, `X_s1`, `X_s2`, `lo_pcb_X`, `lo_pcb_X_s1`, `lo_pcb_X_s2`; arm은 seed만 다르게). 없으면 RESULTS ABLATIONS에 "G1 효과 없음"으로.
+  3. 거르기 판정 (PROPOSALS G1 규칙 그대로) → 통과하면 (X = r2pkfc) **확인 7 run을 PROPOSALS 순서대로 바로 큐** (`lo_pkg_X_s1`, `lo_pkg_X_s2`, `X_s1`, `X_s2`, `lo_pcb_X`, `lo_pcb_X_s1`, `lo_pcb_X_s2`; arm은 seed만 다르게). 없으면 RESULTS ABLATIONS에 "G1 효과 없음"으로.
   4. 11/08 12:00 KST 뒤 새 학습 시작 금지. 판정 칸은 결과가 나오는 대로 RESULTS에.
 - 서버 2는 사람이 비교 수치(S2)를 돌린다. 서버 2 일은 하지 않는다.
 
