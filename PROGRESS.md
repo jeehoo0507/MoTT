@@ -1,5 +1,14 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 09:57 UTC, 라운드 154 — GPU `lo_pkg_bm2_rlonly` 끝 (09:40, rc 0) → `lo_pkg_bm2_rlonly_s1` RL it 25 정상; CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 66분째 (워커 100 %, 정상))
+# PROGRESS (갱신 2026-11-08 10:13 UTC, 라운드 155 — GPU `lo_pkg_bm2_rlonly_s1` RL it 75 정상 (첫 val 전); CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 82분째 (워커 100 %, 정상, pkg20_0 68분보다 김))
+
+## 라운드 155 (2026-11-08 10:11~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 26.1 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` 디스크와 같은 크기 → 할 일 없음.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly_s1` RL (it 75 / 1391 s, count/ref 3.23, fail 0.20, teach ok 0.94, loss −9.49, cert-bad 3, oom 0, gpu peak 12.1 GB; resume ckpt it 65; `_s1_rl/log.csv` 첫 val (it 100) 전이라 비어 있음), cpu = `N coord harness eval_pkg20_1 r0_coord_s1_rl+rep4` (08:49:43~, 82분째, forkserver 워커 1855610 100 % CPU, rss 7.9 GB — 멈춘 워커 아님), 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계. pkg20_1 이 pkg20_0 (68분) 보다 오래 걸리지만 워커가 CPU 100 % 로 일하는 중이라 기다린다 (가장 보수적).
+- 할 일 (다음): (1) 좌표 하네스 pkg20_1 끝 → 드라이버가 eval10 `lo_pkg_bm2_rlonly_rl` → 나머지 하네스. 워커가 0 % CPU 로 멈추면 그때 적기. (2) `lo_pkg_bm2_rlonly_s1` 처음 val (it 100) 만 적기. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 154 머리말: 갱신 2026-11-08 09:57 UTC, 라운드 154 — GPU `lo_pkg_bm2_rlonly` 끝 (09:40, rc 0) → `lo_pkg_bm2_rlonly_s1` RL it 25 정상; CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 66분째 (워커 100 %, 정상))
 
 ## 라운드 154 (2026-11-08 09:55~ UTC)
 - `git fetch r2e`: 새 커밋 = 서버 2 사람 `bdf_distill` log/metrics (학습 기록, eval 기록 아님) — 이미 HEAD 에 있음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
