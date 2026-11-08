@@ -16,3 +16,7 @@ Already up to date.
 - **다음 DAILY:** 11/09 01:15 UTC에 씁니다.
 
 결정: 큐·플래그·순서를 그대로 두고 새 항목을 넣지 않았습니다. 이유는 QUEUE의 N 6단계·N2 지시가 에이전트의 새 학습과 항목 변경을 금지하기 때문이며, PROGRESS.md에도 같은 내용을 적었습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cbbb036..2d9fc30  main -> main
