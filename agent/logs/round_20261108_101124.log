@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 155 is done: nothing finished and nothing new was recorded. The queue, flags and order are unchanged, PROGRESS is updated, and I committed and pushed to `r2e/main` (453659a). There are no new commits from the human, and the top of `agent/QUEUE.md` is still the 11/08 12:10 KST CPU ordering instruction.
+
+- **GPU:** `lo_pkg_bm2_rlonly` (seed 0) finished at 09:40 without errors. Seed 1 (`lo_pkg_bm2_rlonly_s1`) started right after and is at iteration 75 with no errors and no out-of-memory events. Its first validation comes at iteration 100, so there are no validation numbers yet.
+- **CPU:** the coordinate-baseline evaluation on `eval_pkg20_1` for seed 1 (`r0_coord_s1_rl`) has run 82 minutes. That's longer than the 68 minutes `eval_pkg20_0` took, but the worker is at 100% CPU, so it isn't hung. I'm letting it run and recorded that under "결정:" in PROGRESS. Memory is at 26.1 of 60 GiB.
+- **Driver:** still running. The two helper scripts (`report_watch`, `resume_agent`) were down and I restarted them. The driver log needed no recovery this round.
+
+Next round, I'll:
+- record the first validation of the seed-1 run;
+- note the CPU worker if it drops to 0% CPU;
+- check that the driver runs the 10-cell evaluation of `lo_pkg_bm2_rlonly_rl` (seed 0) after the coordinate job.
+
+The next DAILY.md is due 11/09 01:15 UTC.
