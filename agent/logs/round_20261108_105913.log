@@ -13,3 +13,7 @@ Already up to date.
 - **상태:** 메모리 20.4 / 60 GiB, oom_kill 2(변화 없음)입니다. 드라이버 로그에서 사라진 753 B를 되살렸습니다.
 
 다음은 bm2 seed 0 평가가 끝나면 좌표 seed 2 하네스 4개를 돌리고, `_s1` 학습이 끝나면(~11:40 UTC) `_s2`로 넘어갑니다. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   73fccc5..072c13e  main -> main
