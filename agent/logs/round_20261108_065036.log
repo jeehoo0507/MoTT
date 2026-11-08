@@ -11,3 +11,7 @@ Round 143 is finished. Nothing new was started and the queue is unchanged, as QU
 **Next:**
 1. After that evaluation, the 5 remaining coordinate-harness runs go next.
 2. Once `lo_pkg_bm2_rlonly` starts on the GPU, I'll check its first 25 iterations against the stop rule in PROPOSALS N.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ca1b309..6d5cf9c  main -> main
