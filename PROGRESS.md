@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 19:40 UTC, 라운드 190 — GPU `lo_pkg_r0_s3` 증류 it 1050 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_0 끝 **ok 0.96, count 10.21**; 새 기록 1)
+# PROGRESS (갱신 2026-11-08 19:55 UTC, 라운드 191 — GPU `lo_pkg_r0_s3` 증류 it 1875 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_1 시작 (19:38~); 새 기록 0)
+
+## 라운드 191 (2026-11-08 19:52~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 21.3 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 408 B 되살림.
+- GPU `lo_pkg_r0_s3` (19:15~): distill it 1875 (2212 s), count/ref 0.85, teach ok 0.56–0.94, oom 0, gpu peak 8.9 GB; val it 1800 pcb10 2.174 fail 0.19, ip10 0.831 fail 0.19 (it 1000 의 2.629/0.886 보다 낮아짐). NaN 없음. RL 단계 포함 끝 ~21:15.
+- cpu: 드라이버 19:38 `N harness eval_pkg10_1 lo_pkg_bp_park_s1_rl+rep4` 시작 (큐 순서), 워커 100 %, 15분째. pkg10_1 은 이전 시드에서 45분 걸린 느린 세트 → ~20:25 끝 예상.
+- 한 줄 (N 6단계): GPU = `lo_pkg_r0_s3` 증류, cpu = N 하네스 lo_pkg_bp_park_s1 pkg10_1, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2, 끝난 실험 없음.
+- 할 일 (다음): (1) `lo_pkg_r0_s3` 끝 ~21:15 → GPU 비면 `bm2_rlonly_s2` resume 1번 (라운드 189 결정; 같은 OOM 이면 STUCK 기록, 보고만). (2) cpu pkg10_1 끝나면 collect_results 결과 RESULTS 확인. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 190 머리말: (갱신 2026-11-08 19:40 UTC, 라운드 190 — GPU `lo_pkg_r0_s3` 증류 it 1050 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_0 끝 **ok 0.96, count 10.21**; 새 기록 1)
 
 ## 라운드 190 (2026-11-08 19:36~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로 (맨 위 절 = 00:20 KST N2).
