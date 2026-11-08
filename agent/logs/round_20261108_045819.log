@@ -10,3 +10,7 @@ Already up to date.
 - **RESULTS.md:** 이번 라운드에 끝난 실험이 없어 고치지 않았습니다. 평가 6개가 다 끝나면 드라이버가 `collect_results`로 반영합니다.
 
 다음 라운드에는 eval10이 끝나는지 보고 좌표 하네스 3/8 이후를 이어 갑니다. `lo_pkg_bm2_rlonly`는 07:40 UTC 이후에 시작하는데, 그때 처음 25 iter가 멈춤 규칙에 걸리는지 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7e94f19..45ffb19  main -> main
