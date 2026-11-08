@@ -12,3 +12,7 @@ Already up to date.
 1. 10칸 평가가 계속 0 %에 머물면 Pool 워커가 죽은 것으로 보고 확인합니다.
 2. 좌표 하네스 나머지 6개를 지켜봅니다.
 3. `lo_pkg_bm2_rlonly`는 07:40 UTC쯤 시작할 것으로 보고, 시작하면 처음 25 iter로 멈춤 규칙을 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f08b4b7..1795c34  main -> main
