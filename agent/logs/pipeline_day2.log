@@ -1410,3 +1410,6 @@
 [05:24:27] END collect_results rc=0 | mem 18.9 GiB / 60.0 GiB, oom_kill 2
 [05:25:57] START N coord harness eval_pkg20_0 r0_coord_s1_rl+rep4 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [05:25:57] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_0' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_rl  (log runs/2026-10-29/r0_coord_s1_rl/eval.log)
+[05:37:47] END train lo_pkg_bp_park_s1 (CERTIFY_WORKERS=2) rc=0 | mem 22.8 GiB / 60.0 GiB, oom_kill 2
+[05:37:47] START train lo_pkg_bp_park_s2 (CERTIFY_WORKERS=2) | mem 22.8 GiB / 60.0 GiB, oom_kill 2
+[05:37:47] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_bp_park_s2 --arm '--model park_am --baseline rollout --imit 0 --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0' --day 2026-10-29 --pool runs/pool_v1 --seed 2 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_bp_park_s2/rung_stdout.log)
