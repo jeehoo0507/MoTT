@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+이번 라운드(146)에서는 사람 지시 N 5단계의 멈춤 규칙을 확인했고, 규칙에 걸리지 않아 bm2 run 다섯 개를 큐에 그대로 두었습니다. PROGRESS를 갱신해 커밋했고 `r2e main`에 push했습니다.
+
+- **GPU:** `lo_pkg_bp_park_s2`가 07:39 UTC에 정상 종료했습니다(RL 216 iter, 1.26 h, best iter 100). 드라이버가 이어서 `lo_pkg_bm2_rlonly`를 올렸습니다.
+- **멈춤 규칙:** `lo_pkg_bm2_rlonly` it 25에서 loss가 −23.69라 NaN도 0도 아닙니다(fail 0.33, oom 0). 규칙은 NaN이거나 "val 세 종류 fail 1.00 + loss 0"인데, val은 아직 기록 전입니다(it 100에 첫 줄). loss만으로도 두 조건 모두 해당하지 않습니다.
+- **CPU:** `eval10 lo_pkg_bp_park_s1_rl`이 6세트 중 3개를 끝냈습니다(pkg10_1 0.64, pcb10_0 0.04, pkg10_0 0.64). 다음은 좌표 하네스 나머지 5개입니다.
+- **기타:** 메모리 20.5 GiB / 60이고 원격에 새 커밋은 없었습니다. 드라이버 로그가 다시 디스크와 어긋나 있어 `restore_proc_log.py`로 586 B를 되살렸습니다.
+- **RESULTS:** 이번에 끝난 평가 기록은 드라이버의 `collect_results`가 반영하므로 RESULTS는 직접 고치지 않았습니다.
+
+큐·플래그·순서는 바꾸지 않았고 새 항목도 넣지 않았습니다. 이 결정은 이유와 함께 PROGRESS에 "결정:"으로 적었습니다.
