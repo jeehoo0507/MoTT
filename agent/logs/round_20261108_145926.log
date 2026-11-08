@@ -1,3 +1,11 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 173 is done and pushed to `r2e main` as commit `0cef77b`. Nothing new came in this round: no new commits on main, no new instructions in QUEUE, no finished experiments.
+
+- **GPU:** `bm2_rlonly` training is at iteration 250 of RL and should finish around 15:43 UTC. The training failure rate rose from 0.20 at iteration 200 to 0.52; I noted it in PROGRESS. It doesn't meet the stop rule for this batch of night experiments ("N" in QUEUE): NaN in the first 25 iterations, or all three validation types failing with loss 0. So I changed nothing. The latest validation check (iteration 200) matched iteration 100.
+- **CPU:** the driver is running the coordinate-harness evaluation for seed 2 on `pkg20_0` (started 14:43). After it, only `pkg20_1` is left in that set.
+- **Processes:** the driver is alive and I restarted `report_watch` and `resume_agent`. Memory is at 26.9 / 60 GiB. The driver log didn't need restoring.
+- **Decision:** I kept the queue, flags and order as they are and added nothing myself. QUEUE says only the human adds items.
+
+Next round: check that `bm2_rlonly_s1` starts once `bm2_rlonly` ends, and that the driver picks up `eval10 bm2_rlonly_rl` on the CPU. The next DAILY.md is due at 01:15 UTC on 11/09.
