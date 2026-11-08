@@ -10,3 +10,12 @@ Fast-forward
  create mode 100644 runs/2026-10-29/bdf_distill/log.csv
  create mode 100644 runs/2026-10-29/bdf_distill/metrics.json
 Applied autostash.
+Round 154 is done. Both queue jobs are running normally, nothing new finished, and I didn't change the queue.
+
+- **QUEUE:** No new instructions. The top entry is still the 11/08 12:10 KST order to run the N harness evaluations before the old analysis items, so I followed the N rules and added nothing myself.
+- **GPU:** `lo_pkg_bm2_rlonly` (seed 0) finished at 09:40 UTC without error. Its last validation check (iteration 300) hadn't moved since iteration 100: on pcb10 every attempt still fails (fail rate 1.00), and on ip10 the fail rate is 0.69. The driver then started seed 1, `lo_pkg_bm2_rlonly_s1`. It looks healthy at iteration 25: fail rate 0.27, no out-of-memory, GPU peak 10.3 GB. It hasn't reached its first validation check yet, so `log.csv` is still empty.
+- **CPU:** The `r0_coord_s1_rl+rep4` run on `eval_pkg20_1` has been going for 66 minutes and its worker is at 100% CPU. That's normal: `pkg20_0` took 68 minutes. After it, the driver will run the 10-cell evaluation of the finished seed-0 run.
+- **Services:** The driver is alive. I restarted `report_watch` and `resume_agent`. Memory is at 26.0 of 60 GiB. I recovered 595 B of the driver log that had been orphaned.
+- **New results:** None. Server 2 pushed only `bdf_distill` training logs, which aren't evaluation results, so `RESULTS.md` has nothing to add.
+
+PROGRESS.md is updated, and the round is committed, merged with `r2e/main` and pushed; the branch matches the remote. The next DAILY.md is due 11/09 01:15 UTC.
