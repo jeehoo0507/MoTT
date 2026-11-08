@@ -18,3 +18,22 @@ Fast-forward
  create mode 100644 runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_0__bdf_s2_distill.json
  create mode 100644 runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_1__bdf_s2_distill.json
 Applied autostash.
+Round 172 is finished. The PROGRESS update and the new results are committed (`d5b0e32`) and pushed to `r2e main`, and the local branch matches the remote. No new human instructions came in, so I followed the current queue order and added no items of my own.
+
+**Finished:** the 10-cell evaluation of `lo_pkg_bm2_rlonly_s2_rl` ran on CPU (rc 0) and its numbers went into RESULTS.md automatically:
+
+| seed | pkg | pcb | ip |
+|---|---|---|---|
+| 0 | 0.84 | 0.04 | 0.96 |
+| 1 | 0.82 | 0.04 | 0.96 |
+| 2 | 0.84 | 0.02 | 0.96 |
+
+That completes all three seeds of this B-Manoharan2 RL-only run. pcb fails almost every time on all three seeds. Judging what that means is left to you, as the queue says.
+
+**Running now:**
+- **GPU:** `bm2_rlonly` is at iteration 200 with no NaN. Its validation numbers at iteration 200 are the same as at iteration 100 (pcb fail 1.00, pkg 9.000, ip 0.920). It should end around 15:43 UTC, and the next item is `bm2_rlonly_s1`.
+- **CPU:** the driver started the seed 2 coordinate harness on `pkg20_0` at 14:43. One more harness item (`pkg20_1`) is left after it.
+
+Memory use is 18.7 of 60 GiB. The driver's live log had drifted from the copy on disk again, and I copied the missing lines back.
+
+The next DAILY.md is due 11/09 01:15 UTC.
