@@ -14,3 +14,7 @@ Round 128 is done: the first of the 8 coordinate-model harness evals finished, a
 - After `lo_pkg_bm2_rlonly` starts (around 09:00 UTC), check its first 25 iterations against the stop rule.
 - The older analysis CPU items get no retry if they fail again; I'll only note it in `PROGRESS.md`.
 - The next `DAILY.md` is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d285f3b..32e9b5b  main -> main
