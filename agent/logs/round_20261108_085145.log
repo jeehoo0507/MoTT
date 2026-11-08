@@ -1,3 +1,24 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 150 is finished. I updated PROGRESS, committed, and pushed to `r2e main`. RESULTS.md had already been refreshed when the driver ran `collect_results` at 08:48, and the commit includes that.
+
+- **Human instructions:** no new commits on main. The newest QUEUE instruction is still the 11/08 12:10 KST one on CPU order.
+- **Processes:** the driver (pid 1792539) is still running. I restarted report_watch and resume_agent. Memory is 25.3 / 60 GiB. I recovered 726 B of the driver log that hadn't reached disk.
+- **GPU:** `lo_pkg_bm2_rlonly` reached RL iteration 200 of a planned 2 hours, so it should finish around 09:40 UTC. The validation results haven't changed since iteration 100:
+  - pcb10: every instance still fails (fail 1.00).
+  - ip10: count ratio 0.92, fail 0.69.
+  - Loss is −16.5, so this doesn't match the collapse condition. As planned, I only recorded it.
+- **CPU:** `eval10 lo_pkg_bp_park_s2_rl` finished all 6 sets:
+
+  | Set | Success |
+  |---|---|
+  | pkg10_1 | 0.84 |
+  | pcb10_0 | 0.04 |
+  | pkg10_0 | 0.92 |
+  | pcb10_1 | 0.00 |
+  | ip10_0 | 0.96 |
+  | ip10_1 | 1.00 |
+
+  As with seed 1, both 10-cell pcb sets are close to 0. The driver then moved on to the coordinate harness, evaluating `r0_coord_s1_rl` on pkg20_1 with 4 repair rounds.
+- **Decision:** I left the queue, flags and order unchanged and added no items of my own, as the N plan step 6 in QUEUE requires.
