@@ -21,3 +21,7 @@ Applied autostash.
 - **CPU**: 좌표 하네스 s2 pkg20_0이 끝났습니다(성공률 0.88, 평균 개수 10.57). 다음은 pkg20_1입니다.
 - **GPU**: `bm2_rlonly`가 iter 325까지 문제없이 돌고 있고(NaN 없음) 15:43 UTC쯤 끝납니다. 검증 점수는 iter 100 이후 그대로입니다. pcb10은 전부 실패, pkg10 0.94, ip10 0.69 실패율입니다.
 - PROGRESS.md에 이번 라운드와 "결정:" 줄을 적었습니다. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3ca8b8b..d11b256  main -> main

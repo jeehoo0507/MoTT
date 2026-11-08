@@ -1099,7 +1099,17 @@ def n2_table(recs):
         for k in kinds:
             g = got[k]
             if g is None:
-                rows.append(f"| {name} | {k} 10 | 0/3 | — | — | — | — |")
+                # records of this model only (MoTT+P1 for the same seed/set not in yet): unpaired, no CI
+                own = [by[fam.format(s)][x] for s in seeds for x in sorted(by.get(fam.format(s), {}))
+                       if x.startswith(f"eval_{k}10")]
+                if own:
+                    ok = np.concatenate([np.asarray(r["ok"], bool) for r in own])
+                    pre = np.concatenate([np.asarray(r["ok_pre"], bool) for r in own])
+                    nown = sum(any(x.startswith(f"eval_{k}10") for x in by.get(fam.format(s), {})) for s in seeds)
+                    rows.append(f"| {name} | {k} 10 | {nown}/3 (짝 없음) | {pre.mean():.2f} | {ok.mean():.2f} | {len(ok)} "
+                                f"| (MoTT+P1 기록 대기) |")
+                else:
+                    rows.append(f"| {name} | {k} 10 | 0/3 | — | — | — | — |")
                 continue
             ok, pre, rok, _, ns = g
             if name == N2_FAMS[0][0]:
