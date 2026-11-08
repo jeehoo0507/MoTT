@@ -11,3 +11,7 @@ Round 133 is done: I committed it (`9331e67`) and pushed it to r2e/main. The rem
 - **Decision:** I left the queue, flags and order unchanged and added nothing myself, as step 6 of the 11/08 11:30 KST queue instruction requires. This is recorded in PROGRESS.md.
 
 **Next round:** check that the eval finishes and the remaining 6 coordinate harness runs continue. When `lo_pkg_bm2_rlonly` starts (after about 07:40 UTC), check its first 25 iterations against the stop rule. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   9331e67..c9770f8  main -> main
