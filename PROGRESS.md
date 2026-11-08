@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 01:32 UTC, 라운드 123 — 드라이버 F3 20/22 끝 (ip20_0 `r2pk_s2_rl+rep4`·ip20_1 `r2pk_rl+rep4` 둘 다 8/8 → 8/8, 되먹임 안 씀) → ip20_0 3 seed 모두 끝; GPU 빔 (사람 항목 없음))
+# PROGRESS (갱신 2026-11-08 01:50 UTC, 라운드 124 — 사람 밤 묶음 N 시작됨: 드라이버 재시작 (01:34), GPU `lo_pkg_bp_park` distill 중, 첫 25 iter 정상; CPU F3 22/22번째 진행)
+
+## 라운드 124 (2026-11-08 01:44~ UTC)
+- `git fetch r2e`: HEAD = r2e/main (9a1c6db, 사람 N 커밋 3개 이미 받음). QUEUE 새 절 3개: 11/08 "11:30 KST" N 묶음, "11:55" 좌표 seed 1·2 하네스 8개, "12:10" cpu 순서. (절 시각은 KST로 적혔지만 커밋은 10:31~10:37 KST = 01:31~01:37 UTC.)
+- N 1~3단계 확인 (사람이 이미 함): `smoke_manoharan2.ok`·`smoke_devformer.ok`·`smoke_mm_bias.ok` 01:33~01:34 UTC 생김. 드라이버 재시작 01:34:20 (`driver day2 start`, 새 pid 1792539), GPU 줄이 `lo_pkg_bp_park` 올림 (run_rung, distill 0.75 h + RL 1.25 h). 이전 드라이버가 돌리던 `eval_ip20_1 r2pk_s1_rl+rep4`는 ATTACH로 기다려 끝남.
+- **N 5단계 (lo_pkg_bp_park 첫 25 iter):** 정상 — it 25 loss 5.030, teach ok 0.81, cert-bad 0, oom 0; it 50 loss 3.551; it 500 loss 3.893, val pcb10_0 fail 0.75 / ip10_0 fail 0.25 (distill 단계, 판정 아님). loss NaN 없음 (log.csv의 nan은 distill 단계 best_ratio·fail 열). `lo_pkg_bm2_rlonly` 25 iter 확인은 그 run 시작 뒤 (~18:00 KST 예상).
+- **F3 21번째 끝 (드라이버 ATTACH):** `eval_ip20_1 r2pk_s1_rl+rep4` 01:36 rc 0 — 정책 단독 8/8 → **8/8** (되먹임 쓴 문제 0), 개수 21.38, 4.75 s/문제, peak RSS 7.3 GB, git f408aa9. 기록 `runs/2026-10-29/r2pk_s1_rl/eval/eval_ip20_1__r2pk_s1_rl+rep4.json`.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bp_park` (distill), cpu = F3 `eval_ip20_1 r2pk_s2_rl+rep4` (01:41~), 새 기록 1. 대기 cpu 47 (F3 1 + 좌표 하네스 8 + N 하네스 38, 하네스는 `after` 게이트로 모델 대기).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. pod 21.7 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` 같은 inode, 할 일 없음.
+- 결정: 큐·플래그·순서 그대로 (사람이 넣은 N 항목), 에이전트 새 항목 없음 — 이유: QUEUE N 6단계 "에이전트가 스스로 항목을 더 넣지 않는다".
+- 할 일 (다음): (1) F3 22/22 끝 → 좌표 하네스 8개 진행 확인. (2) `lo_pkg_bm2_rlonly` 시작하면 처음 25 iter를 PROPOSALS N 멈춤 규칙 (NaN, 또는 val 세 종류 fail 1.00 + loss 0)으로 확인 → 걸리면 안 시작한 bm2 5개를 `train_removed`로. (3) 예전 분석 cpu 항목이 한 번 더 실패하면 재시도 없이 PROGRESS에 적기만. (4) 라운드마다 `restore_proc_log.py 1792539`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 123 머리말: 드라이버 F3 20/22 끝 (ip20_0 `r2pk_s2_rl+rep4`·ip20_1 `r2pk_rl+rep4` 둘 다 8/8 → 8/8, 되먹임 안 씀) → ip20_0 3 seed 모두 끝; GPU 빔 (사람 항목 없음)
 
 ## 라운드 123 (2026-11-08 01:28~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 = 11/08 03:05 KST 해제 (사람 항목만) 그대로.

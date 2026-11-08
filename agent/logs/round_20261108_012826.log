@@ -11,3 +11,7 @@ Already up to date.
 - **프로세스:** 드라이버는 계속 돌고 있고, 꺼져 있던 report_watch와 resume_agent는 다시 띄웠습니다. 메모리는 16.8/60 GiB입니다.
 
 다음에는 드라이버가 ip20_1의 seed 1·2를 돌려 F3를 끝냅니다. 그 뒤 CPU 큐에는 사람이 내려 둔 `cpu_deferred` 항목만 남고, 이것은 다시 올리지 않습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   96beaa9..aec3e6b  main -> main
