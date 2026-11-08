@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 12:51 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 13:07 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -82,6 +82,7 @@
 | lo_pkg_bdf_s2_distill | – | 0.98 / 2.04 / 2.72 [50] | – | – | 0.64 / 4.28 / 0.81 [50] | – | – | 0.10 / 5.15 / 2.03 [50] | – | – |
 | lo_pkg_bdf_s2_distill+rep4 | – | – | – | – | – | – | – | 0.44 / 4.96 / 2.76 [50] | – | – |
 | lo_pkg_bm2_rlonly_rl | – | 0.96 / 1.97 / 2.44 [50] | – | – | 0.04 / 3.99 / 2.15 [50] | – | – | 0.84 / 4.65 / 3.01 [50] | – | – |
+| lo_pkg_bm2_rlonly_s1_rl | – | – | – | – | – | – | – | 0.76 / 3.86 / 3.13 [25] | – | – |
 | lo_pkg_bp_park_rl | – | 0.98 / 1.28 / 1.81 [50] | – | – | 0.04 / 1.33 / 0.58 [50] | – | – | 0.84 / 2.95 / 1.90 [50] | – | – |
 | lo_pkg_bp_park_s1_rl | – | 0.98 / 1.28 / 1.80 [50] | – | – | 0.02 / 0.86 / 0.50 [50] | – | – | 0.64 / 1.20 / 0.84 [50] | – | – |
 | lo_pkg_bp_park_s2_rl | – | 0.98 / 1.28 / 1.87 [50] | – | – | 0.02 / 5.86 / 3.42 [50] | – | – | 0.88 / 4.35 / 2.84 [50] | – | – |
@@ -674,6 +675,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bdf_s2_distill | 50 | -0.72 [-0.86, -0.56] | 2.034 [1.818, 2.250] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.38 [-0.56, -0.18] | 2.757 [2.405, 3.124] |
 | pkg 10 | lo_pkg_bm2_rlonly_rl | 50 | +0.02 [-0.10, +0.14] | 3.013 [2.602, 3.431] |
+| pkg 10 | lo_pkg_bm2_rlonly_s1_rl | 25 | -0.04 [-0.24, +0.16] | 3.132 [2.449, 3.946] |
 | pkg 10 | lo_pkg_bp_park_rl | 50 | +0.02 [-0.10, +0.14] | 1.901 [1.493, 2.388] |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 50 | -0.18 [-0.34, -0.02] | 0.839 [0.646, 1.156] |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 50 | +0.06 [-0.06, +0.20] | 2.837 [2.450, 3.269] |
@@ -1321,6 +1323,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bdf_s2_distill | 50 | -0.80 [-0.92, -0.66] | 5.152 [2.857, 9.000] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.46 [-0.62, -0.30] | 4.961 [4.120, 5.901] |
 | pkg 10 | lo_pkg_bm2_rlonly_rl | 50 | -0.06 [-0.20, +0.06] | 4.650 [3.910, 5.416] |
+| pkg 10 | lo_pkg_bm2_rlonly_s1_rl | 25 | -0.12 [-0.32, +0.08] | 3.865 [2.974, 4.872] |
 | pkg 10 | lo_pkg_bp_park_rl | 50 | -0.06 [-0.20, +0.06] | 2.953 [2.424, 3.520] |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 50 | -0.26 [-0.42, -0.10] | 1.198 [0.937, 1.638] |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 50 | -0.02 [-0.14, +0.10] | 4.354 [3.875, 4.847] |
@@ -2643,6 +2646,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_bdf_s2_distill | 50 (0, 1) | 0.10 | 25.60 | 5.152 | 2.034 | 2.195 | `runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_0__lo_pkg_bdf_s2_distill.json`, `runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_1__lo_pkg_bdf_s2_distill.json` |
 | lo_pkg_bdf_s2_distill+rep4 | 50 (0, 1) | 0.44 | 35.50 | 4.961 | 2.757 | 1.865 | `runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_0__lo_pkg_bdf_s2_distill+rep4.json`, `runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_1__lo_pkg_bdf_s2_distill+rep4.json` |
 | lo_pkg_bm2_rlonly_rl | 50 (0, 1) | 0.84 | 36.05 | 4.650 | 3.013 | 1.538 | `runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval/eval_pkg10_0__lo_pkg_bm2_rlonly_rl.json`, `runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval/eval_pkg10_1__lo_pkg_bm2_rlonly_rl.json` |
+| lo_pkg_bm2_rlonly_s1_rl | 25 (1) | 0.76 | 35.37 | 3.865 | 3.132 | 2.590 | `runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/eval/eval_pkg10_1__lo_pkg_bm2_rlonly_s1_rl.json` |
 | lo_pkg_bp_park_rl | 50 (0, 1) | 0.84 | 22.76 | 2.953 | 1.901 | 15.472 | `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_0__lo_pkg_bp_park_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_1__lo_pkg_bp_park_rl.json` |
 | lo_pkg_bp_park_s1_rl | 50 (0, 1) | 0.64 | 11.75 | 1.198 | 0.839 | 10.537 | `runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s1_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s1_rl.json` |
 | lo_pkg_bp_park_s2_rl | 50 (0, 1) | 0.88 | 32.36 | 4.354 | 2.837 | 6.650 | `runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s2_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s2_rl.json` |
@@ -3661,6 +3665,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 실패 | 28 | 38.0 | 0.19 | 0.00 | 0.81 |
 | pkg 10 | lo_pkg_bm2_rlonly_rl | 성공 | 42 | 36.0 | 0.98 | 0.02 | 0.00 |
 | pkg 10 | lo_pkg_bm2_rlonly_rl | 실패 | 8 | 48.6 | 0.99 | 0.01 | 0.00 |
+| pkg 10 | lo_pkg_bm2_rlonly_s1_rl | 성공 | 19 | 35.4 | 1.00 | 0.00 | 0.00 |
+| pkg 10 | lo_pkg_bm2_rlonly_s1_rl | 실패 | 6 | 61.2 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | lo_pkg_bp_park_rl | 성공 | 42 | 22.8 | 0.76 | 0.03 | 0.21 |
 | pkg 10 | lo_pkg_bp_park_rl | 실패 | 8 | 47.4 | 0.94 | 0.03 | 0.04 |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 성공 | 32 | 11.8 | 0.48 | 0.06 | 0.46 |
@@ -5254,8 +5260,8 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2v_rl | 166 / 361 | 1.0 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r3_rl | 153 / 361 | 0.1 | 1.00 | – | 0.90 | 8.4 | 0.86 |
 | lo_pkg_bm2_rlonly_rl | 242 / 371 | 6.5 | 0.96 | 2.8 | 0.04 | – | 0.84 |
-| lo_pkg_bm2_rlonly_s1_rl | 237 / 353 | 7.4 | – | 3.0 | – | – | – |
-| lo_pkg_bm2_rlonly_s2_rl | 92 / – | 8.0 | – | 3.5 | – | – | – |
+| lo_pkg_bm2_rlonly_s1_rl | 237 / 353 | 7.4 | – | 3.0 | – | – | 0.76 |
+| lo_pkg_bm2_rlonly_s2_rl | 139 / – | 6.8 | – | 3.5 | – | – | – |
 | lo_pkg_bp_park_rl | 75 / 184 | 4.0 | 0.98 | 5.2 | 0.04 | – | 0.84 |
 | lo_pkg_bp_park_s1_rl | 77 / 175 | 8.0 | 0.98 | 4.0 | 0.02 | – | 0.64 |
 | lo_pkg_bp_park_s2_rl | 91 / 216 | 5.8 | 0.98 | 4.2 | 0.02 | – | 0.88 |

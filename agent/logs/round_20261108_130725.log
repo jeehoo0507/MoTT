@@ -1,0 +1,10 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+라운드 166을 마쳤고 `r2e main`에 push했습니다 (`f8f2f66`). 개입이 필요한 일은 없었습니다.
+
+- **사람 지시:** main에 새 커밋이 없고, QUEUE 맨 위는 11/08 12:10 KST 지시 그대로입니다. QUEUE N 6단계("에이전트가 스스로 항목을 더 넣거나 바꾸지 않는다")에 따라 큐·플래그·순서를 그대로 두었습니다.
+- **프로세스:** 드라이버(pid 1792539)는 살아 있고, report_watch와 resume_agent를 다시 띄웠습니다. 메모리 20.3 / 60 GiB입니다. 드라이버 로그에서 잃어버린 479 B를 되살렸습니다.
+- **GPU:** `lo_pkg_bm2_rlonly_s2` RL이 it 250 근처까지 왔습니다. 마지막 검증(it 200)도 이전과 같습니다: pcb10은 전부 실패(fail 1.00), ip10은 0.920입니다. 13:45 UTC쯤 끝나면 드라이버가 다음 학습(`bm2_rlonly`)을 올립니다.
+- **CPU:** 12:53부터 `eval10 lo_pkg_bm2_rlonly_s1_rl`이 돌고 있고, 6개 세트 중 1개가 끝났습니다 (eval_pkg10_1 성공률 0.76). 워커는 CPU 100 %로 정상입니다. 좌표 seed 2 평가는 4개 중 남은 3개(pkg16_1, pkg20_0·1)가 그 뒤에 이어집니다.
+- **기록:** PROGRESS.md에 라운드 166을 적었습니다. 이번 라운드에 끝난 실험이 없어 RESULTS.md는 바꾸지 않았습니다. 이전 결과는 드라이버의 `collect_results`가 자동으로 넣습니다. 다음 DAILY.md는 11/09 01:15 UTC입니다.
