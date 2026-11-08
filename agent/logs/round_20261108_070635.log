@@ -13,3 +13,7 @@ Already up to date.
 1. eval10 s1이 끝나면 좌표 하네스 평가 5개를 남은 순서대로 돌립니다.
 2. `lo_pkg_bp_park_s2`가 끝나면 `lo_pkg_bm2_rlonly`가 시작됩니다. 처음 25 iter를 PROPOSALS N 멈춤 규칙으로 확인합니다.
 3. DAILY.md는 다음에 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ec0e8a1..3147f90  main -> main
