@@ -1,5 +1,14 @@
 # 사람 지시 (최우선)
 
+## 2026-11-08 11:30 KST — 사람: 밤 실험 묶음 N (PROPOSALS "11/08 N") — 서버 1 할 일, 순서대로, 지금 바로
+1. `git pull` (main 에 `baselines_ml/manoharan2.py`, `baselines_ml/devformer.py`, `scripts/pipeline_day2.py` 의 `distill_only`·cpu `after` 게이트, `scripts/eval_policy.py --bl_seed` 가 들어왔다).
+2. 스모크 셋 (CPU, 각 1분 안): `.venv/bin/python scripts/smoke_manoharan2.py`, `scripts/smoke_devformer.py`, `scripts/smoke_mm_bias.py` → `runs/analysis/smoke_manoharan2.ok`·`smoke_devformer.ok` 가 생겨야 한다 (큐 `after`). 하나라도 실패하면 **아무것도 시작하지 말고** 실패 출력을 PROGRESS 에 그대로 적어라.
+3. **드라이버 재시작** (코드는 시작 때만 읽는다): 지금 `pipeline_day2.py` 를 끝내고 (돌고 있는 eval 자식은 죽이지 마라 — 재시작한 드라이버가 ATTACH 로 기다린다) `.venv/bin/python scripts/bg.py agent/logs/pipeline_day2.log '.venv/bin/python scripts/pipeline_day2.py'`. 로그에 `driver day2 start` 가 찍히고 GPU 줄이 `lo_pkg_bp_park` 를 올리는지 확인.
+4. 큐 (사람이 넣음, 바꾸지 마라): train 끝에 10개 (`lo_pkg_bp_park{,_s1,_s2}`, `lo_pkg_bm2_rlonly{,_s1,_s2}`, `bm2_rlonly{,_s1,_s2}`, `lo_pkg_r0_s3`), cpu 에 하네스 평가 38개 (`after` = 그 모델의 `metrics.json`; 모델이 없으면 건너뛰고 다음 항목 → 기존 greedy@type 등이 그 사이 돈다). GPU 는 2 h × 10 = 11/09 08:00 KST 목표.
+5. **12:30 KST 확인 (한 번):** `lo_pkg_bp_park` 가 먼저 돌므로 `lo_pkg_bm2_rlonly` 는 약 18:00 에 시작한다 — 그 run 의 **처음 25 iter** `log.csv` 를 보고 PROPOSALS N 멈춤 규칙 (NaN, 또는 val 세 종류 fail 1.00 + loss 0) 에 걸리면 **아직 시작 안 한 bm2 5개를 `train_removed` 로 옮기고** 보고. 걸리지 않으면 그대로. 그 전 12:30 에는 `lo_pkg_bp_park` 첫 25 iter 가 정상인지만 적어라.
+6. 매 라운드: GPU 어느 run, cpu 어느 항목, 새 기록 수를 PROGRESS 한 줄. `collect_results.py` 는 드라이버가 돌린다. **에이전트가 스스로 항목을 더 넣거나 arm·seed·세트를 바꾸지 않는다.** 서버 2 는 사람이 `scripts/server2_night.sh run` 으로 bdf·seed 3·좌표 하네스·GA/LS seed 를 맡는다 — 같은 경로로 push 되니 pull 만 하고 중복 실행하지 마라.
+7. 11/09 아침 모든 평가가 끝나면 사람이 속도 측정 프로토콜을 따로 적는다. 그 전에는 속도 숫자를 보고서 표에 쓰지 않는다.
+
 ## 2026-11-08 03:05 KST — 사람: "11/08 12:00 KST 뒤 새 학습 시작 금지" 해제
 - 아래 모든 절의 "11/08 12:00 KST 새 학습 금지" (R 확인 run 18:00 예외 포함)를 **해제**한다. 보고서 제출 11/16 전까지 사람이 지시한 학습은 시작해도 된다.
 - 해제는 **사람이 넣은 항목만** 해당. 에이전트가 스스로 새 학습·새 시도를 큐에 넣는 것은 여전히 금지.

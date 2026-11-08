@@ -1,5 +1,5 @@
 {
- "_doc": "Read by scripts/pipeline_day2.py before every step. train: GPU, one at a time, in order. cpu: 1 worker, after the side-10 evals of finished trainings, in order; an entry runs while any 'done' path is missing.",
+ "_doc": "Read by scripts/pipeline_day2.py before every step. train: GPU, one at a time, in order. cpu: 1 worker, after the side-10 evals of finished trainings, in order; an entry runs while any 'done' path is missing. | 11/08 N (PROPOSALS): train +10 (lo_pkg_bp_park/bm2_rlonly x3, bm2_rlonly x3, lo_pkg_r0_s3), cpu +38 harness evals gated by 'after' = the model's metrics.json; server 2 runs the rest (scripts/server2_night.sh).",
  "train": [
   {
    "name": "r3a",
@@ -583,6 +583,68 @@
    "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0 --rl_pool_glob train_pcb*.pkl,train_ip*.pkl,train_rnd*.pkl",
    "seed": 0,
    "after": "runs/pool_v1/rnd.ok"
+  },
+  {
+   "name": "lo_pkg_bp_park",
+   "arm": "--model park_am --baseline rollout --imit 0 --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0
+  },
+  {
+   "name": "lo_pkg_bp_park_s1",
+   "arm": "--model park_am --baseline rollout --imit 0 --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1
+  },
+  {
+   "name": "lo_pkg_bp_park_s2",
+   "arm": "--model park_am --baseline rollout --imit 0 --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2
+  },
+  {
+   "name": "lo_pkg_bm2_rlonly",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 0,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "lo_pkg_bm2_rlonly_s1",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 1,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "lo_pkg_bm2_rlonly_s2",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 2,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "bm2_rlonly",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan",
+   "seed": 0,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "bm2_rlonly_s1",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan",
+   "seed": 1,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "bm2_rlonly_s2",
+   "arm": "--model manoharan2 --imit 0 --reward manoharan",
+   "seed": 2,
+   "rl_only": true,
+   "after": "runs/analysis/smoke_manoharan2.ok"
+  },
+  {
+   "name": "lo_pkg_r0_s3",
+   "arm": "--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0",
+   "seed": 3
   }
  ],
  "cpu": [
@@ -3001,6 +3063,348 @@
     "runs/2026-10-29/r2pkfc_s1_rl/eval/eval_ip20_1__r2pkfc_s1_rl.json"
    ],
    "log": "runs/2026-10-29/r2pkfc_s1_rl/eval.log"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bp_park_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bp_park_rl=runs/2026-10-29/lo_pkg_bp_park_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_0__lo_pkg_bp_park_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bp_park_rl=runs/2026-10-29/lo_pkg_bp_park_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_1__lo_pkg_bp_park_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bp_park_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bp_park_s1_rl=runs/2026-10-29/lo_pkg_bp_park_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s1_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bp_park_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bp_park_s1_rl=runs/2026-10-29/lo_pkg_bp_park_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s1_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bp_park_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bp_park_s2_rl=runs/2026-10-29/lo_pkg_bp_park_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s2_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bp_park_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bp_park_s2_rl=runs/2026-10-29/lo_pkg_bp_park_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s2_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bp_park_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bm2_rlonly_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval/eval_pkg10_0__lo_pkg_bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bm2_rlonly_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval/eval_pkg10_1__lo_pkg_bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bm2_rlonly_s1_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/eval/eval_pkg10_0__lo_pkg_bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bm2_rlonly_s1_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/eval/eval_pkg10_1__lo_pkg_bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bm2_rlonly_s2_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/eval/eval_pkg10_0__lo_pkg_bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bm2_rlonly_s2_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/eval/eval_pkg10_1__lo_pkg_bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_0 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_0' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_0__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_1 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_1__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_0__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_1__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_0 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_0' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_0__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_1 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_1__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_0 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg16_0__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_1 bm2_rlonly_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg16_1__bm2_rlonly_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_0 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_0' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_0__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_1 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_1' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_1__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_0 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_0' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_0__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_1 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_1' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_1__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_0 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg16_0__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_1 bm2_rlonly_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy bm2_rlonly_s1_rl=runs/2026-10-29/bm2_rlonly_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s1_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg16_1__bm2_rlonly_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s1_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_0 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_0' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pcb10_0__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pcb10_1 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_1' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pcb10_1__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pkg10_0__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pkg10_1__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_0 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_0' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_ip10_0__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_ip10_1 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_1' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_ip10_1__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_0 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pkg16_0__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg16_1 bm2_rlonly_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy bm2_rlonly_s2_rl=runs/2026-10-29/bm2_rlonly_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_s2_rl",
+   "done": [
+    "runs/2026-10-29/bm2_rlonly_s2_rl/eval/eval_pkg16_1__bm2_rlonly_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/bm2_rlonly_s2_rl/eval.log",
+   "after": "runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_0 lo_pkg_r0_s3_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_r0_s3_rl=runs/2026-10-29/lo_pkg_r0_s3_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_r0_s3_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_0__lo_pkg_r0_s3_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_r0_s3_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_r0_s3_rl/metrics.json"
+  },
+  {
+   "name": "N harness eval_pkg10_1 lo_pkg_r0_s3_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_r0_s3_rl=runs/2026-10-29/lo_pkg_r0_s3_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_r0_s3_rl",
+   "done": [
+    "runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_1__lo_pkg_r0_s3_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/lo_pkg_r0_s3_rl/eval.log",
+   "after": "runs/2026-10-29/lo_pkg_r0_s3_rl/metrics.json"
   },
   {
    "name": "ls10 scale-eval eval_pkg16_0 r2pkfc_s1_rl",

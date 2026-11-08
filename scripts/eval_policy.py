@@ -40,7 +40,7 @@ def parse_set(name):
 
 
 def job(args):
-    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start, ls_chunk, env_feat = args
+    path, method, spec, out, rounds, samples, ls_cfg, device, inst_chunk, ga_cfg, repair, start, ls_chunk, env_feat, bl_seed = args
     import resource
     import numpy as np
     import torch
@@ -57,6 +57,8 @@ def job(args):
     if start == "rule" and spec:                    # trained policies only; baselines in the same call run as usual
         method = f"modal_rule>{method}"
     rec_method = f"{method}+rep{repair}" if repair else method
+    if bl_seed and method in ("genetic", "local_search"):   # 11/08 N: stochastic baselines, seeds 1-2 (seed 0 = plain name)
+        rec_method = f"{rec_method}@s{bl_seed}"
     if env_feat and spec:
         rec_method = f"{rec_method}@{env_feat}"
     dst = os.path.join(out, "eval", f"{name}__{rec_method}.json")
@@ -85,7 +87,7 @@ def job(args):
         cont = lambda bb, inst, occ0: modal_heuristic(bb, cfg, inst=inst, occ0=occ0)  # noqa: E731
     elif method == "genetic":                     # 11/02: decap_loop.baselines.genetic, no seed solution
         pop, gens = ga_cfg
-        fn = lambda bb: genetic(bb, cfg, pop=pop, gens=gens, seed=0)  # noqa: E731
+        fn = lambda bb: genetic(bb, cfg, pop=pop, gens=gens, seed=bl_seed)  # noqa: E731
     elif method == "local_search":
         passes, trials = ls_cfg
 
@@ -95,7 +97,7 @@ def job(args):
             step = ls_chunk if ls_chunk > 0 else bb.B
             gs = [greedy(bb, cfg, inst=torch.arange(i, min(i + step, bb.B))) for i in range(0, bb.B, step)]
             g = {k: torch.cat([x[k] for x in gs]) for k in ("occ", "feasible")}
-            occ = local_search(bb, cfg, g["occ"], g["feasible"], passes=passes, trials=trials, sub_chunk=ls_chunk)
+            occ = local_search(bb, cfg, g["occ"], g["feasible"], passes=passes, trials=trials, seed=bl_seed, sub_chunk=ls_chunk)
             inst = torch.arange(bb.B)
             return dict(occ=occ, feasible=torch.from_numpy(grid_worst(bb, inst, occ, cfg) <= FEAS_TOL))
     else:                                         # trained policy: method = "<name>" or "<name>@S"
@@ -221,6 +223,8 @@ def main():
                     "let the policy continue (remove / change type / stop); records 'modal_rule><name>'")
     ap.add_argument("--ls_chunk", type=int, default=0, help="local_search: starting greedy instances and "
                     "destroy-and-repair copies per batch (memory only; 0 = all at once)")
+    ap.add_argument("--bl_seed", type=int, default=0, help="genetic / local_search rng seed (0 = the seed-0 records' "
+                    "plain name; k > 0 writes <method>@sk)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     files = sorted({f for s in a.sets.split(",") for f in glob.glob(os.path.join(a.pool, s + ".pkl"))})
@@ -233,7 +237,7 @@ def main():
     ls_cfg = tuple(map(int, a.ls.split("x")))
     ga_cfg = tuple(map(int, a.ga.split("x")))
     jobs = [(f, m, spec, a.out, a.rounds, a.samples, ls_cfg, a.device, a.inst_chunk, ga_cfg, a.repair, a.start,
-             a.ls_chunk, a.env_feat) for f in files for m, spec in methods]
+             a.ls_chunk, a.env_feat, a.bl_seed) for f in files for m, spec in methods]
     print(f"{len(files)} sets x {len(methods)} methods = {len(jobs)} jobs, {a.workers} workers -> {a.out}/eval", flush=True)
     t0 = time.time()
     # one fresh process per job: a side-16 job's peak stayed resident in the worker into the next job

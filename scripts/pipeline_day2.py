@@ -11,7 +11,8 @@ restarting this process:
             "rl_hours": h -> with "init": rl for h hours instead of RL_H (QUEUE 11/07 10:45 KST: 1 h continuation).
             "distill_only": true -> distill stage only for "distill_hours" (default DISTILL_H + RL_H), no rl; the
             result (done check, side-10 eval) is <name>_distill (B-DevFormer, PROPOSALS_DRAFT_devformer.md).
-  "cpu":   [{"name", "cmd", "done": [paths]}]      -> run in order when every "done" path is missing.
+  "cpu":   [{"name", "cmd", "done": [paths], "after"?}] -> run in order when every "done" path is missing
+            (and "after", if given, exists: 11/08 N harness evals wait for the model's best.pt).
 CPU lane (1 worker): first the side-10 certified eval of every finished training in "train" (rl best.pt,
 eval_*10_*, --inst_chunk 5), then the "cpu" entries in order. It waits while an external job named in
 EXTERNAL is alive (the side-10 single-type greedy+prune analysis holds that slot until it ends).
@@ -142,7 +143,8 @@ def cpu_lane():
             time.sleep(120)
             continue
         jobs = eval_jobs() + queue().get("cpu", [])
-        todo = [j for j in jobs if not all(exists(p) for p in j["done"]) and j["name"] not in FAILED]
+        todo = [j for j in jobs if not all(exists(p) for p in j["done"]) and j["name"] not in FAILED
+                and (not j.get("after") or exists(j["after"]))]   # 11/08 N: cpu "after" gate (eval of a model still training)
         if not todo:
             time.sleep(120)
             continue

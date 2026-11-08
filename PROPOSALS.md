@@ -305,6 +305,30 @@
 - **보고 (판정 규칙):** 10칸 세 종류 50문제, 정책 단독, ablation − `r2pk_rl` 짝지은 성공률 차와 개수비 (bootstrap 95% CI). 어떤 종류에서든 CI 상한 < 0 **이고** 점추정 ≤ −0.16 (seed 잡음 d*)이면 "그 설계를 빼면 나빠진다"로 쓴다. 아니면 "seed 0에서 차이를 확인하지 못함"으로 쓰고 설계 근거로 쓰지 않는다. seed를 더하지 않는다.
 - 가장 가까운 선행: Residual Policy Learning (A2), cutting plane (A1) / 다른 점: 기여 아님, 우리 RL 설계의 ablation.
 
+## 11/08 N: 밤 실험 묶음 — 선행 기준선 원문판·뺀 pkg 비교·보충 seed·하네스 평가 (사람, 11/08 11:30 KST, 어떤 N run도 돌기 전에 고정)
+- **결정 (사람):** 최종 방법 (11/08 F) 은 바꾸지 않는다. 보고서 표를 채우기 위한 학습 19개 + 평가. GPU: 서버 1 큐 10 (`lo_pkg_bp_park` ×3, `lo_pkg_bm2_rlonly` ×3, `bm2_rlonly` ×3, `lo_pkg_r0_s3`), 서버 2 `scripts/server2_night.sh` 9 (`lo_pkg_bdf` ×3, `bdf` ×3, `lo_pkg_r2pk_s3`, `r2pk_s3`, `r0_coord_s3`). 2 h/run, 11/09 아침 목표. 밀리면 **뒤에서부터** 뺀다 (보충 seed → 전 종류 bm2·bdf 순); 앞 9개 (뺀 pkg × Park·Manoharan v2·DevFormer) 가 우선.
+- **왜:** (1) 지금 B-Manoharan 은 원문 (박사논문 Paper I) 과 6군데 어긋남 (`PROPOSALS_DRAFT_bm2.md`) — 원문판 `manoharan2` 로 교체해야 "선행을 약하게 만들었다" 지적을 막는다. (2) B-DevFormer (ICML 2023) 는 같은 문제에서 크기·종류 zero-shot 을 보인 가장 가까운 선행인데 표에 없다 (`PROPOSALS_DRAFT_devformer.md`). (3) 외부 세 모델 모두 **뺀 pkg 학습이 없다** → 초록의 "처음 보는 종류" 비교가 좌표 자체 비교에만 걸려 있다. (4) 좌표+V 16·20칸은 seed 0뿐, GA·LS 는 seed 0 한 번뿐. (5) MoTT·좌표 seed 3 추가는 보충.
+- **무엇 — 학습 (arm 은 기존 seed 0 run 과 같고, 뺀 pkg 는 `lo_pkg_*` 와 같은 `--pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0`):**
+  - `lo_pkg_bp_park{,_s1,_s2}`: `--model park_am --baseline rollout --imit 0` (bp_park 와 같음).
+  - `lo_pkg_bm2_rlonly{,_s1,_s2}`, `bm2_rlonly{,_s1,_s2}`: `--model manoharan2 --imit 0 --reward manoharan`, rl_only (2 h RL, 원문 보상; DRAFT_bm2 추천 그대로), `after runs/analysis/smoke_manoharan2.ok`.
+  - `lo_pkg_bdf{,_s1,_s2}`, `bdf{,_s1,_s2}`: `--model devformer --df_perm 4 --df_self 5`, distill-only 2.0 h (DRAFT_devformer 권고), 서버 2 에서 `run_rung.py --skip_rl`.
+  - 보충 seed 3: `lo_pkg_r0_s3` (서버 1), `lo_pkg_r2pk_s3`, `r2pk_s3`, `r0_coord_s3` (서버 2). seed 4 는 이 묶음에 없다 (11/09 낮 사람 결정).
+- **무엇 — 평가 (모두 CPU, 정확 검사; 정책 단독 `eval_*10_*` 는 드라이버/스크립트가 자동, 하네스는 `--repair 4` = F 와 같은 플래그 `--workers 1 --inst_chunk 5`):**
+  - 뺀 pkg 모델 (lo_pkg_*): 하네스 `eval_pkg10_0/1`. 전 종류 모델 (bm2, bdf, r2pk_s3): 하네스 pcb·pkg·ip 10칸 + `eval_pkg16_0/1`. `r0_coord_s3`: pkg10 + pkg16 하네스.
+  - 좌표 seed 1·2 하네스: `r0_coord_s1_rl`, `r0_coord_s2_rl` × pkg16_0/1, pkg20_0/1 (서버 2 lane C).
+  - GA·LS seed 1·2: `eval_policy --methods ga|ls --bl_seed k` (새 플래그, 기록 이름 `genetic@sk`, `local_search@sk`; seed 0 기록은 이름 그대로), 10칸 6세트, 설정은 seed 0 과 같음 (GA 64x100, LS 4x32).
+  - 서버 1 cpu 항목은 `after` = 그 모델의 `metrics.json` 으로 게이트 (pipeline_day2 11/08 추가). 드라이버 재시작 필요 (distill_only·after 코드).
+- **읽기 (결과 전에 고정):**
+  - 메인 표 (하네스 포함, seed 0·1·2 묶음 점추정 + 짝지은 bootstrap CI) 에 B-Park·B-Manoharan v2·B-DevFormer 행을 추가한다. 정책 단독 열은 ablation. 같은 50문제 짝지은 차 CI 가 0 밖이면 "MoTT+P1+V 높음/낮음", 아니면 "구분 안 됨" — **어느 쪽이든 그대로 적는다.** 초록의 "처음 보는 패키지형" 문장은 이 표의 뺀 pkg 행이 나온 뒤에만 숫자와 함께 쓴다.
+  - **seed 3 은 보충:** 판정 (F (a)/(b)/(c), R, G1·M1·C1) 은 seed 0·1·2 그대로. seed 0–3 묶음 숫자는 "보충 (4 seed)" 로 따로 적는다. MoTT 와 좌표 둘 다 seed 3 이 있어야 그 묶음을 적는다 (한쪽만 있으면 적지 않는다).
+  - 좌표+V 16·20칸 3 seed 묶음이 나오면 F (a) 의 좌표 기준 (seed 0 0.80) 을 3 seed 값으로 **바꾸지 않는다**; 둘 다 적는다 (사전 등록 기준은 seed 0).
+  - GA·LS 3 seed 는 표에 평균 ± seed 간 범위로; 판정 없음.
+  - 기존 `bm_manoharan*` 숫자는 본문 표에서 빼고 부록에 "원문과 다른 변형 (6군데, DRAFT_bm2 표)" 로만 남긴다. v2 결과가 더 나빠도 그렇게 한다.
+  - bm2·bdf 문장에는 항상 조건을 붙인다: "같은 2 h 예산, 우리 합성 판·선생님 해, critic·replay 없음 (Manoharan) / 우리 행동 공간·목표 (DevFormer)". "원문을 이겼다" 는 쓰지 않는다.
+- **멈춤 규칙 (결과 전에 고정):** `lo_pkg_bm2_rlonly` 첫 run 의 처음 25 iter 에서 (서버 1 에이전트가 12:30 KST 확인) loss 가 NaN 이거나 val 세 종류 모두 fail 1.00 + loss 0 (기존 rlonly 붕괴 선례) 이면 그 run 은 끝까지 두되 bm2 6개 중 **아직 시작 안 한 것은 큐에서 내리고 보고만** 한다 — 변형으로 갈아끼우지 않는다. bdf 도 같다 (서버 2, 사람 확인). 다른 run 의 실패는 재시도 1회 (드라이버 재시작) 뒤 보고.
+- **속도 (별도, 11/09 아침, CPU 비운 뒤):** 이 묶음의 시간 기록도 공유 CPU 라 보고용이 아니다. 보고용 속도는 두 서버의 모든 평가가 끝난 뒤 한 번, 종류·크기별 10문제, 정책 단독·하네스, MoTT+P1·좌표·공진 규칙·greedy+prune·B-* 같은 조건 — 프로토콜은 그때 PROPOSALS 에 적고 돌린다.
+- 결과를 보고 run·seed·평가 세트·읽기 규칙을 바꾸지 않는다. 11/10 이후 새 학습 없음.
+
 ## 11/08 F: 최종 방법 = MoTT+P1 + 정밀 검사 되먹임 (평가만, 학습 없음) — 사람, 11/08 01:45 KST, 어떤 F 평가도 돌기 전에 고정
 - **결정 (사람):** 최종 방법은 **MoTT+P1 정책 + 정밀 검사 되먹임 (최대 4회)** = 지금의 `--repair 4` 그대로. 이름 `MoTT+P1+V` (V = verifier). 정책 단독 숫자는 절제 실험(ablation)으로 내려간다. 구조 후보 G1·M1, RL 절차 C1·C1', 학습 분포 R(seed 0: 뺀 pkg 0.68 vs 0.70)은 모두 기준 미달이라 **학습 쪽 변경은 더 하지 않는다** (R seed 1·2는 돌고 있는 대로 끝내고 r_screen 판정만 기록; 통과해도 11/08 확인 run은 돌리지 않는다 — 사람 결정, 시간).
 - **왜 (V 결과, 11/07):** 뺀 pkg 10칸 3 seed 묶음 정책 단독 0.71 → 되먹임 포함 **0.993**; 같은 되먹임을 준 좌표 0.80 → 0.920, greedy+prune 0.90 → 0.94 (seed 0). 정책 단독 실패 44개 중 43개를 **부품을 늘리지 않고 (추가 중앙값 0, 평균 −0.7) 자리만 옮겨** 살렸다; 좌표는 30개 중 18개. 해석: 옮겨 가지 않은 것은 놓는 실력이 아니라 "어느 주파수를 봐야 하는지"(빈 판 봉우리 8개 밖의 위반 주파수)이고, 모드 토큰이 검사기 출력을 받는 입구가 된다. 기여는 되먹임 루프 자체가 아니라 (기준선에도 같은 루프) **이 입구 — 같은 루프를 줘도 MoTT가 앞선다**에만 걸린다.
