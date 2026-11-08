@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 15:00 UTC, 라운드 173 — GPU `bm2_rlonly` it 250 (fail 0.52 로 올라감, NaN 아님, resume it 226); CPU 좌표 하네스 s2 pkg20_0 16분째; 새 기록 0)
+# PROGRESS (갱신 2026-11-08 15:18 UTC, 라운드 174 — 새 QUEUE N2 (뺀 pkg 모델 pcb·ip 하네스 48개) 확인, 큐에 이미 있음 → 드라이버가 N 하네스 뒤에 집음; `collect_results.py` 에 N2 표 (최저 종류 성공률) 추가; CPU 좌표 하네스 s2 pkg20_0 끝 (ok 0.88, count 10.57); GPU `bm2_rlonly` it 325 정상)
+
+## 라운드 174 (2026-11-08 15:15~ UTC)
+- `git fetch r2e`: 새 커밋 없음. HEAD 10062dd = 사람 N2 커밋 (QUEUE 11/09 00:20 KST, PROPOSALS "11/09 N2", day2_queue.json cpu 에 `N2 harness ...` 48개 (서버 1 몫), `scripts/server2_n2.sh`). 드라이버는 큐를 매번 다시 읽으므로 재시작 필요 없음.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 18.8 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 289 B 되살림.
+- **`N coord harness eval_pkg20_0 r0_coord_s2_rl+rep4` 끝 (14:43–15:13, rc 0): ok 0.88, count 10.57 (4 rounds).** collect_results 15:13~ (드라이버).
+- **N2 보고 표 준비 (평가·큐는 안 건드림):** `scripts/collect_results.py` `n2_table` — 모델 5개 (MoTT+P1 `lo_pkg_r2pk*`, 좌표 `lo_pkg_r0*`, B-Park `lo_pkg_bp_park*`, B-Manoharan v2 `lo_pkg_bm2_rlonly*`, B-DevFormer `lo_pkg_bdf*_distill` (서버 2)) × 종류 (뺀 pkg10, pcb10, ip10) `+rep4`: seed 묶음 정책 단독 (`ok_pre`) → 하네스, 짝지은 bootstrap CI vs MoTT+P1, 그리고 최저 종류 성공률 + 그 차의 CI (종류마다 문제를 짝지어 다시 뽑음). pcb10·ip10 `lo_pkg_*+rep4` 기록이 하나라도 생겨야 표가 나옴 (지금은 0 → 안 나옴). 가짜 기록으로 모양만 시험함 (`/tmp/n2t/t.py`, 커밋 안 함). 판정 문장 없음 — PROPOSALS N2 대로 사람 몫.
+- 결정: N2 표는 QUEUE "결과는 판정 없이 RESULTS 에 숫자만 (최저 종류 성공률 포함)" 을 따르기 위한 보고 코드만 추가; 큐·플래그·순서·세트는 그대로 — 이유: QUEUE N 6단계 (에이전트가 항목 추가·변경 금지).
+- 한 줄 (N 6단계): GPU = `bm2_rlonly` RL (it 325 / 5458 s, count/ref 1.728, fail 0.23, loss −8.08, oom 0, gpu peak 21.9 GB; val it 300 = it 100·200 그대로 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69), NaN 아님; 끝 ~15:43), cpu = collect_results → 다음 `N coord harness eval_pkg20_1 r0_coord_s2_rl+rep4`, 새 기록 1 (좌표 s2 pkg20_0).
+- 할 일 (다음): (1) 좌표 하네스 s2 마지막 pkg20_1. (2) `bm2_rlonly` 끝 ~15:43 → 다음 train `bm2_rlonly_s1`; cpu `eval10 bm2_rlonly_rl`·`N harness ... bm2_rlonly_rl+rep4` 를 드라이버가 집는지. (3) N2 48개의 `after` (= 그 모델 `metrics.json`) 는 12 모델 모두 이미 학습 끝이라 열려 있음 → N 하네스 게이트가 닫혀 있을 때 cpu 빈자리에 돈다 — 첫 N2 기록이 생기면 RESULTS 에 N2 표가 나오는지 확인. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 173 머리말: 갱신 2026-11-08 15:00 UTC, 라운드 173 — GPU `bm2_rlonly` it 250 (fail 0.52 로 올라감, NaN 아님, resume it 226); CPU 좌표 하네스 s2 pkg20_0 16분째; 새 기록 0)
 
 ## 라운드 173 (2026-11-08 14:59~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST 그대로.

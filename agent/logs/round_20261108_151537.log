@@ -1,0 +1,13 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   89c0c02..10062dd  main       -> r2e/main
+Updating 89c0c02..10062dd
+Created autostash: 3ef00be
+Fast-forward
+ PROPOSALS.md          |   6 +
+ agent/QUEUE.md        |   3 +
+ agent/day2_queue.json | 432 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/server2_n2.sh |  36 +++++
+ 4 files changed, 477 insertions(+)
+ create mode 100755 scripts/server2_n2.sh
+Applied autostash.

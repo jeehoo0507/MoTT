@@ -9,3 +9,7 @@ Round 173 is done and pushed to `r2e main` as commit `0cef77b`. Nothing new came
 - **Decision:** I kept the queue, flags and order as they are and added nothing myself. QUEUE says only the human adds items.
 
 Next round: check that `bm2_rlonly_s1` starts once `bm2_rlonly` ends, and that the driver picks up `eval10 bm2_rlonly_rl` on the CPU. The next DAILY.md is due at 01:15 UTC on 11/09.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0cef77b..476f34a  main -> main

@@ -1063,6 +1063,80 @@ def heldout_repair_table(recs):
             "개수 비 MoTT+P1/좌표 (둘 다 성공) [95% CI] |", "|---|---|---|---|---|---|"] + rows + ["", f"읽기 (결과 전 고정): {read}.", ""]
 
 
+N2_FAMS = [("MoTT+P1", "lo_pkg_r2pk{}_rl+rep4"), ("좌표", "lo_pkg_r0{}_rl+rep4"), ("B-Park", "lo_pkg_bp_park{}_rl+rep4"),
+           ("B-Manoharan v2", "lo_pkg_bm2_rlonly{}_rl+rep4"), ("B-DevFormer", "lo_pkg_bdf{}_distill+rep4")]
+
+
+def n2_table(recs):
+    """PROPOSALS 11/09 N2 (report only, no verdict): leave-pkg-out models with the harness (`+rep4`) on the held-out
+    pkg10 and the trained pcb10/ip10. Per model x kind: seeds pooled (seed s paired with MoTT+P1 seed s on the same
+    problems), policy-only (`ok_pre`) -> harness, paired bootstrap CI vs MoTT+P1; then the lowest-kind success rate,
+    its CI from resampling problems within each kind (paired, 2000 draws, seed 0)."""
+    by = defaultdict(dict)
+    for r in recs:
+        if int(r["size"]) == 10 and r["method"].startswith("lo_pkg_") and r["method"].endswith("+rep4"):
+            by[r["method"]][r["set"]] = r
+    if not any(s.startswith(("eval_pcb10", "eval_ip10")) for m, d in by.items() for s in d):
+        return []
+    seeds = ["", "_s1", "_s2"]
+    kinds = ["pkg", "pcb", "ip"]
+
+    def pooled(fam, kind):
+        """(ok, ok_pre, ref ok, ref ok_pre, n seeds) over seeds/sets present for both fam and MoTT+P1."""
+        v, ns = [[], [], [], []], 0
+        for s in seeds:
+            a, b = fam.format(s), N2_FAMS[0][1].format(s)
+            sets = sorted(x for x in set(by.get(a, {})) & set(by.get(b, {})) if x.startswith(f"eval_{kind}10"))
+            if not sets:
+                continue
+            ns += 1
+            for p, (m, k) in zip(v, [(a, "ok"), (a, "ok_pre"), (b, "ok"), (b, "ok_pre")]):
+                p.append(np.concatenate([np.asarray(by[m][x][k], bool) for x in sets]))
+        return [np.concatenate(p) for p in v] + [ns] if ns else None
+    rows, mins = [], []
+    for name, fam in N2_FAMS:
+        got = {k: pooled(fam, k) for k in kinds}
+        for k in kinds:
+            g = got[k]
+            if g is None:
+                rows.append(f"| {name} | {k} 10 | 0/3 | — | — | — | — |")
+                continue
+            ok, pre, rok, _, ns = g
+            if name == N2_FAMS[0][0]:
+                d = "(기준)"
+            else:
+                lo, hi = boot_ci(lambda i: ok[i].mean() - rok[i].mean(), len(ok))
+                d = f"{ok.mean() - rok.mean():+.2f} [{lo:+.2f}, {hi:+.2f}]"
+            rows.append(f"| {name} | {k} 10 | {ns}/3 | {pre.mean():.2f} | **{ok.mean():.2f}** | {len(ok)} | {d} |")
+        if any(got[k] is None for k in kinds):
+            mins.append(f"| {name} | (세 종류 다 모이지 않음) | | | | |")
+            continue
+        h = {k: got[k][0].mean() for k in kinds}
+        p = {k: got[k][1].mean() for k in kinds}
+        kmin = min(kinds, key=h.get)
+        pmin = min(kinds, key=p.get)
+        ns = "/".join(str(got[k][4]) for k in kinds)
+        if name == N2_FAMS[0][0]:
+            d = "(기준)"
+        else:
+            rng = np.random.default_rng(0)
+            dif = [min(got[k][0][i].mean() for k, i in idx.items()) - min(got[k][2][i].mean() for k, i in idx.items())
+                   for idx in ({k: rng.integers(0, len(got[k][0]), len(got[k][0])) for k in kinds} for _ in range(2000))]
+            pt = min(h.values()) - min(got[k][2].mean() for k in kinds)
+            d = f"{pt:+.2f} [{np.percentile(dif, 2.5):+.2f}, {np.percentile(dif, 97.5):+.2f}]"
+        mins.append(f"| {name} | {ns} | {p[pmin]:.2f} ({pmin}) | **{h[kmin]:.2f}** ({kmin}) | "
+                    f"{' / '.join(f'{h[k]:.2f}' for k in kinds)} | {d} |")
+    return ["## 뺀 pkg 모델의 세 종류 하네스 (PROPOSALS 11/09 N2, 보고만, 판정 없음, 10칸)", "",
+            "`lo_pkg_*` (pkg 를 학습에서 뺀 모델) 에 `--repair 4` (`--workers 1 --inst_chunk 5`): 뺀 pkg10 + 학습한 pcb10·ip10. "
+            "seed 0·1·2 를 같은 seed 의 MoTT+P1 `lo_pkg_r2pk*` 와 같은 문제로 짝지어 묶음. 정책 단독 = 같은 기록 안 `ok_pre`. "
+            "CI = 짝지은 bootstrap 95% (2000회, seed 0). 최저 종류 차의 CI 는 종류마다 문제를 짝지어 다시 뽑아 최저값끼리 뺀 것. "
+            "B-DevFormer 는 서버 2 기록. \"MoTT 만\" 문장 적용은 PROPOSALS N2 읽기대로 사람이.", "",
+            "| 모델 | 종류 | seed | 정책 단독 | 하네스 | 문제 수 | 하네스 성공률 차 vs MoTT+P1 [95% CI] |",
+            "|---|---|---|---|---|---|---|"] + rows + [
+            "", "| 모델 | seed (pkg/pcb/ip) | 최저 종류 정책 단독 | 최저 종류 하네스 | 하네스 pkg / pcb / ip | 최저 종류 차 vs MoTT+P1 [95% CI] |",
+            "|---|---|---|---|---|---|"] + mins + [""]
+
+
 F_SEEDS = [("0", "r2pk_rl+rep4"), ("1", "r2pk_s1_rl+rep4"), ("2", "r2pk_s2_rl+rep4")]
 F_REFS = [("좌표+V", "r0_coord_rl+rep4"), ("greedy+prune+V", "greedy+prune+rep4")]
 
@@ -1985,6 +2059,7 @@ def main():
     lines += sampling_table(recs)
     lines += repair_table(recs)
     lines += heldout_repair_table(recs)
+    lines += n2_table(recs)
     lines += final_method_table(recs)
     lines += r_screen_table()
     lines += rulestart_table(recs)
