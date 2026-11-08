@@ -23,3 +23,7 @@ Round 167 was a routine monitoring round. There were no new instructions in the 
 I updated PROGRESS.md and committed and pushed it to `r2e main` as `cc3889e`.
 
 Next round I'll check that the evaluation results reach RESULTS.md and that the scheduler picks up the remaining three evaluations for seed 2 of the coordinate model. The next DAILY.md is due 11/09 at 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cc3889e..0328e2a  main -> main

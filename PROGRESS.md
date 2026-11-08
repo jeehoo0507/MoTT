@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 13:25 UTC, 라운드 167 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 4/6 (pkg 0.76·0.88, pcb 0.04·0.04); GPU `lo_pkg_bm2_rlonly_s2` val it 300 = it 100·200 그대로, 끝 ~13:45)
+# PROGRESS (갱신 2026-11-08 13:42 UTC, 라운드 168 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 6/6 끝 (pkg 0.76·0.88, pcb 0.04·0.04, ip 0.92·1.00); 좌표 하네스 s2 pkg16_1 진행; GPU `lo_pkg_bm2_rlonly_s2` 끝 직전 (~13:43))
+
+## 라운드 168 (2026-11-08 13:39~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 27.8 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 729 B 되살림.
+- **`eval10 lo_pkg_bm2_rlonly_s1_rl` 끝 (12:53–13:25, rc 0), 6/6:** pkg10_1 0.76 (count 35.37), pcb10_0 0.04 (44.00), pkg10_0 0.88 (34.55), pcb10_1 0.04 (34.00), ip10_0 0.92 (17.61), ip10_1 1.00 (16.80). collect_results 13:25–13:28 rc 0 (RESULTS 자동 반영). 속도 숫자는 QUEUE 7에 따라 표에 안 씀.
+- 드라이버 cpu: 13:30 `N coord harness eval_pkg16_1 r0_coord_s2_rl+rep4` 시작 (2/4), forkserver 워커 1895757 100 % CPU, rss 9.5 GB — 정상.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly_s2` RL (val it 300 = it 100·200 그대로, 경과 7078 s / 7200 s → 끝 ~13:43, 다음 train `bm2_rlonly`), cpu = 좌표 하네스 s2 pkg16_1, 새 기록 2 (ip10_0·1; 세트 6개 끝).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) `lo_pkg_bm2_rlonly_s2` 끝 → 드라이버가 `eval10 lo_pkg_bm2_rlonly_s2_rl` 과 다음 train `bm2_rlonly` 올리는지 확인. (2) 좌표 하네스 s2 남은 2개 (pkg20_0·1). (3) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 167 머리말: 갱신 2026-11-08 13:25 UTC, 라운드 167 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 4/6 (pkg 0.76·0.88, pcb 0.04·0.04); GPU `lo_pkg_bm2_rlonly_s2` val it 300 = it 100·200 그대로, 끝 ~13:45)
 
 ## 라운드 167 (2026-11-08 13:22~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
