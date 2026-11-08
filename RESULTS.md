@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 07:52 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 08:03 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -5124,7 +5124,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pcb_r2tf_rl | 148 / 360 | 0.2 | 1.00 | – | 0.84 | 9.9 | 0.60 |
 | lo_pcb_r2v_rl | 166 / 361 | 1.0 | 1.00 | – | 0.92 | 8.7 | 0.82 |
 | lo_pcb_r3_rl | 153 / 361 | 0.1 | 1.00 | – | 0.90 | 8.4 | 0.86 |
-| lo_pkg_bm2_rlonly_rl | 1 / – | 6.0 | – | 8.0 | – | – | – |
+| lo_pkg_bm2_rlonly_rl | 8 / – | 6.0 | – | 4.5 | – | – | – |
 | lo_pkg_bp_park_rl | 75 / 184 | 4.0 | 0.98 | 5.2 | 0.04 | – | 0.84 |
 | lo_pkg_bp_park_s1_rl | 77 / 175 | 8.0 | 0.98 | 4.0 | 0.02 | – | 0.64 |
 | lo_pkg_bp_park_s2_rl | 91 / 216 | 5.8 | – | 4.2 | – | – | – |
@@ -5285,6 +5285,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pcb_r3_rl | mott / loop | rl | 361 | 1.26 | val_pkg10_0: 1.00/0.75, val_ip10_0: 0.69/0.19 | `runs/2026-10-29/lo_pcb_r3_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_bdf_distill | coord / devformer | distill | 1358 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: 0.67/0.50 | `runs/2026-10-29/lo_pkg_bdf_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bdf_s1_distill | coord / devformer | distill | 1361 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: –/1.00 | `runs/2026-10-29/lo_pkg_bdf_s1_distill/metrics.json` |
+| runs/2026-10-29/lo_pkg_bdf_s2_distill | coord / devformer | distill | 1431 | 2.01 | val_pcb10_0: 3.89/0.38, val_ip10_0: 0.76/0.38 | `runs/2026-10-29/lo_pkg_bdf_s2_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bp_park_distill | coord / park_am | distill | 2333 | 0.76 | val_pcb10_0: 7.05/0.44, val_ip10_0: 0.73/0.19 | `runs/2026-10-29/lo_pkg_bp_park_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bp_park_rl | coord / park_am | rl | 184 | 1.26 | val_pcb10_0: 1.33/0.94, val_ip10_0: 0.61/0.62 | `runs/2026-10-29/lo_pkg_bp_park_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_bp_park_s1_distill | coord / park_am | distill | 2300 | 0.76 | val_pcb10_0: –/1.00, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/lo_pkg_bp_park_s1_distill/metrics.json` |
