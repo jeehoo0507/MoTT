@@ -11,3 +11,7 @@ Round 197 is committed and pushed to `r2e/main` as `2df12f5`. Nothing needed int
 - **Failed s2 run:** I checked that queue entries 78–85, its N harness evals, only start once its `metrics.json` exists. That file will never appear, so they won't run on the leftover `best.pt` (iteration 100). This matches last round's "no evaluation" decision.
 - **Server 2 N2:** 0 of the 48 records have been pushed so far. The deadline is 11/09 00:00 UTC, so it's not late yet. If they're still missing then, the next round will record that in PROGRESS.
 - **DAILY.md:** not due until 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2df12f5..8ad0a36  main -> main
