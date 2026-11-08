@@ -1,3 +1,13 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 161 is finished, committed and pushed to `r2e/main` as `0dffb7d`. Nothing new came in from the remote, and the top of the QUEUE is still the 11/08 12:10 KST instruction (move the N harness evals ahead in the CPU queue).
+
+- **Driver:** still running (pid 1792539). I restarted report_watch and resume_agent and recovered 598 B of the driver log. Memory is 27.0 / 60 GiB, oom_kill count 2.
+- **GPU:** `lo_pkg_bm2_rlonly_s1` finished at 11:41 UTC (rc 0). Its last validation at iteration 300 still fails every pcb10 case (fail 1.00), and ip10 is 0.920 with fail 0.69. That's the same as at iterations 100 and 200, and the same as seed 0. The driver then started `lo_pkg_bm2_rlonly_s2` on its own.
+- **CPU:** the seed-2 coordinate-model harness eval on `eval_pkg16_0` started at 11:32 UTC and is running normally (worker at 100% CPU, 8.6 GB memory).
+- **New records:** 0.
+- **s1 harness evals:** they are already in the queue, and the `metrics.json` they wait on now exists. The driver will pick them up after the remaining seed-2 coordinate harness evals.
+- **Decision:** I kept the queue, flags and order as they are and added nothing myself, as the human's N-batch instructions (step 6) require.
+
+**Next round:** check the seed-2 coordinate harness progress, and log the first validation of `lo_pkg_bm2_rlonly_s2` at about 12:15 UTC; that run should end around 13:45 UTC. The next DAILY is due 11/09 01:15 UTC.
