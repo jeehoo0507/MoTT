@@ -1,0 +1,33 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   a38c2f7..3c4c5ab  main       -> r2e/main
+Updating a38c2f7..3c4c5ab
+Created autostash: dba4d89
+Fast-forward
+ runs/2026-10-29/bdf_distill/eval/eval_ip10_0__bdf_distill.json  | 1 +
+ runs/2026-10-29/bdf_distill/eval/eval_ip10_1__bdf_distill.json  | 1 +
+ runs/2026-10-29/bdf_distill/eval/eval_pcb10_0__bdf_distill.json | 1 +
+ runs/2026-10-29/bdf_distill/eval/eval_pcb10_1__bdf_distill.json | 1 +
+ runs/2026-10-29/bdf_distill/eval/eval_pkg10_0__bdf_distill.json | 1 +
+ runs/2026-10-29/bdf_distill/eval/eval_pkg10_1__bdf_distill.json | 1 +
+ 6 files changed, 6 insertions(+)
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_ip10_0__bdf_distill.json
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_ip10_1__bdf_distill.json
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pcb10_0__bdf_distill.json
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pcb10_1__bdf_distill.json
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pkg10_0__bdf_distill.json
+ create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pkg10_1__bdf_distill.json
+Applied autostash.
+라운드 157을 마쳤습니다. 이번 라운드에는 할 일이 없었고, 아무것도 바꾸지 않았습니다.
+
+- **QUEUE**: 맨 위 사람 지시는 여전히 11/08 12:10 KST의 CPU 순서 지시입니다. 새로 들어온 커밋은 서버 2에서 사람이 올린 `bdf_distill` 10칸 평가 기록 6개뿐이었고, 이미 받아 둔 상태입니다.
+- **GPU**: `lo_pkg_bm2_rlonly_s1` RL이 175번째 반복까지 문제없이 돌고 있습니다 (메모리 부족 없음, GPU 최대 14.2 GB). 마지막 검증은 it 100 결과이고, seed 0과 같았습니다 (pcb10은 전부 실패, ip10은 0.92).
+- **CPU**: 좌표 하네스 `r0_coord_s1_rl+rep4`의 eval_pkg20_1이 114분째입니다. 앞선 pkg20_0 (68분)보다 오래 걸리지만, 워커가 CPU 100 %에 메모리 8.9 GB로 아직 일하고 있어 멈춘 것은 아닙니다.
+- **결정**: 큐·플래그·순서는 그대로 두고 기다립니다. pkg20_0의 3배 (약 12:15 UTC)를 넘기면 PROGRESS에 적기만 하고 프로세스는 죽이지 않습니다. 이 결정은 PROGRESS에 기록했습니다.
+- **메모리**: 26.7 GiB / 60 GiB입니다. 드라이버 (pid 1792539)는 살아 있고, 보조 스크립트 두 개 (report_watch, resume_agent)는 다시 띄웠습니다.
+- **기록**: 이번에 끝난 서버 1 실험이 없어 RESULTS.md는 그대로입니다. PROGRESS.md만 갱신해 커밋 f4e4c9c로 `r2e main`에 push했습니다.
+
+다음 라운드에 볼 것:
+- pkg20_1이 끝나면 드라이버가 `lo_pkg_bm2_rlonly_rl` 10칸 평가를 올리는지 확인합니다.
+- 약 11:40 UTC에 `_s1` 학습이 끝나면 `_s2`로 넘어가는지 확인합니다.
+- DAILY.md 다음 갱신은 11/09 01:15 UTC입니다.

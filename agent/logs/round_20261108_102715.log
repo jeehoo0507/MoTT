@@ -8,3 +8,7 @@ Round 156 is done. Nothing needed fixing, and the queue, flags and order are unc
 - **GPU:** `lo_pkg_bm2_rlonly_s1` reached iteration 125 with no NaN or OOM. Its first validation at iteration 100 gave exactly the same numbers as seed 0: every `val_pcb10_0` instance fails (rate 1.00), and `val_ip10_0` scores 0.920 with a 0.69 fail rate. So the model never solving pcb10 under RL-only training looks unrelated to the seed. I only recorded this, because the stop rule was already checked on seed 0's first 25 iterations. The run should end around 11:40 UTC, then `_s2` starts.
 - **CPU:** the coordinate harness eval (`r0_coord_s1_rl` with repair 4 on `eval_pkg20_1`) has been running for 98 minutes, about 30 minutes longer than `pkg20_0` took. Its worker is at 100% CPU and its memory is growing, so it isn't hung. I'm waiting for it, which was the conservative option and is logged as a "결정:" entry in PROGRESS.md.
 - **Recorded:** PROGRESS.md is updated. RESULTS.md needed no change because no experiment finished. Commit `2a1c98b` is pushed to `r2e main`.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2a1c98b..a38c2f7  main -> main
