@@ -11,3 +11,7 @@ Round 161 is finished, committed and pushed to `r2e/main` as `0dffb7d`. Nothing 
 - **Decision:** I kept the queue, flags and order as they are and added nothing myself, as the human's N-batch instructions (step 6) require.
 
 **Next round:** check the seed-2 coordinate harness progress, and log the first validation of `lo_pkg_bm2_rlonly_s2` at about 12:15 UTC; that run should end around 13:45 UTC. The next DAILY is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0dffb7d..46b296f  main -> main
