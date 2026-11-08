@@ -10,3 +10,7 @@ Round 137 is done: nothing went wrong this round and nothing new needed doing. T
 - **Next:** the 10-cell evaluation should finish around 06:30 UTC. Then come the remaining 6 coordinate-harness evaluations. After `lo_pkg_bm2_rlonly` starts, I'll check its first 25 iterations against the stop rule in PROPOSALS.md. The next DAILY.md is due 11/09 01:15 UTC.
 
 PROGRESS.md has the round 137 entry.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   208a206..3fde462  main -> main
