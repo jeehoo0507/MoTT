@@ -1,0 +1,235 @@
+{
+  "args": {
+    "out": "runs/2026-10-29/r2pk_s3_rl",
+    "device": "cuda",
+    "seed": 3,
+    "stage": "rl",
+    "init": "runs/2026-10-29/r2pk_s3_distill/best.pt",
+    "iters": 1000000,
+    "B": 16,
+    "M": 8,
+    "chunk": 2,
+    "grid_growth": 0.5,
+    "sizes": "8-12",
+    "shapes": "rect,L,holes",
+    "targets": "flat,step",
+    "n_probe": "1-3",
+    "difficulty": "0.02-0.2",
+    "max_steps": 64,
+    "feat": "mott_pk",
+    "model": "mott",
+    "df_perm": 0,
+    "df_self": 0.0,
+    "df_layers": 3,
+    "reward": "ours",
+    "baseline": "group",
+    "pool": "runs/pool_v1",
+    "pool_glob": "train_*.pkl",
+    "val_pools": "val_pcb10_0,val_pkg10_0,val_ip10_0",
+    "teacher_dir": "data/teacher",
+    "hours": 1.25,
+    "certify": 1,
+    "feas_margin": 0.0,
+    "hard_weight": 0.0,
+    "kind_weight": "",
+    "self_repair": 0,
+    "prior": false,
+    "no_prune": false,
+    "layers": 4,
+    "glob": false,
+    "d": 128,
+    "heads": 8,
+    "loop_train": "2-8",
+    "loop_eval": 8,
+    "fc_bias": false,
+    "mm_bias": false,
+    "mode_head": false,
+    "peak_gate": false,
+    "no_prior": false,
+    "peak_refine": true,
+    "dedup_modes": false,
+    "lr": 0.0003,
+    "imit": 1.0,
+    "teacher": "gp",
+    "lam": 1.0,
+    "lam_lr": 0.05,
+    "fail_target": 0.02,
+    "clip": 1.0,
+    "no_amp": false,
+    "grad_ckpt": false,
+    "val_every": 100,
+    "val_sizes": "10,20",
+    "val_n": 16,
+    "ckpt_min": 20
+  },
+  "git": "37a4faf",
+  "iters": 328,
+  "hours": 1.2787315148777432,
+  "final_val": {
+    "val_pcb10_0": [
+      1.0666667222976685,
+      0.6875
+    ],
+    "val_pkg10_0": [
+      0.9895833730697632,
+      0.5
+    ],
+    "val_ip10_0": [
+      0.6518518924713135,
+      0.1875
+    ]
+  },
+  "best_val_score": 1.750945508480072,
+  "best_iter": 100,
+  "teacher_replaced": 353,
+  "lam": 1.4630156250000106,
+  "cuda_oom_skipped": 0,
+  "grid_capped_steps": 116,
+  "chunk_final": 2,
+  "pool_F": {
+    "train_ip10_0": [
+      140,
+      204
+    ],
+    "train_ip10_1": [
+      177,
+      215
+    ],
+    "train_ip10_2": [
+      107,
+      150
+    ],
+    "train_ip12_0": [
+      135,
+      164
+    ],
+    "train_ip12_1": [
+      117,
+      175
+    ],
+    "train_ip12_2": [
+      135,
+      199
+    ],
+    "train_ip8_0": [
+      83,
+      124
+    ],
+    "train_ip8_1": [
+      177,
+      213
+    ],
+    "train_ip8_2": [
+      107,
+      160
+    ],
+    "train_pcb10_0": [
+      205,
+      307
+    ],
+    "train_pcb10_1": [
+      262,
+      393
+    ],
+    "train_pcb10_2": [
+      216,
+      324
+    ],
+    "train_pcb12_0": [
+      280,
+      387
+    ],
+    "train_pcb12_1": [
+      251,
+      376
+    ],
+    "train_pcb12_2": [
+      257,
+      385
+    ],
+    "train_pcb8_0": [
+      187,
+      280
+    ],
+    "train_pcb8_1": [
+      243,
+      364
+    ],
+    "train_pcb8_2": [
+      213,
+      319
+    ],
+    "train_pkg10_0": [
+      227,
+      340
+    ],
+    "train_pkg10_1": [
+      267,
+      400
+    ],
+    "train_pkg10_2": [
+      253,
+      379
+    ],
+    "train_pkg12_0": [
+      263,
+      392
+    ],
+    "train_pkg12_1": [
+      253,
+      379
+    ],
+    "train_pkg12_2": [
+      255,
+      382
+    ],
+    "train_pkg8_0": [
+      232,
+      348
+    ],
+    "train_pkg8_1": [
+      223,
+      329
+    ],
+    "train_pkg8_2": [
+      220,
+      330
+    ],
+    "train_rnd10_0": [
+      177,
+      250
+    ],
+    "train_rnd10_1": [
+      173,
+      259
+    ],
+    "train_rnd10_2": [
+      138,
+      207
+    ],
+    "train_rnd12_0": [
+      171,
+      199
+    ],
+    "train_rnd12_1": [
+      109,
+      163
+    ],
+    "train_rnd12_2": [
+      179,
+      268
+    ],
+    "train_rnd8_0": [
+      86,
+      129
+    ],
+    "train_rnd8_1": [
+      113,
+      169
+    ],
+    "train_rnd8_2": [
+      101,
+      151
+    ]
+  }
+}
