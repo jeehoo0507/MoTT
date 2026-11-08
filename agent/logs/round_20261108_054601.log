@@ -20,3 +20,12 @@ Fast-forward
  create mode 100644 runs/2026-10-28/baselines/eval/eval_pkg10_1__genetic@s2.json
  create mode 100644 runs/2026-10-28/baselines/eval/eval_pkg10_1__local_search@s2.json
 Applied autostash.
+라운드 139를 마쳤습니다. 모든 작업이 정상으로 돌고 있고, 이번 라운드에 새 평가 기록은 없습니다.
+
+- **GPU:** `lo_pkg_bp_park_s1` 학습이 05:37 UTC에 정상 종료(rc 0)했습니다. 드라이버가 바로 `lo_pkg_bp_park_s2` (seed 2)를 시작했고, 지금 증류 단계 it 400입니다. NaN 없고 메모리 부족(OOM)도 없으며, GPU 최대 사용량은 8.9 GB입니다.
+- **CPU:** 좌표 하네스 평가 3/8번째(`eval_pkg20_0 r0_coord_s1_rl+rep4`)가 21분째 돌고 있습니다. 작업 프로세스가 CPU 100 %를 쓰고 있어 멈춘 상태는 아닙니다. 끝난 seed 1 모델의 하네스 평가는 큐 순서 그대로 좌표 하네스 다음 차례입니다.
+- **결정:** 사람이 정한 큐·플래그·순서는 그대로 두고, 새 항목은 넣지 않았습니다. QUEUE의 N 지시 6단계가 에이전트의 항목 추가를 금지하기 때문입니다.
+- **기타:** 서버 메모리는 24.6 GiB / 60 GiB입니다. 드라이버 로그에서 빠져 있던 572 B를 복구했습니다.
+- **기록:** PROGRESS.md를 갱신해 커밋 `38ab4e5`로 `r2e main`에 push했고, 원격과 일치하는 것을 확인했습니다. 끝난 평가가 없어 RESULTS.md는 바꾸지 않았습니다.
+
+다음 확인할 일은 `lo_pkg_bp_park_s2`가 끝난 뒤(약 07:40 UTC 이후) `lo_pkg_bm2_rlonly`가 시작되면 처음 25 iter가 멈춤 규칙에 걸리는지 보는 것입니다. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
