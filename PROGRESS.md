@@ -1,6 +1,19 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 21:58 UTC, 라운드 196 — **`bm2_rlonly_s2` resume 도 GPU OOM (21:24, it 300 val 직후, 같은 자리) → STUCK, 다시 안 돌림**; GPU 빔 (train 큐 비어 있음); cpu = eval10 lo_pkg_r0_s3_rl (21:29~, pcb10_0 1.00 / pkg10_0 0.64 / pcb10_1 0.96 까지); 새 기록 0)
+# PROGRESS (갱신 2026-11-08 22:05 UTC, 라운드 197 — GPU 빔 (train 큐 끝, s2 STUCK 그대로); cpu eval10 `lo_pkg_r0_s3_rl` 끝 (21:51, rc 0) → **pcb10 0.98 / ip10 0.98 / pkg10 0.64 [50]**; N 하네스 lo_pkg_bm2_rlonly_s2 pkg10_0 **ok 0.92 [25]**; 서버 2 N2 0/48 push; 새 기록 2)
+
+## 라운드 197 (2026-11-08 22:03~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 17.1 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 1052 B 되살림. GPU 85 MiB / 0 % (빔, 사람 항목 없음).
+- **cpu `eval10 lo_pkg_r0_s3_rl` 끝 (21:29–21:51, rc 0):** RESULTS 자동 행 pcb10 **0.98 [50]**, ip10 **0.98 [50]**, pkg10 **0.64 [50]** (held-out pkg 이므로 pkg 가 낮은 것은 설계대로; 판정 없음, 보고만).
+- **cpu `N harness eval_pkg10_0 lo_pkg_bm2_rlonly_s2_rl+rep4` 끝 (21:56–22:00, rc 0): ok 0.92 [25]** (정책 단독 대비 짝 차이 +0.08 [−0.08, +0.24]). 지금 collect_results 22:00~, 다음 = 같은 모델 pkg10_1 (큐 61).
+- 확인: 큐 78–85 (`N harness … bm2_rlonly_s2_rl+rep4`) 는 `after: runs/2026-10-29/bm2_rlonly_s2_rl/metrics.json` 으로 막혀 있음 → s2 STUCK 이라 metrics.json 이 안 생기므로 best.pt (it 100) 평가는 돌지 않음 (라운드 196 "평가 없음" 결정과 맞음). 손대지 않음.
+- 서버 2 N2: 지금 `+rep4` pcb10/ip10 기록 **0 / 48** (마지막 서버 2 push 8f55c5c 20:33 = r0_coord_s3 eval10). 마감 11/09 00:00 UTC 전이라 아직 "늦음" 아님 — 다음 라운드에 다시 셈.
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 lo_pkg_bm2_rlonly_s2 (pkg10), 새 기록 2.
+- 결정: 큐·플래그·순서 그대로, 새 항목 없음 — 이유: QUEUE N 6단계·N2 (에이전트 새 학습 금지, 항목 안 바꿈).
+- 할 일 (다음): (1) cpu N 하네스 진행, RESULTS 자동 행 확인. (2) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기 (지금 0/48). (3) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (4) DAILY 다음 11/09 01:15 UTC. (5) GPU 는 사람 항목 없으면 빈 채로.
+
+# (이전) 라운드 196 머리말: (갱신 2026-11-08 21:58 UTC, 라운드 196 — **`bm2_rlonly_s2` resume 도 GPU OOM (21:24, it 300 val 직후, 같은 자리) → STUCK, 다시 안 돌림**; GPU 빔 (train 큐 비어 있음); cpu = eval10 lo_pkg_r0_s3_rl (21:29~, pcb10_0 1.00 / pkg10_0 0.64 / pcb10_1 0.96 까지); 새 기록 0)
 
 ## 라운드 196 (2026-11-08 21:46~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
