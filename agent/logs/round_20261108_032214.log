@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 130 is done. Everything is running normally and I didn't change the queue, flags or order.
+
+- **Instructions:** no new commits on main. The top instruction in QUEUE is still the 11/08 12:10 KST one about the CPU order, and I'm following the N batch rules as written.
+- **GPU:** `lo_pkg_bp_park` RL is at iteration 150 (3604 s), with fail 0.09, no OOM, no NaN, and a resume checkpoint at iteration 152. `log.csv` hasn't changed since iteration 100, but that's because it only gets a line at validation points; `log.txt` is still updating, so the run isn't stuck.
+- **CPU:** the coordinate harness eval 2 of 8 (`r0_coord_s1_rl+rep4`, pkg16_1) has been running for 34 minutes. Its worker is at 100% CPU using 10.6 GB. Memory is 28.8 of 60 GiB.
+- **New results:** none, so RESULTS.md is unchanged. The driver log matched its on-disk copy, so there was nothing to restore.
+- **Committed:** I added round 130 to PROGRESS.md and pushed `bf78df6` to `r2e main`. The push printed `gh: not found` credential warnings, but the remote is in sync.
+
+**Next:**
+- Finish the remaining 7 harness evals (about 54 minutes each).
+- Check the first 25 iterations of `lo_pkg_bm2_rlonly` against the stop rule once it starts, around 09:00 UTC.
+- The next DAILY.md is due 11/09 01:15 UTC.
