@@ -42,6 +42,9 @@ def feat_dim_any(cfg: PDNConfig, mode: str):
     if mode == "manoharan":   # prior-work baseline B-Manoharan (baselines_ml/manoharan.py)
         from baselines_ml.manoharan import feat_dim as mfd
         return mfd(cfg)
+    if mode == "manoharan2":  # paper-faithful B-Manoharan v2 (baselines_ml/manoharan2.py)
+        from baselines_ml.manoharan2 import feat_dim as mfd2
+        return mfd2(cfg)
     return feat_dim(cfg, mode)
 
 
@@ -63,6 +66,9 @@ def make_env(batch, inst, cfg, feat_mode, **kw):
     if feat_mode == "manoharan":
         from baselines_ml.manoharan import ManoharanEnv
         return ManoharanEnv(batch, inst, cfg, **kw)
+    if feat_mode == "manoharan2":
+        from baselines_ml.manoharan2 import ManoharanEnv2
+        return ManoharanEnv2(batch, inst, cfg, **kw)
     return Env(batch, inst, cfg, feat_mode=feat_mode, **kw)
 
 
