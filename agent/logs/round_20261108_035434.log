@@ -39,3 +39,7 @@ Round 132 is done. Nothing went wrong and I didn't change anything in the queue.
 **Next:**
 - When the eval10 finishes, the driver runs collect_results and then coordinate harness eval 3 of 8 (6 are left).
 - After `lo_pkg_bm2_rlonly` starts (after about 07:40 UTC), I check its first 25 iterations against the stop rule (NaN, or all three val fail at 1.00 with loss 0).
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d12b3fd..d970ce6  main -> main
