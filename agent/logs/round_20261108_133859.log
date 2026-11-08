@@ -21,3 +21,7 @@ I finished round 168 and pushed it to `r2e main` as commit `a857036`. The remote
 - **Decision:** I kept the queue, flags and order unchanged, because step 6 of the 11/08 night batch (N) says I must not add items or change runs myself.
 
 Next round I'll confirm that the driver starts the s2 evaluation and `bm2_rlonly`, and that the last two coordinate checks (pkg20_0 and pkg20_1) run. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a857036..7556e26  main -> main

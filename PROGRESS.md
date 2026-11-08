@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 13:42 UTC, 라운드 168 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 6/6 끝 (pkg 0.76·0.88, pcb 0.04·0.04, ip 0.92·1.00); 좌표 하네스 s2 pkg16_1 진행; GPU `lo_pkg_bm2_rlonly_s2` 끝 직전 (~13:43))
+# PROGRESS (갱신 2026-11-08 13:58 UTC, 라운드 169 — GPU `lo_pkg_bm2_rlonly_s2` 끝 (13:42 rc 0, val it 300 = it 100·200 그대로) → `bm2_rlonly` RL 시작 (it 25 정상); CPU 좌표 하네스 s2 pkg16_1 25분째 (워커 100 %))
+
+## 라운드 169 (2026-11-08 13:55~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 29.0 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 492 B 되살림.
+- **GPU `lo_pkg_bm2_rlonly_s2` 끝 (11:41–13:42, rc 0):** 마지막 val it 300 = pcb10 fail 1.00 (count nan), ip10 0.920 fail 0.69 — it 100·200, seed 0·1 과 같음. metrics.json·best.pt 있음 → 드라이버가 `eval10 lo_pkg_bm2_rlonly_s2_rl` 을 좌표 하네스 다음에 집을 것 (s1 때와 같은 흐름).
+- 드라이버 GPU: 13:42 **`bm2_rlonly`** RL 시작 (seed 0, `--model manoharan2 --imit 0 --reward manoharan`, pool_glob 없음 = 전 종류). it 25 / 386 s: count/ref 1.538, fail 0.11, teach ok 0.94, loss −1.54, cert-bad 10, oom 0, gpu peak 15.8 GB — NaN 아님, 정상.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly` RL (it 25, 끝 ~15:43), cpu = `N coord harness eval_pkg16_1 r0_coord_s2_rl+rep4` (13:30:16~, 25분째, forkserver 워커 1895757 100 % CPU, rss 10.6 GB — 정상), 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) 좌표 하네스 s2 남은 3개 (pkg16_1 진행, pkg20_0·1). (2) `eval10 lo_pkg_bm2_rlonly_s2_rl` 드라이버가 집는지 확인 → RESULTS 자동 반영. (3) `bm2_rlonly` 첫 val (it 100, ~14:15). (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 168 머리말: 갱신 2026-11-08 13:42 UTC, 라운드 168 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 6/6 끝 (pkg 0.76·0.88, pcb 0.04·0.04, ip 0.92·1.00); 좌표 하네스 s2 pkg16_1 진행; GPU `lo_pkg_bm2_rlonly_s2` 끝 직전 (~13:43))
 
 ## 라운드 168 (2026-11-08 13:39~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
