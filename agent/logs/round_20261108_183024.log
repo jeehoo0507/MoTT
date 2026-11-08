@@ -8,3 +8,7 @@ Round 186 is committed and pushed to `r2e main` as commit 8b73484. Git printed a
 - **CPU, now running:** the queued harness eval of `lo_pkg_bp_park` on pkg10_1 started at 18:22, in queue order. After it come the other 10 pkg10 harness evals, then `bm2_rlonly_rl+rep4`.
 - **GPU:** `bm2_rlonly_s2` is at iteration 150 with no NaN or out-of-memory errors. It should finish around 19:47 UTC, and the next training run is `lo_pkg_r0_s3`.
 - **Next round:** at 11/09 00:00 UTC, check whether server 2 has pushed all 48 N2 results. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8b73484..5119fba  main -> main

@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 18:33 UTC, 라운드 186 — cpu `eval10 bm2_rlonly_s1_rl` 6/6 끝 (pcb10_1 0.00, ip10_0 0.92, ip10_1 1.00), collect_results rc 0; cpu 다음 = N 하네스 lo_pkg_bp_park pkg10_1; GPU `bm2_rlonly_s2` it 150 정상; 새 기록 3)
+# PROGRESS (갱신 2026-11-08 18:48 UTC, 라운드 187 — GPU `bm2_rlonly_s2` it 200 정상, val 그대로; cpu N 하네스 lo_pkg_bp_park pkg10_1 25분째 정상 (워커 100 %); 새 기록 0)
+
+## 라운드 187 (2026-11-08 18:46~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 23.3 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 182208 B).
+- GPU `bm2_rlonly_s2` (17:46~): it 200 count/ref 1.524, best 0.897, fail 0.20, loss −18.86, oom 0, gpu peak 21.1 GB; val it 200 = s0·s1 과 같은 값 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69). NaN 없음. 끝 ~19:47 → 다음 train `lo_pkg_r0_s3`.
+- cpu `N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4` (18:22~): forkserver 워커 1939316 100 % CPU, rss 2.3 GB — 정상 (pkg10_0 은 29 분 걸림 → 끝 ~18:51).
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s2` RL it 200, cpu = N 하네스 lo_pkg_bp_park pkg10_1, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2 (01:40 KST "do not re-add them").
+- 할 일 (다음): (1) lo_pkg pkg10 하네스 진행 확인 (남은 10개 → `bm2_rlonly_rl+rep4`). (2) `bm2_rlonly_s2` 끝 ~19:47 → 다음 train (`lo_pkg_r0_s3`) 확인 + s2 eval10 이 cpu 에 들어가는지. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 186 머리말: 갱신 2026-11-08 18:33 UTC, 라운드 186 — cpu `eval10 bm2_rlonly_s1_rl` 6/6 끝 (pcb10_1 0.00, ip10_0 0.92, ip10_1 1.00), collect_results rc 0; cpu 다음 = N 하네스 lo_pkg_bp_park pkg10_1; GPU `bm2_rlonly_s2` it 150 정상; 새 기록 3
 
 ## 라운드 186 (2026-11-08 18:30~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
