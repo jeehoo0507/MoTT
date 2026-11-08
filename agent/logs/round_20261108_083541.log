@@ -1,0 +1,21 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   8e3af04..284436f  main       -> r2e/main
+Updating 8e3af04..284436f
+Created autostash: 99109f6
+Fast-forward
+ .../eval/eval_pkg10_0__lo_pkg_bdf_s2_distill+rep4.json                   | 1 +
+ .../eval/eval_pkg10_1__lo_pkg_bdf_s2_distill+rep4.json                   | 1 +
+ 2 files changed, 2 insertions(+)
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_0__lo_pkg_bdf_s2_distill+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_1__lo_pkg_bdf_s2_distill+rep4.json
+Applied autostash.
+이번 라운드(149)는 정상 상태 확인만 했습니다. 지금 QUEUE 지시(N 6단계)가 에이전트의 새 항목 추가를 금지하고 있어서, 큐·플래그·순서는 그대로 두었습니다.
+
+- **QUEUE**: 원격 main에 새 커밋이 없고, 맨 위 지시는 그대로 11/08 12:10 KST(cpu 순서)입니다.
+- **프로세스**: 드라이버(pid 1792539)는 살아 있습니다. report_watch와 resume_agent는 다시 띄웠습니다. 메모리는 21.2 / 60 GiB입니다. 드라이버 로그는 디스크와 크기가 같아 복구할 것이 없었습니다.
+- **GPU** (`lo_pkg_bm2_rlonly` RL): it 150까지 정상입니다. count/ref 2.93, fail 0.26, loss −8.58이고 메모리 부족(oom)은 0번입니다. 붕괴 조건에는 걸리지 않습니다.
+- **CPU** (`eval10 lo_pkg_bp_park_s2_rl`): 6개 중 3개가 끝났습니다. 새 기록은 pkg10_0 하나로 성공률 0.92입니다. 이 숫자는 아직 RESULTS.md에 없고, 평가가 다 끝나면 드라이버가 collect로 넣습니다.
+- **기록**: PROGRESS.md에 라운드 149 항목을 쓰고 commit한 뒤 `r2e main`에 push했습니다(548fc92).
+
+다음 라운드에는 이 평가가 끝나는지, 그 뒤 좌표 하네스 평가 나머지 5개로 넘어가는지 확인하고, bm2 it 200의 검증 결과를 기록합니다.
