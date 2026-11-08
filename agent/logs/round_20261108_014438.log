@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+This round's work is done: the human's overnight batch N (new QUEUE item) is running as they set it up, and I added nothing new to the queues.
+
+- **Setup:** the human had already done N steps 1–3 before this round. All three smoke tests passed (at 01:33–01:34 UTC), and the driver was restarted at 01:34:20 UTC. The new driver attached to the eval the old one was running and waited for it to finish, so nothing was lost.
+- **GPU:** `lo_pkg_bp_park` is in its distill stage. The first 25 iterations are normal, which is the check N step 5 asks for: loss 5.03 at it 25 and 3.55 at it 50, never NaN, with no bad certificates and no out-of-memory events. The "nan" cells in `log.csv` are columns that stay empty during distill.
+- **CPU:** the 21st of 22 F3 evals finished (`eval_ip20_1 r2pk_s1_rl+rep4`): 8/8 → 8/8, no repair used, 21.38 decaps on average. The 22nd is running now. After it come the 8 coord-harness evals, then the 38 N harness evals, which wait until each model's training has finished.
+- **Decision:** I kept the human's queue, flags and order exactly as they are, because QUEUE says the agent must not add entries. This is recorded in PROGRESS.md with "결정:".
+- **Upkeep:** I restarted `report_watch` and `resume_agent`; the driver itself is still alive. Pod memory is 21.7 / 60 GiB.
+- **Saved:** PROGRESS.md has the round-124 entry, RESULTS.md has the driver's automatic update, and both are committed and pushed to `r2e main` as `29aa4dc`.
+
+**Next round:** check the first 25 iterations of `lo_pkg_bm2_rlonly` once it starts, around 18:00 KST. If its loss is NaN, or all three val types show fail 1.00 with loss 0, the bm2 runs that haven't started go to `train_removed` and I only report it. If an old analysis CPU item fails again, I just note it without retrying.
+
+The next DAILY.md is due 11/09 01:15 UTC.
