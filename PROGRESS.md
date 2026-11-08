@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 11:17 UTC, 라운드 159 — CPU eval10 `lo_pkg_bm2_rlonly_rl` 진행 중 (첫 세트 eval_pkg10_1 ok 0.80); GPU `lo_pkg_bm2_rlonly_s1` RL it 275 정상 (~11:40 끝))
+# PROGRESS (갱신 2026-11-08 11:35 UTC, 라운드 160 — CPU eval10 `lo_pkg_bm2_rlonly_rl` 끝 (11:27, rc 0, 6세트) → collect_results 끝, 다음 = 좌표 하네스 s2; GPU `lo_pkg_bm2_rlonly_s1` RL val it 300 그대로 (~11:40 끝 → `_s2`))
+
+## 라운드 160 (2026-11-08 11:31~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 18.7 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 342 B 되살림.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly_s1` RL (val it 300: pcb10 fail 1.00 (count nan), ip10 0.920 fail 0.69 — it 100·200 과 같음, seed 0 과도 같음; 2 h 다 차 감), cpu = **eval10 `lo_pkg_bm2_rlonly_rl` 끝** (10:57:39~11:27:33, 30분, rc 0) → collect_results (11:30:44 rc 0) → 드라이버 다음 항목 (좌표 하네스 s2, `r0_coord_s2_rl/metrics.json` 있음) 대기, 새 기록 6 (`eval_{ip,pcb,pkg}10_{0,1}__lo_pkg_bm2_rlonly_rl.json`).
+- 새 기록 (숫자만, 판정 없음; RESULTS 는 collect_results 가 갱신): bm2 RL-only seed 0, pkg 뺀 학습 — 성공률 / 개수비(g+p 대비) = ip 0.96 / 1.97, pcb 0.04 / 3.99, **뺀 pkg 0.84 / 4.65**. pcb 는 val 처럼 거의 못 풂; 풀 때는 개수가 g+p 의 2~5배.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) 좌표 하네스 s2 (4개) 진행 확인. (2) `lo_pkg_bm2_rlonly_s1` 끝 → `_s2`, s1 eval10. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 159 머리말: 갱신 2026-11-08 11:17 UTC, 라운드 159 — CPU eval10 `lo_pkg_bm2_rlonly_rl` 진행 중 (첫 세트 eval_pkg10_1 ok 0.80); GPU `lo_pkg_bm2_rlonly_s1` RL it 275 정상 (~11:40 끝))
 
 ## 라운드 159 (2026-11-08 11:15~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.

@@ -1443,3 +1443,7 @@
 [10:56:09] END collect_results rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [10:57:39] START eval10 lo_pkg_bm2_rlonly_rl | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [10:57:39] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy lo_pkg_bm2_rlonly_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_rl  (log runs/2026-10-29/lo_pkg_bm2_rlonly_rl/eval.log)
+[11:27:33] END eval10 lo_pkg_bm2_rlonly_rl rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[11:27:33] START collect_results | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[11:27:33] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[11:30:44] END collect_results rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
