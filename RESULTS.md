@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 20:00 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 20:09 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -5579,6 +5579,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | lo_pkg_r0_rl | 213 / 371 | 2.5 | 0.98 | 2.7 | 0.94 | – | 0.78 |
 | lo_pkg_r0_s1_rl | 212 / 351 | 1.2 | 0.98 | 5.4 | 0.96 | – | 0.84 |
 | lo_pkg_r0_s2_rl | 223 / 361 | 1.5 | 0.96 | 4.2 | 0.90 | – | 0.78 |
+| lo_pkg_r0_s3_rl | 1 / – | 4.0 | – | – | – | – | – |
 | lo_pkg_r1_rl | 251 / 459 | 0.8 | 0.98 | 3.3 | 0.98 | – | 0.74 |
 | lo_pkg_r1_s1_rl | 238 / 407 | 1.3 | 0.98 | 5.8 | 0.92 | – | 0.74 |
 | lo_pkg_r1_s2_rl | 256 / 426 | 1.1 | 0.98 | 6.8 | 0.90 | – | 0.78 |
@@ -5792,6 +5793,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/r0_coord_s1_rl | coord / grid | rl | 338 | 1.27 | val_pcb10_0: 1.13/0.75, val_pkg10_0: 1.04/0.75, val_ip10_0: 0.78/0.38 | `runs/2026-10-29/r0_coord_s1_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s2_distill | coord / grid | distill | 2281 | 0.77 | val_pcb10_0: 2.04/0.50, val_pkg10_0: 1.17/0.75, val_ip10_0: 0.79/0.25 | `runs/2026-10-29/r0_coord_s2_distill/metrics.json` |
 | runs/2026-10-29/r0_coord_s2_rl | coord / grid | rl | 349 | 1.27 | val_pcb10_0: 0.98/0.50, val_pkg10_0: 0.94/0.81, val_ip10_0: 0.77/0.31 | `runs/2026-10-29/r0_coord_s2_rl/metrics.json` |
+| runs/2026-10-29/r0_coord_s3_rl | coord / grid | rl | 347 | 1.28 | val_pcb10_0: 0.77/0.56, val_pkg10_0: 0.94/0.56, val_ip10_0: 0.86/0.31 | `runs/2026-10-29/r0_coord_s3_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_distill | modal / grid | distill | 2100 | 0.77 | val_pcb10_0: 1.23/0.56, val_pkg10_0: 1.15/0.69, val_ip10_0: 0.79/0.31 | `runs/2026-10-29/r1_modal_s1_distill/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_rl | modal / grid | rl | 377 | 1.27 | val_pcb10_0: 0.99/0.75, val_pkg10_0: 0.92/0.75, val_ip10_0: 0.78/0.44 | `runs/2026-10-29/r1_modal_s1_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s2_distill | modal / grid | distill | 2217 | 0.77 | val_pcb10_0: 1.10/0.44, val_pkg10_0: 0.94/0.69, val_ip10_0: 0.68/0.31 | `runs/2026-10-29/r1_modal_s2_distill/metrics.json` |
