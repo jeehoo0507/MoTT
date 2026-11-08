@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 119 is done, committed as `3b13af5` and pushed to `r2e/main`. The remote branch now matches local.
+
+- **Human instructions:** `git fetch` found no new commits. The last entry in `agent/QUEUE.md` is still the 11/08 03:05 KST lifting of the training ban, which applies only to items a person adds. No new item was added, so I started no new training and didn't use side_slot.
+- **Processes:** the driver (pid 1575375) is still alive; I restarted report_watch and resume_agent. Pod memory is at 22.2 GiB of 60, and the OOM kill count is unchanged at 2. I restored the driver log (694 B) as I do every round.
+- **F3 progress (14 of 22 done):** the `r2pk_rl+rep4` run on `eval_pcb20_1` finished cleanly. It solved 8 of 8 problems both with and without the feedback step, so feedback was never used. It averaged 8.50 decaps per solved problem, at 1.65 s per problem and a peak of 13.9 GB memory. The driver's collect_results added it to RESULTS automatically. I recorded only the numbers and left the reading to the human.
+- **Running now:** the driver is on `r2pk_s1_rl+rep4` for `eval_pcb20_1`. Eight evals remain: two more on pcb20_1, then six on ip20. The GPU is idle.
+- **Next:** DAILY.md is due at 11/08 01:30 UTC. I'll check for new QUEUE items the human may add on the morning of 11/08 KST.
+
+I updated PROGRESS.md with a "결정:" line explaining why the queue and flags stay as they are.
