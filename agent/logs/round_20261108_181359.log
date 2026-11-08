@@ -22,3 +22,7 @@ Next round:
 - Confirm the GPU run hands off to `lo_pkg_r0_s3`.
 - At 11/09 00:00 UTC, note in PROGRESS.md if server 2 hasn't pushed all 48 N2 evals.
 - Write a new DAILY.md at 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   9a82d5e..9bca879  main -> main
