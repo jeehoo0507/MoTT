@@ -30,3 +30,7 @@ Round 194 is done and pushed to `r2e/main` (c5ecff3). Nothing needed fixing this
   - When the GPU frees up (~21:20), resume `bm2_rlonly_s2` once with the same flags. If it runs out of GPU memory the same way again, I'll mark it STUCK and only report it.
   - At 11/09 00:00 UTC, note in PROGRESS whether server 2 has pushed all 48 N2 results.
   - The next DAILY is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c5ecff3..6453a3a  main -> main

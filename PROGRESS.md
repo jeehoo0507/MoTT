@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 20:52 UTC, 라운드 194 — GPU `lo_pkg_r0_s3` RL it 175 정상; cpu N 하네스 lo_pkg_bp_park_s2 pkg10_1 끝 **ok 0.88 → 합계 0.92 [50]**, B-Park pkg10 3/3 시드 +rep4 = **0.91 [150]**; lo_pkg_bm2_rlonly pkg10_0 끝 **ok 0.92**; 새 기록 2)
+# PROGRESS (갱신 2026-11-08 21:22 UTC, 라운드 195 — GPU `lo_pkg_r0_s3` 끝 (354 it, 1.26 h, rc 0) → **`bm2_rlonly_s2` resume 1번 시작 (it 288 에서, 남은 ~0.65 h, ~22:00 끝)**; cpu N 하네스 lo_pkg_bm2_rlonly pkg10_1 **ok 0.88 → 합계 0.90 [50]**, lo_pkg_bm2_rlonly_s1 pkg10_0 **ok 0.92**; 새 기록 2)
+
+## 라운드 195 (2026-11-08 21:04~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 19.2 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 845 B + 1309 B 되살림.
+- **GPU `lo_pkg_r0_s3` 끝 (21:17, rc 0):** RL 354 it, 1.26 h, best it 100 score 1.704, replaced 248, gpu peak 11.9 GB, oom 0. 마지막 val (it 300) pcb10_0 1.339 / fail 0.62, ip10_0 0.787 / 0.31. eval10 은 드라이버 cpu 줄이 (eval_jobs 가 큐 앞) 다음에 집는다.
+- **GPU `bm2_rlonly_s2` resume (라운드 189 결정 실행, 21:18):** GPU 빈 것 확인 (compute app 0) 뒤 `bg.py` 로 드라이버와 같은 명령 (`CERTIFY_WORKERS=2 run_rung.py --name bm2_rlonly_s2 --arm '--model manoharan2 --imit 0 --reward manoharan' --seed 2 --distill_hours 0 --rl_hours 2.0 --skip_distill --skip_eval`, 플래그 그대로) pid 1965291. log: "resumed from resume.pt: iter 288, 1.35 h used, lam 3.76" → 남은 ~0.65 h, ~22:00 끝. 드라이버 train 큐는 이제 비어 있음 (s2 는 FAILED 라 드라이버가 겹쳐 띄우지 않음). metrics.json 이 생기면 드라이버가 eval10·N 하네스를 집는다.
+- **cpu `N harness eval_pkg10_1 lo_pkg_bm2_rlonly_rl+rep4` 끝 (20:52–21:00, rc 0, 489 s): ok 0.88, count 37.91** → RESULTS 행 `lo_pkg_bm2_rlonly_rl+rep4` pkg10 = **0.90 [50]** (정책 단독 0.84, 짝 차이 +0.08 [−0.04, +0.20] vs 기준). **cpu `N harness eval_pkg10_0 lo_pkg_bm2_rlonly_s1_rl+rep4` 끝: 0.92 [25]**. 판정 없음 (보고만). 지금 cpu = lo_pkg_bm2_rlonly_s1 pkg10_1 (21:14~).
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s2` resume (결정대로 1번), cpu = N 하네스 lo_pkg_bm2_rlonly_s1 pkg10_1, 새 기록 2.
+- 결정: `bm2_rlonly_s2` 는 같은 명령·플래그로 1번만 이어 감 — 이유: 라운드 189 결정 (보수적: 큐·플래그 그대로, GPU 1개에 train.py 1개). 같은 OOM 이면 STUCK 로 적고 다시 돌리지 않음.
+- 할 일 (다음): (1) `bm2_rlonly_s2` ~22:00 끝 확인 (OOM 이면 STUCK, 보고만). (2) cpu: eval10 lo_pkg_r0_s3 → N 하네스 진행, RESULTS 확인. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 194 머리말: (갱신 2026-11-08 20:52 UTC, 라운드 194 — GPU `lo_pkg_r0_s3` RL it 175 정상; cpu N 하네스 lo_pkg_bp_park_s2 pkg10_1 끝 **ok 0.88 → 합계 0.92 [50]**, B-Park pkg10 3/3 시드 +rep4 = **0.91 [150]**; lo_pkg_bm2_rlonly pkg10_0 끝 **ok 0.92**; 새 기록 2)
 
 ## 라운드 194 (2026-11-08 20:41~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
