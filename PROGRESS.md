@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 10:45 UTC, 라운드 157 — GPU `lo_pkg_bm2_rlonly_s1` RL it 175 정상; CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 114분째 (워커 100 %, rss 8.9 GB, 정상))
+# PROGRESS (갱신 2026-11-08 11:02 UTC, 라운드 158 — CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 끝 (10:52, rc 0, 6/8) → eval10 `lo_pkg_bm2_rlonly_rl` 시작; GPU `lo_pkg_bm2_rlonly_s1` RL it 200 (val 그대로))
+
+## 라운드 158 (2026-11-08 10:59~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.4 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 753 B 되살림.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly_s1` RL (val it 200: pcb10 fail 1.00 (count nan), ip10 0.920 fail 0.69 — it 100 과 같음, seed 0 과도 같음), cpu = 좌표 하네스 `eval_pkg20_1 r0_coord_s1_rl+rep4` 끝 (08:49:43~10:52:59, 123분, rc 0, 193 s/판) → collect_results → **eval10 `lo_pkg_bm2_rlonly_rl`** (10:57:39~), 새 기록 1 (`eval_pkg20_1__r0_coord_s1_rl+rep4.json`).
+- 새 기록: 좌표 s1 +rep4 pkg20_1 = 6/8 (수리 전 5/8; 판 0 이 수리로 통과), 개수 평균 10.5. pkg20 두 세트 합 13/16 = 0.81, 개수비 0.809 [0.650, 0.950] — RESULTS 는 드라이버 collect_results 가 이미 갱신 (판정 없음, 숫자만).
+- 좌표 seed 1 하네스 4개 (pkg16_0/1, pkg20_0/1) 다 끝. 남은 N coord harness = seed 2 4개 (bm2 eval10 뒤).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) eval10 bm2 seed 0 끝 → 좌표 하네스 s2 (4개). (2) `lo_pkg_bm2_rlonly_s1` 끝 (~11:40) → `_s2`. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 157 머리말: 갱신 2026-11-08 10:45 UTC, 라운드 157 — GPU `lo_pkg_bm2_rlonly_s1` RL it 175 정상; CPU 좌표 하네스 `r0_coord_s1_rl+rep4` eval_pkg20_1 114분째 (워커 100 %, rss 8.9 GB, 정상))
 
 ## 라운드 157 (2026-11-08 10:43~ UTC)
 - `git fetch r2e`: 새 커밋 = 서버 2 사람 `bdf_distill` 10칸 eval 기록 6개 (3c4c5ab, 이미 HEAD). QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.

@@ -31,3 +31,7 @@ Applied autostash.
 - pkg20_1이 끝나면 드라이버가 `lo_pkg_bm2_rlonly_rl` 10칸 평가를 올리는지 확인합니다.
 - 약 11:40 UTC에 `_s1` 학습이 끝나면 `_s2`로 넘어가는지 확인합니다.
 - DAILY.md 다음 갱신은 11/09 01:15 UTC입니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f4e4c9c..b88fd6c  main -> main
