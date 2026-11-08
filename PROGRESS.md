@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 16:58 UTC, 라운드 180 — 좌표 하네스 s2 pkg20_1 끝 (ok 0.50, count 13.00); collect_results 뒤 RESULTS N2 표에 B-DevFormer pcb·ip "짝 없음" 행 나옴; cpu `eval10 bm2_rlonly_rl` 시작; GPU `bm2_rlonly_s1` it 200 정상)
+# PROGRESS (갱신 2026-11-08 17:12 UTC, 라운드 181 — cpu `eval10 bm2_rlonly_rl` 3/6 (pkg10_1 0.80, pcb10_0 0.04, pkg10_0 0.88); GPU `bm2_rlonly_s1` it 300 정상, val 그대로; 새 기록 3)
+
+## 라운드 181 (2026-11-08 17:10~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 맨 위 = 11/09 00:20 KST N2 + 끝 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.7 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 179525 B).
+- cpu `eval10 bm2_rlonly_rl` (16:44~, 정책 단독 10칸 6세트): 끝난 3 = **pkg10_1 ok 0.80 (count 37.35), pcb10_0 ok 0.04 (44.00), pkg10_0 ok 0.88 (34.77)**. 남은 ip10·pcb10_1 진행 중 (워커 100 %, rss 1.7 GB). 다음 cpu 항목 = `N harness ... bm2_rlonly_rl+rep4`. 판정 없음 (보고만).
+- GPU `bm2_rlonly_s1` (15:44~): it 300 count/ref 2.512, best 1.909, fail 0.05, loss −2.19; val it 300 = it 100·200 그대로 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69). NaN 없음. 끝 ~17:45 → 다음 train `bm2_rlonly_s2`.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s1` RL it 300, cpu = `eval10 bm2_rlonly_rl` (3/6), 새 기록 3.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2 (01:40 KST "do not re-add them").
+- 할 일 (다음): (1) `eval10 bm2_rlonly_rl` 끝 → collect_results → `N harness ... bm2_rlonly_rl+rep4` 시작 확인. (2) `bm2_rlonly_s1` 끝 ~17:45 → `bm2_rlonly_s2` 시작 확인. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 180 머리말: 갱신 2026-11-08 16:58 UTC, 라운드 180 — 좌표 하네스 s2 pkg20_1 끝 (ok 0.50, count 13.00); collect_results 뒤 RESULTS N2 표에 B-DevFormer pcb·ip "짝 없음" 행 나옴; cpu `eval10 bm2_rlonly_rl` 시작; GPU `bm2_rlonly_s1` it 200 정상
 
 ## 라운드 180 (2026-11-08 16:54~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 맨 위 = 11/09 00:20 KST N2 + 끝 01:40 KST "N2 moved to server 2" 그대로.
