@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 136을 마쳤습니다. 커밋 `7e94f19`를 `r2e main`에 push했고, 로컬과 원격이 일치하는 것까지 확인했습니다. push할 때 `gh: not found` 경고가 찍혔지만 push 자체는 문제없이 들어갔습니다.
+
+- **QUEUE:** 원격에 새 커밋이 없고, 사람 지시 맨 위는 여전히 11/08 12:10 KST "cpu 순서"입니다. N 6단계 규칙대로 큐, 플래그, 순서는 그대로 두고 에이전트가 따로 넣은 항목은 없습니다.
+- **프로세스:** 드라이버(1792539)는 살아 있습니다. report_watch와 resume_agent는 꺼져 있어서 다시 띄웠습니다. 메모리는 20.1 / 60 GiB이고 oom_kill 수(2)는 그대로입니다. 드라이버 로그는 디스크와 크기가 같아서 복구할 것이 없었습니다.
+- **GPU:** `lo_pkg_bp_park_s1` RL은 it 75까지 정상입니다(fail 0.06, NaN 없음, 메모리 최대 10.7 GB).
+- **CPU:** `eval10 lo_pkg_bp_park_rl`이 6개 중 3개 끝났습니다. 이번에 새로 나온 기록은 `eval_pkg10_0` 하나이고, 25문제 중 성공률(ok) 0.88입니다. 나머지 세트는 06:30 UTC쯤 끝날 것으로 봅니다.
+- **RESULTS.md:** 이번 라운드에 끝난 실험이 없어 고치지 않았습니다. 평가 6개가 다 끝나면 드라이버가 `collect_results`로 반영합니다.
+
+다음 라운드에는 eval10이 끝나는지 보고 좌표 하네스 3/8 이후를 이어 갑니다. `lo_pkg_bm2_rlonly`는 07:40 UTC 이후에 시작하는데, 그때 처음 25 iter가 멈춤 규칙에 걸리는지 확인합니다.
