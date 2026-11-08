@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 19:19 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-08 19:33 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -92,6 +92,7 @@
 | lo_pkg_bp_park_rl | – | 0.98 / 1.28 / 1.81 [50] | – | – | 0.04 / 1.33 / 0.58 [50] | – | – | 0.84 / 2.95 / 1.90 [50] | – | – |
 | lo_pkg_bp_park_rl+rep4 | – | – | – | – | – | – | – | 0.90 / 2.87 / 1.86 [50] | – | – |
 | lo_pkg_bp_park_s1_rl | – | 0.98 / 1.28 / 1.80 [50] | – | – | 0.02 / 0.86 / 0.50 [50] | – | – | 0.64 / 1.20 / 0.84 [50] | – | – |
+| lo_pkg_bp_park_s1_rl+rep4 | – | – | – | – | – | – | – | 0.96 / 1.41 / 0.83 [25] | – | – |
 | lo_pkg_bp_park_s2_rl | – | 0.98 / 1.28 / 1.87 [50] | – | – | 0.02 / 5.86 / 3.42 [50] | – | – | 0.88 / 4.35 / 2.84 [50] | – | – |
 | lo_pkg_r0_rl | – | 0.98 / 0.88 / 1.29 [50] | – | – | 0.94 / 0.82 / 0.20 [50] | – | – | 0.78 / 1.03 / 0.74 [50] | – | – |
 | lo_pkg_r0_rl+rep4 | – | – | – | – | – | – | – | 0.90 / 1.11 / 0.80 [50] | – | – |
@@ -722,6 +723,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bp_park_rl | 50 | +0.02 [-0.10, +0.14] | 1.901 [1.493, 2.388] |
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 50 | +0.08 [-0.04, +0.22] | 1.862 [1.449, 2.344] |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 50 | -0.18 [-0.34, -0.02] | 0.839 [0.646, 1.156] |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 25 | +0.12 [-0.04, +0.28] | 0.834 [0.570, 1.232] |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 50 | +0.06 [-0.06, +0.20] | 2.837 [2.450, 3.269] |
 | pkg 10 | lo_pkg_r0_rl | 50 | -0.04 [-0.18, +0.10] | 0.741 [0.631, 0.862] |
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | +0.08 [-0.02, +0.18] | 0.798 [0.649, 1.007] |
@@ -1410,6 +1412,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bp_park_rl | 50 | -0.06 [-0.20, +0.06] | 2.953 [2.424, 3.520] |
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 50 | +0.00 [-0.12, +0.12] | 2.870 [2.355, 3.416] |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 50 | -0.26 [-0.42, -0.10] | 1.198 [0.937, 1.638] |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 25 | +0.04 [-0.08, +0.16] | 1.413 [0.997, 2.006] |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 50 | -0.02 [-0.14, +0.10] | 4.354 [3.875, 4.847] |
 | pkg 10 | lo_pkg_r0_rl | 50 | -0.12 [-0.24, +0.00] | 1.026 [0.935, 1.120] |
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | +0.00 [-0.08, +0.08] | 1.112 [0.935, 1.390] |
@@ -2774,6 +2777,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_bp_park_rl | 50 (0, 1) | 0.84 | 22.76 | 2.953 | 1.901 | 15.472 | `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_0__lo_pkg_bp_park_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_1__lo_pkg_bp_park_rl.json` |
 | lo_pkg_bp_park_rl+rep4 | 50 (0, 1) | 0.90 | 22.73 | 2.870 | 1.862 | 19.892 | `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_0__lo_pkg_bp_park_rl+rep4.json`, `runs/2026-10-29/lo_pkg_bp_park_rl/eval/eval_pkg10_1__lo_pkg_bp_park_rl+rep4.json` |
 | lo_pkg_bp_park_s1_rl | 50 (0, 1) | 0.64 | 11.75 | 1.198 | 0.839 | 10.537 | `runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s1_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s1_rl.json` |
+| lo_pkg_bp_park_s1_rl+rep4 | 25 (0) | 0.96 | 10.21 | 1.413 | 0.834 | 10.116 | `runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s1_rl+rep4.json` |
 | lo_pkg_bp_park_s2_rl | 50 (0, 1) | 0.88 | 32.36 | 4.354 | 2.837 | 6.650 | `runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_0__lo_pkg_bp_park_s2_rl.json`, `runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pkg10_1__lo_pkg_bp_park_s2_rl.json` |
 | lo_pkg_r0_rl | 50 (0, 1) | 0.78 | 7.72 | 1.026 | 0.741 | 3.082 | `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_0__lo_pkg_r0_rl.json`, `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_1__lo_pkg_r0_rl.json` |
 | lo_pkg_r0_rl+rep4 | 50 (0, 1) | 0.90 | 8.07 | 1.112 | 0.798 | 3.175 | `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_0__lo_pkg_r0_rl+rep4.json`, `runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pkg10_1__lo_pkg_r0_rl+rep4.json` |
@@ -3863,6 +3867,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 실패 | 5 | 62.6 | 0.98 | 0.00 | 0.02 |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 성공 | 32 | 11.8 | 0.48 | 0.06 | 0.46 |
 | pkg 10 | lo_pkg_bp_park_s1_rl | 실패 | 18 | 25.7 | 0.82 | 0.05 | 0.13 |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 성공 | 24 | 10.2 | 0.44 | 0.08 | 0.47 |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 실패 | 1 | 77.0 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 성공 | 44 | 32.4 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | lo_pkg_bp_park_s2_rl | 실패 | 6 | 61.7 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | lo_pkg_r0_rl | 성공 | 39 | 7.7 | 0.15 | 0.18 | 0.66 |
@@ -4690,6 +4696,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 0.06 → 0.08 | 1 | 3.00 | 6.31 | 50 | +0.02 [+0.00, +0.06] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 0.10 → 0.44 | 17 | 9.53 | 3.76 | 50 | +0.34 [+0.20, +0.46] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 0.84 → 0.90 | 3 | 0.67 | 1.50 | 50 | +0.06 [+0.00, +0.14] | 1.000 [1.000, 1.000] |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 0.64 → 0.96 | 8 | 0.12 | 1.85 | 25 | +0.32 [+0.12, +0.52] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r0_rl+rep4 | 0.78 → 0.90 | 6 | 0.50 | 1.25 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 0.84 → 0.96 | 6 | 0.00 | 0.82 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 0.78 → 0.90 | 6 | 0.67 | 1.71 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
@@ -4771,6 +4778,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.86 [-0.94, -0.76] | 1.896 [1.229, 2.333] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.50 [-0.66, -0.34] | 4.961 [4.120, 5.901] |
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 50 | -0.04 [-0.16, +0.06] | 2.785 [2.278, 3.320] |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 25 | +0.00 [-0.12, +0.12] | 1.381 [0.980, 1.954] |
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | -0.04 [-0.10, +0.00] | 1.093 [0.922, 1.357] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 50 | +0.02 [-0.04, +0.08] | 0.826 [0.757, 0.895] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | -0.04 [-0.14, +0.04] | 0.797 [0.738, 0.858] |
@@ -4843,6 +4851,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.90 [-0.98, -0.80] | 2.046 [1.453, 2.333] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.54 [-0.68, -0.40] | 5.405 [4.613, 6.235] |
 | pkg 10 | lo_pkg_bp_park_rl+rep4 | 50 | -0.08 [-0.16, -0.02] | 3.438 [2.791, 4.097] |
+| pkg 10 | lo_pkg_bp_park_s1_rl+rep4 | 25 | -0.04 [-0.12, +0.00] | 1.828 [1.203, 2.627] |
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | -0.08 [-0.16, -0.02] | 1.304 [1.110, 1.640] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 50 | -0.02 [-0.06, +0.00] | 0.964 [0.910, 1.024] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | -0.08 [-0.16, -0.02] | 0.930 [0.888, 0.972] |
@@ -4897,7 +4906,7 @@ pkg를 한 번도 안 본 run (`lo_pkg_*`)에 같은 고치기 (`--repair 4`). s
 | 좌표 | pkg 10 | 3/3 | 0.80 | **0.92** | 150 | -0.07 [-0.12, -0.03] |
 | 좌표 | pcb 10 | 0/3 | — | — | — | — |
 | 좌표 | ip 10 | 0/3 | — | — | — | — |
-| B-Park | pkg 10 | 1/3 | 0.84 | **0.90** | 50 | -0.10 [-0.20, -0.02] |
+| B-Park | pkg 10 | 2/3 | 0.77 | **0.92** | 75 | -0.08 [-0.15, -0.03] |
 | B-Park | pcb 10 | 0/3 | — | — | — | — |
 | B-Park | ip 10 | 0/3 | — | — | — | — |
 | B-Manoharan v2 | pkg 10 | 0/3 | — | — | — | — |

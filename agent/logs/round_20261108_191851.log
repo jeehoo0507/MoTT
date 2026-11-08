@@ -38,3 +38,7 @@ Applied autostash.
 - 다시 같은 OOM으로 죽으면 STUCK으로 적고 보고만 합니다.
 
 이 내용은 다음 세션을 위해 메모리 노트(`bm2-rlonly-gpu-oom.md`)에도 남겼습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f24a2af..e451b57  main -> main

@@ -1525,3 +1525,7 @@
 [19:15:24] train bm2_rlonly_s2 failed rc=1, skipped until driver restart
 [19:15:24] START train lo_pkg_r0_s3 (CERTIFY_WORKERS=2) | mem 18.9 GiB / 60.0 GiB, oom_kill 2
 [19:15:24] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_r0_s3 --arm '--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0' --day 2026-10-29 --pool runs/pool_v1 --seed 3 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_r0_s3/rung_stdout.log)
+[19:33:30] END N harness eval_pkg10_0 lo_pkg_bp_park_s1_rl+rep4 rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[19:33:30] START collect_results | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[19:33:30] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[19:37:00] END collect_results rc=0 | mem 18.8 GiB / 60.0 GiB, oom_kill 2
