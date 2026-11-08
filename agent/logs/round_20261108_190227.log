@@ -11,3 +11,7 @@ Round 188 is done: everything is running normally and nothing new was finished, 
 - **Commit:** PROGRESS.md is updated and committed (`61d9dd0`). It was pushed to `r2e main`, and the branch is in sync with the remote. The push printed a `gh: not found` credential message, which made no difference.
 
 Next: check that the pkg10_1 eval finishes, and that `lo_pkg_r0_s3` and the evals for `bm2_rlonly_s2` start once it ends. At 00:00 UTC on 11/09, record whether server 2 has pushed all 48 N2 results. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   61d9dd0..68ace36  main -> main

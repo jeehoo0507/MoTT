@@ -1,5 +1,19 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 19:05 UTC, 라운드 188 — GPU `bm2_rlonly_s2` it 250 정상; cpu N 하네스 lo_pkg_bp_park pkg10_1 41분째 (워커 100 %, pkg10_0 29분보다 김 — 아직 정상 범위); 새 기록 0)
+# PROGRESS (갱신 2026-11-08 19:25 UTC, 라운드 189 — **GPU `bm2_rlonly_s2` 실패 (19:15 rc 1, it 300 뒤 CUDA OOM in `probe_impedance` solve, 1.49 h / 2 h)** → 드라이버가 마지막 train `lo_pkg_r0_s3` 시작; cpu N 하네스 lo_pkg_bp_park pkg10_1 끝 **ok 0.84**; cpu 지금 lo_pkg_bp_park_s1 pkg10_0; 새 기록 1)
+
+## 라운드 189 (2026-11-08 19:19~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 1363 B 되살림.
+- **GPU `bm2_rlonly_s2` 실패 (17:46–19:15, rc 1, 5350 s):** it 300 (count/ref 3.450, best 2.134, fail 0.20, val 그대로) 뒤 `manoharan_reward → probe_impedance → torch.linalg.solve` 에서 `magma_zgetrf_batched cannot allocate` → `CUDA error: out of memory`. gpu peak 22.0 GB / 24.5 GB, grid capped 39 → 105 로 계속 늘어남 (RL-only 판 격자가 커짐); 18:13 부터 `expandable_segments ... OOM` 경고가 점점 잦아짐. 그때 GPU 를 쓰던 다른 프로세스 없음 (지금 GPU = `lo_pkg_r0_s3` 1개, 11.8 GB). s0·s1 은 같은 경고 뒤 2 h 를 채움 (peak 22.1 GB) → 메모리 한계에 걸친 시드 차이로 봄. 남은 것: `bm2_rlonly_s2_rl/{best.pt (18:15), last.pt (it 300), resume.pt (it 288, ~1.36 h 사용)}`, `metrics.json` 없음 → eval10·N 하네스 (`after` = metrics.json) 는 돌지 않음 (잘린 ckpt 평가 안 됨, 맞는 동작).
+- 드라이버: `FAILED` 에 넣고 "skipped until driver restart" (재시작하면 resume.pt 에서 이어 감 — 설계대로). 19:15 바로 **`lo_pkg_r0_s3`** (train 큐 마지막 항목) 시작, 지금 distill 정상.
+- **cpu `N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4` 끝 (18:22–19:07, rc 0): ok 0.84, count 21.95, 24.8 s/inst** (pkg10_0 은 15.0 s/inst → 더 느린 세트, 워커 멈춤 아님). collect_results 19:07–19:11 rc 0 → RESULTS 행 `lo_pkg_bp_park_rl+rep4` pkg10 = 0.90 [50]. 판정 없음 (보고만).
+- cpu 다음: 드라이버 19:12 `N harness eval_pkg10_0 lo_pkg_bp_park_s1_rl+rep4` 시작 (큐 순서), 워커 100 %.
+- 한 줄 (N 6단계): GPU = `lo_pkg_r0_s3` 증류 (bm2_rlonly_s2 OOM 실패), cpu = N 하네스 lo_pkg_bp_park_s1 pkg10_0, 새 기록 1.
+- 결정: 드라이버를 지금 재시작하지 않음, `bm2_rlonly_s2` 를 다른 GPU 작업과 겹쳐 돌리지 않음 — 이유: 재시작하면 도는 cpu 하네스·`lo_pkg_r0_s3` 가 겹쳐 다시 뜰 수 있음 (한 GPU 에 train.py 1개 규칙), 큐·플래그 그대로가 가장 보수적. **`lo_pkg_r0_s3` 가 끝나 GPU 가 비면 (~21:20 UTC)** 같은 명령 (`run_rung.py --name bm2_rlonly_s2 …`, day2_queue 그대로, 플래그 바꾸지 않음) 을 한 번만 bg 로 돌려 resume.pt (it 288) 에서 남은 ~0.64 h 를 채운다. 같은 OOM 으로 또 죽으면 플래그를 바꾸지 말고 "STUCK" 로 적고 보고만 한다 (s2 는 seed 0·1 과 val 이 같은 보고용 반복).
+- 할 일 (다음): (1) `lo_pkg_r0_s3` 끝 ~21:20 → GPU 비면 `bm2_rlonly_s2` resume 1번 (위 결정). (2) cpu lo_pkg pkg10 하네스 진행. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 188 머리말: 갱신 2026-11-08 19:05 UTC, 라운드 188 — GPU `bm2_rlonly_s2` it 250 정상; cpu N 하네스 lo_pkg_bp_park pkg10_1 41분째 (워커 100 %, pkg10_0 29분보다 김 — 아직 정상 범위); 새 기록 0)
 
 ## 라운드 188 (2026-11-08 19:02~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.

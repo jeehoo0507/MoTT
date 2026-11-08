@@ -1515,3 +1515,13 @@
 [18:20:42] END collect_results rc=0 | mem 19.2 GiB / 60.0 GiB, oom_kill 2
 [18:22:12] START N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4 | mem 19.5 GiB / 60.0 GiB, oom_kill 2
 [18:22:12] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_1' --policy lo_pkg_bp_park_rl=runs/2026-10-29/lo_pkg_bp_park_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_rl  (log runs/2026-10-29/lo_pkg_bp_park_rl/eval.log)
+[19:07:40] END N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4 rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[19:07:40] START collect_results | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[19:07:40] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[19:11:08] END collect_results rc=0 | mem 19.0 GiB / 60.0 GiB, oom_kill 2
+[19:12:38] START N harness eval_pkg10_0 lo_pkg_bp_park_s1_rl+rep4 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[19:12:38] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bp_park_s1_rl=runs/2026-10-29/lo_pkg_bp_park_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s1_rl  (log runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval.log)
+[19:15:24] END train bm2_rlonly_s2 (CERTIFY_WORKERS=2) rc=1 | mem 18.9 GiB / 60.0 GiB, oom_kill 2
+[19:15:24] train bm2_rlonly_s2 failed rc=1, skipped until driver restart
+[19:15:24] START train lo_pkg_r0_s3 (CERTIFY_WORKERS=2) | mem 18.9 GiB / 60.0 GiB, oom_kill 2
+[19:15:24] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_r0_s3 --arm '--feat coord --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0' --day 2026-10-29 --pool runs/pool_v1 --seed 3 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-29/lo_pkg_r0_s3/rung_stdout.log)
