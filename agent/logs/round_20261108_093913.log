@@ -9,3 +9,7 @@ Round 153 is done: no new results this round, nothing in the queue or settings c
 - **CPU:** the coordinate-model check of seed 1 with 4 repair rounds on eval_pkg20_1 has been running for 50 minutes. Its worker is at 100% CPU, so it is not one of the hung workers seen before. pkg20_0 took 68 minutes, so this one should finish around 09:58 UTC. The 4 seed-2 checks come after it.
 
 PROGRESS.md has the round 153 entry. RESULTS.md is unchanged because no experiment finished; the driver updates it itself after each eval. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   de50ff4..275bec0  main -> main
