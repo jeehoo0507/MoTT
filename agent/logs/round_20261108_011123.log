@@ -20,3 +20,7 @@ Already up to date.
   - 다음 DAILY는 11/09 01:15 UTC입니다.
 - **결정:** 큐와 플래그는 그대로 두고 GPU는 비워 둡니다. 에이전트가 스스로 새 학습을 넣는 것은 여전히 금지이기 때문입니다. PROGRESS.md에 같은 내용을 기록했습니다.
 - **다음 라운드:** 남은 F3 4건을 확인하고, 11/08 아침(KST)에 사람이 넣을 새 QUEUE 항목(B-Manoharan 원문판 재실행, B-DevFormer 재구현)을 가져옵니다. 드라이버 로그 복구(`restore_proc_log.py`)는 계속 라운드마다 합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a1dc105..653803a  main -> main
