@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 14:15 UTC, 라운드 170 — GPU `bm2_rlonly` 첫 val it 100 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69; NaN 아님); CPU 좌표 하네스 s2 pkg16_1 41분째 (워커 100 %))
+# PROGRESS (갱신 2026-11-08 14:30 UTC, 라운드 171 — CPU 좌표 하네스 s2 pkg16_1 끝 (ok 0.88, count 9.00; pkg16 s2 50개 0.88); 드라이버 cpu `eval10 lo_pkg_bm2_rlonly_s2_rl` 시작 (pkg10_1 0.80, pcb10_0 0.04); GPU `bm2_rlonly` it 150 정상)
+
+## 라운드 171 (2026-11-08 14:27~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 768 B 되살림.
+- **`N coord harness eval_pkg16_1 r0_coord_s2_rl+rep4` 끝 (13:30–14:14, rc 0):** ok 0.88, count 9.00 (4 rounds). collect_results 14:14–14:17 rc 0 → RESULTS pkg16 s2 행 50개 (0.88, count 9.36; 정책 단독 0.58 → 0.88, +0.30 [+0.18, +0.42]). 속도 숫자는 QUEUE 7에 따라 표에 안 씀.
+- 드라이버 cpu: 14:19 `eval10 lo_pkg_bm2_rlonly_s2_rl` 시작 (좌표 하네스 s2 pkg20_0·1 보다 먼저 집음 — 드라이버 순서, 그대로 둠). 지금 2/6: pkg10_1 0.80 (count 37.75), pcb10_0 0.04 (44.00).
+- 한 줄 (N 6단계): GPU = `bm2_rlonly` RL (it 150 / 2279 s, count/ref 1.924, fail 0.13, teach ok 0.88, loss −2.39, oom 0, gpu peak 19.7 GB; log.csv 의 nan 은 val pcb10 count 하나 = fail 1.00 때문, 학습 값은 NaN 아님; 끝 ~15:43), cpu = `eval10 lo_pkg_bm2_rlonly_s2_rl` (2/6), 새 기록 3 (좌표 s2 pkg16_1, bm2_rlonly_s2 pkg10_1·pcb10_0).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) `eval10 lo_pkg_bm2_rlonly_s2_rl` 남은 4개 → RESULTS 자동. (2) 좌표 하네스 s2 남은 2개 (pkg20_0·1). (3) `bm2_rlonly` 끝 ~15:43 → 다음 train (`bm2_rlonly_s1`). (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 170 머리말: 갱신 2026-11-08 14:15 UTC, 라운드 170 — GPU `bm2_rlonly` 첫 val it 100 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69; NaN 아님); CPU 좌표 하네스 s2 pkg16_1 41분째 (워커 100 %))
 
 ## 라운드 170 (2026-11-08 14:11~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.

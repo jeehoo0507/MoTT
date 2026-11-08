@@ -20,3 +20,7 @@ Round 170 is done. Nothing went wrong and I didn't add or change any queue entri
   - It should finish around 15:43 UTC, and then `bm2_rlonly_s1` starts.
 - **CPU:** The coord-repair evaluation (`r0_coord_s2_rl+rep4`) on `eval_pkg16_1` has been running for 41 minutes. Its worker is at 100% CPU, so it's working normally; the previous set took 77 minutes. This round produced no new results.
 - **Next round:** Watch the 3 remaining coord evaluations (pkg16_1, then pkg20_0 and pkg20_1). After those, the driver should pick up the 10-cell evaluation of `lo_pkg_bm2_rlonly_s2_rl`. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3406cb1..8e10cfc  main -> main
