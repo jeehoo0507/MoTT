@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 08:08 UTC, 라운드 147 — GPU `lo_pkg_bm2_rlonly` RL it 75 정상; CPU `eval10 lo_pkg_bp_park_s1_rl` 끝 (6/6) → `eval10 lo_pkg_bp_park_s2_rl` 07:56~)
+# PROGRESS (갱신 2026-11-08 08:24 UTC, 라운드 148 — GPU `lo_pkg_bm2_rlonly` RL it 100 (val pcb10 fail 1.00, ip10 fail 0.69, loss −15.9 → 붕괴 아님); CPU `eval10 lo_pkg_bp_park_s2_rl` 2/6)
+
+## 라운드 148 (2026-11-08 08:19~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 21.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` 디스크와 같은 크기 → 할 일 없음.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly` RL (it 100 / 1936 s, count/ref 3.08, fail 0.11, teach ok 1.00, loss −15.898, cert-bad 3, oom 0, gpu peak 13.3 GB; **첫 val: val_pcb10_0 fail 1.00 (count nan), val_ip10_0 count/g+p 0.920 fail 0.69**, new best score 6.648), cpu = `eval10 lo_pkg_bp_park_s2_rl` 2/6 (pkg10_1 0.84, pcb10_0 0.04), 새 기록 2 (s2 pkg10_1, pcb10_0).
+- bm2 it 100 val: fail 1.00 은 pcb 한 종류뿐이고 loss 는 0 이 아님 → 할 일 (2) 의 붕괴 조건 (두 종류 fail 1.00 + loss ~0) 아님. 적기만, 큐 그대로. (pcb10 fail 1.00 은 bp_park 의 eval pcb10 0.04 와 같은 흐름 — 비교는 eval10 나온 뒤.)
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) eval10 s2 끝 → 좌표 하네스 나머지 5개. (2) bm2 it 200 val 도 적기만. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 147 머리말: 갱신 2026-11-08 08:08 UTC, 라운드 147 — GPU `lo_pkg_bm2_rlonly` RL it 75 정상; CPU `eval10 lo_pkg_bp_park_s1_rl` 끝 (6/6) → `eval10 lo_pkg_bp_park_s2_rl` 07:56~)
 
 ## 라운드 147 (2026-11-08 08:03~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
