@@ -1,5 +1,18 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 19:55 UTC, 라운드 191 — GPU `lo_pkg_r0_s3` 증류 it 1875 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_1 시작 (19:38~); 새 기록 0)
+# PROGRESS (갱신 2026-11-08 20:12 UTC, 라운드 192 — GPU `lo_pkg_r0_s3` 증류 끝 → RL it 25 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_1 끝 **ok 0.84 → 합계 0.90 [50]**; cpu 지금 lo_pkg_bp_park_s2 pkg10_0; 새 기록 1)
+
+## 라운드 192 (2026-11-08 20:09~ UTC)
+- `git fetch r2e`: 새 커밋 없음 (HEAD 6633d0d = 서버 2 N 기록 20:07, `r0_coord_s3_rl` metrics). QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 21.1 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 771 B 되살림.
+- GPU `lo_pkg_r0_s3`: 증류 끝 (2306 s, val pcb10_0 2.25/0.25, ip10_0 0.81/0.19 — RESULTS 학습 표에 자동 행). RL 시작 ~20:00, it 25 count/ref 0.971, best 0.884, fail 0.03, oom 0, gpu peak 9.0 GB. RL 끝 ~21:15.
+- **cpu `N harness eval_pkg10_1 lo_pkg_bp_park_s1_rl+rep4` 끝 (19:38–20:00, rc 0, 22 분, 11.0 s/inst)** → collect_results 20:00–20:04 rc 0 → RESULTS 행 `lo_pkg_bp_park_s1_rl+rep4` pkg10 = **0.90 [50]** (pkg10_0 0.96 + pkg10_1 0.84), base 0.64 → 0.90, 짝 차이 +0.26 [+0.14, +0.38]. B-Park pkg10 요약 2/3 시드 0.74 → 0.90 [100]. 판정 없음 (보고만).
+- cpu 다음: 드라이버 20:05 `N harness eval_pkg10_0 lo_pkg_bp_park_s2_rl+rep4` 시작 (큐 순서), 워커 100 %.
+- 한 줄 (N 6단계): GPU = `lo_pkg_r0_s3` RL, cpu = N 하네스 lo_pkg_bp_park_s2 pkg10_0, 새 기록 1.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2, 라운드 189 결정 (`bm2_rlonly_s2` resume 은 GPU 빈 뒤 1번) 유지.
+- 할 일 (다음): (1) `lo_pkg_r0_s3` 끝 ~21:15 → GPU 비면 `bm2_rlonly_s2` resume 1번 (라운드 189 결정; 같은 OOM 이면 STUCK 기록, 보고만). (2) cpu lo_pkg_bp_park_s2 pkg10 하네스 진행. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 191 머리말: (갱신 2026-11-08 19:55 UTC, 라운드 191 — GPU `lo_pkg_r0_s3` 증류 it 1875 정상; cpu N 하네스 lo_pkg_bp_park_s1 pkg10_1 시작 (19:38~); 새 기록 0)
 
 ## 라운드 191 (2026-11-08 19:52~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.

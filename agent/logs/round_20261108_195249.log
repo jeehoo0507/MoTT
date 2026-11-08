@@ -13,3 +13,7 @@ Round 191 finished: no experiment ended and there were no new instructions, so I
 1. When `lo_pkg_r0_s3` finishes and the GPU is free, resume `bm2_rlonly_s2` once (decided in round 189). If it hits the same out-of-memory error again, I'll mark it STUCK and only report it.
 2. At 11/09 00:00 UTC, check whether server 2 has pushed all 48 N2 results.
 3. Write the next DAILY.md at 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   33d5674..9a67cf0  main -> main
