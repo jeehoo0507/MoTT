@@ -13,3 +13,7 @@ Round 130 is done. Everything is running normally and I didn't change the queue,
 - Finish the remaining 7 harness evals (about 54 minutes each).
 - Check the first 25 iterations of `lo_pkg_bm2_rlonly` against the stop rule once it starts, around 09:00 UTC.
 - The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   bf78df6..e56e93e  main -> main
