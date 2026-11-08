@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 14:30 UTC, 라운드 171 — CPU 좌표 하네스 s2 pkg16_1 끝 (ok 0.88, count 9.00; pkg16 s2 50개 0.88); 드라이버 cpu `eval10 lo_pkg_bm2_rlonly_s2_rl` 시작 (pkg10_1 0.80, pcb10_0 0.04); GPU `bm2_rlonly` it 150 정상)
+# PROGRESS (갱신 2026-11-08 14:45 UTC, 라운드 172 — CPU `eval10 lo_pkg_bm2_rlonly_s2_rl` 6/6 끝 (pkg 0.84, pcb 0.02, ip 0.96; seed 0·1 과 거의 같음); 좌표 하네스 s2 pkg20_0 시작; GPU `bm2_rlonly` val it 200 = it 100 그대로)
+
+## 라운드 172 (2026-11-08 14:43~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음 (HEAD 93d3f7d = 서버 2 사람 bdf_s2_distill 기록 6개, 이미 받음). QUEUE 맨 위 = 11/08 12:10 KST 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 18.7 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 345 B + 384 B 되살림.
+- **`eval10 lo_pkg_bm2_rlonly_s2_rl` 끝 (14:19–14:38, rc 0), collect_results 14:38–14:42 rc 0 → RESULTS 자동:** pkg10 0.84 (count/ref 4.68), pcb10 0.02 (6.29), ip10 0.96 (1.97). seed 0 = 0.84 / 0.04 / 0.96, seed 1 = 0.82 / 0.04 / 0.96 → B-Manoharan2 RL 단독 3 seed 묶음 완성 (pcb 거의 전부 실패는 3 seed 공통). 판정·해석은 사람 몫.
+- 드라이버 cpu: 14:43:46 `N coord harness eval_pkg20_0 r0_coord_s2_rl+rep4` 시작.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly` RL (it 200 / 3248 s, count/ref 1.595, fail 0.20, loss −7.65; val it 200 = pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69 — it 100 그대로, NaN 아님; 끝 ~15:43), cpu = `N coord harness eval_pkg20_0 r0_coord_s2_rl+rep4`, 새 기록 6 (bm2_rlonly_s2 10칸 4개 + 이전 라운드 2개 포함 6/6).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) 좌표 하네스 s2 남은 2개 (pkg20_0 진행, pkg20_1). (2) `bm2_rlonly` 끝 ~15:43 → 다음 train (`bm2_rlonly_s1`), 그 뒤 cpu `eval10 bm2_rlonly_rl` 을 드라이버가 집는지 확인. (3) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 171 머리말: 갱신 2026-11-08 14:30 UTC, 라운드 171 — CPU 좌표 하네스 s2 pkg16_1 끝 (ok 0.88, count 9.00; pkg16 s2 50개 0.88); 드라이버 cpu `eval10 lo_pkg_bm2_rlonly_s2_rl` 시작 (pkg10_1 0.80, pcb10_0 0.04); GPU `bm2_rlonly` it 150 정상)
 
 ## 라운드 171 (2026-11-08 14:27~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.

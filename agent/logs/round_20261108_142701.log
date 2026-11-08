@@ -9,3 +9,7 @@ Round 171 is committed and pushed to `r2e/main` as `fc91dd3`. Nothing went wrong
 - **System:** the driver (pid 1792539) is alive, memory use is 20.9 of 60 GiB, and the out-of-memory kill count is still 2. I restored 768 B of the driver log that had been cut off.
 
 Next round: watch the remaining 4 sets of the `lo_pkg_bm2_rlonly_s2_rl` eval, the two `pkg20` harness evals and the hand-off from `bm2_rlonly` to `bm2_rlonly_s1`. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   fc91dd3..b35eb53  main -> main

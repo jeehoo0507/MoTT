@@ -1473,3 +1473,9 @@
 [14:17:49] END collect_results rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [14:19:20] START eval10 lo_pkg_bm2_rlonly_s2_rl | mem 18.7 GiB / 60.0 GiB, oom_kill 2
 [14:19:20] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy lo_pkg_bm2_rlonly_s2_rl=runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl  (log runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/eval.log)
+[14:38:58] END eval10 lo_pkg_bm2_rlonly_s2_rl rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[14:38:58] START collect_results | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[14:38:58] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[14:42:16] END collect_results rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[14:43:46] START N coord harness eval_pkg20_0 r0_coord_s2_rl+rep4 | mem 18.8 GiB / 60.0 GiB, oom_kill 2
+[14:43:46] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_0' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl  (log runs/2026-10-29/r0_coord_s2_rl/eval.log)
