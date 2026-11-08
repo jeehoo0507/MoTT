@@ -13,3 +13,7 @@ This round's work is done: the human's overnight batch N (new QUEUE item) is run
 **Next round:** check the first 25 iterations of `lo_pkg_bm2_rlonly` once it starts, around 18:00 KST. If its loss is NaN, or all three val types show fail 1.00 with loss 0, the bm2 runs that haven't started go to `train_removed` and I only report it. If an old analysis CPU item fails again, I just note it without retrying.
 
 The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   29aa4dc..33fcba8  main -> main

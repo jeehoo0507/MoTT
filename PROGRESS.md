@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 01:50 UTC, 라운드 124 — 사람 밤 묶음 N 시작됨: 드라이버 재시작 (01:34), GPU `lo_pkg_bp_park` distill 중, 첫 25 iter 정상; CPU F3 22/22번째 진행)
+# PROGRESS (갱신 2026-11-08 02:05 UTC, 라운드 125 — F3 22/22 끝; CPU 좌표 하네스 1/8 (`r0_coord_s1_rl+rep4` pkg16_0) 진행; GPU `lo_pkg_bp_park` distill it 1375 정상)
+
+## 라운드 125 (2026-11-08 02:01~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 마지막 절 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. pod 26.9 GiB / 60, oom_kill 2.
+- `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log` +458 B (loop.sh autostash로 지워진 inode 복구).
+- **F3 22/22 끝 (드라이버):** `eval_ip20_1 r2pk_s2_rl+rep4` 01:41–01:47 rc 0. collect_results 01:47–01:50 자동 반영. → F 묶음 (F1·F2·F3) 서버 1 몫 모두 끝.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bp_park` distill (it 1375, loss 0.18, teach ok 0.56, oom 0; val pcb10_0 fail 0.44 / ip10_0 fail 0.19 — distill 단계, 판정 아님; 기록은 `runs/2026-10-29/lo_pkg_bp_park_distill/`), cpu = `N coord harness eval_pkg16_0 r0_coord_s1_rl+rep4` (01:52~), 새 기록 0 (하네스 기록 아직 없음).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) 좌표 하네스 8개 진행. (2) `lo_pkg_bm2_rlonly` 시작 (~09:00 UTC) 뒤 처음 25 iter 멈춤 규칙 확인. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 124 머리말: 사람 밤 묶음 N 시작됨: 드라이버 재시작 (01:34), GPU `lo_pkg_bp_park` distill 중, 첫 25 iter 정상; CPU F3 22/22번째 진행
 
 ## 라운드 124 (2026-11-08 01:44~ UTC)
 - `git fetch r2e`: HEAD = r2e/main (9a1c6db, 사람 N 커밋 3개 이미 받음). QUEUE 새 절 3개: 11/08 "11:30 KST" N 묶음, "11:55" 좌표 seed 1·2 하네스 8개, "12:10" cpu 순서. (절 시각은 KST로 적혔지만 커밋은 10:31~10:37 KST = 01:31~01:37 UTC.)
