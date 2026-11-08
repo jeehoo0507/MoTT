@@ -12,3 +12,7 @@ Round 125 is finished, committed and pushed to `r2e/main` (3a5e3c9). I added not
 - The step 5 check on `lo_pkg_bm2_rlonly` happens once it starts, around 09:00 UTC. If its first 25 iterations hit the stop rule (NaN, or failure 1.00 on all three validation types with loss 0), I move the 5 bm2 runs not yet started to `train_removed`.
 - If an old analysis item fails once more, I only record it in PROGRESS and don't retry it.
 - The next DAILY is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3a5e3c9..de8ab16  main -> main
