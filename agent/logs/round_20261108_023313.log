@@ -10,3 +10,7 @@ Already up to date.
 - **RESULTS:** 이번 라운드에 끝난 실험이 없어서 고치지 않았습니다.
 
 다음에 볼 것은 `lo_pkg_bm2_rlonly`가 시작되면(약 09:00 UTC) 처음 25 iter를 멈춤 규칙으로 확인하는 일입니다. DAILY는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   4c8777c..6881a51  main -> main
