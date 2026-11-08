@@ -13,3 +13,7 @@ Next round, I'll:
 - check that the driver runs the 10-cell evaluation of `lo_pkg_bm2_rlonly_rl` (seed 0) after the coordinate job.
 
 The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   453659a..64e27f0  main -> main
