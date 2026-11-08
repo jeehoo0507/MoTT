@@ -1,3 +1,16 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 128 is done: the first of the 8 coordinate-model harness evals finished, and nothing new needs a decision. The GPU training run is going normally, and both commits are pushed to `r2e main` (latest `d285f3b`).
+
+- **First harness eval:** `r0_coord_s1_rl+rep4` on `eval_pkg16_0` ran from 01:52 to 02:45 UTC and succeeded on 0.84 of instances, with an average count of 10.14. The driver's results script added it to `RESULTS.md` automatically, and I committed that change. I left the per-instance time (21.5 s) out of the results table, because the human asked that speed numbers wait for their timing protocol on 11/09.
+- **Next eval:** the driver started `eval_pkg16_1`, the 2nd of 8, at 02:50:15. Each file is taking about 54 minutes, so the remaining 7 should take about 6 more hours.
+- **GPU:** `lo_pkg_bp_park` is at RL iteration 75, with no NaN loss and no out-of-memory errors. GPU memory peaked at 10.6 GB; the whole machine is using 18.6 of 60 GiB.
+- **Housekeeping:** there were no new commits on remote main, and the top entry in `QUEUE.md` (the CPU ordering from 11/08 12:10 KST) is unchanged. The driver was alive, and I restarted `report_watch` and `resume_agent`. The automatic stash had cut off the end of the driver log twice this round, and I restored it both times (+363 B, then +384 B).
+- **Decision:** I kept the queue, flags and order as they are and added no items, as step 6 of the human's batch N instructions requires. It's logged in `PROGRESS.md`.
+
+**Next round:**
+- Follow the remaining harness evals.
+- After `lo_pkg_bm2_rlonly` starts (around 09:00 UTC), check its first 25 iterations against the stop rule.
+- The older analysis CPU items get no retry if they fail again; I'll only note it in `PROGRESS.md`.
+- The next `DAILY.md` is due 11/09 01:15 UTC.
