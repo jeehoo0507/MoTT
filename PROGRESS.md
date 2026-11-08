@@ -1,5 +1,16 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 15:40 UTC, 라운드 175 — 서버 2 N2 기록 (B-DevFormer `lo_pkg_bdf*` pcb10·ip10 +rep4) 들어옴; N2 표가 짝 없는 기록도 보이게 고침 (보고 코드만); CPU 좌표 하네스 s2 마지막 pkg20_1 진행; GPU `bm2_rlonly` it 375, 끝 ~15:43)
+# PROGRESS (갱신 2026-11-08 15:55 UTC, 라운드 176 — GPU `bm2_rlonly` 끝 (15:44 rc 0, 419 iter / 2.03 h, val it 400 = it 100 그대로) → `bm2_rlonly_s1` 시작; CPU 좌표 하네스 s2 pkg20_1 33분째 (워커 100 %); 새 기록 0)
+
+## 라운드 176 (2026-11-08 15:50~ UTC)
+- `git fetch r2e`: 새 커밋 없음 (HEAD 978c5df = 서버 2 사람 N2 기록 커밋, 이미 받음). QUEUE 맨 위 = 11/09 00:20 KST N2 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 25.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 491 B 되살림.
+- **GPU `bm2_rlonly` 끝 (13:42–15:44, rc 0):** 419 iter, 2.03 h, metrics.json·best.pt 있음 (`runs/2026-10-29/bm2_rlonly_rl/`). val it 400 = pcb10 fail 1.00 (count nan), pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69 — it 100·200·300 그대로. 드라이버 15:44 **`bm2_rlonly_s1`** (seed 1) 시작, 끝 ~17:45.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s1` RL (막 시작), cpu = `N coord harness eval_pkg20_1 r0_coord_s2_rl+rep4` (15:18~, 33분째, forkserver 워커 1912072 100 % CPU, rss 7.7 GB — 정상), 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2.
+- 할 일 (다음): (1) 좌표 하네스 s2 pkg20_1 끝 → collect_results → RESULTS N2 표 (B-DevFormer 짝 없음 행) 확인. (2) cpu `eval10 bm2_rlonly_rl`·`N harness ... bm2_rlonly_rl+rep4` 를 드라이버가 집는지 (after 열림). (3) 그 뒤 N2 48개 (서버 1 몫). (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 175 머리말: 갱신 2026-11-08 15:40 UTC, 라운드 175 — 서버 2 N2 기록 (B-DevFormer `lo_pkg_bdf*` pcb10·ip10 +rep4) 들어옴; N2 표가 짝 없는 기록도 보이게 고침 (보고 코드만); CPU 좌표 하네스 s2 마지막 pkg20_1 진행; GPU `bm2_rlonly` it 375, 끝 ~15:43)
 
 ## 라운드 175 (2026-11-08 15:33~ UTC)
 - `git fetch r2e`: 새 커밋 없음 (HEAD a1df71d = 서버 2 사람 "N2 records" 커밋 5개 15:19–15:28, 이미 받음). QUEUE 맨 위 = 11/09 00:20 KST N2 그대로.

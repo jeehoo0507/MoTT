@@ -51,3 +51,7 @@ I changed only the table code in `scripts/collect_results.py`. When there's no m
 The table goes into RESULTS.md the next time the driver runs `collect_results`. I didn't run it myself, so it won't collide with the driver's run. No verdicts are written, as N2 requires. I logged this as a "결정:" entry in PROGRESS.md.
 
 **Next round:** check that the N2 table appears in RESULTS.md, and that after `bm2_rlonly` finishes the driver picks up its evals and then server 1's N2 evals. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b1a2d20..348af5f  main -> main
