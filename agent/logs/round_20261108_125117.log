@@ -22,3 +22,13 @@ Fast-forward
  create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pkg16_0__bdf_distill+rep4.json
  create mode 100644 runs/2026-10-29/bdf_distill/eval/eval_pkg16_1__bdf_distill+rep4.json
 Applied autostash.
+라운드 165를 마쳤습니다. PROGRESS.md를 갱신했고, 커밋 `bff5886`을 `r2e main`에 push했습니다. push 때 `gh: not found`라는 credential 경고가 나왔지만 push는 됐습니다. 원격과 로컬이 같은 커밋인지 확인했습니다.
+
+- **QUEUE / 원격:** 새 커밋이 없습니다. 최우선 지시는 여전히 11/08 12:10 KST 항목(cpu 순서 변경)이라 큐, 플래그, 순서를 바꾸지 않았습니다.
+- **드라이버:** 살아 있습니다(pid 1792539). report_watch와 resume_agent를 다시 띄웠고, 메모리는 18.8 / 60 GiB입니다. 드라이버 로그에서 빠졌던 289 B를 되살렸습니다.
+- **CPU 새 기록 1개:** 좌표 하네스 seed 2의 `eval_pkg16_0` 평가(`r0_coord_s2_rl+rep4`)가 정상 종료(rc 0)했습니다.
+  - 수리 포함 성공률은 **0.88 (22/25)**, 수리 전에는 0.56입니다. seed 1은 같은 세트에서 0.84였습니다.
+  - 속도 숫자는 QUEUE 7항에 따라 적지 않았습니다.
+- **RESULTS.md:** 이번 라운드에서는 직접 고치지 않았습니다. 드라이버의 `collect_results`가 이 기록을 반영하려고 12:48부터 돌고 있었는데, 제가 커밋할 때까지 끝나지 않았습니다. 지금까지 이런 반영은 드라이버가 "results: auto" 커밋으로 올려 왔습니다.
+- **GPU:** `lo_pkg_bm2_rlonly_s2` 학습이 200회째까지 정상입니다. 200회째 검증값은 100회째와 같습니다(pcb10 실패율 1.00, ip10 0.920). 13:45쯤 끝나면 큐의 다음 항목인 `bm2_rlonly`가 시작됩니다.
+- **다음 할 일:** seed 2 좌표 하네스 남은 3개(pkg16_1, pkg20_0, pkg20_1)를 지켜봅니다. 다음 DAILY.md는 11/09 01:15 UTC에 씁니다.
