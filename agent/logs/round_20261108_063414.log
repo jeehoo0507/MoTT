@@ -29,3 +29,7 @@ Round 142 is done, committed and pushed (`0f4e15e`, in sync with `r2e/main`).
 - The 5 remaining coordinate-harness evaluations.
 - `eval10 lo_pkg_bp_park_s1_rl`.
 - Once `lo_pkg_bm2_rlonly` starts, check its first 25 iterations against the stop rule.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0f4e15e..604f972  main -> main
