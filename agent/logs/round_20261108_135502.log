@@ -1,3 +1,9 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 169 is finished and pushed to `r2e/main` as `18c0f71`. Nothing needed my intervention this round, so I added no queue entries and changed no flags, following QUEUE.md step 6 of the 11/08 11:30 KST instructions.
+
+- **GPU:** `lo_pkg_bm2_rlonly_s2` finished at 13:42 UTC with rc 0. Its final validation at it 300 was the same as at it 100 and 200 and the same as seeds 0 and 1: pcb10 failure rate 1.00, ip10 0.920 (failure rate 0.69). The driver then started `bm2_rlonly` (seed 0), which looks normal at it 25: no NaN, no out-of-memory errors, 15.8 GB peak GPU memory. It should finish around 15:43 UTC.
+- **CPU:** the seed-2 coordinate harness is on pkg16_1, the second of four sets. It has run 25 minutes with the worker at 100% CPU. pkg20_0 and pkg20_1 are still to come.
+- **Upcoming:** `lo_pkg_bm2_rlonly_s2` has no 10-cell test evaluation yet. I expect the driver to start it after the harness, as it did for seed 1, but I haven't confirmed that.
+- **Records and reports:** no new results this round, so RESULTS.md is unchanged; it updates automatically when the driver runs `collect_results`. The driver log on disk had fallen behind the live log again, and I restored the missing 492 B. PROGRESS.md has the round-169 entry and next steps. DAILY.md is next due 11/09 01:15 UTC.
