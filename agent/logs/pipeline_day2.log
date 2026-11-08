@@ -1447,3 +1447,5 @@
 [11:27:33] START collect_results | mem 18.5 GiB / 60.0 GiB, oom_kill 2
 [11:27:33] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
 [11:30:44] END collect_results rc=0 | mem 18.5 GiB / 60.0 GiB, oom_kill 2
+[11:32:14] START N coord harness eval_pkg16_0 r0_coord_s2_rl+rep4 | mem 18.7 GiB / 60.0 GiB, oom_kill 2
+[11:32:14] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl  (log runs/2026-10-29/r0_coord_s2_rl/eval.log)
