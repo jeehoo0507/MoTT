@@ -11,3 +11,7 @@ Already up to date.
   - `lo_pkg_r0_s3`가 끝나 GPU가 비면 `bm2_rlonly_s2`를 resume으로 한 번만 다시 돌립니다. 같은 OOM으로 또 죽으면 STUCK으로 적고 보고만 합니다.
   - 11/09 00:00 UTC에 서버 2의 N2 평가 48개가 다 push됐는지 확인합니다.
   - DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f69fe36..912716e  main -> main
