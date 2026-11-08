@@ -1,3 +1,13 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 133 is done: I committed it (`9331e67`) and pushed it to r2e/main. The remote now matches local. Git printed a "gh not found" credential message during the push, but the push still went through.
+
+- **New instructions:** none. There were no new commits on main, and the top of `agent/QUEUE.md` is still the 11/08 12:10 KST instruction to reorder the CPU queue.
+- **Driver:** it's still running (pid 1792539). I restarted the two helper processes (report_watch, resume_agent) as usual. Memory is 20.0 of 60 GiB with no new out-of-memory kills, and the driver log needed no recovery.
+- **GPU:** `lo_pkg_bp_park_s1` is in the distill stage at iteration 1725. No NaN or OOM, peak GPU memory 8.9 GB.
+- **CPU:** `eval10 lo_pkg_bp_park_rl` has finished 1 of 6 sets: `eval_pkg10_1` succeeded on 80 % of problems (ok 0.80) with an average count of 20.40. The worker is now running the second set at 100 % CPU, so it isn't hung. At about 30 minutes per set, the rest should finish around 06:40 UTC. The driver then updates RESULTS.md and moves on to coordinate harness run 3 of 8.
+- **New results:** 1. RESULTS.md isn't updated yet, because the driver only does that after all 6 sets finish.
+- **Decision:** I left the queue, flags and order unchanged and added nothing myself, as step 6 of the 11/08 11:30 KST queue instruction requires. This is recorded in PROGRESS.md.
+
+**Next round:** check that the eval finishes and the remaining 6 coordinate harness runs continue. When `lo_pkg_bm2_rlonly` starts (after about 07:40 UTC), check its first 25 iterations against the stop rule. The next DAILY.md is due 11/09 01:15 UTC.
