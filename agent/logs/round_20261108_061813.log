@@ -12,3 +12,7 @@ Round 141 was a routine monitoring round. Both jobs are running normally, nothin
 `PROGRESS.md` has the round 141 entry. It is committed as `fbf3d21` and pushed to `r2e main`, and the local branch matches the remote.
 
 The next thing to check is the 25-iteration stop rule for `lo_pkg_bm2_rlonly`, which starts after `lo_pkg_bp_park_s2` ends around 07:40 UTC. The next `DAILY.md` is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   fbf3d21..4ff26e2  main -> main
