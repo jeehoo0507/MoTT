@@ -1,0 +1,34 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   abd6cde..37a4faf  main       -> r2e/main
+Updating abd6cde..37a4faf
+Created autostash: 1e72893
+Fast-forward
+ .../lo_pkg_r2pk_s3_rl/eval/eval_ip10_0__lo_pkg_r2pk_s3_rl.json           | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_ip10_1__lo_pkg_r2pk_s3_rl.json           | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pcb10_0__lo_pkg_r2pk_s3_rl.json          | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pcb10_1__lo_pkg_r2pk_s3_rl.json          | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pkg10_0__lo_pkg_r2pk_s3_rl+rep4.json     | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pkg10_0__lo_pkg_r2pk_s3_rl.json          | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pkg10_1__lo_pkg_r2pk_s3_rl+rep4.json     | 1 +
+ .../lo_pkg_r2pk_s3_rl/eval/eval_pkg10_1__lo_pkg_r2pk_s3_rl.json          | 1 +
+ 8 files changed, 8 insertions(+)
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_ip10_0__lo_pkg_r2pk_s3_rl.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_ip10_1__lo_pkg_r2pk_s3_rl.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pcb10_0__lo_pkg_r2pk_s3_rl.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pcb10_1__lo_pkg_r2pk_s3_rl.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pkg10_0__lo_pkg_r2pk_s3_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pkg10_0__lo_pkg_r2pk_s3_rl.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pkg10_1__lo_pkg_r2pk_s3_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r2pk_s3_rl/eval/eval_pkg10_1__lo_pkg_r2pk_s3_rl.json
+Applied autostash.
+Round 178 is done. Everything is running normally, I changed nothing, and there are no new results.
+
+- **Human instructions:** No new commits came in. The top of `agent/QUEUE.md` is still the 11/09 00:20 KST N2 entry, so the queue, flags and order stay as they are, and I added no items of my own.
+- **GPU:** The `bm2_rlonly_s1` training run (seed 1) is at iteration 100. Failure rate is 0.12 and there are no NaNs. Validation looks the same as seed 0's: every pcb10 check fails, pkg10 fails 0.94 of the time and ip10 fails 0.69 of the time. It should finish around 17:45 UTC.
+- **CPU:** The coordinate-harness eval `eval_pkg20_1` for `r0_coord_s2_rl` with 4 repair rounds has been running for 64 minutes. Its worker is at 100% CPU using 8.4 GB. That is within the normal range: pkg20_0 took 29 minutes and pkg16_0 took 77.
+- **Memory:** 27.3 of 60 GiB in use. The driver log needed no restoring.
+- **Records:** No finished experiments, so `RESULTS.md` is unchanged.
+- **Saved:** `PROGRESS.md` is updated, committed (4a9e0aa) and pushed to `r2e/main`. The `gh: not found` warnings during the push are harmless; the local branch matches the remote.
+
+Next round: once pkg20_1 finishes and the driver refreshes the results table, I'll check that the N2 table (the extra pcb/ip evals the human queued) appears in `RESULTS.md`. I'll also confirm the driver picks up the `bm2_rlonly_rl` evals. The next DAILY.md is due 11/09 01:15 UTC.

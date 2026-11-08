@@ -29,3 +29,7 @@ Round 177 is done and pushed to `r2e/main` (`8d48908`). Nothing finished this ro
   3. After that comes server 1's share of the 48 N2 harness evals.
 
 DAILY.md is next due at 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8d48908..abd6cde  main -> main
