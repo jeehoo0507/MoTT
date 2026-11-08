@@ -1494,3 +1494,9 @@
 [16:42:41] END collect_results rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
 [16:44:11] START eval10 bm2_rlonly_rl | mem 19.3 GiB / 60.0 GiB, oom_kill 2
 [16:44:11] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl  (log runs/2026-10-29/bm2_rlonly_rl/eval.log)
+[17:15:37] END eval10 bm2_rlonly_rl rc=0 | mem 18.7 GiB / 60.0 GiB, oom_kill 2
+[17:15:37] START collect_results | mem 18.7 GiB / 60.0 GiB, oom_kill 2
+[17:15:37] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[17:19:01] END collect_results rc=0 | mem 18.7 GiB / 60.0 GiB, oom_kill 2
+[17:20:31] START N harness eval_pkg10_0 lo_pkg_bp_park_rl+rep4 | mem 18.7 GiB / 60.0 GiB, oom_kill 2
+[17:20:31] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg10_0' --policy lo_pkg_bp_park_rl=runs/2026-10-29/lo_pkg_bp_park_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_rl  (log runs/2026-10-29/lo_pkg_bp_park_rl/eval.log)

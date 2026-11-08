@@ -46,3 +46,7 @@ RESULTS.md는 이번 라운드에 끝난 실험이 없어서 고치지 않았습
 3. 11/09 00:00 UTC까지 서버 2가 N2 48개를 다 push하지 않았으면 PROGRESS에 적습니다.
 
 DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   771280e..ff605e9  main -> main
