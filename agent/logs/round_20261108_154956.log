@@ -21,3 +21,7 @@ Applied autostash.
 - **상태:** 드라이버는 살아 있습니다. 메모리 25.9/60 GiB이고 OOM은 새로 없었습니다(누적 2회). 지워진 드라이버 로그는 `restore_proc_log.py`로 491 B 복구했습니다.
 - **결정:** QUEUE 지시대로 큐·플래그·순서는 그대로 두고 새 항목도 넣지 않았습니다. PROGRESS.md에 그렇게 적었습니다.
 - **다음:** pkg20_1이 끝나면 RESULTS.md N2 표에 B-DevFormer 행(짝지을 MoTT+P1 기록 없음)이 나오는지 확인합니다. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cd255ee..a1497a7  main -> main
