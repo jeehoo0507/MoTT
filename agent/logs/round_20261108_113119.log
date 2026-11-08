@@ -20,3 +20,7 @@ It almost never solves pcb, matching the validation runs where pcb failed every 
 **Housekeeping:** the driver, `report_watch` and `resume_agent` are alive, and I restored the driver's log file. Memory is 18.7 / 60 GiB with no new OOM kills (still 2). PROGRESS.md is updated, and the work is committed and pushed to `r2e main` (commit 917910e; local and remote are in sync).
 
 **Next round:** check progress on the seed-2 harness evals and the start of `_s2`. If one of the old analysis CPU items fails again, I'll only note it in PROGRESS.md, per QUEUE. The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   917910e..93ea039  main -> main
