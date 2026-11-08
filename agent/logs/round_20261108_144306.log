@@ -37,3 +37,7 @@ That completes all three seeds of this B-Manoharan2 RL-only run. pcb fails almos
 Memory use is 18.7 of 60 GiB. The driver's live log had drifted from the copy on disk again, and I copied the missing lines back.
 
 The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   d5b0e32..5f73608  main -> main
