@@ -22,3 +22,7 @@ Applied autostash.
 - **RESULTS.md·DAILY.md:** 끝난 실험이 없어 RESULTS.md는 그대로입니다. DAILY.md는 다음 차례가 11/09 01:15 UTC라 이번에 쓰지 않았습니다.
 - **결정:** 큐·플래그·순서를 그대로 두었습니다. QUEUE 지시상 에이전트가 새 학습을 시작하거나 항목을 바꾸면 안 되기 때문입니다.
 - **다음 라운드:** 11/09 00:00 UTC(09:00 KST)까지 서버 2가 N2 48개를 다 올리지 않으면 PROGRESS에 적습니다. QUEUE에서 그렇게 하라고 했습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   75c7984..03f30c6  main -> main
