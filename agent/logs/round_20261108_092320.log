@@ -1,3 +1,11 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 152 is done. Nothing new finished, so I didn't change any settings, add anything to the queue or touch RESULTS. PROGRESS is updated and pushed to `r2e main` (c5cf8e7).
+
+- **Instructions and processes:** there were no new commits on `r2e/main`, and the latest human instruction in QUEUE is still the 11/08 12:10 KST CPU order. The driver (pid 1792539) is still running; I restarted `report_watch` and `resume_agent`. Memory is at 25.3 / 60 GiB. The driver log needed no recovery.
+- **GPU:** `lo_pkg_bm2_rlonly` RL training is at iteration 300 of a 2-hour run and should end around 09:40 UTC. Validation at it 300 matches it 100 and 200: `val_pcb10_0` fails every case (fail 1.00), `val_ip10_0` scores 0.920 with fail 0.69. Loss is −2.7 and moving toward 0. The stop rule (checked once at iteration 25) didn't trigger, and since only one validation type is at fail 1.00 this isn't a collapse, so I only noted it.
+- **CPU:** the seed-1 coord harness eval `eval_pkg20_1 r0_coord_s1_rl+rep4` has been running for 35 minutes. The same run's `pkg20_0` took 68 minutes, so this one should finish around 09:57 UTC.
+- **New results this round:** 0.
+
+**Next round:** after `pkg20_1`, the four remaining seed-2 harness evals run. When bm2 training ends, the driver puts its 10-cell eval at the front of the CPU queue, and the GPU picks up the next training run.
