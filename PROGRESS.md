@@ -1,5 +1,17 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 18:48 UTC, 라운드 187 — GPU `bm2_rlonly_s2` it 200 정상, val 그대로; cpu N 하네스 lo_pkg_bp_park pkg10_1 25분째 정상 (워커 100 %); 새 기록 0)
+# PROGRESS (갱신 2026-11-08 19:05 UTC, 라운드 188 — GPU `bm2_rlonly_s2` it 250 정상; cpu N 하네스 lo_pkg_bp_park pkg10_1 41분째 (워커 100 %, pkg10_0 29분보다 김 — 아직 정상 범위); 새 기록 0)
+
+## 라운드 188 (2026-11-08 19:02~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 182208 B).
+- GPU `bm2_rlonly_s2` (17:46~): it 250 count/ref 3.561, best 2.186, fail 0.20, loss −3.07, oom 0, gpu peak 21.1 GB (it 222 에서 resume ckpt). NaN 없음. 끝 ~19:47 → 다음 train `lo_pkg_r0_s3`.
+- cpu `N harness eval_pkg10_1 lo_pkg_bp_park_rl+rep4` (18:22~): 워커 1939316 2451 s CPU / 2447 s 경과 = 100 %, rss 2.4 GB → 멈춘 Pool 워커 아님 (메모리 노트의 "dead worker hang" 증상과 다름). pkg10_0 은 1745 s; pkg10_1 은 더 느린 세트일 수 있음. 다음 라운드에 60분을 넘으면 원인 확인.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s2` RL it 250, cpu = N 하네스 lo_pkg_bp_park pkg10_1, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2 (01:40 KST "do not re-add them").
+- 할 일 (다음): (1) pkg10_1 하네스 끝 확인 (60분 넘으면 워커 상태 확인). (2) `bm2_rlonly_s2` 끝 ~19:47 → 다음 train (`lo_pkg_r0_s3`) + s2 eval10 이 cpu 에 들어가는지. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 187 머리말: 갱신 2026-11-08 18:48 UTC, 라운드 187 — GPU `bm2_rlonly_s2` it 200 정상, val 그대로; cpu N 하네스 lo_pkg_bp_park pkg10_1 25분째 정상 (워커 100 %); 새 기록 0)
 
 ## 라운드 187 (2026-11-08 18:46~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
