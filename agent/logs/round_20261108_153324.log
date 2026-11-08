@@ -30,3 +30,24 @@ Fast-forward
  create mode 100644 runs/2026-10-29/lo_pkg_bdf_distill/eval/eval_pcb10_1__lo_pkg_bdf_distill+rep4.json
  create mode 100644 runs/2026-10-29/lo_pkg_bdf_s1_distill/eval/eval_pcb10_0__lo_pkg_bdf_s1_distill+rep4.json
 Applied autostash.
+Round 175 is done, committed and pushed to `r2e main` as `b1a2d20`. Push printed a `gh` credential-helper warning, but the remote is at the new commit.
+
+**Status**
+- No new commits on the remote. The top QUEUE instruction is still N2 (11/09 00:20 KST), which says to run the evals only, add no items and record numbers without verdicts.
+- The driver is alive (pid 1792539). Memory is 25.8 / 60 GiB. I restarted `report_watch` and `resume_agent`, and recovered 458 B of the orphaned driver log.
+- **GPU:** `bm2_rlonly` RL is at it 375 with no NaN. Its validation numbers haven't moved since it 100. It should finish around 15:43 UTC, and then `bm2_rlonly_s1` starts.
+- **CPU:** the last coord-harness eval (s2 `eval_pkg20_1 +rep4`) started at 15:18. The previous one, pkg20_0, finished at 0.88. Server 1 has no new records this round.
+
+**What I changed:** server 2 pushed N2 records for B-DevFormer (`lo_pkg_bdf*`) on pcb10 and ip10. The N2 table only counted sets where MoTT+P1 also has a record, and server 1 hasn't produced any MoTT+P1 pcb/ip records yet. So the table showed B-DevFormer pcb/ip as "0/3" even though the records exist.
+
+I changed only the table code in `scripts/collect_results.py`. When there's no matching MoTT+P1 record, the row now says "k/3 (짝 없음)" with the model's own success rates, and the comparison column says "MoTT+P1 기록 대기" with no confidence interval. Current read:
+
+| B-DevFormer | Seeds | Harness success | Problems | vs MoTT+P1 [95% CI] |
+|---|---|---|---|---|
+| pkg10 | 3/3 | 0.45 | 150 | −0.54 [−0.62, −0.46] |
+| pcb10 | 2/3, unpaired | 0.81 | 75 | not available yet |
+| ip10 | 1/3, unpaired | 1.00 | 50 | not available yet |
+
+The table goes into RESULTS.md the next time the driver runs `collect_results`. I didn't run it myself, so it won't collide with the driver's run. No verdicts are written, as N2 requires. I logged this as a "결정:" entry in PROGRESS.md.
+
+**Next round:** check that the N2 table appears in RESULTS.md, and that after `bm2_rlonly` finishes the driver picks up its evals and then server 1's N2 evals. The next DAILY.md is due 11/09 01:15 UTC.
