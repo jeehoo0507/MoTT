@@ -329,3 +329,10 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
 - 서버의 Codex 프로세스는 사람이 `scripts/stop_codex.sh`로 멈춘다. 에이전트 관리자는 Claude (`agent/loop.sh`) 그대로.
 - 11/05 서버 2 실행기 (`server2_once`·`server2_fresh`, PROPOSALS L3·L4·FRESH)는 코드만 남겨 둔다. 결과가 올라와도 판정은 사람이 한다.
 - 다음 할 일 (에이전트): `train.py`가 바뀌었으므로 진행 중인 학습이 있으면 PROGRESS에 어떤 코드로 돌았는지 (git hash) 적어라. 서버 1 드라이버 큐 (F1·B1 남은 것)는 그대로 이어 간다. 새 시도 시작은 하지 않는다 (11/06 12:00 UTC 마감 지남).
+
+## 11/09 01:40 KST — N2 moved to server 2
+- The 48 "N2 harness" cpu entries (pcb10/ip10 rep4 for lo_pkg_{r2pk,r0,bp_park,bm2_rlonly} x3 seeds) left the server-1
+  cpu list -> `cpu_deferred` (field `moved`). Server 2 runs them with `scripts/server2_n2b.sh` (same command and flags),
+  checkpoints copied from server 1 by the human. Reason: server 1 has one CPU lane and ~87 evals queued (N2 would land
+  ~13:00); server 2 CPU is idle. No rule or set changed; N2 stays report-only (PROPOSALS 11/09 N2).
+- Server 1 agent: do not re-add them. If server 2 has not pushed all 48 by 11/09 09:00 KST, say so in PROGRESS.
