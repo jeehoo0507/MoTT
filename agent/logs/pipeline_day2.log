@@ -1488,3 +1488,9 @@
 [15:44:18] END train bm2_rlonly (CERTIFY_WORKERS=2) rc=0 | mem 24.1 GiB / 60.0 GiB, oom_kill 2
 [15:44:18] START train bm2_rlonly_s1 (CERTIFY_WORKERS=2) | mem 24.1 GiB / 60.0 GiB, oom_kill 2
 [15:44:18] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name bm2_rlonly_s1 --arm '--model manoharan2 --imit 0 --reward manoharan' --day 2026-10-29 --pool runs/pool_v1 --seed 1 --distill_hours 0 --rl_hours 2.0 --skip_distill --skip_eval  (log runs/2026-10-29/bm2_rlonly_s1/rung_stdout.log)
+[16:39:19] END N coord harness eval_pkg20_1 r0_coord_s2_rl+rep4 rc=0 | mem 19.1 GiB / 60.0 GiB, oom_kill 2
+[16:39:19] START collect_results | mem 19.1 GiB / 60.0 GiB, oom_kill 2
+[16:39:19] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[16:42:41] END collect_results rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[16:44:11] START eval10 bm2_rlonly_rl | mem 19.3 GiB / 60.0 GiB, oom_kill 2
+[16:44:11] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl  (log runs/2026-10-29/bm2_rlonly_rl/eval.log)

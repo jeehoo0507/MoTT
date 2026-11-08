@@ -19,3 +19,7 @@ Applied autostash.
 - **결정:** 큐·플래그·순서는 그대로 두었습니다. 서버 2가 11/09 09:00 KST(00:00 UTC)까지 48개를 다 push하지 않으면 PROGRESS에 적으라는 지시가 있어서, PROGRESS 할 일 목록에 넣어 두었습니다.
 
 DAILY.md는 다음에 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   798f5c8..9c50844  main -> main

@@ -1,5 +1,19 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 16:40 UTC, 라운드 179 — 사람이 N2 서버 1 몫 48개를 서버 2로 옮김 (`cpu_deferred`, 확인함); GPU `bm2_rlonly_s1` it 175 정상; CPU 좌표 하네스 s2 pkg20_1 80분째; 새 기록 0)
+# PROGRESS (갱신 2026-11-08 16:58 UTC, 라운드 180 — 좌표 하네스 s2 pkg20_1 끝 (ok 0.50, count 13.00); collect_results 뒤 RESULTS N2 표에 B-DevFormer pcb·ip "짝 없음" 행 나옴; cpu `eval10 bm2_rlonly_rl` 시작; GPU `bm2_rlonly_s1` it 200 정상)
+
+## 라운드 180 (2026-11-08 16:54~ UTC)
+- `git fetch r2e`: 새 커밋 없음. QUEUE 맨 위 = 11/09 00:20 KST N2 + 끝 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 20.4 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 718 B 되살림.
+- **`N coord harness eval_pkg20_1 r0_coord_s2_rl+rep4` 끝 (15:18–16:39, rc 0): ok 0.50, count 13.00, 117 s/inst (4 rounds).** 좌표 하네스 s2 8개 중 서버 1 몫 끝. collect_results 16:39–16:42 rc 0.
+- RESULTS N2 표 확인: MoTT+P1 pkg10 하네스 0.99 (3/3), 좌표 pkg10 0.92 (−0.07 [−0.12, −0.03]), B-DevFormer pkg10 0.45 (−0.54 [−0.62, −0.46]), B-DevFormer pcb10 0.79·ip10 0.99 (3/3 짝 없음, MoTT+P1 기록 대기). 나머지 0/3 (서버 2 `server2_n2b.sh` 몫). 판정 없음.
+- cpu: 드라이버 16:44 **`eval10 bm2_rlonly_rl`** 시작 (after 열림, 예상대로). 다음은 `N harness ... bm2_rlonly_rl+rep4`.
+- GPU `bm2_rlonly_s1` (15:44~): it 200 count/ref 2.439, best 1.527, fail 0.41, loss −12.9; val it 200 = it 100 그대로 (pcb10 fail 1.00, pkg10 9.000 fail 0.94, ip10 0.920 fail 0.69) — seed 0 과 같은 모양. NaN 없음. 끝 ~17:45.
+- 한 줄 (N 6단계): GPU = `bm2_rlonly_s1` RL it 200, cpu = `eval10 bm2_rlonly_rl`, 새 기록 1 (좌표 s2 pkg20_1).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계·N2 (01:40 KST "do not re-add them").
+- 할 일 (다음): (1) `eval10 bm2_rlonly_rl` → `N harness ... bm2_rlonly_rl+rep4` 진행 확인. (2) `bm2_rlonly_s1` 끝 ~17:45 → 다음 train `bm2_rlonly_s2`. (3) **11/09 00:00 UTC** 에 서버 2 N2 48개 다 push 안 됐으면 PROGRESS 에 적기. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 179 머리말: 갱신 2026-11-08 16:40 UTC, 라운드 179 — 사람이 N2 서버 1 몫 48개를 서버 2로 옮김 (`cpu_deferred`, 확인함); GPU `bm2_rlonly_s1` it 175 정상; CPU 좌표 하네스 s2 pkg20_1 80분째; 새 기록 0
 
 ## 라운드 179 (2026-11-08 16:38~ UTC)
 - `git fetch r2e`: 새 커밋 없음. HEAD af70aef = **사람 커밋 (11/09 01:31 KST) "Move N2 harness evals from server 1 queue to server 2"**: QUEUE 끝에 "11/09 01:40 KST — N2 moved to server 2" 절, `day2_queue.json` cpu 의 `N2 harness ...` 48개 → `cpu_deferred` (`moved`), `scripts/server2_n2b.sh` (서버 2 사람 실행, 체크포인트는 사람이 손으로 복사). 확인: cpu 안 N2 0개, cpu_deferred N2 48개. 드라이버는 큐를 매번 다시 읽음 → 재시작 필요 없음.
