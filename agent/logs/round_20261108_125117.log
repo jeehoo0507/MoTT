@@ -32,3 +32,7 @@ Applied autostash.
 - **RESULTS.md:** 이번 라운드에서는 직접 고치지 않았습니다. 드라이버의 `collect_results`가 이 기록을 반영하려고 12:48부터 돌고 있었는데, 제가 커밋할 때까지 끝나지 않았습니다. 지금까지 이런 반영은 드라이버가 "results: auto" 커밋으로 올려 왔습니다.
 - **GPU:** `lo_pkg_bm2_rlonly_s2` 학습이 200회째까지 정상입니다. 200회째 검증값은 100회째와 같습니다(pcb10 실패율 1.00, ip10 0.920). 13:45쯤 끝나면 큐의 다음 항목인 `bm2_rlonly`가 시작됩니다.
 - **다음 할 일:** seed 2 좌표 하네스 남은 3개(pkg16_1, pkg20_0, pkg20_1)를 지켜봅니다. 다음 DAILY.md는 11/09 01:15 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   bff5886..676bac0  main -> main
