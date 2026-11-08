@@ -1,3 +1,9 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 195 is finished, committed and pushed to r2e/main (last commit 1ee1751).
+
+- **GPU:** `lo_pkg_r0_s3` finished cleanly at 21:17 UTC (354 iterations, 1.26 h, no OOM). With the GPU empty, I resumed `bm2_rlonly_s2` once, as decided in round 189, using the same command and flags as the driver. It picked up from its iter-288 checkpoint and has passed iter 300 and the validation step without an OOM, which is where it died before. At iter 300 it gave the same numbers as the earlier run. GPU memory is high: nvidia-smi shows 22.5 GB used, and the earlier crash came at about 22 GB, so another OOM is still possible. It should finish around 22:00 UTC. If it runs out of memory again, it gets written up as STUCK and not retried.
+- **CPU harness:** `lo_pkg_bm2_rlonly` pkg10_1 scored 0.88, so its pkg10 total is now 0.90 over 50 instances. `lo_pkg_bm2_rlonly_s1` pkg10_0 scored 0.92. Both are recorded in RESULTS with no verdict, as instructed. The CPU is now running `lo_pkg_bm2_rlonly_s1` pkg10_1. The 10-cell eval of `lo_pkg_r0_s3` hasn't started; the driver should pick it up next.
+- **Housekeeping:** No new commits came in from the human or server 2. The driver log had been orphaned again and is restored. Pod memory is about 19 GB of 60.
+- **Next:** confirm `bm2_rlonly_s2` finishes, check at 00:00 UTC on 11/09 whether server 2 has pushed all 48 N2 results, and write the next DAILY at 01:15 UTC.
