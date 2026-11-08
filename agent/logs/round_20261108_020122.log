@@ -1,3 +1,14 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 125 is finished, committed and pushed to `r2e/main` (3a5e3c9). I added nothing to the queue, because the human's N batch says the agent must not add items itself.
+
+- **F3:** all 22 evaluations are done. The last one, `eval_ip20_1 r2pk_s2_rl+rep4`, exited cleanly at 01:47 UTC, and the driver copied it into RESULTS automatically. Server 1's share of the F evaluations is now complete.
+- **GPU:** `lo_pkg_bp_park` is still in its first stage (distillation), at iteration 1375. Loss is 0.18 and nothing ran out of memory. The training log is in `runs/2026-10-29/lo_pkg_bp_park_distill/`, not the run's main folder.
+- **CPU:** the first of the 8 coordinate-model harness evaluations is running (`r0_coord_s1_rl+rep4` on `eval_pkg16_0`, started 01:52 UTC). No harness results exist yet.
+- **Health:** the driver is alive and the pod is using 26.9 of 60 GiB. There have been no new out-of-memory kills (still 2). The driver's log file had been deleted from disk again by the loop's stash step, and I restored it from the running process.
+
+**Next:**
+- The step 5 check on `lo_pkg_bm2_rlonly` happens once it starts, around 09:00 UTC. If its first 25 iterations hit the stop rule (NaN, or failure 1.00 on all three validation types with loss 0), I move the 5 bm2 runs not yet started to `train_removed`.
+- If an old analysis item fails once more, I only record it in PROGRESS and don't retry it.
+- The next DAILY is due 11/09 01:15 UTC.
