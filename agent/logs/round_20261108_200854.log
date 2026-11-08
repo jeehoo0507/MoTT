@@ -22,3 +22,7 @@ Applied autostash.
 3. DAILY는 11/09 01:15 UTC에 씁니다.
 
 참고로 이 환경에는 `python` 명령이 없어서 모든 스크립트를 `.venv/bin/python`으로, 명령 하나씩 따로 실행했습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f3dcc35..cbdc5d3  main -> main
