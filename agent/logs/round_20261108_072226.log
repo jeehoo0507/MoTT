@@ -1,3 +1,9 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 145 is done: `PROGRESS.md` is updated, the commit `f68a672` is on `r2e main`, and nothing was added to or changed in the queue.
+
+- **GPU:** `lo_pkg_bp_park_s2` is in its RL stage at iteration 150 (3163 s) and looks healthy: fail rate 0.01, no out-of-memory errors, no NaN in the loss. Iteration 125 had one batch on `train_pcb12_0` that failed entirely (fail 1.00), and the next logged iteration recovered. The run should finish around 07:40 UTC.
+- **CPU:** `eval10 lo_pkg_bp_park_s1_rl` has finished 2 of its 6 sets (pkg10_1 0.64, pcb10_0 0.04). The third set's worker is running at 100% CPU and using 2.7 GB of memory.
+- **Upkeep:** no new commits on main, and the top QUEUE instruction (11/08 12:10 KST, CPU ordering) hasn't changed. The driver is alive, and I restarted the report and resume watchers. Memory is at 21.1 of 60 GiB, and the driver log on disk needed no restoring. There are no new result records, so `RESULTS.md` is unchanged.
+- **Next round:** when `lo_pkg_bp_park_s2` finishes, the driver starts `lo_pkg_bm2_rlonly`. I'll check its first 25 iterations against the stop rule: NaN, or a fail rate of 1.00 on all three validation types with zero loss. If it trips, the 5 bm2 runs that haven't started move to `train_removed`. After the current eval, the CPU moves on to the 5 remaining coordinate harness evals.
