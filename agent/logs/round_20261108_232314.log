@@ -11,3 +11,7 @@ Already up to date.
 - **결정:** QUEUE의 N 6단계와 N2 지시에 따라 큐, 플래그, 순서를 그대로 두고 새 항목은 넣지 않았습니다.
 
 DAILY.md는 다음에 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7f292ea..d0622e8  main -> main
