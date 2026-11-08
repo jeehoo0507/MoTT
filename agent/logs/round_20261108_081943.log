@@ -1,0 +1,30 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   9d31e85..e0804eb  main       -> r2e/main
+Updating 9d31e85..e0804eb
+Created autostash: bcb3d18
+Fast-forward
+ .../lo_pkg_bdf_s2_distill/eval/eval_ip10_0__lo_pkg_bdf_s2_distill.json   | 1 +
+ .../lo_pkg_bdf_s2_distill/eval/eval_ip10_1__lo_pkg_bdf_s2_distill.json   | 1 +
+ .../lo_pkg_bdf_s2_distill/eval/eval_pcb10_0__lo_pkg_bdf_s2_distill.json  | 1 +
+ .../lo_pkg_bdf_s2_distill/eval/eval_pcb10_1__lo_pkg_bdf_s2_distill.json  | 1 +
+ .../lo_pkg_bdf_s2_distill/eval/eval_pkg10_0__lo_pkg_bdf_s2_distill.json  | 1 +
+ .../lo_pkg_bdf_s2_distill/eval/eval_pkg10_1__lo_pkg_bdf_s2_distill.json  | 1 +
+ 6 files changed, 6 insertions(+)
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_ip10_0__lo_pkg_bdf_s2_distill.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_ip10_1__lo_pkg_bdf_s2_distill.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pcb10_0__lo_pkg_bdf_s2_distill.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pcb10_1__lo_pkg_bdf_s2_distill.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_0__lo_pkg_bdf_s2_distill.json
+ create mode 100644 runs/2026-10-29/lo_pkg_bdf_s2_distill/eval/eval_pkg10_1__lo_pkg_bdf_s2_distill.json
+Applied autostash.
+라운드 148을 마쳤고 커밋(`3f42b17`)을 `r2e main`에 push했습니다. QUEUE에 새 사람 지시는 없어서 N 6단계 지시대로 상태만 적었습니다.
+
+- **GPU:** `lo_pkg_bm2_rlonly`가 RL it 100까지 문제없이 돌고 있습니다(loss −15.9, fail 0.11, gpu peak 13.3 GB).
+  - 첫 검증 결과에서 pcb10 문제는 전부 실패했습니다(fail 1.00). ip10은 count/greedy+prune 0.92, fail 0.69입니다.
+  - 실패율 1.00은 pcb 한 종류뿐이고 loss도 0이 아니라 붕괴 조건에는 걸리지 않습니다. 남은 bm2 run은 큐에 그대로 두었습니다.
+- **CPU:** `eval10 lo_pkg_bp_park_s2_rl`이 6개 중 2개를 끝냈습니다. pkg10_1은 0.84, pcb10_0은 0.04입니다.
+- **새 기록:** 2개입니다.
+- **결정:** 큐·플래그·순서는 그대로 두고, 제가 스스로 넣은 항목은 없습니다.
+- **기타:** 드라이버는 살아 있고 report_watch·resume_agent는 다시 띄웠습니다. 메모리는 21.9 / 60 GiB입니다. 이번 라운드에 끝난 실험이 없어 RESULTS.md는 바꾸지 않았습니다. DAILY는 11/09 01:15 UTC에 새로 씁니다.
+- **다음 라운드:** eval10 s2가 끝나면 좌표 하네스 평가 나머지 5개가 돕니다. bm2 it 200 검증 결과도 PROGRESS에 적기만 합니다.
