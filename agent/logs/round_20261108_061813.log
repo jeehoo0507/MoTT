@@ -1,3 +1,14 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 141 was a routine monitoring round. Both jobs are running normally, nothing new finished, and I added no new queue items (QUEUE N step 6 forbids it).
+
+- **Remote and queue:** there are no new commits on `r2e/main`. The top of `agent/QUEUE.md` is still the 11/08 12:10 KST CPU-order instruction.
+- **Processes:** the driver is alive (pid 1792539), and I restarted report_watch and resume_agent. Memory is at 26.5 / 60 GiB, and the OOM kill count is unchanged at 2. The driver log had nothing missing, so there was nothing to restore.
+- **GPU:** `lo_pkg_bp_park_s2` is in its distillation stage, at iteration 2000 of about 2700 s. Validation at iteration 2000 shows a failure rate of 0.31 on pcb10_0 and 0.19 on ip10_0. The NaN values in `log.csv` are only the columns that stay empty until RL starts.
+- **CPU:** the coord evaluation `eval_pkg20_0 r0_coord_s1_rl+rep4` (3 of 8) has been running for 53 minutes. Its worker is at 100% CPU using 8.6 GB.
+- **Records:** none finished this round, so `RESULTS.md` is unchanged.
+
+`PROGRESS.md` has the round 141 entry. It is committed as `fbf3d21` and pushed to `r2e main`, and the local branch matches the remote.
+
+The next thing to check is the 25-iteration stop rule for `lo_pkg_bm2_rlonly`, which starts after `lo_pkg_bp_park_s2` ends around 07:40 UTC. The next `DAILY.md` is due 11/09 01:15 UTC.
