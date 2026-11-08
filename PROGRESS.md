@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 13:10 UTC, 라운드 166 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 진행 (pkg10_1 ok 0.76, 1/6); GPU `lo_pkg_bm2_rlonly_s2` RL it ~250, 끝 ~13:45)
+# PROGRESS (갱신 2026-11-08 13:25 UTC, 라운드 167 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 4/6 (pkg 0.76·0.88, pcb 0.04·0.04); GPU `lo_pkg_bm2_rlonly_s2` val it 300 = it 100·200 그대로, 끝 ~13:45)
+
+## 라운드 167 (2026-11-08 13:22~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 19.9 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` 디스크와 같은 크기 → 할 일 없음.
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly_s2` RL (val it 300: pcb10 fail 1.00 (count nan), ip10 0.920 fail 0.69 — it 100·200 과 같음, seed 0·1 과도 같음; 경과 ~6100 s, 끝 ~13:45), cpu = `eval10 lo_pkg_bm2_rlonly_s1_rl` (12:53:42~, 4/6: eval_pkg10_1 ok 0.76, eval_pcb10_0 ok 0.04, eval_pkg10_0 ok 0.88, eval_pcb10_1 ok 0.04; 남은 ip10 2개), 새 기록 0 (세트 기록은 6개 끝난 뒤 collect_results).
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) eval10 s1 끝 → RESULTS 자동 반영 확인. (2) 좌표 하네스 s2 남은 3개 (pkg16_1, pkg20_0·1) 드라이버가 집는지 확인. (3) `lo_pkg_bm2_rlonly_s2` 끝 ~13:45 → 다음 train (`bm2_rlonly`). (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+
+# (이전) 라운드 166 머리말: 갱신 2026-11-08 13:10 UTC, 라운드 166 — CPU `eval10 lo_pkg_bm2_rlonly_s1_rl` 진행 (pkg10_1 ok 0.76, 1/6); GPU `lo_pkg_bm2_rlonly_s2` RL it ~250, 끝 ~13:45)
 
 ## 라운드 166 (2026-11-08 13:05~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
