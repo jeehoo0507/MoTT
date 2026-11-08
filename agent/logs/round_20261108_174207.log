@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 183이 끝났습니다. 새로 나온 결과는 없고, 상태는 정상이라 아무것도 바꾸지 않았습니다.
+
+- **GPU:** `bm2_rlonly_s1` 학습이 it 400에 이르렀고, 2시간 예산 중 6683 s를 썼습니다. NaN이나 OOM은 없고, 검증값은 seed 0과 같은 모양입니다. 몇 분 안에 끝나고, 다음 학습 항목은 큐에 있는 `bm2_rlonly_s2`입니다.
+- **CPU:** `N harness eval_pkg10_0 lo_pkg_bp_park_rl+rep4`는 17:20 UTC에 시작했고, 워커가 CPU 100%로 돌고 있습니다. 끝나면 lo_pkg pkg10 하네스 평가 12개 중 나머지가 이어지고, 그다음이 `bm2_rlonly_rl+rep4`입니다.
+- **QUEUE / 메모리:** 사람이 새로 올린 커밋은 없습니다. N2 평가 48개는 이전 지시대로 서버 2 몫이라 서버 1 큐에 다시 넣지 않았습니다. 메모리는 21.2 / 60 GiB이고, OOM kill 횟수는 이전과 같은 2입니다.
+- **결정:** 큐, 플래그, 순서를 그대로 두고 새 항목은 넣지 않았습니다. 이유와 함께 PROGRESS.md에 기록했습니다.
+- **기록:** PROGRESS.md를 갱신했고, commit `4a1e329`를 `r2e main`에 push한 뒤 원격과 맞는 것을 확인했습니다. RESULTS.md는 이번 라운드에 끝난 실험이 없어 그대로입니다.
+
+다음 라운드 할 일:
+- `bm2_rlonly_s2`가 시작되는지 확인합니다.
+- 11/09 00:00 UTC까지 서버 2가 N2 48개를 다 push하지 않으면 PROGRESS.md에 적습니다.
+- 11/09 01:15 UTC에 DAILY.md를 새로 씁니다.
