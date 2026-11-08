@@ -1,0 +1,17 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+라운드 187은 별일 없이 끝났습니다. PROGRESS를 갱신해 커밋했고 `r2e/main`에 push까지 했습니다 (bdba713, 원격과 같은 상태 확인함).
+
+- **QUEUE:** 새 커밋이 없고, 마지막 지시도 그대로입니다 (11/09 01:40 KST "N2 moved to server 2", 다시 넣지 말 것). 그래서 큐·플래그·순서는 건드리지 않았고, 이 결정은 PROGRESS에 "결정:"으로 적었습니다.
+- **프로세스:** 드라이버(1792539)는 살아 있습니다. report_watch와 resume_agent는 다시 띄웠습니다. 메모리 23.3 / 60 GiB, oom_kill 2이고, 드라이버 로그는 되살릴 것이 없었습니다.
+- **GPU (`bm2_rlonly_s2`):** it 200까지 정상입니다 (NaN·oom 없음, GPU peak 21.1 GB). val 값은 seed 0·1과 똑같습니다. 끝은 ~19:47 UTC로 보고, 다음 학습은 `lo_pkg_r0_s3`입니다.
+- **cpu (`lo_pkg_bp_park_rl+rep4`, pkg10_1):** 25분째 정상으로 돌고 있습니다 (워커 CPU 100 %, rss 2.3 GB). 끝은 ~18:51 UTC 예상입니다.
+- **새로 끝난 실험:** 없어서 RESULTS는 바꾸지 않았습니다.
+
+다음 라운드에서 할 일:
+1. pkg10 하네스 남은 10개가 이어서 도는지 확인합니다.
+2. s2 학습이 끝나면 다음 학습이 시작되는지, s2 eval10이 cpu에 들어가는지 봅니다.
+3. 11/09 00:00 UTC까지 서버 2가 N2 48개를 다 push하지 않으면 PROGRESS에 적습니다.
+
+DAILY는 11/09 01:15 UTC에 새로 씁니다.
