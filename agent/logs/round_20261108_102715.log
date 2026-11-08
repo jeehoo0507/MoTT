@@ -1,3 +1,10 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 156 is done. Nothing needed fixing, and the queue, flags and order are unchanged, as the human queue's N step 6 says.
+
+- **Remote and queue:** no new commits on `r2e/main`. The top instruction in `agent/QUEUE.md` is still the 11/08 12:10 KST CPU-order note.
+- **Driver:** the pipeline driver (pid 1792539) is still running. I restarted `report_watch` and `resume_agent`. Memory is at 27.1 / 60 GiB, and the live pipeline log matches the copy on disk.
+- **GPU:** `lo_pkg_bm2_rlonly_s1` reached iteration 125 with no NaN or OOM. Its first validation at iteration 100 gave exactly the same numbers as seed 0: every `val_pcb10_0` instance fails (rate 1.00), and `val_ip10_0` scores 0.920 with a 0.69 fail rate. So the model never solving pcb10 under RL-only training looks unrelated to the seed. I only recorded this, because the stop rule was already checked on seed 0's first 25 iterations. The run should end around 11:40 UTC, then `_s2` starts.
+- **CPU:** the coordinate harness eval (`r0_coord_s1_rl` with repair 4 on `eval_pkg20_1`) has been running for 98 minutes, about 30 minutes longer than `pkg20_0` took. Its worker is at 100% CPU and its memory is growing, so it isn't hung. I'm waiting for it, which was the conservative option and is logged as a "결정:" entry in PROGRESS.md.
+- **Recorded:** PROGRESS.md is updated. RESULTS.md needed no change because no experiment finished. Commit `2a1c98b` is pushed to `r2e main`.
