@@ -9,3 +9,7 @@ Round 152 is done. Nothing new finished, so I didn't change any settings, add an
 - **New results this round:** 0.
 
 **Next round:** after `pkg20_1`, the four remaining seed-2 harness evals run. When bm2 training ends, the driver puts its 10-cell eval at the front of the CPU queue, and the GPU picks up the next training run.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c5cf8e7..7d769cc  main -> main
