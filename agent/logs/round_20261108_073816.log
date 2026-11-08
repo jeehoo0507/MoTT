@@ -10,3 +10,7 @@ Already up to date.
 - **RESULTS:** 이번에 끝난 평가 기록은 드라이버의 `collect_results`가 반영하므로 RESULTS는 직접 고치지 않았습니다.
 
 큐·플래그·순서는 바꾸지 않았고 새 항목도 넣지 않았습니다. 이 결정은 이유와 함께 PROGRESS에 "결정:"으로 적었습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   44488c7..3fe2897  main -> main

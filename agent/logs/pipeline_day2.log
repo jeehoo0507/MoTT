@@ -1422,3 +1422,9 @@
 [07:39:32] END train lo_pkg_bp_park_s2 (CERTIFY_WORKERS=2) rc=0 | mem 18.4 GiB / 60.0 GiB, oom_kill 2
 [07:39:32] START train lo_pkg_bm2_rlonly (CERTIFY_WORKERS=2) | mem 18.4 GiB / 60.0 GiB, oom_kill 2
 [07:39:32] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name lo_pkg_bm2_rlonly --arm '--model manoharan2 --imit 0 --reward manoharan --pool_glob train_pcb*.pkl,train_ip*.pkl --val_pools val_pcb10_0,val_ip10_0' --day 2026-10-29 --pool runs/pool_v1 --seed 0 --distill_hours 0 --rl_hours 2.0 --skip_distill --skip_eval  (log runs/2026-10-29/lo_pkg_bm2_rlonly/rung_stdout.log)
+[07:52:16] END eval10 lo_pkg_bp_park_s1_rl rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[07:52:16] START collect_results | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[07:52:16] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[07:55:24] END collect_results rc=0 | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[07:56:54] START eval10 lo_pkg_bp_park_s2_rl | mem 18.6 GiB / 60.0 GiB, oom_kill 2
+[07:56:54] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*10_*' --policy lo_pkg_bp_park_s2_rl=runs/2026-10-29/lo_pkg_bp_park_s2_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-29/lo_pkg_bp_park_s2_rl  (log runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval.log)

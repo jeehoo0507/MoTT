@@ -1,5 +1,15 @@
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 07:50 UTC, 라운드 146 — GPU `lo_pkg_bp_park_s2` 끝 → `lo_pkg_bm2_rlonly` it 25 멈춤 규칙 안 걸림 (bm2 그대로); CPU `eval10 lo_pkg_bp_park_s1_rl` 3/6)
+# PROGRESS (갱신 2026-11-08 08:08 UTC, 라운드 147 — GPU `lo_pkg_bm2_rlonly` RL it 75 정상; CPU `eval10 lo_pkg_bp_park_s1_rl` 끝 (6/6) → `eval10 lo_pkg_bp_park_s2_rl` 07:56~)
+
+## 라운드 147 (2026-11-08 08:03~ UTC)
+- `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 22.1 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log` → 732 B 복구 (07:52 eval10 s1 끝, collect, 07:56 eval10 s2 시작 줄).
+- 한 줄 (N 6단계): GPU = `lo_pkg_bm2_rlonly` RL (it 75 / 1365 s, count/ref 2.54, fail 0.18, teach ok 0.94, loss −9.34, cert-bad 1, oom 0, gpu peak 13.3 GB; resume ckpt it 68; log.csv 아직 0 B — it 100 에 첫 줄), cpu = `eval10 lo_pkg_bp_park_s1_rl` **끝** (07:52 rc 0; pkg10_1 0.64, pcb10_0 0.04, pkg10_0 0.64, pcb10_1 0.00, ip10_0 0.96, ip10_1 1.00 — pcb 10칸 둘 다 거의 0, collect_results 07:55 RESULTS 반영) → `eval10 lo_pkg_bp_park_s2_rl` (07:56:54~), 새 기록 3 (s1 pcb10_1, ip10_0, ip10_1).
+- 참고: 드라이버가 좌표 하네스 나머지 5개보다 `eval10` 을 먼저 집음 (학습 끝난 run 의 eval10 은 드라이버가 자동으로 앞에 세움) — 순서는 건드리지 않음.
+- 결정: 큐·플래그·순서 그대로, 에이전트 새 항목 없음 — 이유: QUEUE N 6단계.
+- 할 일 (다음): (1) eval10 s2 끝 → 좌표 하네스 나머지 5개. (2) bm2 it 100 val 이 fail 1.00 두 종류 + loss ~0 이면 적기만. (3) 예전 분석 cpu 항목 한 번 더 실패하면 적기만. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. DAILY 다음 11/09 01:15 UTC.
+
+# (이전) 라운드 146 머리말: 갱신 2026-11-08 07:50 UTC, 라운드 146 — GPU `lo_pkg_bp_park_s2` 끝 → `lo_pkg_bm2_rlonly` it 25 멈춤 규칙 안 걸림 (bm2 그대로); CPU `eval10 lo_pkg_bp_park_s1_rl` 3/6)
 
 ## 라운드 146 (2026-11-08 07:38~ UTC)
 - `git fetch r2e`: 새 main 커밋 없음. QUEUE 맨 위 = 11/08 12:10 KST (cpu 순서) 그대로.
