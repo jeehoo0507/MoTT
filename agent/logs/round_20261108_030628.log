@@ -13,3 +13,7 @@ Round 129 was routine monitoring with no new decisions. PROGRESS.md is updated, 
 **Next:**
 - Six more harness evals after this one, at about 54 minutes each.
 - After `lo_pkg_bm2_rlonly` starts (around 09:00 UTC), check its first 25 iterations against the batch N stop rule.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e86d0a8..f52c86e  main -> main
