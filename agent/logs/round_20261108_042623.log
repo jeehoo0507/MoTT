@@ -18,3 +18,22 @@ Fast-forward
  create mode 100644 runs/2026-10-29/lo_pkg_bdf_distill/eval/eval_pkg10_0__lo_pkg_bdf_distill+rep4.json
  create mode 100644 runs/2026-10-29/lo_pkg_bdf_distill/eval/eval_pkg10_1__lo_pkg_bdf_distill+rep4.json
 Applied autostash.
+라운드 134에서는 상태만 확인하고 기록했습니다. QUEUE N 6단계에 따라 새 항목도, 바꾼 설정도 없습니다.
+
+- **원격:** `git fetch` 결과 새 main 커밋이 없고, QUEUE 맨 위도 11/08 12:10 KST 지시(cpu 순서) 그대로입니다.
+- **프로세스:** 드라이버(1792539)는 살아 있습니다. report_watch와 resume_agent는 꺼져 있어서 다시 띄웠습니다. 메모리 20.8 / 60 GiB, oom_kill 2이고, 드라이버 로그는 디스크 파일과 크기가 같아 복구할 것이 없었습니다.
+- **GPU:** `lo_pkg_bp_park_s1`의 증류가 it 2300에서 끝나고 RL이 막 시작됐습니다. RL `log.csv`에는 아직 행이 없어 RL 쪽 숫자는 다음 라운드에 확인합니다.
+- **CPU:** `eval10 lo_pkg_bp_park_rl`은 6세트 중 2개가 끝났습니다.
+
+  | 세트 | ok | 개수 |
+  |---|---|---|
+  | `eval_pkg10_1` | 0.80 | 20.40 |
+  | `eval_pcb10_0` | 0.04 | 7.00 |
+
+  pcb10_0의 0.04는 학습 때 val pcb10_0 fail 0.94와 맞습니다. 3번째 세트 워커는 CPU 100 %로 정상 작동 중입니다.
+- **기록:** PROGRESS.md에 라운드 134를 적었습니다. 이번 라운드에 끝난 실험이 없어 RESULTS.md는 바꾸지 않았습니다(eval10이 6세트 끝나면 드라이버가 `collect_results`를 돌립니다). 커밋 `54c8b76`을 `r2e main`에 push했고, 로컬과 원격이 일치합니다.
+
+**다음 라운드 할 일:**
+1. eval10이 약 06:40 UTC에 끝나면 결과 수집 뒤 좌표 하네스 3/8로 넘어가는지 봅니다.
+2. 약 07:40 UTC 이후 `lo_pkg_bm2_rlonly`가 시작되면 처음 25 iter로 멈춤 규칙에 걸리는지 확인합니다.
+3. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
