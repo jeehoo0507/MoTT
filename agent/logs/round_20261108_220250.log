@@ -1,3 +1,13 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 197 is committed and pushed to `r2e/main` as `2df12f5`. Nothing needed intervention, and I added no new jobs.
+
+- **GPU:** idle. The training queue is finished, and `bm2_rlonly_s2` stays STUCK: it ran out of GPU memory twice at the same step, so it won't be rerun.
+- **CPU, finished since last round** (RESULTS.md filled these rows in automatically):
+  - `eval10 lo_pkg_r0_s3_rl`: pcb10 0.98, ip10 0.98, pkg10 0.64 [50]. The pkg score is low by design, because pkg was held out from training.
+  - N harness `lo_pkg_bm2_rlonly_s2` pkg10_0: 0.92 [25].
+  - Now running: the same model's pkg10_1.
+- **Failed s2 run:** I checked that queue entries 78–85, its N harness evals, only start once its `metrics.json` exists. That file will never appear, so they won't run on the leftover `best.pt` (iteration 100). This matches last round's "no evaluation" decision.
+- **Server 2 N2:** 0 of the 48 records have been pushed so far. The deadline is 11/09 00:00 UTC, so it's not late yet. If they're still missing then, the next round will record that in PROGRESS.
+- **DAILY.md:** not due until 11/09 01:15 UTC.
