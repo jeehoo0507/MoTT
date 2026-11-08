@@ -10,3 +10,15 @@ Fast-forward
  create mode 100644 runs/2026-10-29/r0_coord_s3_rl/log.csv
  create mode 100644 runs/2026-10-29/r0_coord_s3_rl/metrics.json
 Applied autostash.
+라운드 192를 마쳤고 커밋 후 push했습니다 (`r2e main` 6633d0d → f3dcc35). 새로 끝난 실험은 하나이고 큐·플래그는 바꾸지 않았습니다. 드라이버(pid 1792539)는 계속 돌고 있고 메모리는 21.1 / 60 GiB입니다. 꺼져 있던 report_watch·resume_agent는 다시 띄웠습니다.
+
+- **GPU `lo_pkg_r0_s3`:** 증류는 끝났고 val은 pcb10_0 2.25/0.25, ip10_0 0.81/0.19입니다. 지금 RL 단계 it 25까지 정상(NaN·OOM 없음)이고 ~21:15 UTC에 끝날 예정입니다.
+- **cpu N 하네스 `lo_pkg_bp_park_s1_rl+rep4`:** pkg10_1이 끝났고(ok 0.84) RESULTS에 자동 반영됐습니다. pkg10 50문제 합계는 0.90으로, 고치기 전 0.64에서 짝 차이 +0.26 [+0.14, +0.38]입니다. 판정은 쓰지 않고 보고만 했습니다. 지금 cpu에서는 큐 순서대로 `lo_pkg_bp_park_s2` pkg10_0이 돌고 있습니다.
+- **결정:** 큐·플래그·순서는 그대로 두었습니다. 이유는 QUEUE의 N 6단계·N2 지시 때문입니다.
+
+**다음 라운드 할 일:**
+1. GPU가 비면(~21:15) 19:15에 OOM으로 죽은 `bm2_rlonly_s2`를 resume.pt에서 한 번만 이어 돌립니다. 또 같은 OOM이면 STUCK으로 기록합니다.
+2. 11/09 00:00 UTC에 서버 2가 N2 48개를 다 push했는지 확인합니다.
+3. DAILY는 11/09 01:15 UTC에 씁니다.
+
+참고로 이 환경에는 `python` 명령이 없어서 모든 스크립트를 `.venv/bin/python`으로, 명령 하나씩 따로 실행했습니다.
