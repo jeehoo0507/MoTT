@@ -85,6 +85,7 @@ gpu_lane() {
 }
 laneC() {  # coord seeds 1,2 with the harness on the big pkg boards (seed 0 exists: runs/repair16, 2026-10-28)
   for r in r0_coord_s1_rl r0_coord_s2_rl; do
+    [ -f runs/$DAY/$r/best.pt ] || { say "laneC: no $r/best.pt on this server -> server 1 queue has it (QUEUE 11/08 11:55)"; continue; }
     for s in eval_pkg16_0 eval_pkg16_1 eval_pkg20_0 eval_pkg20_1; do
       [ -f runs/$DAY/$r/eval/${s}__${r}+rep4.json ] && continue
       say "laneC start $r $s"; ev $r runs/$DAY/$r $s --repair 4; say "laneC end $r $s"

@@ -991,6 +991,70 @@
    "log": "runs/2026-10-29/r2pk_s2_rl/eval.log"
   },
   {
+   "name": "N coord harness eval_pkg16_0 r0_coord_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s1_rl/eval/eval_pkg16_0__r0_coord_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s1_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg16_1 r0_coord_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s1_rl/eval/eval_pkg16_1__r0_coord_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s1_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg20_0 r0_coord_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_0' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s1_rl/eval/eval_pkg20_0__r0_coord_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s1_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg20_1 r0_coord_s1_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_1' --policy r0_coord_s1_rl=runs/2026-10-29/r0_coord_s1_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s1_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s1_rl/eval/eval_pkg20_1__r0_coord_s1_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s1_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg16_0 r0_coord_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_0' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s2_rl/eval/eval_pkg16_0__r0_coord_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s2_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg16_1 r0_coord_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s2_rl/eval/eval_pkg16_1__r0_coord_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s2_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg20_0 r0_coord_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_0' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s2_rl/eval/eval_pkg20_0__r0_coord_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s2_rl/eval.log"
+  },
+  {
+   "name": "N coord harness eval_pkg20_1 r0_coord_s2_rl+rep4",
+   "cmd": ".venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg20_1' --policy r0_coord_s2_rl=runs/2026-10-29/r0_coord_s2_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/r0_coord_s2_rl",
+   "done": [
+    "runs/2026-10-29/r0_coord_s2_rl/eval/eval_pkg20_1__r0_coord_s2_rl+rep4.json"
+   ],
+   "log": "runs/2026-10-29/r0_coord_s2_rl/eval.log"
+  },
+  {
    "name": "build rnd pool (PROPOSALS 11/07 R)",
    "cmd": ".venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 4 --only train --techs rnd && touch runs/pool_v1/rnd.ok",
    "done": [

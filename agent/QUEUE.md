@@ -1,5 +1,8 @@
 # 사람 지시 (최우선)
 
+## 2026-11-08 11:55 KST — 사람: 좌표 seed 1·2 하네스 평가 8개는 서버 1 cpu 로 (N 의 일부)
+- 서버 2 에 `r0_coord_s1_rl`·`r0_coord_s2_rl` best.pt 가 없다 (pt 는 git 밖). cpu 큐 F3 바로 뒤에 `N coord harness ...` 8개 (pkg16_0/1, pkg20_0/1 × 2 seed)를 사람이 넣었다 — 드라이버가 다음 cpu 항목으로 집는다. 플래그·세트 바꾸지 마라. 서버 2 lane C 는 best.pt 가 없어 건너뛴다.
+
 ## 2026-11-08 11:30 KST — 사람: 밤 실험 묶음 N (PROPOSALS "11/08 N") — 서버 1 할 일, 순서대로, 지금 바로
 1. `git pull` (main 에 `baselines_ml/manoharan2.py`, `baselines_ml/devformer.py`, `scripts/pipeline_day2.py` 의 `distill_only`·cpu `after` 게이트, `scripts/eval_policy.py --bl_seed` 가 들어왔다).
 2. 스모크 셋 (CPU, 각 1분 안): `.venv/bin/python scripts/smoke_manoharan2.py`, `scripts/smoke_devformer.py`, `scripts/smoke_mm_bias.py` → `runs/analysis/smoke_manoharan2.ok`·`smoke_devformer.ok` 가 생겨야 한다 (큐 `after`). 하나라도 실패하면 **아무것도 시작하지 말고** 실패 출력을 PROGRESS 에 그대로 적어라.
