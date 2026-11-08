@@ -37,3 +37,7 @@ Applied autostash.
 1. eval10이 약 06:40 UTC에 끝나면 결과 수집 뒤 좌표 하네스 3/8로 넘어가는지 봅니다.
 2. 약 07:40 UTC 이후 `lo_pkg_bm2_rlonly`가 시작되면 처음 25 iter로 멈춤 규칙에 걸리는지 확인합니다.
 3. DAILY.md는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   54c8b76..132183b  main -> main
