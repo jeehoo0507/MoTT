@@ -1592,3 +1592,9 @@
 [22:16:36] END collect_results rc=0 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
 [22:18:06] START N harness eval_pcb10_0 bm2_rlonly_rl+rep4 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
 [22:18:06] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_0' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl  (log runs/2026-10-29/bm2_rlonly_rl/eval.log)
+[23:12:52] END N harness eval_pcb10_0 bm2_rlonly_rl+rep4 rc=0 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
+[23:12:52] START collect_results | mem 16.8 GiB / 60.0 GiB, oom_kill 2
+[23:12:52] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[23:16:25] END collect_results rc=0 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
+[23:17:55] START N harness eval_pcb10_1 bm2_rlonly_rl+rep4 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
+[23:17:55] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pcb10_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl  (log runs/2026-10-29/bm2_rlonly_rl/eval.log)

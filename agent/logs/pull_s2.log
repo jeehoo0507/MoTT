@@ -1,0 +1,12 @@
+[16:38:40] start: waiting for 18 server-2 F records
+[16:41:42] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s1_rl/eval/eval_pcb10_1__r2pk_s1_rl+rep4.json | records 0 -> 2/18
+[16:47:43] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s1_rl/eval/eval_pkg10_1__r2pk_s1_rl+rep4.json | records 2 -> 4/18
+[16:50:45] merge 2 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s1_rl/eval/eval_ip10_1__r2pk_s1_rl+rep4.json | records 4 -> 7/18
+[16:56:46] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s2_rl/eval/eval_pcb10_1__r2pk_s2_rl+rep4.json | records 7 -> 9/18
+[17:02:48] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg10_1__r2pk_s2_rl+rep4.json | records 9 -> 11/18
+[17:05:49] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s2_rl/eval/eval_ip10_1__r2pk_s2_rl+rep4.json | records 11 -> 13/18
+[17:08:50] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_rl/eval/eval_pkg20_1__r2pk_rl+rep4.json | records 13 -> 14/18
+[17:38:58] merge 2 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s1_rl/eval/eval_pkg20_1__r2pk_s1_rl+rep4.json | records 15 -> 16/18
+[17:54:02] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg20_0__r2pk_s2_rl+rep4.json | records 16 -> 17/18
+[18:12:06] merge 1 commits rc=0:  create mode 100644 runs/2026-10-29/r2pk_s2_rl/eval/eval_pkg20_1__r2pk_s2_rl+rep4.json | records 17 -> 18/18
+[18:15:06] all server-2 F records here, done
