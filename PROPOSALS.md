@@ -305,6 +305,12 @@
 - **보고 (판정 규칙):** 10칸 세 종류 50문제, 정책 단독, ablation − `r2pk_rl` 짝지은 성공률 차와 개수비 (bootstrap 95% CI). 어떤 종류에서든 CI 상한 < 0 **이고** 점추정 ≤ −0.16 (seed 잡음 d*)이면 "그 설계를 빼면 나빠진다"로 쓴다. 아니면 "seed 0에서 차이를 확인하지 못함"으로 쓰고 설계 근거로 쓰지 않는다. seed를 더하지 않는다.
 - 가장 가까운 선행: Residual Policy Learning (A2), cutting plane (A1) / 다른 점: 기여 아님, 우리 RL 설계의 ablation.
 
+## 11/09 N2: 패키지형을 뺀 모델의 PCB·인터포저 하네스 평가 (사람, 11/09 00:20 KST, 어떤 N2 평가도 돌기 전에 고정; 평가만, 학습 없음)
+- **결정 (사람):** N 에서 뺀 pkg 모델은 하네스를 pkg10 에만 씌웠다. "하네스 안에서도 세 종류를 다 푸는가" 를 보려면 같은 모델의 학습한 종류 (PCB·인터포저) 하네스가 필요하다. 그래서 **패키지형을 뺀 모델 15개 모두** 에 `eval_pcb10_0/1`, `eval_ip10_0/1` `--repair 4` (F·N 과 같은 플래그 `--workers 1 --inst_chunk 5`) 를 더한다: MoTT+P1 `lo_pkg_r2pk{,_s1,_s2}`, 좌표 `lo_pkg_r0{,_s1,_s2}`, B-Park `lo_pkg_bp_park{,_s1,_s2}`, B-Manoharan v2 `lo_pkg_bm2_rlonly{,_s1,_s2}` (서버 1 cpu 큐), B-DevFormer `lo_pkg_bdf{,_s1,_s2}_distill` (서버 2 `scripts/server2_n2.sh`, 체크포인트가 서버 2 에만 있음).
+- **왜 지금 (정직하게):** 서버 1 정책 단독 중간 결과 (11/09 00:00) 에서 B-Park·B-Manoharan v2 가 뺀 pkg 에서 0.79·0.83 (MoTT+P1 0.71) 이면서 학습한 PCB 에서 0.03 인 것을 **본 뒤** 에 추가한다. 그래서 이 평가는 **보고용 (판정 없음)** 이다; N 의 읽기 규칙·판정은 바꾸지 않는다.
+- **읽기 (결과 전에 고정, 보고만):** 모델마다 세 종류 (뺀 pkg10 + 학습한 pcb10 + ip10) 하네스 포함 성공률을 seed 3개 묶음 점추정 + 짝지은 bootstrap 95% CI (vs MoTT+P1) 로 적는다. 세 종류 중 **가장 낮은 종류의 성공률 (최저 종류 성공률)** 을 같이 적는다 — "세 종류를 다 푸는가" 를 한 숫자로. 정책 단독 열도 같이 적는다. 어느 쪽이 나와도 그대로 쓰고, "MoTT 만" 이라는 문장은 다른 모델의 최저 종류 성공률이 MoTT+P1 보다 낮고 CI 가 0 밖일 때만 쓴다.
+- 결과를 보고 세트·seed·플래그를 바꾸지 않는다.
+
 ## 11/08 N: 밤 실험 묶음 — 선행 기준선 원문판·뺀 pkg 비교·보충 seed·하네스 평가 (사람, 11/08 11:30 KST, 어떤 N run도 돌기 전에 고정)
 - **결정 (사람):** 최종 방법 (11/08 F) 은 바꾸지 않는다. 보고서 표를 채우기 위한 학습 19개 + 평가. GPU: 서버 1 큐 10 (`lo_pkg_bp_park` ×3, `lo_pkg_bm2_rlonly` ×3, `bm2_rlonly` ×3, `lo_pkg_r0_s3`), 서버 2 `scripts/server2_night.sh` 9 (`lo_pkg_bdf` ×3, `bdf` ×3, `lo_pkg_r2pk_s3`, `r2pk_s3`, `r0_coord_s3`). 2 h/run, 11/09 아침 목표. 밀리면 **뒤에서부터** 뺀다 (보충 seed → 전 종류 bm2·bdf 순); 앞 9개 (뺀 pkg × Park·Manoharan v2·DevFormer) 가 우선.
 - **왜:** (1) 지금 B-Manoharan 은 원문 (박사논문 Paper I) 과 6군데 어긋남 (`PROPOSALS_DRAFT_bm2.md`) — 원문판 `manoharan2` 로 교체해야 "선행을 약하게 만들었다" 지적을 막는다. (2) B-DevFormer (ICML 2023) 는 같은 문제에서 크기·종류 zero-shot 을 보인 가장 가까운 선행인데 표에 없다 (`PROPOSALS_DRAFT_devformer.md`). (3) 외부 세 모델 모두 **뺀 pkg 학습이 없다** → 초록의 "처음 보는 종류" 비교가 좌표 자체 비교에만 걸려 있다. (4) 좌표+V 16·20칸은 seed 0뿐, GA·LS 는 seed 0 한 번뿐. (5) MoTT·좌표 seed 3 추가는 보충.
