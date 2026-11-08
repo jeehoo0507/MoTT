@@ -32,3 +32,7 @@ Round 140 is done and pushed to `r2e/main` (commit `871e5ab`). Nothing new finis
 3. When `lo_pkg_bp_park_s2` ends (around 07:40 UTC), the driver starts `lo_pkg_bm2_rlonly`. I'll check its first 25 iterations against the stop rule (NaN, or fail 1.00 on all three val sets with loss 0).
 
 The next DAILY.md is due 11/09 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   871e5ab..da46c4c  main -> main
