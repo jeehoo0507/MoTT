@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 10:40 UTC, 라운드 237 — 새 기록 0; 사람 T (속도 측정, 서버 2) 등록 확인; GPU = 사람 S bdf_s4 distill it 1125 (5683 s); RESULTS 1548 기록 그대로)
+# PROGRESS (갱신 2026-11-09 10:56 UTC, 라운드 238 — 새 기록 0; GPU = 사람 S bdf_s4 distill it 1325 (6654 s, 끝 ≈ 11:00 UTC); RESULTS 1548 기록 그대로)
+
+## 라운드 238 (2026-11-09 10:52 ~ 10:56 UTC)
+- `git fetch r2e` (10:52): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T, 서버 2 사람 실행) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (197570 B). mem 19.1 GiB / 60, oom_kill 2.
+- 참고: 이 셸엔 `python` 이 없음 → `.venv/bin/python scripts/...` 로 부름 (도우미 동작 같음).
+- S (사람 `seeds_s.sh s1 run`): bdf_s4 distill it 1325 (6654 s, gpu peak 13.9 GB), train.py 2067496 elapsed 6834 s (같은 프로세스, `--hours 2.0` → 곧 끝). 손대지 않음.
+- 한 줄 (N 6단계): GPU = 사람 S (bdf_s4), cpu = 없음, 새 기록 0.
+- 결정: 새 항목 넣지 않음, RESULTS 다시 만들지 않음 — 이유: QUEUE 11/09 14:00 (S 도는 동안 GPU 금지), 11/09 19:20 (T 는 서버 2), 새 기록 없음.
+- 할 일 (다음): (1) bdf_s4 distill 끝 → 사람 평가 push → collect_results; 그 뒤 r2pk_s4·s5. (2) T 기록 push (`runs/speed_1109/eval`, 21) → `speed_table.py` 출력 그대로 RESULTS 쪽에. (3) nrest 남은 1 (서버 2). (4) restore_proc_log. (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+
+# (이전) 라운드 237 머리말: (갱신 2026-11-09 10:40 UTC, 라운드 237 — 새 기록 0; 사람 T (속도 측정, 서버 2) 등록 확인; GPU = 사람 S bdf_s4 distill it 1125 (5683 s); RESULTS 1548 기록 그대로)
 
 ## 라운드 237 (2026-11-09 10:36 ~ 10:40 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. 라운드 236 뒤 사람 커밋 4a359f1 + 머지 64eba0f (10:31 UTC): **PROPOSALS "11/09 T" 보고용 속도 측정** + QUEUE 11/09 19:20 KST — 서버 2 에서 사람이 `scripts/speed_bench.sh run` (16칸 `eval_{ip,pcb,pkg}16_0` 앞 10문제, 21 작업, 코어 10–15, ≈1.7 h), 기록 → `runs/speed_1109/eval`, 큐에 넣지 않음. 서버 1 에이전트 할 일 없음 (기록 push 되면 `scripts/speed_table.py` 표만 옮김).

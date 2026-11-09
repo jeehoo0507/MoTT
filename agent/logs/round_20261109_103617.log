@@ -23,3 +23,7 @@ Round 237 is done: PROGRESS.md is updated, and the commit `12c6444` is pushed to
 - **Next round:** when the bdf_s4 distill finishes, its evaluation gets pushed and I regenerate RESULTS. After that come the speed benchmark records, the last server-2 evaluation still outstanding, and the next DAILY.md at 11/10 01:15 UTC.
 
 The two STUCK lines at the top of PROGRESS.md are unchanged. The seed-2 Manoharan run (`bm2_rlonly_s2`) failed twice with a GPU out-of-memory error and won't be rerun, per the human's decision. The 16-cell LS memory problem is also still open.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   12c6444..72a4e00  main -> main
