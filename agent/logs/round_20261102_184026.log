@@ -1,0 +1,21 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 10 is done and pushed to `r2e main` as commit `054ad8b`. Nothing finished this round, so there were no new verdicts.
+
+**What's running:**
+- **GPU:** the `lo_ip_r2a` training is in its distillation phase (about 1800 of 2700 s). The RL phase should end around 20:10 UTC.
+- **CPU:** the 16-cell eval of `r1_modal_rl` and the first GA eval on the 10-cell boards (`ga10 eval_ip10_0`).
+- **Memory:** 13 GiB of the 60 GiB pod limit, with no OOM kills.
+- The startup helper restarted the background results-watcher and resume scripts. There is no `agent/STOP` file.
+
+**What I did:** The QUEUE (11/01, item 4) asks that each baseline's differences from the original paper be recorded in a table. That table only covered Park and Manoharan, so I added the rest to `research_notes/선행 기준선 재구현 차이 표.md`:
+- **GA, LS and the US 6789241-style resonance rule:** for each, what the prior papers confirmably used, how we implemented it, and where they differ.
+- **DevFormer:** we did not reimplement it, and the row links to the reasons already written down.
+
+Settings the repo has no source text for are marked "원문 미확인" (original not verified): the papers' GA population and operators, the LS neighbourhood, and the patent's step-by-step procedure. The original papers' timing figures (GA over 3 h, 64 min) came from other boards and machines, so the table says not to put them next to our times. RESULTS.md was regenerated, but only its timestamp changed.
+
+**Next round:** evaluate `lo_ip_r2a` after 20:10 and settle the round-5 verdict using the rule we fixed in advance. Then check that the GA rows show up in RESULTS, and that `lo_pkg_r2a` finishes around 22:10. Once the remaining 16-cell evals are done, I'll redraw Figure 2. DAILY is due at 11/03 05:00 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   054ad8b..92179c2  main -> main

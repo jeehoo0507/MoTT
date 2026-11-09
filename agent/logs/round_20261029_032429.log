@@ -1,0 +1,20 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 21 is done: PROGRESS.md and RESULTS.md are updated, committed and pushed (`6eaa556`). Nothing is stuck.
+
+**Runs this round**
+- **r3a distill (level 3 with the frequency-match bias, QUEUE item a) finished.** It ran 1477 iterations in 0.77 h with no out-of-memory errors. Its best validation score was 1.858 at iteration 800; the unbiased r3 distill reached 1.743 at iteration 1400. The validation set is only 16 problems, so this doesn't decide anything — the 10-cell evaluation will.
+- **r3a RL started at 03:57** and should end around 05:15. The driver then runs the r3a 10-cell evaluation first.
+- **The single-type greedy+prune runs are filling in.** Type 1 on 10-cell pcb and pkg is done: success 0.72 / 0.56 on the two pcb files and 0.40 / 0.56 on the two pkg files. Once type 2 finishes (around 05:30), the type-aware greedy baseline table fills in automatically.
+- The day-2 driver and the 16-cell greedy+prune job are running normally. Pod memory is 16.4 / 60 GiB with no OOM kills, and the CPU process limit of 4 is full, so I started nothing new.
+
+**QUEUE item B (external data check): dropped after about 15 minutes.** I cloned the public DevFormer repository into `/home/coder/ext_devformer`, outside our repo, and only read its numpy arrays without running any of its code. The data can't be used with our setup:
+- It is one fixed impedance table (201 frequencies × 100 ports), with no target impedance and no pretrained checkpoint in the repository (the checkpoint is a separate Google Drive download).
+- It has one capacitor type, resistor plus capacitor only, with zero inductance. Our frequency-match bias has nothing to work with, and our policy expects exactly 3 capacitor types as input.
+- Our pass/fail check (`verify.py`, 700 points) recomputes the board's impedance at arbitrary frequencies from the board model. A fixed 201-point table can't be checked that way, so using this data would need a new success criterion, which our rules don't allow.
+
+PROPOSALS.md item (e) lists the reasons and what would have to be approved to use this data anyway. The inspection script is `scripts/ext_devformer_inspect.py`.
+
+**Next round:** finish r3a RL, run its 10-cell evaluation, then build the type-aware greedy table and compare r3a against both r3 and that baseline.
+To https://github.com/jeehoo0507/R2E.git
+   6eaa556..568dcef  main -> main

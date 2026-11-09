@@ -19,3 +19,7 @@ Already up to date.
 - **기록 위치 정정**: PROGRESS.md는 `agent/`가 아니라 저장소 루트에 있습니다. 처음에 경로를 잘못 잡아 고친 뒤 커밋했습니다.
 
 다음 라운드에는 r2pk_s5_rl 하네스 평가 8개를 RESULTS에 반영하고, S가 끝나면 GPU를 다시 쓸지 QUEUE에서 확인합니다. DAILY는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c04a2c5..5590fb7  main -> main

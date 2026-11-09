@@ -1,0 +1,15 @@
+cell C=0.885 pF, edge L=12.57 pH, edge R=17.24 mohm, f1(10x10)=15.0 GHz
+[1] dense  bank: Woodbury vs direct solve: loaded_state 1.3e-13, probe_impedance 1.5e-13
+[1] sparse bank: Woodbury vs direct solve: loaded_state 1.5e-13, probe_impedance 8.0e-14
+[2] rank-1 action effects vs recomputed (add/swap/remove, 21 cases): max err 1.6e-15
+[3] 10x10, 8 inst, 3 probes, targets ['flat', 'flat', 'step', 'flat', 'step', 'step', 'flat', 'step']
+    greedy           count [14, 3, 4, 3, 5, 2, 3, 3]  feasible 1.00  (0.27s)
+    greedy+prune     count [7, 3, 4, 3, 5, 2, 3, 3]  feasible 1.00  (0.16s)
+    random+prune(8)  count [7, 3, 12, 6, 11, 5, 8, 3]  feasible 1.00  (2.37s)
+    incremental vs from-scratch state after 106 steps (no resync): max rel err 5.0e-10
+    local search     count [5, 2, 4, 3, 5, 2, 3, 3]  (0.68s)
+    GA 32x30         count [3, 2, 4, 3, 5, 2, 3, 3]  feasible 1.00  (1.16s)
+    greedy+prune solutions verified by direct solve: 8/8
+[4] phys: sampled count 28.9 feasible 0.44, backward OK (loss 507.03), greedy replay reproduces greedy+prune: True
+[4] coord: sampled count 32.6 feasible 0.31, backward OK (loss -432.09), greedy replay reproduces greedy+prune: True
+all checks done

@@ -1,0 +1,12 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I updated PROGRESS.md for round 33 and committed and pushed it to `r2e main`. This round was a status check only: no experiment finished, so RESULTS.md is unchanged.
+
+- **Processes:** the day-2 pipeline driver and the 16-cell greedy+prune evaluation (`side16_gp`) are both still running. Pod memory is 16.8 of 60 GiB and nothing has been killed for running out of memory.
+- **GPU:** r3a (stage-3 model with the new resonance-to-decap frequency bias) is at RL iteration 175. Nothing has run out of memory and GPU peak is 16.4 GB. RL should finish around 05:15 UTC.
+- **E0+ baseline** (greedy+prune run once per fixed decap type, keeping the smallest successful solution): only 1 of 6 files is done for the 10-cell boards, the same as last round.
+- **Decision:** I didn't start anything new or change code, because all 4 allowed CPU slots are busy and the next decision depends on r3a finishing.
+
+Next round: once r3a RL is done, the driver runs its 10-cell evaluation. Then I compare it against the unbiased stage-3 model (r3) and against E0+, and regenerate RESULTS.md.
+To https://github.com/jeehoo0507/R2E.git
+   879666c..81d2dbf  main -> main

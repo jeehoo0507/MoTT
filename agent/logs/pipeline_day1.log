@@ -1,0 +1,110 @@
+[12:15:48] wait for train/val pools
+[12:57:48] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 8  (log agent/logs/make_teacher.log)
+[14:20:44] driver start | mem 0.8 GiB / 60.0 GiB, oom_kill 0
+[14:20:44] START teacher | mem 0.8 GiB / 60.0 GiB, oom_kill 0
+[14:20:44] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[15:14:48] END teacher rc=0 | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:14:48] START train r0_coord (CERTIFY_WORKERS=2) | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:14:48] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r0_coord --arm '--feat coord' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval
+[15:14:48] START train r1_modal (CERTIFY_WORKERS=2) | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:14:48] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r1_modal --arm '--feat modal' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval
+[15:15:49] END train r0_coord rc=1 | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:15:49] END train r1_modal rc=1 | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:15:49] START train r2_mott (CERTIFY_WORKERS=2) | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:15:49] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r2_mott --arm '--model mott' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval
+[15:15:49] START build eval pools side 10,16 | mem 2.4 GiB / 60.0 GiB, oom_kill 0
+[15:15:49] $ /home/coder/R2E/.venv/bin/python scripts/build_pools.py --out runs/pool_v1 --workers 2 --only eval --eval_sizes 10,16  (log agent/logs/build_pools_v1_r3.log)
+[15:36:20] driver start | mem 9.3 GiB / 60.0 GiB, oom_kill 0
+[15:36:20] START teacher | mem 9.3 GiB / 60.0 GiB, oom_kill 0
+[15:36:20] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[15:36:23] END teacher rc=0 | mem 9.5 GiB / 60.0 GiB, oom_kill 0
+[15:36:23] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[15:36:23] START train r0_coord (CERTIFY_WORKERS=2) | mem 9.5 GiB / 60.0 GiB, oom_kill 0
+[15:36:23] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r0_coord --arm '--feat coord' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r0_coord/rung_stdout.log)
+[15:44:58] driver start | mem 12.3 GiB / 60.0 GiB, oom_kill 0
+[15:44:58] START teacher | mem 12.3 GiB / 60.0 GiB, oom_kill 0
+[15:44:58] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[15:45:01] END teacher rc=0 | mem 12.7 GiB / 60.0 GiB, oom_kill 0
+[15:45:01] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[15:45:01] ATTACH train r0_coord (CERTIFY_WORKERS=2) (pid 16503 still running)
+[15:48:59] driver start | mem 12.4 GiB / 60.0 GiB, oom_kill 0
+[15:48:59] START teacher | mem 12.4 GiB / 60.0 GiB, oom_kill 0
+[15:48:59] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[15:49:01] END teacher rc=0 | mem 12.7 GiB / 60.0 GiB, oom_kill 0
+[15:49:01] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[15:49:01] ATTACH train r0_coord (CERTIFY_WORKERS=2) (pid 16503 still running)
+[16:24:01] END train r0_coord (CERTIFY_WORKERS=2) (attached) | mem 14.0 GiB / 60.0 GiB, oom_kill 0
+[16:24:01] START train r1_modal (CERTIFY_WORKERS=2) | mem 14.0 GiB / 60.0 GiB, oom_kill 0
+[16:24:01] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r1_modal --arm '--feat modal' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r1_modal/rung_stdout.log)
+[16:39:36] driver start | mem 21.5 GiB / 60.0 GiB, oom_kill 0
+[16:39:36] START teacher | mem 21.5 GiB / 60.0 GiB, oom_kill 0
+[16:39:36] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[16:39:39] END teacher rc=0 | mem 17.3 GiB / 60.0 GiB, oom_kill 0
+[16:39:39] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[16:39:39] ATTACH train r1_modal (CERTIFY_WORKERS=2) (pid 24912 still running)
+[17:16:39] END train r1_modal (CERTIFY_WORKERS=2) (attached) | mem 17.9 GiB / 60.0 GiB, oom_kill 0
+[17:16:39] START train r0_coord (CERTIFY_WORKERS=2) | mem 17.9 GiB / 60.0 GiB, oom_kill 0
+[17:16:39] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r0_coord --arm '--feat coord' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r0_coord/rung_stdout.log)
+[17:22:36] END train r0_coord (CERTIFY_WORKERS=2) rc=1 | mem 25.3 GiB / 60.0 GiB, oom_kill 0
+[17:22:36] START train r2_mott (CERTIFY_WORKERS=2) | mem 25.3 GiB / 60.0 GiB, oom_kill 0
+[17:22:36] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r2_mott --arm '--model mott' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r2_mott/rung_stdout.log)
+[17:38:09] driver start | mem 28.2 GiB / 60.0 GiB, oom_kill 0
+[17:38:09] START teacher | mem 28.2 GiB / 60.0 GiB, oom_kill 0
+[17:38:09] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[17:38:12] END teacher rc=0 | mem 29.1 GiB / 60.0 GiB, oom_kill 0
+[17:38:12] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[17:38:12] ATTACH train r2_mott (CERTIFY_WORKERS=2) (pid 33737 still running)
+[18:25:16] driver start | mem 10.1 GiB / 60.0 GiB, oom_kill 0
+[18:25:16] START teacher | mem 10.1 GiB / 60.0 GiB, oom_kill 0
+[18:25:16] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[18:25:18] END teacher rc=0 | mem 9.3 GiB / 60.0 GiB, oom_kill 0
+[18:25:18] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[18:25:18] START train r0_coord (CERTIFY_WORKERS=2) | mem 9.2 GiB / 60.0 GiB, oom_kill 0
+[18:25:18] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r0_coord --arm '--feat coord' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r0_coord/rung_stdout.log)
+[19:41:35] END train r0_coord (CERTIFY_WORKERS=2) rc=0 | mem 15.1 GiB / 60.0 GiB, oom_kill 0
+[19:41:35] START train r1_modal (CERTIFY_WORKERS=2) | mem 15.1 GiB / 60.0 GiB, oom_kill 0
+[19:41:35] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r1_modal --arm '--feat modal' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r1_modal/rung_stdout.log)
+[20:57:51] END train r1_modal (CERTIFY_WORKERS=2) rc=0 | mem 19.5 GiB / 60.0 GiB, oom_kill 0
+[20:57:51] START train r2_mott (CERTIFY_WORKERS=2) | mem 19.5 GiB / 60.0 GiB, oom_kill 0
+[20:57:51] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r2_mott --arm '--model mott' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r2_mott/rung_stdout.log)
+[22:14:13] END train r2_mott (CERTIFY_WORKERS=2) rc=0 | mem 14.6 GiB / 60.0 GiB, oom_kill 0
+[22:14:13] START smoke r3 loop (tiny boards) | mem 14.6 GiB / 60.0 GiB, oom_kill 0
+[22:14:13] $ /home/coder/R2E/.venv/bin/python scripts/smoke_pipeline.py --arms loop --workers 2  (log agent/logs/smoke_loop.log)
+[22:15:58] END smoke r3 loop (tiny boards) rc=0 | mem 14.7 GiB / 60.0 GiB, oom_kill 0
+[22:15:58] START train r3_loop (CERTIFY_WORKERS=2) | mem 14.7 GiB / 60.0 GiB, oom_kill 0
+[22:15:58] $ /home/coder/R2E/.venv/bin/python scripts/run_rung.py --name r3_loop --arm '--model loop' --day 2026-10-28 --pool runs/pool_v1 --distill_hours 0.75 --rl_hours 1.25 --skip_eval  (log runs/2026-10-28/r3_loop/rung_stdout.log)
+[23:27:42] driver start | mem 12.1 GiB / 60.0 GiB, oom_kill 0
+[23:27:42] START teacher | mem 12.1 GiB / 60.0 GiB, oom_kill 0
+[23:27:42] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[23:27:45] END teacher rc=0 | mem 12.1 GiB / 60.0 GiB, oom_kill 0
+[23:27:45] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[23:27:45] ATTACH train r3_loop (CERTIFY_WORKERS=2) (pid 76992 still running)
+[00:19:45] END train r3_loop (CERTIFY_WORKERS=2) (attached) | mem 7.2 GiB / 60.0 GiB, oom_kill 0
+[00:19:45] r0_coord: rl stage finished, skip training
+[00:19:45] r1_modal: rl stage finished, skip training
+[00:19:45] r2_mott: rl stage finished, skip training
+[00:20:45] early evals while pools build: eval_ip10_0,eval_ip10_1,eval_ip16_0,eval_pcb10_0,eval_pcb10_1,eval_pcb16_0,eval_pcb16_1,eval_pkg10_0,eval_pkg10_1,eval_pkg16_0,eval_pkg16_1
+[00:20:45] START eval r0_coord_distill (built pools) | mem 8.0 GiB / 60.0 GiB, oom_kill 0
+[00:20:45] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip10_0,eval_ip10_1,eval_ip16_0,eval_pcb10_0,eval_pcb10_1,eval_pcb16_0,eval_pcb16_1,eval_pkg10_0,eval_pkg10_1,eval_pkg16_0,eval_pkg16_1' --policy r0_coord_distill=runs/2026-10-28/r0_coord_distill/best.pt --workers 2 --out runs/2026-10-28/r0_coord_distill  (log runs/2026-10-28/r0_coord_distill/eval.log)
+[01:36:06] driver start | mem 38.7 GiB / 60.0 GiB, oom_kill 0
+[01:36:06] START teacher | mem 38.7 GiB / 60.0 GiB, oom_kill 0
+[01:36:06] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[01:36:09] END teacher rc=0 | mem 39.4 GiB / 60.0 GiB, oom_kill 0
+[01:36:09] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[01:36:09] r0_coord: rl stage finished, skip training
+[01:36:09] r1_modal: rl stage finished, skip training
+[01:36:09] r2_mott: rl stage finished, skip training
+[01:36:09] r3_loop: rl stage finished, skip training
+[01:37:09] ATTACH eval from previous driver (pid 95481)
+[01:59:44] driver start | mem 10.2 GiB / 60.0 GiB, oom_kill 0
+[01:59:44] START teacher | mem 10.2 GiB / 60.0 GiB, oom_kill 0
+[01:59:44] $ /home/coder/R2E/.venv/bin/python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher --workers 4  (log agent/logs/make_teacher.log)
+[01:59:47] END teacher rc=0 | mem 10.2 GiB / 60.0 GiB, oom_kill 0
+[01:59:47] ATTACH build eval pools side 10,16 (pid 13040 still running)
+[01:59:47] r0_coord: rl stage finished, skip training
+[01:59:47] r1_modal: rl stage finished, skip training
+[01:59:47] r2_mott: rl stage finished, skip training
+[01:59:47] r3_loop: rl stage finished, skip training
+[02:00:47] rung evals on side 16 (side 10 in side_evals.py, gp in side16_gp.py): eval_ip16_0,eval_pcb16_0,eval_pcb16_1,eval_pkg16_0,eval_pkg16_1
+[02:00:47] START eval r0_coord_rl (eval_ip16_0,eval_pcb16_0,eval_pcb16_1,eval_pkg16_0,eval_pkg16_1, 1 workers) | mem 9.9 GiB / 60.0 GiB, oom_kill 0
+[02:00:47] $ /home/coder/R2E/.venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_ip16_0,eval_pcb16_0,eval_pcb16_1,eval_pkg16_0,eval_pkg16_1' --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --workers 1 --inst_chunk 5 --out runs/2026-10-28/r0_coord_rl  (log runs/2026-10-28/r0_coord_rl/eval.log)

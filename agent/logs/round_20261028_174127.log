@@ -1,0 +1,33 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I found the real cause of the RL-stage GPU out-of-memory crashes and fixed it. That clears the STUCK item: rung 0 RL has now run 100 iterations with no OOM (GPU peak 15.2 GB). Both commits are pushed to `r2e main`.
+
+**Cause**
+- When an exact check fails during RL, frequency points get added to that training pool's working grid. After I split each RL step into chunks, this happened once per chunk instead of once per step. Each call pads every instance up to the longest list in it, so the grid grew much faster: one pool went from 267 to 511 points in 25 iterations.
+- GPU memory for both the stored pool and the rollouts grows with the number of grid points, so smaller chunks would still have hit OOM eventually. My last-round claim that chunking gives "the same update" was wrong: the grid grew differently.
+
+**Fix (`train.py`)**
+1. New grid points are added once at the end of each step, as before chunking.
+2. `--grid_growth 0.5`: each pool's grid can grow to at most 1.5× its starting size. Failures past that limit are still counted as failures by the exact check.
+3. If a CUDA OOM happens inside a step, that step is skipped (no update), the chunk size is halved, and the run stops after 20 OOMs.
+
+A CPU smoke test (`scripts/smoke_rl_grid.py`) passes, including an injected OOM.
+
+**Effect**
+- I stopped rung 2's RL 12 minutes in because it was on the old code, and restarted the driver. All three rungs now run RL from scratch under the same rules: r0 (started 18:25) → r1 → r2 → r3. The finished distill checkpoints are reused.
+- On the same pool, r0 at iteration 25 has 310 grid points (511 before) and a GPU peak of 13.0 GB (18.3 GB before). It runs about 14 s per iteration, so roughly 320 iterations fit in 1.25 h.
+- The growth cap was hit 6 times by iteration 100. That means samples other than each instance's best one may score better on the working grid than they really are. This needs to go in the methods chapter.
+- First RL validation at iteration 100 is not yet better than the distill-only checkpoint: interposer fail rate 0.25 vs 0.19, package 0.88 vs 0.56 (validation numbers, not report numbers).
+
+**Your decision: evaluation pools are too slow**
+- Building one 16-cell evaluation pool takes an estimated 6–9 h on one thread; time grows with roughly the 6th power of board side. All six take about 18–27 h with 2 workers, and the 20-cell pools would take about 90 h, which is not realistic.
+- The driver only starts the baseline and rung evaluations after all 10- and 16-cell pools exist, so even the 10-cell evaluations are pushed to around midday 10/29.
+- I left this alone: stopping a build throws away its progress, and adding workers would break the 4-process limit you set in `agent/QUEUE.md`.
+- Your options, written up in `PROPOSALS.md`:
+  - **(a)** raise the process limit to 6 so 10-cell evaluations run alongside the pool builds;
+  - **(b)** stop one 16-cell pool build and run the 10-cell evaluations in its slot;
+  - **(c)** cut the 20-cell evaluation set from 25 to 8 problems per file.
+
+The next round will check r0's finished RL run (around 19:45) and confirm r1 starts.
+To https://github.com/jeehoo0507/R2E.git
+   1372119..ab61d2f  main -> main

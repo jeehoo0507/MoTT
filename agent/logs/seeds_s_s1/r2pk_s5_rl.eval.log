@@ -7,3 +7,4 @@
 [   964s] eval_ip10_1    r2pk_s5_rl                   ok 1.00 count 8.68 0.255s/inst rounds 3
 done
 8 sets x 1 methods = 8 jobs, 1 workers -> runs/2026-10-29/r2pk_s5_rl/eval
+[  1399s] eval_pkg16_1   r2pk_s5_rl+rep4              ok 0.84 count 9.57 3.113s/inst rounds 4

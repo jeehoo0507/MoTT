@@ -1,0 +1,159 @@
+{
+ "pcb": {
+  "n": 50,
+  "share_uncovered": 0.18,
+  "n_bands_q": [
+   2.0,
+   3.0,
+   3.0,
+   4.0
+  ],
+  "n_uncov_q": [
+   0.0,
+   0.0,
+   0.0,
+   2.0
+  ],
+  "uncov_worst_q": [
+   0.318,
+   0.555,
+   0.721
+  ],
+  "tok_logf_span_q": [
+   0.904,
+   0.98,
+   1.185
+  ],
+  "seed0": {
+   "r2_unc": 1.0,
+   "r2_cov": 0.854,
+   "r0_unc": 1.0,
+   "r0_cov": 0.951,
+   "diff_unc": 0.0,
+   "diff_cov": -0.098
+  },
+  "seed1": {
+   "r2_unc": 0.556,
+   "r2_cov": 0.829,
+   "r0_unc": 0.889,
+   "r0_cov": 0.951,
+   "diff_unc": -0.333,
+   "diff_cov": -0.122
+  },
+  "seed2": {
+   "r2_unc": 0.889,
+   "r2_cov": 0.829,
+   "r0_unc": 1.0,
+   "r0_cov": 0.976,
+   "diff_unc": -0.111,
+   "diff_cov": -0.146
+  },
+  "rule_a": false,
+  "rule_b": false
+ },
+ "pkg": {
+  "n": 50,
+  "share_uncovered": 0.06,
+  "n_bands_q": [
+   2.0,
+   2.0,
+   2.0,
+   3.0
+  ],
+  "n_uncov_q": [
+   0.0,
+   0.0,
+   0.0,
+   1.0
+  ],
+  "uncov_worst_q": [
+   1.023,
+   1.632,
+   1.784
+  ],
+  "tok_logf_span_q": [
+   0.398,
+   0.472,
+   0.579
+  ],
+  "seed0": {
+   "r2_unc": 0.333,
+   "r2_cov": 0.745,
+   "r0_unc": 0.667,
+   "r0_cov": 0.766,
+   "diff_unc": -0.333,
+   "diff_cov": -0.021
+  },
+  "seed1": {
+   "r2_unc": 0.333,
+   "r2_cov": 0.872,
+   "r0_unc": 0.667,
+   "r0_cov": 0.745,
+   "diff_unc": -0.333,
+   "diff_cov": 0.128
+  },
+  "seed2": {
+   "r2_unc": 0.667,
+   "r2_cov": 0.617,
+   "r0_unc": 0.667,
+   "r0_cov": 0.766,
+   "diff_unc": 0.0,
+   "diff_cov": -0.149
+  },
+  "rule_a": false,
+  "rule_b": false
+ },
+ "ip": {
+  "n": 50,
+  "share_uncovered": 0.0,
+  "n_bands_q": [
+   1.0,
+   1.0,
+   1.0,
+   2.0
+  ],
+  "n_uncov_q": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "uncov_worst_q": [
+   NaN,
+   NaN,
+   NaN
+  ],
+  "tok_logf_span_q": [
+   0.276,
+   0.394,
+   0.439
+  ],
+  "seed0": {
+   "r2_unc": null,
+   "r2_cov": 1.0,
+   "r0_unc": null,
+   "r0_cov": 1.0,
+   "diff_unc": null,
+   "diff_cov": 0.0
+  },
+  "seed1": {
+   "r2_unc": null,
+   "r2_cov": 1.0,
+   "r0_unc": null,
+   "r0_cov": 0.96,
+   "diff_unc": null,
+   "diff_cov": 0.04
+  },
+  "seed2": {
+   "r2_unc": null,
+   "r2_cov": 1.0,
+   "r0_unc": null,
+   "r0_cov": 1.0,
+   "diff_unc": null,
+   "diff_cov": 0.0
+  },
+  "rule_a": false,
+  "rule_b": false
+ },
+ "candidate": false
+}

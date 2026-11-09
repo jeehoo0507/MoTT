@@ -1,0 +1,14 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Pool build is the only pending dependency (monitor armed on its log); the next steps (teacher generation, baseline eval, rung launches) all need its files. Waiting for the first "built" events.
+
+Nothing else is actionable until the first pool files land; waiting on the monitor.
+
+First pool file done (eval_pcb10_0: 25 boards, grid grew to 257 points over 10 cutting-plane rounds, greedy+prune certified 92%). Waiting for the rest; CPU is saturated by the build so I will not start the teacher stage yet.
+
+Second file: eval_pcb10_1 certified greedy+prune only 76% after 10 rounds, so some PCB 10x10 boards resist certification (grid keeps growing). Noting it as an environment issue for DAILY.md; continuing to wait.
+
+Waiting on the pool build (monitor re-armed). The eval 20x20 and 16x16 files are the long pole; train files will follow.
+
+Noted (eval_pkg10_0: 88% certified). Still waiting for the rest.

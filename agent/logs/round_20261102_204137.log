@@ -1,0 +1,27 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 14 is done and pushed (commits `6df7916`, `0048238`). No new instructions in QUEUE.md, and nothing is stuck.
+
+**Status:** all jobs are running normally. Pod memory is 8–13 GiB of 60, with no out-of-memory kills.
+- **GPU:** `lo_pkg_r2a` is in the distill stage and should finish around 22:20 UTC. Then `r2m` (~23:40), then `lo_pcb_r2m` (~01:00).
+- **CPU:** the 20-cell eval boards (8 per file, one worker) started building at 20:51. The fourth CPU slot is running the GA baseline on pcb10_1.
+
+**Done this round:**
+- **Fig 2 redrawn with `r2a_rl`** (`reports/fig2_bigboard_draft.png`), now that all six of its 16-cell evals are in. At 16 cells r2a's success is pcb 0.88, pkg 0.46, ip 1.00, at 1.6–3.7 s per board versus 62–131 s for greedy+prune.
+- **The r2a advantage stays at 10 cells.** At 10 cells r2a beat r2_mott on pcb (+0.08) and pkg (+0.12) with CIs above 0. At 16 cells the difference is pcb −0.02 and pkg −0.06, and both CIs include 0. The report should say r2a's edge holds only at the 10-cell size.
+- **pkg16 is weak for every learned model.** All of them (0.46–0.64) score below greedy+prune (0.82).
+- **Queued the next GPU pair so the GPU doesn't sit idle after ~01:00.** Decision recorded in PROGRESS.md: `r2g` and `lo_pcb_r2g` raise the training grid's growth cap (`--grid_growth`) from 0.5 to 1.0. This is the H2 fix from round 1 that hasn't been tested yet. It reuses the same distilled starting weights and only re-runs RL, so the grid cap is the only change.
+  - The pass/fail rule is written down before results and is the same as round 7's.
+  - If `r2m` wins under its own rule, its seed 1 and 2 runs go ahead of `r2g`.
+  - Result rows for `r2g` will appear in RESULTS.md automatically once its evals exist.
+
+**Next round:**
+- Restart the fourth CPU slot's eval runner (`side_slot.py`) with `r2g` added to its targets.
+- Record the `r2m` verdict.
+- Watch memory while the 20-cell boards build.
+
+The 24-hour DAILY.md is due at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0048238..ad1205e  main -> main

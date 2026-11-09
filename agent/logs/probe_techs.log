@@ -1,0 +1,21 @@
+pcb: cell 500um diel 10um C_cell 0.885pF L_edge 12.57pH R_edge 17.24mohm VRM 5mohm+200pH f1(10x10) 15.0GHz f1(20x20) 7.5GHz SRF ['0.16GHz', '0.92GHz', '5.03GHz']
+pkg: cell 400um diel 35um C_cell 0.138pF L_edge 43.98pH R_edge 2.30mohm VRM 3mohm+100pH f1(10x10) 20.3GHz f1(20x20) 10.2GHz SRF ['0.80GHz', '2.77GHz', '8.21GHz']
+ip: cell 200um diel 1um C_cell 1.417pF L_edge 1.26pH R_edge 34.48mohm VRM 5mohm+50pH f1(10x10) 37.5GHz f1(20x20) 18.7GHz SRF ['7.12GHz', '25.16GHz', '71.18GHz']
+  pcb easy 10x10: g+p feasible 1.00 count [1, 3, 4, 2] F=38 targets ['flat', 'flat', 'step', 'flat'] (11s)
+  pkg easy 10x10: g+p feasible 1.00 count [1, 2, 2, 1] F=37 targets ['flat', 'flat', 'step', 'flat'] (11s)
+  pcb hard 10x10: g+p feasible 1.00 count [3, 8, 7, 2] F=38 targets ['flat', 'flat', 'step', 'flat'] (11s)
+  pkg hard 10x10: g+p feasible 1.00 count [2, 6, 15, 8] F=37 targets ['flat', 'flat', 'step', 'flat'] (11s)
+  ip easy 10x10: g+p feasible 1.00 count [2, 18, 48, 4] F=36 targets ['flat', 'flat', 'step', 'flat'] (12s)
+  ip hard 10x10: g+p feasible 0.25 count [45, 94, 74, 79] F=36 targets ['flat', 'flat', 'step', 'flat'] (15s)
+  pcb easy 16x16: g+p feasible 1.00 count [1, 1, 1, 2] F=38 targets ['flat', 'step', 'flat', 'flat'] (72s)
+  pcb hard 16x16: g+p feasible 1.00 count [4, 4, 2, 4] F=38 targets ['flat', 'step', 'flat', 'flat'] (72s)
+  pkg easy 16x16: g+p feasible 1.00 count [1, 1, 1, 1] F=38 targets ['flat', 'step', 'flat', 'flat'] (72s)
+  pkg hard 16x16: g+p feasible 1.00 count [4, 4, 4, 6] F=38 targets ['flat', 'step', 'flat', 'flat'] (73s)
+  ip easy 16x16: g+p feasible 1.00 count [15, 1, 9, 15] F=38 targets ['flat', 'step', 'flat', 'flat'] (70s)
+  ip hard 16x16: g+p feasible 0.00 count [218, 209, 203, 218] F=38 targets ['flat', 'step', 'flat', 'flat'] (168s)
+  pcb easy 20x20: g+p feasible 1.00 count [3, 4, 4, 1] F=38 targets ['step', 'step', 'step', 'flat'] (183s)
+  pcb hard 20x20: g+p feasible 1.00 count [4, 11, 6, 6] F=38 targets ['step', 'step', 'step', 'flat'] (184s)
+  pkg easy 20x20: g+p feasible 1.00 count [2, 1, 3, 1] F=38 targets ['step', 'step', 'step', 'flat'] (186s)
+  ip easy 20x20: g+p feasible 1.00 count [2, 32, 20, 10] F=38 targets ['step', 'step', 'step', 'flat'] (179s)
+  ip hard 20x20: g+p feasible 1.00 count [18, 122, 33, 44] F=38 targets ['step', 'step', 'step', 'flat'] (192s)
+  pkg hard 20x20: g+p feasible 1.00 count [15, 186, 7, 4] F=38 targets ['step', 'step', 'step', 'flat'] (211s)

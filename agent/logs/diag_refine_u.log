@@ -1,0 +1,5 @@
+r2_mott pkg {'n_fail': 40, 'covered': 0.65, 'uncovered': 0.35, 'd_tok_med': 0.0317, 's_med': 0.0723, 'underres_med': 0.4401, 'worst_med': 0.2323, 'grid_feasible': 0.98, 'exact_pass': 0.18, 'n': 50}
+r2_mott_s1 pkg {'n_fail': 39, 'covered': 0.5641, 'uncovered': 0.4359, 'd_tok_med': 0.0477, 's_med': 0.0742, 'underres_med': 0.4439, 'worst_med': 0.2096, 'grid_feasible': 0.98, 'exact_pass': 0.2, 'n': 50}
+r2_mott_s2 pkg {'n_fail': 44, 'covered': 0.5, 'uncovered': 0.5, 'd_tok_med': 0.0928, 's_med': 0.1065, 'underres_med': 0.474, 'worst_med': 0.2383, 'grid_feasible': 0.98, 'exact_pass': 0.1, 'n': 50}
+P1 check {'n_covered': 70, 'frac_gt_002': 0.4143, 'median': 0.012} -> queue
+P3 report {'n_covered': 70, 'frac_gt_002_raw': 0.4143, 'frac_gt_002_distinct': 0.5571, 'median_raw': 0.012, 'median_distinct': 0.0237, 'underres_med': 0.4456}

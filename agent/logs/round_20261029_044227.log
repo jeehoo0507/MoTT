@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+라운드 35는 상태만 확인했고, 새로 끝난 실험이나 결과는 없습니다.
+
+- **상태:** 학습 드라이버(`pipeline_day2`)와 16칸 g+p 평가(`side16_gp`)가 둘 다 돌고 있습니다. 메모리는 16.6 / 60 GiB이고 oom_kill은 0입니다.
+- **GPU r3a RL:** 2503초에 it 200까지 갔고 OOM은 0입니다. it 200 검증(16문제, 보고서용 아님)은 pcb 1.124 / 실패 0.62, pkg 1.000 / 0.88, ip 0.691 / 0.12로 최고점인 it 100(점수 1.678)보다 나쁩니다. 비교 대상 r3도 최고점이 it 100이었고 그 뒤로 나빠졌습니다. 평가는 둘 다 최고점 체크포인트로 하므로 비교 조건은 같습니다.
+- **E0+(종류 인식 greedy):** 6개 파일 중 3개 그대로입니다. 남은 것은 ip10_0, ip10_1, pkg10_1입니다. RESULTS.md는 바뀐 게 없어 다시 만들지 않았습니다.
+- **결정:** 실험이나 코드는 바꾸지 않았습니다. CPU 4칸이 다 차 있고, 다음 판단은 r3a RL이 끝난 뒤(~05:15)에야 할 수 있습니다.
+- PROGRESS.md를 갱신했고 commit과 `git push r2e main`까지 마쳤습니다.
+
+다음 라운드에 할 일: r3a RL이 끝나면 10칸 평가가 나오고, 남은 종류 2 기록으로 E0+를 6/6 채운 뒤 r3 대비, E0+ 대비로 판정합니다.
+To https://github.com/jeehoo0507/R2E.git
+   dceee23..8c5ec2a  main -> main

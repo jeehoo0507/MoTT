@@ -1,0 +1,12 @@
+2 sets x 3 methods = 6 jobs, 1 workers -> runs/analysis/ckpt_last/eval
+[   222s] eval_pkg10_1   r2_mott_distill@last         ok 0.56 count 7.14 1.324s/inst rounds 4
+[   457s] eval_pkg10_1   r2_mott_s1_distill@last      ok 0.72 count 7.72 1.437s/inst rounds 4
+[   679s] eval_pkg10_1   r2_mott_s2_distill@last      ok 0.64 count 6.88 1.338s/inst rounds 4
+[   805s] eval_pkg10_0   r2_mott_distill@last         ok 0.68 count 6.24 1.033s/inst rounds 4
+[   907s] eval_pkg10_0   r2_mott_s1_distill@last      ok 0.64 count 6.12 0.482s/inst rounds 4
+[  1008s] eval_pkg10_0   r2_mott_s2_distill@last      ok 0.80 count 6.60 0.453s/inst rounds 4
+done
+2 sets x 1 methods = 2 jobs, 1 workers -> runs/analysis/ckpt_last/eval
+[   236s] eval_pkg10_1   r2it_distill@last            ok 0.68 count 7.88 1.347s/inst rounds 4
+[   368s] eval_pkg10_0   r2it_distill@last            ok 0.76 count 6.21 0.494s/inst rounds 4
+done

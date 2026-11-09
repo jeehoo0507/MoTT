@@ -1,0 +1,21 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I handled the new QUEUE instruction (14:20 UTC: leave-one-type-out runs, then shut down) in this round and ended the loop. Everything is committed and pushed to `r2e main`, and `agent/STOP` exists. The driver, `side16_gp` and the new results watcher are still running, as instructed.
+
+**Status at 14:13 UTC:** pod memory 23.4 / 60 GiB, no OOM kills. r0_coord_s1 finished distillation (2215 iterations, best at 1800) and started RL at 14:12; it should finish around 15:30. No new evaluation results came in this round.
+
+**Leave-one-type-out experiment:**
+1. **Queue:** the 9 runs `lo_{ip,pcb,pkg}_r{0,1,2}` are added to `agent/day2_queue.json`. I put them right after r0_coord_s1 rather than at the very top of the list. Every entry above it has already finished, so they still run next. This placement also stops a driver restart from putting a second training job on the GPU while r0_coord_s1 is still running. Each run uses the same options as the existing rung 0/1/2 runs, plus the two new pool and validation options.
+2. **Checks (CPU only):** each run's training set is 18 files, with zero files of the left-out type and 9 of each of the other two. `train.py` reads two validation pools and averages them to pick the best checkpoint. All 9 option sets parse. Nothing was wrong, so nothing was held back.
+3. **Evaluation:** the driver already evaluates every finished run on all six 10×10 eval files, so no change was needed.
+4. **Results table:** `collect_results.py` has a new section "한 종류 빼고 학습". It covers the three comparisons requested: rung 1 vs 0, rung 2 vs 0, and each left-out run vs the same rung trained on all types. Missing results show as "–". I checked the layout with renamed copies of existing records, since no real results exist yet.
+5. **Auto-report:** `scripts/report_watch.py` is running. Its first cycle at 14:17 committed RESULTS.md and the 114 existing eval files (force-added, since `runs/` is gitignored) and pushed. It stops by itself once all 9 runs are evaluated and pushed, or after 72 hours. I also added it to `ensure_running.py` so it comes back after a pod restart.
+
+**Shutdown:** I did the end-of-loop procedure now rather than waiting for 15:00. The 14:20 instruction overrides 08:40 and puts shutdown right after these steps, within the 16:30 deadline. The end-of-loop summary at the top of PROGRESS.md lists confirmed results, the schedule and open questions. The 9 runs take about 2 hours each, so they should finish around 09:30 UTC on 10/30, with evaluations after that. The 10 seed runs follow, about 20 more hours.
+
+**Still waiting:**
+- **Results not in yet:** the leave-one-type-out results, the B-Manoharan 10×10 table, the 3-seed confidence intervals, and the 16×16 tables.
+- **CPU lane:** these evaluations queue behind the 16×16 E0+ pcb16_0 type 0 job, which started at 11:38 and has no known end time.
+- **Not started:** the 20×20 eval boards haven't been built.
+To https://github.com/jeehoo0507/R2E.git
+   c3ecf0d..3e78e20  main -> main

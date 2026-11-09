@@ -1,0 +1,5 @@
+[ OK ] 1 tiny pools (3 kinds) (32.9s) — train_pcb6_0 F=72 ok 0.50, val_pcb6_0 F=86 ok 0.25, eval_pcb6_0 F=93 ok 0.25, train_pkg6_0 F=57 ok 1.00, val_pkg6_0 F=73 ok 0.75, eval_pkg6_0 F=107 ok 0.50, train_ip6_0 F=71 ok 0.75, val_ip6_0 F=66 ok 0.75, eval_ip6_0 F=60 ok 0.75
+[ OK ] 2 teacher (g+p -> LS, certified) (3.9s) — [     4s] train_pkg6_0     built       1s g+p ok 1.00 LS ok 0.75 LS/g+p 0.9333333333333332 improved 0.3333333333333333 teacher count 3.00
+[ OK ] 3+4 train distill -> rl (loop) (43.7s) — loop: distill + rl, metrics written
+[ OK ] 5 eval_policy (gp, ls, policies) (23.9s) — 15 eval records
+PIPELINE SMOKE PASSED

@@ -1,0 +1,8 @@
+2 sets x 3 methods = 6 jobs, 1 workers -> runs/analysis/ckpt_last/eval
+[   132s] eval_pcb10_0   r2_mott_rl@last              ok 0.92 count 6.87 0.416s/inst rounds 4
+[   273s] eval_pcb10_0   r2_mott_s1_rl@last           ok 0.88 count 6.91 0.469s/inst rounds 4
+[   410s] eval_pcb10_0   r2_mott_s2_rl@last           ok 0.92 count 7.09 0.486s/inst rounds 4
+[   551s] eval_pcb10_1   r2_mott_rl@last              ok 0.92 count 6.96 0.581s/inst rounds 4
+[   745s] eval_pcb10_1   r2_mott_s1_rl@last           ok 0.96 count 7.17 1.053s/inst rounds 4
+[   884s] eval_pcb10_1   r2_mott_s2_rl@last           ok 1.00 count 7.24 0.561s/inst rounds 4
+done

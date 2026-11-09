@@ -1,6 +1,20 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 16:20 UTC, 라운드 252 — 새 기록 6; S r2pk_s4_rl 평가 끝 (15:45), r2pk_s5_rl 정책 6 / 6 끝, 하네스 8 세트 시작; GPU 비어 있음; RESULTS 1587 → 1593 기록)
+사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`). cjh 쪽 clone 이 같은 상태면 다음 push 가 또 지울 수 있으니 그 clone 을 `git fetch && git reset --hard r2e/main` 으로 맞춰 주세요.
+# PROGRESS (갱신 2026-11-09 16:55 UTC, 라운드 253 — 사람 커밋 31663a9 의 추적 파일 1443개 삭제 복원; 새 기록 9; S r2pk_s5_rl 하네스 진행 중; GPU 비어 있음; RESULTS 1593 → 1602 기록)
+
+## 라운드 253 (2026-11-09 16:28 ~ 16:55 UTC)
+- `git fetch r2e` (16:29): 새 원격 커밋 없음. 그 뒤 16:33 report_watch 의 `pull --rebase --autostash` 가 사람 커밋 5개 (31663a9, f768848 s2 bdf_s3_distill 하네스 7, 6e451ce·32aa7d4 PROPOSALS U, d45e2cc speed_1109b PCB 재측정 6) 를 가져옴.
+- 사고: 31663a9 가 추적 파일 1443 개 삭제 (위 첫 줄). collect_results 가 RESULTS 에서 R4 표·학습 표 행 59 줄을 지운 것으로 발견. 드라이버 (pid 1792539) 는 16:34–16:36 에 r3a_rl·r2a_rl eval10, r2m·r2g·lo_pcb_r2g·r2s1·r2pkdd·lo_pcb_r2pkdd train 을 시작했다가 모두 rc=1 ("skipped until driver restart"). 옛 best.pt·last.pt (11-02) 손상 없음; 실패 시도는 각 rung 의 `rung_stdout.log`·`driver.log` 만 덧씀.
+- 결정: 31663a9 의 삭제를 사고로 보고 부모 5590fb7 에서 지워진 1443 개를 모두 복원 (나중 커밋이 건드린 파일 0 개, PROPOSALS 변경은 그대로 둠) — 이유: 같은 커밋 메시지는 PROPOSALS 한 줄 수정이고, AGENT_PROMPT·코드·결과 파일 삭제 지시는 QUEUE·PROPOSALS 어디에도 없음; 복원은 되돌릴 수 있고 기존 상태 유지가 가장 보수적. 드라이버는 다시 시작하지 않음 (실패 표시는 재시작 전까지 건너뛰기라, 파일이 돌아온 지금 다시 돌 일 없음).
+- 삭제된 로그에 쓰던 프로세스 로그를 `restore_proc_log.py` 로 다시 씀: pipeline_day2.log (+4.8 KB), loop_bg.log (+19 KB). r2pk_s5_rl.eval.log 는 같음.
+- S (사람): run.log 마지막 "15:45 eval done r2pk_s4_rl". r2pk_s5_rl 하네스 `+rep4` 1 / 8 (pkg16_1 0.84 / 0.76 / 0.45 [25]), 나머지 진행 중 (eval_policy 2126250). 손대지 않음.
+- `.venv/bin/python scripts/collect_results.py` (복원 뒤) → 1602 기록 (+9: r2pk_s5_rl+rep4 pkg16_1 1, 서버 2 bdf_s3_distill+rep4 7, report_watch 1). `runs/speed_1109b` (6 기록) 는 "PCB형 재측정" 절에만 들어가고 주 표 기록 수엔 안 섞임 (1595 → 1602 = bdf_s3 7) — 할 일 (3) 끝. 판정 없음 (S 는 보고만).
+- 한 줄 (N 6단계): GPU = 비어 있음, cpu = 사람 S 평가 (r2pk_s5_rl 하네스 1 / 8), 새 기록 9.
+- 결정: 새 항목 넣지 않음 — 이유: QUEUE 11/09 14:00 (S 가 평가로 살아 있는 동안 GPU 금지), 11/06 12:00 UTC 마감 지남.
+- 할 일 (다음): (1) 다음 pull 뒤 추적 파일 수 (`git ls-tree -r HEAD --name-only | wc -l` ≈ 2580) 확인 — 또 줄면 같은 스크립트로 복원. (2) r2pk_s5_rl 하네스 7 → collect_results. (3) S 끝나면 run.log·QUEUE 확인. (4) nrest 남은 1 (서버 2). (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+
+# (이전) 라운드 252 머리말: (갱신 2026-11-09 16:20 UTC, 라운드 252 — 새 기록 6; S r2pk_s4_rl 평가 끝 (15:45), r2pk_s5_rl 정책 6 / 6 끝, 하네스 8 세트 시작; GPU 비어 있음; RESULTS 1587 → 1593 기록)
 
 ## 라운드 252 (2026-11-09 16:08 ~ 16:20 UTC)
 - `git fetch r2e` (16:08): 새 원격 커밋 없음. 사람 s1 8b88cc0 (16:01, r2pk_s5_rl 정책 6 파일) 은 이 작업 트리에서 커밋됨. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. `runs/speed_1109b` 아직 없음.

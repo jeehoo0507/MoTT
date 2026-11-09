@@ -1,0 +1,188 @@
+{
+  "args": {
+    "out": "runs/2026-10-29/r2tf_distill",
+    "device": "cuda",
+    "seed": 0,
+    "stage": "distill",
+    "init": "",
+    "iters": 1000000,
+    "B": 16,
+    "M": 8,
+    "chunk": 2,
+    "grid_growth": 0.5,
+    "sizes": "8-12",
+    "shapes": "rect,L,holes",
+    "targets": "flat,step",
+    "n_probe": "1-3",
+    "difficulty": "0.02-0.2",
+    "max_steps": 64,
+    "feat": "mott",
+    "model": "mott",
+    "baseline": "group",
+    "pool": "runs/pool_v1",
+    "pool_glob": "train_*.pkl",
+    "val_pools": "val_pcb10_0,val_pkg10_0,val_ip10_0",
+    "teacher_dir": "data/teacher_rcp",
+    "hours": 0.75,
+    "certify": 1,
+    "feas_margin": 0.0,
+    "hard_weight": 0.0,
+    "prior": false,
+    "no_prune": false,
+    "layers": 4,
+    "glob": false,
+    "d": 128,
+    "heads": 8,
+    "loop_train": "2-8",
+    "loop_eval": 8,
+    "fc_bias": false,
+    "mode_head": false,
+    "lr": 0.0003,
+    "imit": 1.0,
+    "teacher": "gp",
+    "lam": 1.0,
+    "lam_lr": 0.05,
+    "fail_target": 0.02,
+    "clip": 1.0,
+    "no_amp": false,
+    "grad_ckpt": false,
+    "val_every": 100,
+    "val_sizes": "10,20",
+    "val_n": 16,
+    "ckpt_min": 20
+  },
+  "git": "0a30a42",
+  "iters": 2200,
+  "hours": 0.7729188744889365,
+  "final_val": {
+    "val_pcb10_0": [
+      1.1160087585449219,
+      0.625
+    ],
+    "val_pkg10_0": [
+      1.0333333015441895,
+      0.6875
+    ],
+    "val_ip10_0": [
+      0.7275720238685608,
+      0.25
+    ]
+  },
+  "best_val_score": 1.748873273531596,
+  "best_iter": 1900,
+  "teacher_replaced": 0,
+  "lam": 1.0,
+  "cuda_oom_skipped": 0,
+  "grid_capped_steps": 0,
+  "chunk_final": 2,
+  "pool_F": {
+    "train_ip10_0": [
+      140,
+      140
+    ],
+    "train_ip10_1": [
+      177,
+      177
+    ],
+    "train_ip10_2": [
+      107,
+      107
+    ],
+    "train_ip12_0": [
+      135,
+      135
+    ],
+    "train_ip12_1": [
+      117,
+      117
+    ],
+    "train_ip12_2": [
+      135,
+      135
+    ],
+    "train_ip8_0": [
+      83,
+      83
+    ],
+    "train_ip8_1": [
+      177,
+      177
+    ],
+    "train_ip8_2": [
+      107,
+      107
+    ],
+    "train_pcb10_0": [
+      205,
+      205
+    ],
+    "train_pcb10_1": [
+      262,
+      262
+    ],
+    "train_pcb10_2": [
+      216,
+      216
+    ],
+    "train_pcb12_0": [
+      280,
+      280
+    ],
+    "train_pcb12_1": [
+      251,
+      251
+    ],
+    "train_pcb12_2": [
+      257,
+      257
+    ],
+    "train_pcb8_0": [
+      187,
+      187
+    ],
+    "train_pcb8_1": [
+      243,
+      243
+    ],
+    "train_pcb8_2": [
+      213,
+      213
+    ],
+    "train_pkg10_0": [
+      227,
+      227
+    ],
+    "train_pkg10_1": [
+      267,
+      267
+    ],
+    "train_pkg10_2": [
+      253,
+      253
+    ],
+    "train_pkg12_0": [
+      263,
+      263
+    ],
+    "train_pkg12_1": [
+      253,
+      253
+    ],
+    "train_pkg12_2": [
+      255,
+      255
+    ],
+    "train_pkg8_0": [
+      232,
+      232
+    ],
+    "train_pkg8_1": [
+      223,
+      223
+    ],
+    "train_pkg8_2": [
+      220,
+      220
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+라운드 14를 마쳤습니다. PROGRESS.md와 RESULTS.md를 갱신하고 커밋(`12af30b`)해 `r2e main`에 push했습니다. 설정은 하나도 바꾸지 않았고, QUEUE에 새 지시도 없었습니다.
+
+- **3단(loop) distill 끝:** 23:05에 끝났습니다. 1500 iter / 0.77 h, best는 iter 1400, GPU peak 12.1 GB, OOM 없음. 0·1단과 같은 시간 예산인데 iter 수는 더 적습니다(0단 2192, 1단 2109). loop 모델은 iter 하나가 더 느려서(~1.6 s/iter)이고, 이 차이는 metrics.json과 RESULTS.md에 남아 있습니다.
+- **3단 RL 시작:** iter 75까지 OOM 없이 돌고 있습니다. GPU peak는 13.3 GB에서 14.6 GB로 늘었고 0~2단 RL과 같은 추세라, 24 GB 안에서 끝날 것으로 봅니다. 실제로 OOM이 없었는지는 끝날 때(~00:25 예상) 로그의 `cuda_oom_skipped` 값으로 확인해야 합니다.
+- **평가 풀:** `eval_pkg16_0`이 5.1 h 걸려 완성됐습니다. 16칸 풀 중 가장 오래 걸렸습니다. 남은 것은 ip16 2개와 ip10_1입니다. 이 셋이 끝나야 기준선(E0)과 각 단의 평가가 시작되므로, 아직 평가 결과는 0개입니다.
+- **상태:** 파드 메모리 12.6 GiB / 60, oom_kill 0, 동시 CPU 프로세스는 한도 4 이하입니다.
+
+다음 라운드에서는 3단 RL 종료와 `cuda_oom_skipped`를 확인하고, ip16 풀 소요 시간을 기록하고, 풀이 다 끝나면 평가가 시작됐는지 봅니다. 첫 DAILY.md는 10/29 05:30 UTC 무렵에 씁니다.
+To https://github.com/jeehoo0507/R2E.git
+   12af30b..ec36819  main -> main

@@ -1,0 +1,16 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+This round is wrapped up. All the long jobs are still running and none of them failed, so I didn't change any settings or start any new experiments.
+
+**Status (21:48 UTC)**
+- The driver is alive. Pod memory is 20.8 of 60 GiB with no out-of-memory kills. The cap of 4 concurrent CPU processes from `agent/QUEUE.md` is full, so nothing new was launched.
+- **Eval pools:** `eval_pkg16_1` finished in 11,319 s (3.1 h). `eval_pkg16_0` was still building after about 3.8 h. Still to come: pkg16_0, ip16 ×2 and ip10_1. At the measured ~3.1 h per 16-side pool, the 10- and 16-side pools should all be done around 01:00 on 10/29. The E0 baselines and the rung evaluations start after that.
+- **Rung 2 (mott) RL training:** no GPU out-of-memory up to iter 200, GPU peak 15.5 GB at iter 100, about 14.4 s per iteration.
+  - Interim validation at iter 100, not for the report: decap count vs greedy+prune and exact-check fail rate were pcb 0.83 / fail 0.62, pkg 0.97 / fail 0.69, ip 0.69 / fail 0.12.
+  - Iter 200 became the new best checkpoint (validation score 1.723).
+  - The same pattern from rungs 0 and 1 is back: fail is 0.01–0.23 on the training batches but 0.12–0.69 in validation.
+- **Bookkeeping:** I updated `PROGRESS.md` with a round 10 section and regenerated `RESULTS.md`, which still has 0 eval records because the pools aren't finished. Committed as `4155220` and pushed to `r2e main`.
+
+**Next round:** record rung 2 RL's completion (around 22:15), confirm the rung 3 loop smoke test passes and training starts (`agent/logs/smoke_loop.log`), and log the build times for the pkg16_0 and ip16 pools.
+To https://github.com/jeehoo0507/R2E.git
+   4155220..0e615eb  main -> main

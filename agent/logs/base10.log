@@ -1,0 +1,8 @@
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-28/baselines/eval
+[     2s] eval_pkg10_1   modal_rule                   exists
+[   113s] eval_pcb10_0   modal_rule                   ok 1.00 count 7.08 0.490s/inst rounds 3
+[   260s] eval_pkg10_0   modal_rule                   ok 0.84 count 6.05 0.673s/inst rounds 4
+[   398s] eval_pcb10_1   modal_rule                   ok 1.00 count 7.20 0.520s/inst rounds 4
+[   546s] eval_ip10_0    modal_rule                   ok 0.96 count 11.08 0.815s/inst rounds 4
+[   650s] eval_ip10_1    modal_rule                   ok 0.92 count 14.04 0.423s/inst rounds 4
+done

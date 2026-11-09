@@ -1,0 +1,39 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+P1 (`--peak_refine`) passes its pre-registered rule: "이김" on same-kind pcb. It is not the final architecture yet; that waits on a seed-2 check and the held-out ip/pkg runs, which I've queued. Round 39 is committed and pushed; the run is unattended and QUEUE.md has no new instructions.
+
+**P1 result (seed 0 and 1 pooled, 100 problem pairs per board):**
+
+| Board | seed 0 | seed 1 | Pooled [95% CI] |
+|---|---|---|---|
+| same-kind pcb | +0.02 | +0.14 | +0.080 [+0.010, +0.160] |
+| same-kind pkg | +0.06 | +0.04 | +0.050 [−0.050, +0.150] |
+| same-kind ip | −0.02 | +0.00 | −0.010 [−0.030, +0.000] |
+| held-out pcb | −0.04 | +0.04 | +0.000 [−0.080, +0.090] |
+
+- **Why it counts as a win:** the pcb CI is above 0, both seeds are positive, and no board is below −0.05.
+- **Caveat:** the seed-1 pcb gain of +0.14 is measured against `r2_mott_s1_rl`, whose pcb score of 0.78 is the lowest of its three seeds. The seed-2 check tests exactly this.
+- **New runs this round:** `r2pk_s1_rl` scored ip 1.00 / pcb 0.92 / pkg 0.88. `lo_pcb_r2pk_s1` scored 0.88 on the held-out pcb.
+
+**What I set up for the follow-up:**
+- **Rule written first:** I wrote the follow-up rule into PROPOSALS before the last P1 eval came in. P1 is confirmed only if seeds 0+1+2 pooled have a CI above 0 and seed 2 is ≥ 0. To adopt it as the final structure, the held-out ip and pkg results must also both be above −0.16.
+- **Queued runs:** `r2pk_s2`, `lo_pcb_r2pk_s2`, `lo_ip_r2pk` and `lo_pkg_r2pk` run after P2's four runs, finishing around 23:00 UTC, well before the 11/6 12:00 deadline for starting new attempts. Keeping P2 first preserves the existing queue order.
+- **Results table:** RESULTS.md now has an auto-generated `### P1 확장` table. I checked it renders correctly using fake records only.
+
+**P2 (`--dedup_modes`), first result (one seed, so no verdict yet):**
+- The distill-only checkpoint scored ip 0.80 / pcb 0.88 / pkg 0.78. Against `r2_mott_distill` that is pkg +0.08 [−0.06, +0.22] and ip −0.12 [−0.24, +0.00].
+- In the report-only diagnostic, removing duplicate tokens took the uncovered failures from 14 to 0, and the median number of distinct tokens went from 3 to 5. But the policy still reads peak levels about 0.45 decade too low (0.44 before), so that problem remains.
+- On ip, 10 of the distill-only checkpoint's failures keep adding type-2 decaps (about 78 on average). The older checkpoints fail the same way, just less often, so I logged it as an observation rather than a bug in the dedup code.
+
+**Next round:**
+- The `r2dd` RL eval is due around 09:20 UTC.
+- After `lo_pcb_r2dd` (~11:20), check P2's early-stop rule.
+- Once `r2dd_s1` finishes distilling (~12:00), queue its distill-only eval.
+- The P2 pooled verdict comes after ~15:20.
+- If P2 also wins, write the rule for combining P1 and P2 before any of those results come in.
+
+I also corrected a memory note: live training progress is in `<name>_distill/log.txt` and `<name>_rl/log.txt`, not `rung_stdout.log`.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6530206..54c78d7  main -> main

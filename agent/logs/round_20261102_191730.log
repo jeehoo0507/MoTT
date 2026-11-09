@@ -1,0 +1,30 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+I've finished this round's work and pushed it to `r2e main` as commit `3b97076`. The only thing that came due this round was redrawing Figure 2. Nothing new is in `agent/QUEUE.md`; the latest instruction there was already handled in rounds 5 and 10.
+
+**Figure 2 (16×16 boards).** The figure is redrawn in `reports/fig2_bigboard_draft.png` and now uses complete results. Each of greedy+prune, the type-aware greedy (E0+), the resonance rule (`modal_rule`) and rungs 0–3 has all 50 problems.
+
+| Success rate | greedy+prune | type-aware greedy | resonance rule | rung 0 | rung 1 | rung 2 | rung 3 |
+|---|---|---|---|---|---|---|---|
+| PCB-like | 0.92 | 0.46 | 1.00 | 1.00 | 0.92 | 0.90 | 0.86 |
+| package-like | 0.82 | 0.80 | 0.60 | 0.64 | 0.52 | 0.52 | 0.58 |
+| interposer-like | 0.56 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+
+- **Interposer-like:** rungs 2 and 3 beat greedy+prune by +0.44 success (95% CI +0.30 to +0.58). They use about 0.30× as many decaps on problems both methods solved.
+- **Speed:** rungs 2 and 3 take 1.7–4.1 s per board, against 62–131 s for greedy+prune. That is 22–48 times faster, not the "hundreds of times" the figure was aiming for.
+- **Timing caveat:** the same method's time per board differs up to about 2× between the two files of a set. For example, rung 0 on PCB-like took 19.1 s on one file and 37.5 s on the other. These runs shared the CPU with other jobs, so the times should be described as "same machine, load not controlled". I did not check why rungs 0 and 1 are slower than rungs 2 and 3.
+
+**Genetic algorithm, interposer-like 10×10 (both files, 50 problems).** It succeeds on 0.40, the same as greedy+prune (difference +0.00, CI −0.08 to +0.08). That is 0.60 below the type-aware greedy (CI −0.72 to −0.46), and it uses 2.37× as many decaps. The PCB-like and package-like files are still running.
+
+**Running now:** the GPU is still training `lo_ip_r2a` (r2a with the interposer kind left out). It should finish around 20:12 UTC, after which `lo_pkg_r2a`, `r2m` and `lo_pcb_r2m` follow until about 00:50. The CPU is evaluating r2a on the six 16×16 files. Memory is 9.4 of 60 GiB with no out-of-memory kills.
+
+**Next round:**
+1. Evaluate `lo_ip_r2a` and apply the decision rule written down in advance in round 5.
+2. Add r2a to Figure 2 once its six 16×16 evaluations are done.
+3. Record the remaining genetic-algorithm results.
+
+DAILY.md is due at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3b97076..e2a7b17  main -> main

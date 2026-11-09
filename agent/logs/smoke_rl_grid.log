@@ -1,0 +1,25 @@
+--- oom: rc 0
+params: 0.02M  device: cpu  stage: rl  feat: coord  model: grid
+  teacher train_ip8_0.npz: teacher file, ok 0.62, count 2.50, g+p 22.06
+  teacher train_pcb8_0.npz: teacher file, ok 1.00, count 3.88, g+p 4.12
+pool: 2 train batches, 32 instances
+it 1: CUDA OOM (batch.P=1 F=187), step skipped, chunk -> 1 (OOM 1) | gpu peak 0.0 GB
+  val val_ip10_0: count/greedy+prune=1.785 fail=0.75
+  new best (score 3.285) at iter 6
+done: 6 iters, 0.03 h, best iter 6 score 3.285, replaced 0 | gpu peak 0.0 GB
+
+
+oom iters 6 oom 1 chunk 1 pool_F {'train_ip8_0': [83, 83], 'train_pcb8_0': [187, 187]} capped 3
+--- cap: rc 0
+params: 0.02M  device: cpu  stage: rl  feat: coord  model: grid
+  teacher train_ip8_0.npz: teacher file, ok 0.62, count 2.50, g+p 22.06
+  teacher train_pcb8_0.npz: teacher file, ok 1.00, count 3.88, g+p 4.12
+pool: 2 train batches, 32 instances
+  val val_ip10_0: count/greedy+prune=0.754 fail=0.81
+  new best (score 2.379) at iter 6
+done: 6 iters, 0.01 h, best iter 6 score 2.379, replaced 0 | gpu peak 0.0 GB
+
+
+cap iters 6 oom 0 chunk 2 pool_F {'train_ip8_0': [83, 100], 'train_pcb8_0': [187, 259]} capped 0
+SMOKE RL GRID OK
+EXIT 0
