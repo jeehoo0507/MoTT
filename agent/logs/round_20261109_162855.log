@@ -17,3 +17,7 @@ Already up to date.
 - pull할 때마다 추적 파일 수(약 2582)를 확인합니다. 이번처럼 크게 줄면 같은 스크립트로 복원합니다. 이 점검을 메모리에 저장해 두었습니다.
 - r2pk_s5_rl 하네스 남은 7개가 끝나면 결과를 모읍니다.
 - 11/10 01:15 UTC에 DAILY.md를 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   112186a..61c4a62  main -> main
