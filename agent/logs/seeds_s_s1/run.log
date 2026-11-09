@@ -21,3 +21,7 @@
 11-09 13:04 start train r2pk_s5 (std, seed 5)
 14:33 pushed
 11-09 14:33 eval done bdf_s4_distill
+14:46 pushed
+11-09 15:08 end train r2pk_s5 rc=0
+15:08 pushed
+11-09 15:08 gpu lane done, waiting for evals

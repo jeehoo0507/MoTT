@@ -20,3 +20,7 @@ Round 248 is committed and pushed to r2e main (73ce423). I didn't start any new 
 | r2pk_s4_rl, policy only | pkg10_1 | 0.60 / 0.81 / 0.57 [25] |
 
 - **PROGRESS.md:** updated with the round, the "결정:" line for not adding runs, and the next steps. Those are the remaining r2pk_s4/s5 evals, and checking that the T and U speed records stay out of the main tables once they're pushed. The next DAILY is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   73ce423..9822f0a  main -> main
