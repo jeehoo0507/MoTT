@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 14:45 UTC, 라운드 248 — 새 기록 4; S bdf_s4_distill harness 8 / 8 끝; r2pk_s4_rl 정책 평가 2 / 6; r2pk_s5 rl it 100; RESULTS 1572 → 1576 기록)
+# PROGRESS (갱신 2026-11-09 15:15 UTC, 라운드 249 — 새 기록 4; S r2pk_s4_rl 정책 6 / 6 끝, 하네스 1 / 8; r2pk_s5 rl 학습 끝 (15:08 rc=0); RESULTS 1576 → 1580 기록)
+
+## 라운드 249 (2026-11-09 14:59 ~ 15:15 UTC)
+- `git fetch r2e` (14:59, 15:12): 새 원격 커밋은 사람 9229ad8 s1 (15:08, r2pk_s5_rl log.csv·metrics.json) 하나, 이미 HEAD (s1 스크립트가 이 작업 트리에서 커밋). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 29.5 → 25.6 GiB / 60, oom_kill 2.
+- S (사람): r2pk_s5 rl 끝 (run.log "15:08 end train r2pk_s5 rc=0", log.csv it 200: ratio 0.88 / best 0.70; 이어서 "gpu lane done, waiting for evals"). r2pk_s4_rl 정책 평가 6 / 6 끝 (14:46), 이어서 하네스 `+rep4` 8 세트 (eval_policy 2115151), 15:12 에 pkg16_1 1 개. 손대지 않음.
+- `.venv/bin/python scripts/collect_results.py` → 1580 기록 (+4; 시스템 python3 엔 numpy 없음 → venv 로). 스크립트 숫자 그대로 (성공률 / 개수 비 / 문제당 초 [n]): r2pk_s4_rl 정책 단독 ip10 1.00 / 0.74 / 1.01 [50], pcb10 0.84 / 0.84 / 0.20 [50], pkg10 0.62 / 0.80 / 0.55 [50]. 판정 없음 (S 는 보고만).
+- 한 줄 (N 6단계): GPU = 비어 있음 (S gpu lane 끝, 평가만 남음), cpu = 사람 S 평가 (r2pk_s4_rl 하네스 1 / 8), 새 기록 4.
+- 결정: GPU 가 비었지만 새 항목 넣지 않음 — 이유: QUEUE 11/09 14:00 "S 가 도는 동안 GPU 에 다른 것 시작 금지" — `seeds_s.sh s1 run` 은 평가 대기로 아직 살아 있음 (보수적으로 S 전체가 끝날 때까지 기다림). 11/06 12:00 UTC 마감 지나 새 시도도 없음.
+- 할 일 (다음): (1) r2pk_s4_rl 하네스 남은 7 + r2pk_s5_rl 정책·하네스 평가 (사람 스크립트) → collect_results (venv). (2) S 끝나면 run.log 확인, GPU 다시 쓸지 QUEUE 확인. (3) `runs/speed_1109b`·U push → collect_results 가 주 표에 섞지 않는지 확인. (4) nrest 남은 1 (서버 2). (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+
+# (이전) 라운드 248 머리말: (갱신 2026-11-09 14:45 UTC, 라운드 248 — 새 기록 4; S bdf_s4_distill harness 8 / 8 끝; r2pk_s4_rl 정책 평가 2 / 6; r2pk_s5 rl it 100; RESULTS 1572 → 1576 기록)
 
 ## 라운드 248 (2026-11-09 14:37 ~ 14:45 UTC)
 - `git fetch r2e` (14:38): 새 원격 커밋 없음 (사람 8bc60ec·cfd6e80·68aabe0 = PROPOSALS 11/09 U "새 문제 50개로 속도 재측정", `scripts/speed_fresh.{py,sh}`; 1e3ad9a s1 = bdf_s4_distill ip10 하네스 2 기록 — 모두 이미 HEAD). U 는 서버 2·사람 실행 (T 와 같은 조건, 코어 10–15) → 서버 1 큐에 넣지 않음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
