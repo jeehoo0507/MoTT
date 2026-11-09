@@ -2,3 +2,5 @@
 [   269s] eval_pkg10_1   bdf_s4_distill               ok 0.48 count 9.75 1.903s/inst rounds 4
 [   760s] eval_pcb10_0   bdf_s4_distill               ok 0.80 count 24.75 3.724s/inst rounds 4
 [   893s] eval_pkg10_0   bdf_s4_distill               ok 0.40 count 7.10 1.003s/inst rounds 4
+[  1308s] eval_pcb10_1   bdf_s4_distill               ok 0.80 count 25.15 3.065s/inst rounds 4
+[  2072s] eval_ip10_0    bdf_s4_distill               ok 0.04 count 18.00 6.602s/inst rounds 4

@@ -26,3 +26,7 @@ Applied autostash.
   - S의 남은 학습은 r2pk_s4, r2pk_s5입니다.
   - T 기록 21개가 올라오면 속도 표를 옮깁니다.
   - DAILY는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c5941f5..3164e1b  main -> main
