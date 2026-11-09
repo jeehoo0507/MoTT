@@ -24,3 +24,7 @@ Already up to date.
 2. 서버 2의 S, T(속도 재측정), N 나머지 결과 수집
 3. pull 뒤 추적 파일 수 확인
 4. DAILY는 11/10 01:15 UTC에 작성
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e51ef9c..ddb7708  main -> main
