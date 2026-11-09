@@ -38,7 +38,16 @@ run)
   git pull -q --rebase --autostash r2e main; git add -f $OUT/eval/*.json
   git commit -q -m "server 2 (human): speed benchmark 11/09 T" && git pull -q --rebase --autostash r2e main && git push -q r2e main \
     && echo "$(date '+%H:%M') pushed" >> $L/run.log ;;
+pcb)   # PROPOSALS 11/09 T addendum: PCB set again, all methods, same conditions, separate records
+  OUT=runs/speed_1109b; L=agent/logs/speed_1109b; mkdir -p $OUT $L
+  N=$(( $(echo $CORES | cut -d- -f2) - $(echo $CORES | cut -d- -f1) + 1 ))
+  export -f one; export PY POOL OUT L CORES
+  jobs | grep eval_pcb16_0_k10 | xargs -P $N -L 1 bash -c 'one "$@"' _
+  echo "$(date '+%m-%d %H:%M') pcb rerun done" >> $L/run.log
+  git pull -q --rebase --autostash r2e main; git add -f $OUT/eval/*.json
+  git commit -q -m "server 2 (human): speed PCB rerun 11/09 T" && git pull -q --rebase --autostash r2e main && git push -q r2e main ;;
+pcbtable) $PY scripts/speed_table.py runs/speed_1109b/eval ;;
 status) tail -6 $L/run.log; echo "records: $(ls $OUT/eval/*.json 2>/dev/null | wc -l) / 21" ;;
 table) $PY scripts/speed_table.py $OUT/eval ;;
-*) echo "usage: $0 check | run | status | table" ;;
+*) echo "usage: $0 check | run | status | table | pcb | pcbtable" ;;
 esac
