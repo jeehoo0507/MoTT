@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 09:43 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 11:08 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -22,6 +22,7 @@
 | bdf_s1_distill+rep4 | – | 1.00 / 1.63 / 2.29 [50] | – | – | 0.94 / 2.06 / 0.45 [50] | – | – | 0.62 / 1.32 / 0.94 [50] | 0.60 / 1.32 / 1.02 [50] | – |
 | bdf_s2_distill | – | 0.88 / 1.31 / 1.93 [50] | – | – | 0.02 / 4.86 / 2.83 [50] | – | – | 0.70 / 2.37 / 1.70 [50] | – | – |
 | bdf_s2_distill+rep4 | – | 0.96 / 1.41 / 1.98 [50] | – | – | 0.02 / 4.86 / 2.83 [50] | – | – | 0.90 / 2.36 / 1.67 [50] | 0.98 / 1.86 / 1.16 [50] | – |
+| bdf_s4_distill | – | – | – | – | – | – | – | 0.48 / 1.29 / 1.02 [25] | – | – |
 | bm2_rlonly_rl | – | 0.96 / 2.18 / 2.59 [50] | – | – | 0.04 / 3.99 / 2.15 [50] | – | – | 0.84 / 4.64 / 3.01 [50] | – | – |
 | bm2_rlonly_rl+rep4 | – | 1.00 / 2.33 / 2.63 [50] | – | – | 0.04 / 3.99 / 2.15 [50] | – | – | 0.90 / 4.58 / 2.99 [50] | 0.92 / 10.15 / 6.13 [50] | – |
 | bm2_rlonly_s1_rl | – | 0.96 / 1.97 / 2.44 [50] | – | – | 0.02 / 6.29 / 3.67 [50] | – | – | 0.84 / 4.65 / 3.01 [50] | – | – |
@@ -713,6 +714,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bdf_s1_distill+rep4 | 50 | -0.20 [-0.34, -0.06] | 0.940 [0.857, 1.029] |
 | pkg 10 | bdf_s2_distill | 50 | -0.12 [-0.26, +0.04] | 1.703 [1.491, 1.939] |
 | pkg 10 | bdf_s2_distill+rep4 | 50 | +0.08 [-0.04, +0.22] | 1.667 [1.482, 1.873] |
+| pkg 10 | bdf_s4_distill | 25 | -0.32 [-0.52, -0.12] | 1.019 [0.908, 1.126] |
 | pkg 10 | bm2_rlonly_rl | 50 | +0.02 [-0.10, +0.14] | 3.008 [2.600, 3.426] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | +0.08 [-0.04, +0.20] | 2.992 [2.595, 3.398] |
 | pkg 10 | bm2_rlonly_s1_rl | 50 | +0.02 [-0.10, +0.14] | 3.013 [2.602, 3.431] |
@@ -1465,6 +1467,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bdf_s1_distill+rep4 | 50 | -0.28 [-0.42, -0.14] | 1.318 [1.176, 1.473] |
 | pkg 10 | bdf_s2_distill | 50 | -0.20 [-0.34, -0.06] | 2.368 [2.144, 2.581] |
 | pkg 10 | bdf_s2_distill+rep4 | 50 | +0.00 [-0.12, +0.12] | 2.364 [2.177, 2.556] |
+| pkg 10 | bdf_s4_distill | 25 | -0.40 [-0.60, -0.20] | 1.292 [1.077, 1.543] |
 | pkg 10 | bm2_rlonly_rl | 50 | -0.06 [-0.20, +0.06] | 4.643 [3.906, 5.406] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | +0.00 [-0.12, +0.12] | 4.582 [3.876, 5.306] |
 | pkg 10 | bm2_rlonly_s1_rl | 50 | -0.06 [-0.20, +0.06] | 4.650 [3.910, 5.416] |
@@ -2893,6 +2896,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bdf_s1_distill+rep4 | 50 (0, 1) | 0.62 | 9.58 | 1.318 | 0.940 | 1.820 | `runs/2026-10-29/bdf_s1_distill/eval/eval_pkg10_0__bdf_s1_distill+rep4.json`, `runs/2026-10-29/bdf_s1_distill/eval/eval_pkg10_1__bdf_s1_distill+rep4.json` |
 | bdf_s2_distill | 50 (0, 1) | 0.70 | 17.11 | 2.368 | 1.703 | 2.342 | `runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_0__bdf_s2_distill.json`, `runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_1__bdf_s2_distill.json` |
 | bdf_s2_distill+rep4 | 50 (0, 1) | 0.90 | 20.42 | 2.364 | 1.667 | 2.234 | `runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_0__bdf_s2_distill+rep4.json`, `runs/2026-10-29/bdf_s2_distill/eval/eval_pkg10_1__bdf_s2_distill+rep4.json` |
+| bdf_s4_distill | 25 (1) | 0.48 | 9.75 | 1.292 | 1.019 | 1.903 | `runs/2026-10-29/bdf_s4_distill/eval/eval_pkg10_1__bdf_s4_distill.json` |
 | bm2_rlonly_rl | 50 (0, 1) | 0.84 | 36.00 | 4.643 | 3.008 | 1.732 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_0__bm2_rlonly_rl.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_1__bm2_rlonly_rl.json` |
 | bm2_rlonly_rl+rep4 | 50 (0, 1) | 0.90 | 35.82 | 4.582 | 2.992 | 1.423 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_0__bm2_rlonly_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_1__bm2_rlonly_rl+rep4.json` |
 | bm2_rlonly_s1_rl | 50 (0, 1) | 0.84 | 36.05 | 4.650 | 3.013 | 1.433 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl.json` |
@@ -4001,6 +4005,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bdf_s2_distill | 실패 | 15 | 40.9 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | bdf_s2_distill+rep4 | 성공 | 45 | 20.4 | 1.00 | 0.00 | 0.00 |
 | pkg 10 | bdf_s2_distill+rep4 | 실패 | 5 | 65.8 | 1.00 | 0.00 | 0.00 |
+| pkg 10 | bdf_s4_distill | 성공 | 12 | 9.8 | 0.00 | 1.00 | 0.00 |
+| pkg 10 | bdf_s4_distill | 실패 | 13 | 26.9 | 0.00 | 0.89 | 0.11 |
 | pkg 10 | bm2_rlonly_rl | 성공 | 42 | 36.0 | 0.98 | 0.00 | 0.02 |
 | pkg 10 | bm2_rlonly_rl | 실패 | 8 | 48.6 | 0.99 | 0.00 | 0.01 |
 | pkg 10 | bm2_rlonly_rl+rep4 | 성공 | 45 | 35.8 | 0.97 | 0.00 | 0.03 |
@@ -6091,6 +6097,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/bdf_distill | coord / devformer | distill | 1500 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: –/1.00 | `runs/2026-10-29/bdf_distill/metrics.json` |
 | runs/2026-10-29/bdf_s1_distill | coord / devformer | distill | 1457 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: 0.66/0.62 | `runs/2026-10-29/bdf_s1_distill/metrics.json` |
 | runs/2026-10-29/bdf_s2_distill | coord / devformer | distill | 1323 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bdf_s2_distill/metrics.json` |
+| runs/2026-10-29/bdf_s4_distill | coord / devformer | distill | 1439 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: 0.64/0.62 | `runs/2026-10-29/bdf_s4_distill/metrics.json` |
 | runs/2026-10-29/bm2_rlonly_rl | manoharan2 / manoharan2 | rl | 419 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 9.00/0.94, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/bm2_rlonly_rl/metrics.json` |
 | runs/2026-10-29/bm2_rlonly_s1_rl | manoharan2 / manoharan2 | rl | 430 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 9.00/0.94, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json` |
 | runs/2026-10-29/bm2_rlonly_s3_rl | manoharan2 / manoharan2 | rl | 445 | 2.04 | val_pcb10_0: –/1.00, val_pkg10_0: 9.00/0.94, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/bm2_rlonly_s3_rl/metrics.json` |
@@ -6245,6 +6252,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/r0_coord_s2_rl | coord / grid | rl | 349 | 1.27 | val_pcb10_0: 0.98/0.50, val_pkg10_0: 0.94/0.81, val_ip10_0: 0.77/0.31 | `runs/2026-10-29/r0_coord_s2_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s3_rl | coord / grid | rl | 347 | 1.28 | val_pcb10_0: 0.77/0.56, val_pkg10_0: 0.94/0.56, val_ip10_0: 0.86/0.31 | `runs/2026-10-29/r0_coord_s3_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s4_rl | coord / grid | rl | 338 | 1.28 | val_pcb10_0: 1.05/0.62, val_pkg10_0: 0.83/0.88, val_ip10_0: 0.58/0.56 | `runs/2026-10-29/r0_coord_s4_rl/metrics.json` |
+| runs/2026-10-29/r0_coord_s5_rl | coord / grid | rl | 304 | 1.28 | val_pcb10_0: 0.94/0.44, val_pkg10_0: 0.92/0.75, val_ip10_0: 0.95/0.38 | `runs/2026-10-29/r0_coord_s5_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_distill | modal / grid | distill | 2100 | 0.77 | val_pcb10_0: 1.23/0.56, val_pkg10_0: 1.15/0.69, val_ip10_0: 0.79/0.31 | `runs/2026-10-29/r1_modal_s1_distill/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_rl | modal / grid | rl | 377 | 1.27 | val_pcb10_0: 0.99/0.75, val_pkg10_0: 0.92/0.75, val_ip10_0: 0.78/0.44 | `runs/2026-10-29/r1_modal_s1_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s2_distill | modal / grid | distill | 2217 | 0.77 | val_pcb10_0: 1.10/0.44, val_pkg10_0: 0.94/0.69, val_ip10_0: 0.68/0.31 | `runs/2026-10-29/r1_modal_s2_distill/metrics.json` |
