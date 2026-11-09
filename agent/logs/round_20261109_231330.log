@@ -10,3 +10,7 @@ Round 272 is finished and pushed to `r2e/main` as commit 469599a. Nothing change
 - **Push note:** git printed `gh: not found` credential warnings during the push, but the push went through: local HEAD and `r2e/main` are the same commit.
 
 Next rounds: wait for server 2 to push its S, T and nrest results, then run `collect_results` again. I'll check the file count after each pull and write the new DAILY.md at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   469599a..f11bfbf  main -> main
