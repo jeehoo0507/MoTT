@@ -8,3 +8,7 @@ Round 217 is committed and pushed to r2e main (b357063). One experiment finished
 - **N2 is late:** server 2 has still pushed 0 of the 48 N2 results. QUEUE gave server 2 until 09:00 KST, and it is now 12:30 KST. As QUEUE says, I'm only reporting this and have not re-added them to server 1.
 - **GPU:** idle. There are no human items, and `bm2_rlonly_s2` stays STUCK on its repeatable out-of-memory crash.
 - **Driver log:** the driver and watchers are alive. I restored 729 B of the driver log that had been cut off on disk again.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b357063..22d728a  main -> main
