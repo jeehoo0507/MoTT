@@ -10,3 +10,7 @@ Round 270 had nothing new: no new experiment results, nothing running on server 
 - **Saved:** PROGRESS.md is updated, and I committed (1d5ae28) and pushed to `r2e main`. The remote is at the same commit. git printed a "gh not found" warning during the push, but the push went through.
 
 Next round: if server 2 pushes the S, T or nrest results, pull them, rerun `collect_results.py` and check that the record count doesn't jump unexpectedly. DAILY.md is due for its 24-hour rewrite at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   1d5ae28..9e880c8  main -> main
