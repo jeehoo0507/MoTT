@@ -1,0 +1,20 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   ef1c4e2..8f5419e  main       -> r2e/main
+Updating ef1c4e2..8f5419e
+Created autostash: 1191f29
+Fast-forward
+ agent/QUEUE.md                                     |   7 +
+ agent/day2_queue.json                              | 190 +++++++++++----------
+ .../eval/eval_ip10_0__lo_pkg_r0_rl+rep4.json       |   1 +
+ .../eval/eval_ip10_1__lo_pkg_r0_rl+rep4.json       |   1 +
+ .../eval/eval_pcb10_0__lo_pkg_r0_rl+rep4.json      |   1 +
+ .../eval/eval_pcb10_1__lo_pkg_r0_rl+rep4.json      |   1 +
+ scripts/server2_nrest.sh                           |  42 +++++
+ 7 files changed, 153 insertions(+), 90 deletions(-)
+ create mode 100644 runs/2026-10-29/lo_pkg_r0_rl/eval/eval_ip10_0__lo_pkg_r0_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r0_rl/eval/eval_ip10_1__lo_pkg_r0_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pcb10_0__lo_pkg_r0_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pcb10_1__lo_pkg_r0_rl+rep4.json
+ create mode 100755 scripts/server2_nrest.sh
+Applied autostash.

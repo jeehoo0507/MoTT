@@ -1,6 +1,19 @@
-STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
+STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 04:24 UTC, 라운드 220 — 서버 2 N2 기록 도착 시작: **14 / 48** (사람 커밋 16 개, 04:07~04:24 UTC); RESULTS 손으로 collect_results 다시 돌려 반영; cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (57 분째, 워커 100 %); GPU 빔)
+# PROGRESS (갱신 2026-11-09 04:50 UTC, 라운드 221 — 사람 새 QUEUE (13:50 KST): 남은 N 하네스 10 개 (bm2_rlonly_s1 8, lo_pkg_r0_s3 pkg10 2) 서버 2 로 옮김 → 서버 1 cpu 는 `bm2_rlonly_rl+rep4` pkg16_1 하나만 (80 분째, 워커 100 %); 서버 2 N2 **22 / 48** (r0_rl·r2pk_s2 도착), RESULTS 다시 생성; GPU 빔)
+
+## 라운드 221 (2026-11-09 04:41 ~ 04:50 UTC)
+- `git fetch r2e` (04:42): 새 커밋 없음 (사람 8f5419e `Move last 10 N harness evals from server 1 to server 2` 은 이미 로컬). QUEUE 끝 = **11/09 13:50 KST** 새 항목: bm2_rlonly_s1_rl (pcb10/pkg10/ip10/pkg16 ×0,1 = 8) + lo_pkg_r0_s3_rl pkg10_{0,1} (2) → `cpu_deferred` (`moved` = server2_nrest), 서버 2 가 `scripts/server2_nrest.sh` 로 병렬. "Do not re-add them." bm2_rlonly_s2 항목은 그대로 (STUCK, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀; 플래그 바꿔 다시 돌리지 않음).
+- 드라이버는 큐를 매 단계 다시 읽음 (pipeline_day2.py docstring) → 따로 할 일 없음. 확인: cpu 대기 9 개 = 진행 중 pkg16_1 1 개 + bm2_rlonly_s2 8 개 (after = s2 metrics.json 없음 → 영원히 건너뜀). 즉 **pkg16_1 끝나면 서버 1 cpu 줄도 빔.**
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 197214 B). GPU 85 MiB / 0 % (빔).
+- cpu: `N harness eval_pkg16_1 bm2_rlonly_rl+rep4` 4828 s 째, 워커 2016660 util 100 % / rss 9.3 GB (살아 있음). pkg16_0 (9055 s) 처럼이면 ≈ 05:55 UTC.
+- **N2 (서버 2, 보고만): 22 / 48.** 새로 8 개: lo_pkg_r0_rl ip10_{0,1}·pcb10_{0,1}, lo_pkg_r2pk_s2_rl ip10_{0,1}·pcb10_{0,1}. 아직 없음 (26): bm2_rlonly pcb10 ×6, r0 s1·s2 (8), bp_park ×3 (12). `collect_results.py` 손으로 다시 (1468 → 1476 기록). 숫자는 스크립트 그대로: r0_rl+rep4 ip10 1.00 / 1.30 (개수 비), pcb10 0.94 / 0.20; r2pk_s2_rl+rep4 ip10 1.00 / 1.01, pcb10 1.00 / 0.20. 판정 줄 안 씀 (사람). 서버 2 시간은 쓰지 않음.
+- QUEUE "09:00 KST 까지 48 개" 기한 지남 (지금 13:50 KST): **26 개 아직 안 옴 (늦음, 보고만).** 서버 1 에 다시 넣지 않음.
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pkg16_1 (서버 1 마지막 항목), 새 기록 8 (서버 2 N2, RESULTS 반영).
+- 결정: 큐·플래그·순서 그대로, 아무것도 다시 넣지 않음 — 이유: 사람 13:50 KST 항목이 남은 10 개를 서버 2 로 옮기고 "do not re-add" 라 함; pkg16_1 정상 진행. pkg16_1 끝난 뒤 서버 1 이 비어도 새 일을 스스로 시작하지 않음 — 이유: 11/06 12:00 UTC 새 시도 마감 지남 (QUEUE 11/07 10:20 KST), 사람 항목 없음.
+- 할 일 (다음): (1) pkg16_1 경과 감시 (기준 14400 s ≈ 07:20 UTC; 넘거나 util 0 % 이면 eval.log·py-spy). (2) 끝나면 RESULTS `bm2_rlonly_rl+rep4` pkg16 행이 [50] 이 되는지 확인. (3) 서버 2 push (N2 남은 26 + nrest 10) 오면 개수 세고 `collect_results.py` 다시. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) GPU·cpu 빈 채로 (사람 항목 없으면).
+
+# (이전) 라운드 220 머리말: (갱신 2026-11-09 04:24 UTC, 라운드 220 — 서버 2 N2 기록 도착 시작: **14 / 48** (사람 커밋 16 개, 04:07~04:24 UTC); RESULTS 손으로 collect_results 다시 돌려 반영; cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (57 분째, 워커 100 %); GPU 빔)
 
 ## 라운드 220 (2026-11-09 04:19 ~ 04:24 UTC)
 - `git fetch r2e` (04:19): 새 커밋 없음 (사람 "N2 records" 커밋 10 개 223995f..9575af4 는 이미 로컬). QUEUE 끝 = 11/09 01:40 KST 그대로.

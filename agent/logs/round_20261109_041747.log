@@ -37,3 +37,7 @@ Round 220 is finished and pushed to `r2e main`.
   The per-problem times in these files come from server 2's CPU, so they're kept out of time comparisons, as the QUEUE rules require. The human writes the N2 verdict.
 - **N2 is late:** the QUEUE asked for all 48 by 11/09 09:00 KST, and 34 were still missing at 13:24 KST. PROGRESS.md says so; I did not re-add them to server 1.
 - **Running jobs:** the CPU eval of `bm2_rlonly_rl+rep4` on pkg16_1 is at 57 minutes with the worker at 100%, expected to finish around 06:00 UTC. The GPU is idle with no human items queued, and the `bm2_rlonly_s2` out-of-memory STUCK is unchanged.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   1b4a092..ef1c4e2  main -> main
