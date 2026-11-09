@@ -41,3 +41,7 @@ Round 246 is finished and pushed as `5c647fe`. RESULTS went from 1561 to 1570 re
 - Pod memory is at 19.8 GiB of 60.
 
 **Next round:** collect the remaining 4 harness sets, the r2pk_s4 and r2pk_s5 evals from your script, and `runs/speed_1109b` once it's pushed. DAILY.md is due at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   5c647fe..6b0d581  main -> main
