@@ -1,6 +1,18 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 00:52 UTC, 라운드 207 — **N2 여전히 늦음: 서버 2 push 0 / 48**; GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu N 하네스 `bm2_rlonly_rl+rep4` ip10_0·1 끝 → ip10 **1.00 [50]** (단독 0.96), 지금 pkg16_0 (00:45~); 새 기록 2)
+# PROGRESS (갱신 2026-11-09 01:08 UTC, 라운드 208 — **DAILY 11/09 새로 씀**; N2 여전히 늦음: 서버 2 push 0 / 48; GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_0 진행 (00:45~); 새 기록 0)
+
+## 라운드 208 (2026-11-09 01:04 ~ 01:08 UTC)
+- `git fetch r2e` (01:05): 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 25.0 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 196485 B). GPU 85 MiB / 0 % (빔).
+- cpu: `N harness eval_pkg16_0 bm2_rlonly_rl+rep4` 1204 s 째, 워커 1995558 util 100 % / rss 8.7 GB (정상). 남은 N 하네스 = 이 run pkg16_1 + `bm2_rlonly_s1_rl` 8개 (`_s2` 8개는 metrics.json 없어 `after` 게이트로 건너뜀).
+- **N2 늦음 (보고만):** 01:05 UTC 다시 셈 → `eval_{pcb10,ip10}_{0,1}__lo_pkg_{r2pk,r0,bp_park,bm2_rlonly}*+rep4.json` **0 / 48** (있는 pcb10/ip10 +rep4 12개는 lo_pkg_bdf*). 서버 1 은 다시 넣지 않음.
+- **DAILY.md 새로 씀** (대상 11/08 01:15 ~ 11/09 01:06 UTC, 라운드 123~208): F3 끝, N GPU 9/10 (s2 STUCK), 뺀 pkg 하네스 묶음, N2 늦음, 추천 큐 5개.
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pkg16_0, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, N2 를 서버 1 에 다시 넣지 않음 — 이유: QUEUE 11/09 01:40 KST "do not re-add them".
+- 할 일 (다음): (1) bm2_rlonly pkg16 +rep4 RESULTS 행 확인. (2) 서버 2 N2 push 오면 개수 세기. (3) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (4) DAILY 다음 11/10 01:15 UTC. (5) GPU 는 사람 항목 없으면 빈 채로.
+
+# (이전) 라운드 207 머리말: (갱신 2026-11-09 00:52 UTC, 라운드 207 — **N2 여전히 늦음: 서버 2 push 0 / 48**; GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu N 하네스 `bm2_rlonly_rl+rep4` ip10_0·1 끝 → ip10 **1.00 [50]** (단독 0.96), 지금 pkg16_0 (00:45~); 새 기록 2)
 
 ## 라운드 207 (2026-11-09 00:48 ~ 00:52 UTC)
 - `git fetch r2e` (00:48): 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.

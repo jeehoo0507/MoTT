@@ -1,31 +1,33 @@
-# DAILY — 2026-11-08 (루프 재개 7일차, 01:15 UTC 작성; 대상 기간 11/07 01:30 ~ 11/08 01:15 UTC, 라운드 65~122)
+# DAILY — 2026-11-09 (루프 재개 8일차, 01:06 UTC 작성; 대상 기간 11/08 01:15 ~ 11/09 01:06 UTC, 라운드 123~208)
 
 ## 요약 (10줄 이내)
-- **최종 방법 확정 (사람, QUEUE 11/08 01:45 KST):** `MoTT+P1+V` = MoTT+P1 정책 + 정밀 검사 되먹임 4회 (`--repair 4`). 학습 쪽 후보는 끝.
-- 마지막 방법 탐색 (사람 QUEUE 11/07 10:45·10:50 KST) 결과 — 모두 채택 안 됨: G1 `--fc_bias` (seed 0 거르기 통과 → 확인 run (b') 미통과, 사람 판정), C1' 추론 게이트 G-inf (효과 없음), C1 `--self_repair` (서버 2, 기준 미달), M1 `--mm_bias` (서버 2, 사람 중단), R 무작위 판 섞기 (3 seed 뺀 pkg +0.01 [−0.08, +0.11] → 미통과).
-- V (사람 nohup, 보고만): 뺀 pkg 10칸 + 되먹임 MoTT+P1 0.71 → **0.993**, 좌표 0.80 → 0.920 (차 +0.07 [+0.03, +0.12], 개수비 1.064).
-- F1 14/14, F2 (서버 2) 18/18, **F3 18/22 끝** (드라이버, 남은 4 = ip20_0 seed 2, ip20_1 3 seed). 최종 방법 3 seed 묶음: 10칸 ip/pcb/pkg 1.000/1.000/0.987; 16칸 1.000/0.993/0.940 (pkg 정책 단독 0.56); 20칸 pcb 1.000 (48), pkg 0.958 (48, 정책 단독 0.50).
-- 짝 CI (숫자만, 읽기 (a)(b)(c)는 사람): pkg16 좌표+V 대비 +0.14 [+0.07, +0.21] 개수비 1.131, greedy+prune+V 대비 −0.02 [−0.05, +0.00] 개수비 0.729; pkg20 좌표+V 대비 +0.15 [+0.02, +0.27].
-- GPU: 사람 항목 (G1 확인, R 3 run + 대조군 `lo_pkg_rnd_r0`) 끝난 뒤 11/07 20:38 UTC부터 빔. 에이전트 새 학습 금지 유지 (해제는 사람 항목만).
+- **F 끝:** F3 22/22 (11/08 02:01 UTC). 최종 방법 `MoTT+P1+V` 표의 10·16·20칸 칸이 다 찼다 (ip20 4개 모두 8/8, 되먹임 쓰지 않음).
+- **밤 묶음 N (사람, QUEUE 11/08 11:30 KST) GPU 9/10 끝:** `lo_pkg_bp_park{,_s1,_s2}`, `lo_pkg_bm2_rlonly{,_s1,_s2}`, `bm2_rlonly{,_s1}`, `lo_pkg_r0_s3`. **`bm2_rlonly_s2` 는 STUCK** (it 300 에서 `probe_impedance` 의 CUDA OOM 이 처음 run 과 resume 에서 똑같이 남; best.pt 는 it 100 뿐, metrics.json 없음 → 평가 없음, 사람 결정 필요).
+- 뺀 pkg 10칸 + `--repair 4` 3 seed 묶음 (RESULTS "N2" 절, 150문제): MoTT+P1 0.71 → **0.99**; 좌표 0.80 → 0.92 (차 −0.07 [−0.12, −0.03]); B-Park 0.79 → 0.91 (−0.09 [−0.14, −0.04]); B-Manoharan v2 0.83 → 0.89 (−0.10 [−0.15, −0.05]); B-DevFormer (서버 2) 0.20 → 0.45 (−0.54 [−0.62, −0.46]).
+- 같은 종류 학습 B-Manoharan v2 RL만 (`bm2_rlonly_rl` + rep4): pcb10 **0.04 [50]** (단독과 같음, 수리 이득 없음), pkg10 0.90 [50] (단독 0.84), ip10 1.00 [50] (단독 0.96). 판정 없음.
+- `lo_pkg_r0_s3` (좌표 seed 3) 정책 단독 10칸: pcb 0.98 / ip 0.98 / 뺀 pkg 0.64 [50]. 좌표 seed 1·2·3 하네스 pkg16·pkg20 기록도 들어옴 (표 "좌표+V").
+- **N2 늦음 (보고만):** 사람이 48개를 서버 2로 옮김 (QUEUE 11/09 01:40 KST). 마감 11/09 00:00 UTC 지났고 01:05 UTC 에 다시 세도 서버 2 push **0 / 48** → N2 표의 MoTT+P1·좌표·B-Park·B-Manoharan v2 pcb/ip 칸과 "최저 종류" 표가 비어 있음. 서버 1 은 다시 넣지 않음.
+- GPU: 11/08 21:47 UTC 부터 빔 (사람 항목 없음). cpu: N 하네스 `bm2_rlonly_rl+rep4` pkg16_0 진행 중, 그 뒤 pkg16_1, `bm2_rlonly_s1_rl+rep4` 8개 (`_s2` 8개는 metrics.json 없음 → `after` 게이트로 건너뜀).
 
 ## 결과표
-[RESULTS.md](RESULTS.md) — 바뀐 절: "최종 방법 MoTT+P1+V" (새 표, 짝 CI), "시도한 수정" G1·M1·C1'·C1·R 행, "R" 절 (2×2 대조군 포함), 뺀 pkg 되먹임 (V) 표, G1 같은 유형 3 seed.
+[RESULTS.md](RESULTS.md) — 바뀐 절: "뺀 pkg 모델의 세 종류 하네스 (N2)" (새 표, 최저 종류 표 포함), "최종 방법 MoTT+P1+V" (F3 칸 완성), "좌표+V" pkg16/20 (seed 1·2·3), 선행 연구 재구현 (B-Park·B-Manoharan v2 뺀 pkg, `bm2_rlonly` 같은 종류) 자동 행.
 
 ## 발견한 문제
-- `agent/loop.sh`의 `git pull --rebase --autostash`가 라운드마다 추적 로그를 다시 만들어 드라이버가 지워진 inode에 씀 → `scripts/restore_proc_log.py <pid> <log>`로 라운드마다 복구. loop.sh 수정은 사람께 제안만 (라운드 96).
-- 11/07 16:51 side_slot (좌표 pkg20) + 드라이버 pkg16 수리 평가가 겹쳐 pod 45.7 GiB → side_slot 쪽을 멈추고 F 큰 판 수리 평가는 드라이버 한 줄로만.
-- LS16 ip16_1은 11/07 04:51 mem_guard가 멈춤 (r2pkfc pkg16 평가와 겹침) → 사람 결정으로 `.memskip`; 남은 LS16은 `cpu_deferred`.
-- `r2pkfc_s2` 16·20칸 11개는 사람이 F 우선으로 `cpu_deferred`로 내림 (G1 보충 2 표는 seed 0·1까지).
+- `bm2_rlonly_s2` GPU OOM 결정적 재현 (24.5 GB 카드, it 300 val 직후 `manoharan_reward` → `probe_impedance` `torch.linalg.solve`). 같은 플래그로는 다시 돌리지 않음 (PROGRESS 첫 줄 STUCK).
+- N2 가 서버 2 로 옮겨진 뒤 push 가 없음 (원인 알 수 없음, 서버 2 는 사람 관리).
+- `agent/loop.sh` autostash 가 드라이버 로그 inode 를 갈아끼우는 문제 그대로 → 라운드마다 `scripts/restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`.
+- pcb10 하네스 평가는 B-Manoharan 류에서 한 파일 47~55 분 (pcb10_0 3286 s, pcb10_1 23:17–00:04; 성공 0.04 라 실패 문제가 되먹임을 계속 씀) → cpu 한 줄이 느림.
 
 ## 오늘 추천 큐 (5개)
-1. 드라이버 F3 남은 4개 (ip20) → "최종 방법" 표 20칸 ip 칸 완성. 이유: QUEUE 11/08 01:45 KST F 순서.
-2. 사람 다음 계획 (B-Manoharan 원문판 재실행, B-DevFormer 재구현) — 사람이 사전 등록 뒤 큐에 넣으면 그대로 실행. 이유: QUEUE 11/08 03:05 KST.
-3. 그림 1·2·3을 최신 기록으로 다시 그림 (최종 방법 MoTT+P1+V 칸 포함, 기존 기록만 읽기). 이유: 보고서 제출 11/16.
-4. F3 끝나면 `cpu_deferred` (LS16 남은 것, `r2pkfc_s2` 16·20칸)는 사람 지시 있을 때만 다시 올림. 이유: 사람이 내린 항목.
-5. GPU 새 학습 없음 유지 (사람 항목 대기). 이유: 에이전트 새 시도 금지.
+1. cpu N 하네스 남은 것 (`bm2_rlonly_rl` pkg16_1, `bm2_rlonly_s1_rl` 8개) 그대로 끝내기. 이유: QUEUE 11/08 11:30 KST N 4번.
+2. 서버 2 N2 48개 push 받기 → N2 표·최저 종류 표 채우기 (collect_results 자동). 이유: QUEUE 11/09 01:40 KST; 보고서 범용화 문장의 근거.
+3. `bm2_rlonly_s2` 처리 결정 (사람): 예) 다른 GPU·작은 val 배치로 재실행, 또는 2 seed 로 보고. 이유: STUCK, 에이전트는 플래그를 못 바꿈.
+4. 속도 측정 프로토콜 (사람, QUEUE N 7번) 이 오면 그대로 실행 — 그 전엔 속도 숫자를 보고서 표에 쓰지 않음.
+5. 그림 1·2·3 최신 기록으로 다시 그리기 (사람이 서버 밖에서 그림 데이터 사용 중 — `report: export board-figure data`). 이유: 실험·그림 완료 11/10.
 
 ## 하지 말아야 할 것
-- F 항목의 플래그·순서·세트 바꾸기; `r2pkfc_s*` 평가 다시 올리기 (사람이 내림).
-- 에이전트 스스로 새 학습·새 시도 큐에 넣기; R·G1 확인 run 돌리기.
-- PROPOSALS F 읽기 (a)(b)(c)를 RESULTS에 적용하기 (사람 몫); 재구현 seed 하나 숫자 쓰기.
-- side_slot으로 큰 판 수리 평가 겹치기 (45 GiB 조건 넘음).
+- N2 48개를 서버 1 큐에 다시 넣기 (QUEUE 11/09 01:40 KST).
+- `bm2_rlonly_s2` 를 같은 플래그로 다시 돌리기; 에이전트 스스로 새 학습·arm·seed·세트 추가.
+- 속도 숫자를 보고서 표에 쓰기 (프로토콜 전); 서버 2 시간과 서버 1 시간 섞기.
+- N2·F 읽기 판정을 RESULTS 에 적용하기 (사람 몫, 숫자와 CI 만).
+- `git stash`/rebase 로 추적 로그 건드리기.
