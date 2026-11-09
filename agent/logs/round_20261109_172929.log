@@ -12,3 +12,7 @@ Already up to date.
   - pkg16_0 기록이 나오면 `collect_results`를 돌립니다. 4시간 timeout이라 늦어도 20:37 UTC에는 끝납니다.
   - 서버 2에서 S·T·nrest 결과가 push되면 반영하고, 기록 수가 갑자기 뛰지 않았는지 봅니다.
   - DAILY는 11/10 01:15 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   385f1e2..5555ad3  main -> main
