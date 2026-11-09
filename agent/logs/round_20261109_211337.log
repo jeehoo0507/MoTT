@@ -10,3 +10,7 @@ This round (266) was a check-in only: nothing new came in and I started nothing 
 - **Commit**: I updated PROGRESS.md and RESULTS.md, committed, and pushed to r2e main (`b847a90`).
 
 Next round: if server 2 pushes its S, T or nrest results, merge them and re-run `collect_results`. The speed_1109 records go only in the "PCB형 재측정" section, so check the record count doesn't jump. After any pull, check the tracked-file count is still about 2602. The next DAILY.md is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b847a90..fa8b605  main -> main
