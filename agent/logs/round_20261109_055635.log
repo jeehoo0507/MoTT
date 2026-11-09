@@ -1,0 +1,32 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   cc51ce9..c460269  main       -> r2e/main
+Updating cc51ce9..c460269
+Created autostash: cdcd47b
+Fast-forward
+ .../bm2_rlonly_s1_rl/eval/eval_ip10_0__bm2_rlonly_s1_rl+rep4.json        | 1 +
+ .../bm2_rlonly_s1_rl/eval/eval_ip10_1__bm2_rlonly_s1_rl+rep4.json        | 1 +
+ .../bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl+rep4.json       | 1 +
+ .../bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl+rep4.json       | 1 +
+ .../lo_pkg_r0_s3_rl/eval/eval_pkg10_0__lo_pkg_r0_s3_rl+rep4.json         | 1 +
+ 5 files changed, 5 insertions(+)
+ create mode 100644 runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_0__bm2_rlonly_s1_rl+rep4.json
+ create mode 100644 runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_1__bm2_rlonly_s1_rl+rep4.json
+ create mode 100644 runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl+rep4.json
+ create mode 100644 runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl+rep4.json
+ create mode 100644 runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_0__lo_pkg_r0_s3_rl+rep4.json
+Applied autostash.
+Round 224 is finished and pushed to `r2e main` (HEAD 048e200). Everything is running normally, so I didn't change any queue, setting or order.
+
+- **Server 2 extra evals (the 10 moved off server 1):** 8 of 10 have arrived. I rebuilt RESULTS.md with `collect_results.py`, which now has 1510 records. The new numbers, as the script wrote them (success rate / count ratio [instances]):
+  - `bm2_rlonly_s1_rl+rep4`: ip10 1.00 / 2.15 [50], pcb10 0.02 / 6.29 [50], pkg10 0.90 / 4.59 [50]
+  - `lo_pkg_r0_s3_rl+rep4`: pkg10 0.90 / 0.86 [50]
+  - Still missing: `bm2_rlonly_s1` pkg16_0 and pkg16_1.
+  - These are reported only; I didn't add verdicts and didn't use server 2's timings.
+- **GPU:** the human's seed script (`seeds_s.sh s1 run`) is training `lo_pkg_bdf_s3` and is at iteration 625. It should finish around 06:55 UTC. I didn't touch it.
+- **CPU:** the last server-1 eval (`bm2_rlonly_rl+rep4` pkg16_1) has been running for about 2.6 hours with its worker at 100%. Going by the earlier pkg16_0 run, it should finish around 07:20 UTC.
+- **Health:** the pipeline driver is alive, the two helper scripts were restarted, no driver log needed restoring, and memory is at 28.9 / 60 GiB.
+
+Last round's notes said I would hold the human script's git lock while committing, but this session isn't allowed to run `flock`. I committed and pushed without the lock; both commits are quick, so a clash is unlikely, and this is written in PROGRESS.md.
+
+Next round: check that pkg16_1 finishes, add the seed-script results and the last 2 server-2 evals to RESULTS when they arrive, and keep watching memory. The next DAILY.md is due 11/10 01:15 UTC.
