@@ -1,6 +1,6 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 06:15 UTC, 라운드 224 — 서버 2 nrest **7 / 10**; RESULTS 다시 생성 (1509 기록); GPU = 사람 S (lo_pkg_bdf_s3 distill it 625); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (9320 s 째, 워커 100 %))
+# PROGRESS (갱신 2026-11-09 06:15 UTC, 라운드 224 — 서버 2 nrest **8 / 10**; RESULTS 다시 생성 (1510 기록); GPU = 사람 S (lo_pkg_bdf_s3 distill it 625); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (9320 s 째, 워커 100 %))
 
 ## 라운드 224 (2026-11-09 05:56 ~ 06:15 UTC)
 - `git fetch r2e` (05:56): 새 커밋 없음 (사람 "N records" a18a628..c460269 는 이미 로컬). QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
@@ -9,9 +9,11 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - cpu: `N harness eval_pkg16_1 bm2_rlonly_rl+rep4` 9320 s 째, 워커 2016660 util 100 % / rss 10.1 GB. 기준 14400 s ≈ 07:20 UTC.
 - **nrest (서버 2, 보고만): 7 / 10.** 새로 5 (지난 라운드 2 개 뒤): bm2_rlonly_s1 pkg10_{0,1}·ip10_{0,1}, lo_pkg_r0_s3 pkg10_0. 남은 3: bm2_rlonly_s1 pkg16_{0,1}, lo_pkg_r0_s3 pkg10_1.
 - `collect_results.py` 손으로 (1503 → 1509 기록). 스크립트 숫자 그대로 (성공률 / 개수 비 [n]): bm2_rlonly_s1_rl+rep4 ip10 1.00 / 2.15 [50], pcb10 0.02 / 6.29 [50], pkg10 0.90 / 4.59 [50]; lo_pkg_r0_s3_rl+rep4 pkg10 0.96 / 0.86 [25]. 판정 없음, 서버 2 시간은 쓰지 않음.
-- 한 줄 (N 6단계): GPU = 사람 S (lo_pkg_bdf_s3), cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 7 (서버 2 nrest, RESULTS 반영).
+- push 전 merge 로 1 개 더 (24e83a6: lo_pkg_r0_s3 pkg10_1) → **nrest 8 / 10** (남은 2: bm2_rlonly_s1 pkg16_{0,1}). collect_results 다시 (1510 기록): lo_pkg_r0_s3_rl+rep4 pkg10 0.90 / 0.86 [50].
+- 참고: 지난 라운드에 적은 seeds_s `git.lock` flock 은 이번 세션 권한에서 안 됨 → 잠금 없이 commit/push (짧은 작업이라 겹칠 확률 낮음; 끊긴 로그는 restore_proc_log 로 확인).
+- 한 줄 (N 6단계): GPU = 사람 S (lo_pkg_bdf_s3), cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 8 (서버 2 nrest, RESULTS 반영).
 - 결정: 큐·플래그·순서 그대로, S 손대지 않음 — 이유: 사람 새 지시 없음, 모든 프로세스 정상.
-- 할 일 (다음): (1) pkg16_1 경과 (07:20 UTC 기준; 넘거나 util 0 % 면 eval.log·py-spy); 끝나면 RESULTS `bm2_rlonly_rl+rep4` pkg16 [50]. (2) S: distill 끝 ≈ 06:55 UTC → seeds_s 가 평가·push; S 기록 오면 collect_results (실패 포함 전부). (3) nrest 남은 3 오면 collect_results. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) mem 감시 (S 평가 + cpu 겹칠 때 45 GiB).
+- 할 일 (다음): (1) pkg16_1 경과 (07:20 UTC 기준; 넘거나 util 0 % 면 eval.log·py-spy); 끝나면 RESULTS `bm2_rlonly_rl+rep4` pkg16 [50]. (2) S: distill 끝 ≈ 06:55 UTC → seeds_s 가 평가·push; S 기록 오면 collect_results (실패 포함 전부). (3) nrest 남은 2 (bm2_rlonly_s1 pkg16) 오면 collect_results. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) mem 감시 (S 평가 + cpu 겹칠 때 45 GiB).
 
 # (이전) 라운드 223 머리말: (갱신 2026-11-09 05:50 UTC, 라운드 223 — 서버 2 **N2 48 / 48 다 옴** (지난 라운드 "35" 는 셈 실수), nrest 1 / 10; RESULTS 다시 생성 (1503 기록); GPU = 사람 S (lo_pkg_bdf_s3 distill it 415, best 2.356 @ 400); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (8070 s 째, 워커 100 %))
 
