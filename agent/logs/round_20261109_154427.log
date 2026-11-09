@@ -18,3 +18,7 @@ Already up to date.
   S는 보고만 하는 실험이라 판정은 하지 않았습니다.
 - **결정:** GPU가 비어 있지만 새 작업은 넣지 않았습니다. QUEUE 11/09 14:00 지시대로 S 스크립트가 평가 대기로 살아 있는 동안은 GPU를 쓰지 않습니다. 새 시도 마감(11/06 12:00 UTC)도 이미 지났습니다. 이 결정은 PROGRESS에 "결정:"으로 적었습니다.
 - **다음 라운드:** 남은 S 평가 결과를 RESULTS에 반영합니다. S가 끝나면 GPU를 다시 쓸지 QUEUE를 확인합니다. `runs/speed_1109b`가 올라오면 주 표에 섞이지 않는지 봅니다. DAILY는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   29afde6..11a7990  main -> main
