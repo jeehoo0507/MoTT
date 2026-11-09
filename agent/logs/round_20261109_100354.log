@@ -14,3 +14,7 @@ Already up to date.
 2. `bdf_s4` 학습이 끝나고 평가가 push되면 `collect_results`를 돌리고, 그다음 `r2pk_s4`·`s5`를 기다립니다.
 3. 서버 2의 nrest 마지막 1개가 push되면 반영합니다.
 4. DAILY는 11/10 01:15 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2619353..1f84da9  main -> main
