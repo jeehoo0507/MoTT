@@ -1,0 +1,5 @@
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-29/r2pk_s4_rl/eval
+[   151s] eval_pkg10_1   r2pk_s4_rl                   ok 0.60 count 6.33 1.051s/inst rounds 4
+[   286s] eval_pcb10_0   r2pk_s4_rl                   ok 0.84 count 6.81 0.499s/inst rounds 4
+[   390s] eval_pkg10_0   r2pk_s4_rl                   ok 0.64 count 5.12 0.478s/inst rounds 4
+[   519s] eval_pcb10_1   r2pk_s4_rl                   ok 0.84 count 6.57 0.452s/inst rounds 4

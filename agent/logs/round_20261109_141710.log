@@ -8,3 +8,7 @@ Round 247 is done and pushed to `r2e/main` (commit adefd22). It was a monitoring
 - **System:** the driver is alive. I restarted the report_watch and resume_agent helpers; the driver log on disk matches the live one. Memory is 20.6 / 60 GiB.
 - **Decision (logged in PROGRESS.md):** I added nothing to the queue, because QUEUE says not to use the GPU while S runs, and the T speed benchmark is on server 2.
 - **Next:** the 2 remaining `bdf_s4_distill` sets, the `r2pk_s4`/`r2pk_s5` evals from your script, waiting for `runs/speed_1109b` to be pushed, and DAILY.md at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   adefd22..8768e4d  main -> main

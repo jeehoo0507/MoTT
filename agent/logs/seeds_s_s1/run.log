@@ -19,3 +19,5 @@
 11-09 13:04 end train r2pk_s4 rc=0
 13:04 pushed
 11-09 13:04 start train r2pk_s5 (std, seed 5)
+14:33 pushed
+11-09 14:33 eval done bdf_s4_distill
