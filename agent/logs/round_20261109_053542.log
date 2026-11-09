@@ -14,3 +14,16 @@ Fast-forward
  create mode 100644 runs/2026-10-29/lo_pkg_bp_park_s1_rl/eval/eval_pcb10_1__lo_pkg_bp_park_s1_rl+rep4.json
  create mode 100644 runs/2026-10-29/lo_pkg_bp_park_s2_rl/eval/eval_pcb10_1__lo_pkg_bp_park_s2_rl+rep4.json
 Applied autostash.
+Round 223 is finished and pushed to r2e/main. I didn't start or change anything, because there are no new human instructions and every process is healthy.
+
+- **N2 (server 2): all 48 of 48 records are in.** Last round's "35 / 48" was a miscount on my part: the 3 bm2_rlonly pcb10 records I listed as missing had already arrived at 05:13 UTC. PROGRESS.md now has the correct count. The last records came in around 14:35 KST, well past the 09:00 KST deadline in QUEUE. That lateness is noted in PROGRESS.md, nothing more.
+- **The 10 evals moved to server 2 (QUEUE 13:50 KST): 2 of 10 are in.** Both are bm2_rlonly_s1 pcb10. The second one arrived during the merge before the push, so RESULTS.md will pick it up next round.
+- **RESULTS.md was regenerated and now holds 1503 records.** The numbers are copied from the script with no judgement added (success rate / count ratio):
+  - bp_park on pcb10: 0.06 / 1.22, 0.04 / 1.10 and 0.02 / 5.86 across the three seeds; on ip10 every seed is 1.00 / 1.28.
+  - lo_pkg_bm2_rlonly on pcb10: 0.04 / 3.99 for seeds 0 and 1 (identical), 0.02 / 6.29 for seed 2.
+  - Identical numbers across seeds fit last round's note that different seeds settle on the same placement. I recorded this for the human to judge.
+- **GPU:** the human's S run is still on lo_pkg_bdf_s3 distillation (iteration 415, expected to finish around 06:55 UTC). I haven't touched it.
+- **CPU:** the bm2_rlonly pkg16_1 eval is about 8,070 s in, with its worker at 100%. Based on pkg16_0's runtime I expect it to finish around 07:20 UTC.
+- **Memory** is 28.9 of 60 GiB.
+
+Next round: watch the pkg16_1 eval and the S results, rerun collect_results when the remaining 8 server-2 evals arrive, and write the next DAILY.md at 11/10 01:15 UTC.
