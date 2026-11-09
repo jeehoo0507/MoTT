@@ -9,3 +9,7 @@ Round 215 was a check-only round. I made no queue changes and recorded no new re
 - **CPU:** The `bm2_rlonly_rl+rep4` evaluation on pkg16_0 has run for 7952 s, which is long. Its worker is at 100 % and memory use is slowly rising to 10.2 GB, so it is working, not hung. The likely reason is that this model places 34–44 decaps per instance, so the repair step is slow. I'm leaving it alone. If it passes 14400 s (about 04:45 UTC) or the worker drops to 0 %, I'll look at its log before deciding anything.
 - **N2 still late:** Server 2 has pushed 0 of the 48 results. I am not re-adding them on server 1, because the QUEUE says "do not re-add them". This is noted in PROGRESS as a report only.
 - **Results:** Nothing finished this round, so RESULTS.md is unchanged. The next DAILY.md is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   bd4de69..378910f  main -> main
