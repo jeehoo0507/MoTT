@@ -9,3 +9,7 @@ Round 209 had no new results; it was a status check.
 - **GPU:** idle. No human-added training item is queued, and `bm2_rlonly_s2` stays marked STUCK (it runs out of GPU memory at the same iteration every time).
 - **N2 is late:** server 2 has pushed 0 of the 48 result files. The deadline was 11/09 09:00 KST, so I recorded it in PROGRESS. Per QUEUE ("do not re-add them"), I did not put them back on server 1.
 - **Wrap-up:** PROGRESS.md has the new round entry and is committed as `3f318ab`. The push to `r2e main` succeeded and the remote matches it (the `gh: not found` messages printed during the push did not stop it). RESULTS.md was not updated because no experiment finished this round. The next DAILY.md is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3f318ab..04e4168  main -> main
