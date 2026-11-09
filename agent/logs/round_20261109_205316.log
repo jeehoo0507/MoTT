@@ -10,3 +10,7 @@ Round 265 is done: nothing new came in, nothing was started, and RESULTS.md stil
 - **Tracked files:** the count went from 2601 to 2602 with this commit, because a new round log was added. Nothing was deleted.
 
 Next round: pull and collect results when server 2 pushes its supplement-seed (S), speed (T) and remaining harness results, and check the tracked-file count after the pull. The next DAILY.md is due at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   40a587a..db4feb9  main -> main
