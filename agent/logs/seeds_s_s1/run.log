@@ -1,2 +1,5 @@
 11-09 04:55 smokes ok
 11-09 04:55 start train lo_pkg_bdf_s3 (distill, seed 3)
+11-09 06:55 end train lo_pkg_bdf_s3 rc=0
+06:57 pushed
+11-09 06:57 start train lo_pkg_bdf_s4 (distill, seed 4)

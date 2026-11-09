@@ -16,3 +16,7 @@ Next round:
 - Check that the S run moves on to its evaluation, and watch memory while that evaluation and pkg16_1 run at the same time.
 - Collect the 2 remaining server-2 results when they arrive.
 - The next DAILY.md is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   94149a4..5adfc1a  main -> main
