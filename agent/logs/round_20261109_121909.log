@@ -14,3 +14,7 @@ Already up to date.
 2. `r2pk_s4`가 끝나면 그 평가를 기다리고, 이어서 `r2pk_s5`를 확인합니다.
 3. T 기록이 push되면 `speed_table.py` 출력을 그대로 옮깁니다.
 4. DAILY.md는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   451954d..8b25df2  main -> main

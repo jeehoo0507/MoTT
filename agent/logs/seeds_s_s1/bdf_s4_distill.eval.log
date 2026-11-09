@@ -5,3 +5,4 @@
 [  1308s] eval_pcb10_1   bdf_s4_distill               ok 0.80 count 25.15 3.065s/inst rounds 4
 [  2072s] eval_ip10_0    bdf_s4_distill               ok 0.04 count 18.00 6.602s/inst rounds 4
 8 sets x 1 methods = 8 jobs, 1 workers -> runs/2026-10-29/bdf_s4_distill/eval
+[  3236s] eval_pkg16_1   bdf_s4_distill+rep4          ok 0.48 count 22.92 20.162s/inst rounds 4
