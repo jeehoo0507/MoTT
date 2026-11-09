@@ -15,3 +15,7 @@ Already up to date.
 2. S가 끝나면 run.log를 보고 QUEUE를 다시 확인한다.
 3. `runs/speed_1109b`가 올라오면 본 표에 섞이지 않는지 확인한다.
 4. DAILY.md는 11/10 01:15 UTC에 새로 쓴다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   bc843d2..3e73950  main -> main
