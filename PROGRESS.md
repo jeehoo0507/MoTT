@@ -1,8 +1,21 @@
-STUCK: `bm2_rlonly_s1_rl` `eval_pkg16_0 +rep4` 하네스 (사람 실행) 2번 실패 — 서버 2 hang, 서버 1 재실행 (11/09 16:37) 은 worker 가 17:34~17:50 사이 흔적 없이 사라짐 (oom_kill 늘지 않음, traceback 없음), 부모는 timeout 4h (20:37 UTC) 까지 대기. 에이전트는 다시 넣지 않음, 사람 판단.
+정정 (11/09 18:15 UTC, 라운드 257): 라운드 256 의 "bm2_rlonly_s1_rl pkg16_0 재실행 worker 가 사라짐" 과 그 STUCK 줄은 **틀렸다** — worker 2131728 은 살아 있다 (18:13 cpu 5664 s / elapsed 5662 s, util 100%, rss 10–11 GB). 라운드 256 은 `ps.py` 로 `eval_policy` 같은 패턴만 찾아 forkserver worker 줄 (cmdline 이 `multiprocessing.forkserver`) 을 놓친 것으로 보임. STUCK 아님 (서버 2 hang 1 번 + 지금 진행 중). timeout 4h = 20:37 UTC — 단, 같은 run pkg16_1 이 4.6 h 걸렸으므로 timeout 에 걸릴 가능성 큼 (아래 라운드 257 "사람에게").
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-09 18:00 UTC, 라운드 256 — 새 기록 0; 사람 bm2_rlonly_s1_rl pkg16_0 재실행의 worker 가 결과 없이 사라짐 (OOM 아님), 부모는 timeout 4h (20:37 UTC) 까지 대기; GPU 비어 있음; RESULTS 1609 기록 그대로)
+# PROGRESS (갱신 2026-11-09 18:20 UTC, 라운드 257 — 새 기록 0; 사람 bm2_rlonly_s1_rl pkg16_0 재실행 진행 중 (worker 살아 있음, 라운드 256 "사라짐" 정정); GPU 비어 있음; RESULTS 1609 기록 그대로)
+
+## 라운드 257 (2026-11-09 18:11 ~ 18:20 UTC)
+- `git fetch r2e` (18:11): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2592 (줄지 않음).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 28.4 GiB / 60, oom_kill 2. GPU 85 MiB (비어 있음).
+- 사람 `timeout 4h eval_policy … eval_pkg16_0 … bm2_rlonly_s1_rl` (2131724, 16:37 시작): `ps.py forkserver` 로 보니 worker 2131728 이 util 100%, rss 10–11 GB, cpu 5664 s 로 **살아 있음** → 라운드 256 의 "사라짐" 은 관찰 실수, 맨 위 STUCK 줄을 정정 줄로 바꿈. 손대지 않음.
+- 사람에게: 같은 run 의 `eval_pkg16_1__bm2_rlonly_s1_rl+rep4.json` (서버 1, 09:20 UTC) 은 `sec_total` 16655 s (= 4.6 h, 문제당 93 s, 수리 5136 s), `peak_rss_mb` 28 GB. pkg16_0 도 비슷하면 지금 실행은 `timeout 4h` (20:37 UTC) 전에 **끝나지 못할 가능성이 크다** (16:37 시작). 즉 서버 2 "hang" 도 실제론 느린 것이었을 수 있음. PROPOSALS 11/09 U 의 4 h 규칙과 부딪히므로 사람 판단 필요 (에이전트는 timeout 을 바꾸거나 다시 돌리지 않음).
+- 결정: 사람 프로세스 그대로 둠 — 이유: 살아서 계산 중, 사람이 직접 띄운 것, timeout 이 스스로 정리. 가장 보수적인 선택.
+- `.venv/bin/python scripts/collect_results.py` (18:14) → 1609 기록 (변화 없음).
+- 한 줄 (N 6단계): GPU = 비어 있음, cpu = 사람 bm2_rlonly_s1_rl pkg16_0 재실행 (진행 중), 새 기록 0.
+- 결정: 새 항목 넣지 않음 — 이유: 11/06 12:00 UTC 마감 지남 (QUEUE 11/07). 가장 보수적인 선택.
+- 할 일 (다음): (1) bm2_rlonly_s1_rl pkg16_0 기록 → collect_results; 20:37 UTC 에 timeout 이면 rc 124 로 적음 (그때가 두 번째 실패 → STUCK). worker 확인은 `ps.py forkserver` 로. (2) 서버 2 S·T·nrest push 오면 collect_results (기록 수 점프 확인). (3) pull 뒤 추적 파일 수 (≈ 2592) 확인. (4) DAILY 11/10 01:15 UTC. (5) mem 감시.
+
+# (이전) 라운드 256 머리말: (갱신 2026-11-09 18:00 UTC, 라운드 256 — 새 기록 0; 사람 bm2_rlonly_s1_rl pkg16_0 재실행의 worker 가 결과 없이 사라짐 (OOM 아님), 부모는 timeout 4h (20:37 UTC) 까지 대기; GPU 비어 있음; RESULTS 1609 기록 그대로) — **정정: worker 는 살아 있었음 (라운드 257)**
 
 ## 라운드 256 (2026-11-09 17:49 ~ 18:00 UTC)
 - `git fetch r2e` (17:50): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2591 (줄지 않음 — 할 일 (3) 확인).
