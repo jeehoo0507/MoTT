@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 05:36 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 05:57 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -25,7 +25,7 @@
 | bm2_rlonly_rl | – | 0.96 / 2.18 / 2.59 [50] | – | – | 0.04 / 3.99 / 2.15 [50] | – | – | 0.84 / 4.64 / 3.01 [50] | – | – |
 | bm2_rlonly_rl+rep4 | – | 1.00 / 2.33 / 2.63 [50] | – | – | 0.04 / 3.99 / 2.15 [50] | – | – | 0.90 / 4.58 / 2.99 [50] | 0.92 / 8.08 / 5.34 [25] | – |
 | bm2_rlonly_s1_rl | – | 0.96 / 1.97 / 2.44 [50] | – | – | 0.02 / 6.29 / 3.67 [50] | – | – | 0.84 / 4.65 / 3.01 [50] | – | – |
-| bm2_rlonly_s1_rl+rep4 | – | – | – | – | 0.04 / 6.29 / 3.67 [25] | – | – | – | – | – |
+| bm2_rlonly_s1_rl+rep4 | – | 1.00 / 2.15 / 2.50 [50] | – | – | 0.02 / 6.29 / 3.67 [50] | – | – | 0.90 / 4.59 / 3.00 [50] | – | – |
 | bm_manoharan_rl | – | 0.00 / – / – [50] | – | – | 0.00 / – / – [50] | – | – | 0.00 / – / – [50] | – | – |
 | bm_manoharan_rlonly_l20_rl | – | 0.96 / 1.23 / 1.73 [50] | – | – | 0.00 / – / – [50] | – | – | 0.88 / 6.59 / 4.63 [50] | – | – |
 | bm_manoharan_rlonly_l20_s1_rl | – | 0.96 / 1.23 / 1.73 [50] | – | – | 0.00 / – / – [50] | – | – | 0.00 / – / – [50] | – | – |
@@ -107,6 +107,7 @@
 | lo_pkg_r0_s2_rl | – | 0.96 / 0.92 / 1.35 [50] | – | – | 0.90 / 0.86 / 0.21 [50] | – | – | 0.78 / 0.78 / 0.56 [50] | – | – |
 | lo_pkg_r0_s2_rl+rep4 | – | 1.00 / 0.92 / 1.36 [50] | – | – | 0.90 / 0.86 / 0.21 [50] | – | – | 0.90 / 0.80 / 0.55 [50] | – | – |
 | lo_pkg_r0_s3_rl | – | 0.98 / 0.99 / 1.40 [50] | – | – | 0.98 / 0.87 / 0.20 [50] | – | – | 0.64 / 0.90 / 0.64 [50] | – | – |
+| lo_pkg_r0_s3_rl+rep4 | – | – | – | – | – | – | – | 0.96 / 0.86 / 0.53 [25] | – | – |
 | lo_pkg_r1_rl | – | 0.98 / 0.83 / 1.20 [50] | – | – | 0.98 / 0.78 / 0.19 [50] | – | – | 0.74 / 0.78 / 0.54 [50] | – | – |
 | lo_pkg_r1_s1_rl | – | 0.98 / 0.94 / 1.23 [50] | – | – | 0.92 / 0.75 / 0.18 [50] | – | – | 0.74 / 0.82 / 0.60 [50] | – | – |
 | lo_pkg_r1_s2_rl | – | 0.98 / 0.78 / 1.15 [50] | – | – | 0.90 / 0.75 / 0.18 [50] | – | – | 0.78 / 0.81 / 0.60 [50] | – | – |
@@ -260,6 +261,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bm2_rlonly_rl | 50 | -0.04 [-0.10, +0.00] | 2.585 [2.168, 3.138] |
 | ip 10 | bm2_rlonly_rl+rep4 | 50 | +0.00 [+0.00, +0.00] | 2.632 [2.216, 3.162] |
 | ip 10 | bm2_rlonly_s1_rl | 50 | -0.04 [-0.10, +0.00] | 2.445 [2.063, 2.950] |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.00 [+0.00, +0.00] | 2.497 [2.131, 2.988] |
 | ip 10 | bm_manoharan_rl | 50 | -1.00 [-1.00, -1.00] | – [–, –] |
 | ip 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.04 [-0.10, +0.00] | 1.731 [1.575, 1.889] |
 | ip 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | -0.04 [-0.10, +0.00] | 1.731 [1.575, 1.889] |
@@ -475,7 +477,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bm2_rlonly_rl | 50 | -0.62 [-0.76, -0.48] | 2.154 [0.642, 3.667] |
 | pcb 10 | bm2_rlonly_rl+rep4 | 50 | -0.62 [-0.76, -0.48] | 2.154 [0.642, 3.667] |
 | pcb 10 | bm2_rlonly_s1_rl | 50 | -0.64 [-0.76, -0.52] | 3.667 [3.667, 3.667] |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 25 | -0.68 [-0.84, -0.48] | 3.667 [3.667, 3.667] |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.64 [-0.76, -0.52] | 3.667 [3.667, 3.667] |
 | pcb 10 | bm_manoharan_rl | 50 | -0.66 [-0.78, -0.54] | – [–, –] |
 | pcb 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.66 [-0.78, -0.54] | – [–, –] |
 | pcb 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | -0.66 [-0.78, -0.54] | – [–, –] |
@@ -696,6 +698,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bm2_rlonly_rl | 50 | +0.02 [-0.10, +0.14] | 3.008 [2.600, 3.426] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | +0.08 [-0.04, +0.20] | 2.992 [2.595, 3.398] |
 | pkg 10 | bm2_rlonly_s1_rl | 50 | +0.02 [-0.10, +0.14] | 3.013 [2.602, 3.431] |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.08 [-0.04, +0.20] | 2.999 [2.600, 3.406] |
 | pkg 10 | bm_manoharan_rl | 50 | -0.82 [-0.92, -0.70] | – [–, –] |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 50 | +0.06 [-0.04, +0.16] | 4.627 [3.915, 5.532] |
 | pkg 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | -0.82 [-0.92, -0.70] | – [–, –] |
@@ -777,6 +780,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_r0_s2_rl | 50 | -0.04 [-0.18, +0.10] | 0.557 [0.492, 0.625] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | +0.08 [-0.06, +0.22] | 0.553 [0.494, 0.616] |
 | pkg 10 | lo_pkg_r0_s3_rl | 50 | -0.18 [-0.32, -0.02] | 0.636 [0.555, 0.722] |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 25 | +0.12 [+0.00, +0.24] | 0.530 [0.443, 0.631] |
 | pkg 10 | lo_pkg_r1_rl | 50 | -0.08 [-0.24, +0.08] | 0.539 [0.469, 0.614] |
 | pkg 10 | lo_pkg_r1_s1_rl | 50 | -0.08 [-0.24, +0.08] | 0.598 [0.517, 0.686] |
 | pkg 10 | lo_pkg_r1_s2_rl | 50 | -0.04 [-0.16, +0.08] | 0.596 [0.532, 0.664] |
@@ -956,6 +960,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bm2_rlonly_rl | 50 | +0.56 [+0.40, +0.72] | 2.177 [1.502, 2.902] |
 | ip 10 | bm2_rlonly_rl+rep4 | 50 | +0.60 [+0.46, +0.72] | 2.335 [1.683, 3.007] |
 | ip 10 | bm2_rlonly_s1_rl | 50 | +0.56 [+0.40, +0.72] | 1.974 [1.400, 2.609] |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.60 [+0.46, +0.72] | 2.151 [1.565, 2.785] |
 | ip 10 | bm_manoharan_rl | 50 | -0.40 [-0.54, -0.28] | – [–, –] |
 | ip 10 | bm_manoharan_rlonly_l20_rl | 50 | +0.56 [+0.40, +0.70] | 1.225 [0.913, 1.535] |
 | ip 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | +0.56 [+0.40, +0.70] | 1.225 [0.913, 1.535] |
@@ -1188,7 +1193,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bm2_rlonly_rl | 50 | -0.86 [-0.94, -0.76] | 3.993 [1.700, 6.286] |
 | pcb 10 | bm2_rlonly_rl+rep4 | 50 | -0.86 [-0.94, -0.76] | 3.993 [1.700, 6.286] |
 | pcb 10 | bm2_rlonly_s1_rl | 50 | -0.88 [-0.96, -0.78] | 6.286 [6.286, 6.286] |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 25 | -0.96 [-1.00, -0.88] | 6.286 [6.286, 6.286] |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.88 [-0.96, -0.78] | 6.286 [6.286, 6.286] |
 | pcb 10 | bm_manoharan_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
 | pcb 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
 | pcb 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
@@ -1426,6 +1431,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bm2_rlonly_rl | 50 | -0.06 [-0.20, +0.06] | 4.643 [3.906, 5.406] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | +0.00 [-0.12, +0.12] | 4.582 [3.876, 5.306] |
 | pkg 10 | bm2_rlonly_s1_rl | 50 | -0.06 [-0.20, +0.06] | 4.650 [3.910, 5.416] |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.00 [-0.12, +0.12] | 4.591 [3.886, 5.318] |
 | pkg 10 | bm_manoharan_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 50 | -0.02 [-0.10, +0.06] | 6.589 [5.871, 7.396] |
 | pkg 10 | bm_manoharan_rlonly_l20_s1_rl | 50 | -0.90 [-0.98, -0.82] | – [–, –] |
@@ -1507,6 +1513,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_r0_s2_rl | 50 | -0.12 [-0.26, +0.02] | 0.784 [0.715, 0.852] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | +0.00 [-0.12, +0.10] | 0.802 [0.742, 0.866] |
 | pkg 10 | lo_pkg_r0_s3_rl | 50 | -0.26 [-0.42, -0.10] | 0.897 [0.781, 1.024] |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 25 | +0.04 [+0.00, +0.12] | 0.856 [0.728, 0.997] |
 | pkg 10 | lo_pkg_r1_rl | 50 | -0.16 [-0.30, -0.02] | 0.776 [0.721, 0.830] |
 | pkg 10 | lo_pkg_r1_s1_rl | 50 | -0.16 [-0.32, -0.02] | 0.817 [0.748, 0.888] |
 | pkg 10 | lo_pkg_r1_s2_rl | 50 | -0.12 [-0.24, -0.02] | 0.813 [0.751, 0.876] |
@@ -2326,6 +2333,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bm2_rlonly_rl | 50 (0, 1) | 0.96 | 17.96 | 2.177 | 2.585 | 0.168 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_0__bm2_rlonly_rl.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_1__bm2_rlonly_rl.json` |
 | bm2_rlonly_rl+rep4 | 50 (0, 1) | 1.00 | 17.84 | 2.335 | 2.632 | 0.167 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_0__bm2_rlonly_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_ip10_1__bm2_rlonly_rl+rep4.json` |
 | bm2_rlonly_s1_rl | 50 (0, 1) | 0.96 | 17.19 | 1.974 | 2.445 | 0.159 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_0__bm2_rlonly_s1_rl.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_1__bm2_rlonly_s1_rl.json` |
+| bm2_rlonly_s1_rl+rep4 | 50 (0, 1) | 1.00 | 17.10 | 2.151 | 2.497 | 0.176 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_0__bm2_rlonly_s1_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_ip10_1__bm2_rlonly_s1_rl+rep4.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.119 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_ip10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_ip10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.96 | 14.21 | 1.225 | 1.731 | 0.133 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_ip10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.96 | 14.21 | 1.225 | 1.731 | 0.130 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_ip10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_ip10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2576,7 +2584,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bm2_rlonly_rl | 50 (0, 1) | 0.04 | 39.00 | 3.993 | 2.154 | 7.554 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_0__bm2_rlonly_rl.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_1__bm2_rlonly_rl.json` |
 | bm2_rlonly_rl+rep4 | 50 (0, 1) | 0.04 | 39.00 | 3.993 | 2.154 | 7.482 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_0__bm2_rlonly_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pcb10_1__bm2_rlonly_rl+rep4.json` |
 | bm2_rlonly_s1_rl | 50 (0, 1) | 0.02 | 44.00 | 6.286 | 3.667 | 7.332 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_0__bm2_rlonly_s1_rl.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_1__bm2_rlonly_s1_rl.json` |
-| bm2_rlonly_s1_rl+rep4 | 25 (0) | 0.04 | 44.00 | 6.286 | 3.667 | 9.805 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_0__bm2_rlonly_s1_rl+rep4.json` |
+| bm2_rlonly_s1_rl+rep4 | 50 (0, 1) | 0.02 | 44.00 | 6.286 | 3.667 | 9.770 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_0__bm2_rlonly_s1_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pcb10_1__bm2_rlonly_s1_rl+rep4.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.237 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_pcb10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_pcb10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.00 | – | – | – | 0.570 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pcb10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pcb10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.00 | – | – | – | 0.207 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pcb10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pcb10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2832,6 +2840,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | bm2_rlonly_rl | 50 (0, 1) | 0.84 | 36.00 | 4.643 | 3.008 | 1.732 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_0__bm2_rlonly_rl.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_1__bm2_rlonly_rl.json` |
 | bm2_rlonly_rl+rep4 | 50 (0, 1) | 0.90 | 35.82 | 4.582 | 2.992 | 1.423 | `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_0__bm2_rlonly_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_rl/eval/eval_pkg10_1__bm2_rlonly_rl+rep4.json` |
 | bm2_rlonly_s1_rl | 50 (0, 1) | 0.84 | 36.05 | 4.650 | 3.013 | 1.433 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl.json` |
+| bm2_rlonly_s1_rl+rep4 | 50 (0, 1) | 0.90 | 35.89 | 4.591 | 2.999 | 1.769 | `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_0__bm2_rlonly_s1_rl+rep4.json`, `runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg10_1__bm2_rlonly_s1_rl+rep4.json` |
 | bm_manoharan_rl | 50 (0, 1) | 0.00 | – | – | – | 0.296 | `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_0__bm_manoharan_rl.json`, `runs/2026-10-29/bm_manoharan_rl/eval/eval_pkg10_1__bm_manoharan_rl.json` |
 | bm_manoharan_rlonly_l20_rl | 50 (0, 1) | 0.88 | 49.86 | 6.589 | 4.627 | 3.566 | `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_rl.json` |
 | bm_manoharan_rlonly_l20_s1_rl | 50 (0, 1) | 0.00 | – | – | – | 0.193 | `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pkg10_0__bm_manoharan_rlonly_l20_s1_rl.json`, `runs/2026-10-29/bm_manoharan_rlonly_l20_s1_rl/eval/eval_pkg10_1__bm_manoharan_rlonly_l20_s1_rl.json` |
@@ -2913,6 +2922,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | lo_pkg_r0_s2_rl | 50 (0, 1) | 0.78 | 5.87 | 0.784 | 0.557 | 1.537 | `runs/2026-10-29/lo_pkg_r0_s2_rl/eval/eval_pkg10_0__lo_pkg_r0_s2_rl.json`, `runs/2026-10-29/lo_pkg_r0_s2_rl/eval/eval_pkg10_1__lo_pkg_r0_s2_rl.json` |
 | lo_pkg_r0_s2_rl+rep4 | 50 (0, 1) | 0.90 | 5.84 | 0.802 | 0.553 | 1.834 | `runs/2026-10-29/lo_pkg_r0_s2_rl/eval/eval_pkg10_0__lo_pkg_r0_s2_rl+rep4.json`, `runs/2026-10-29/lo_pkg_r0_s2_rl/eval/eval_pkg10_1__lo_pkg_r0_s2_rl+rep4.json` |
 | lo_pkg_r0_s3_rl | 50 (0, 1) | 0.64 | 8.75 | 0.897 | 0.636 | 2.224 | `runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_0__lo_pkg_r0_s3_rl.json`, `runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_1__lo_pkg_r0_s3_rl.json` |
+| lo_pkg_r0_s3_rl+rep4 | 25 (0) | 0.96 | 5.71 | 0.856 | 0.530 | 1.614 | `runs/2026-10-29/lo_pkg_r0_s3_rl/eval/eval_pkg10_0__lo_pkg_r0_s3_rl+rep4.json` |
 | lo_pkg_r1_rl | 50 (0, 1) | 0.74 | 5.73 | 0.776 | 0.539 | 0.983 | `runs/2026-10-29/lo_pkg_r1_rl/eval/eval_pkg10_0__lo_pkg_r1_rl.json`, `runs/2026-10-29/lo_pkg_r1_rl/eval/eval_pkg10_1__lo_pkg_r1_rl.json` |
 | lo_pkg_r1_s1_rl | 50 (0, 1) | 0.74 | 5.95 | 0.817 | 0.598 | 1.038 | `runs/2026-10-29/lo_pkg_r1_s1_rl/eval/eval_pkg10_0__lo_pkg_r1_s1_rl.json`, `runs/2026-10-29/lo_pkg_r1_s1_rl/eval/eval_pkg10_1__lo_pkg_r1_s1_rl.json` |
 | lo_pkg_r1_s2_rl | 50 (0, 1) | 0.78 | 6.21 | 0.813 | 0.596 | 1.026 | `runs/2026-10-29/lo_pkg_r1_s2_rl/eval/eval_pkg10_0__lo_pkg_r1_s2_rl.json`, `runs/2026-10-29/lo_pkg_r1_s2_rl/eval/eval_pkg10_1__lo_pkg_r1_s2_rl.json` |
@@ -3132,6 +3142,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | ip 10 | bm2_rlonly_rl+rep4 | 성공 | 50 | 17.8 | 0.96 | 0.00 | 0.04 |
 | ip 10 | bm2_rlonly_s1_rl | 성공 | 48 | 17.2 | 1.00 | 0.00 | 0.00 |
 | ip 10 | bm2_rlonly_s1_rl | 실패 | 2 | 14.0 | 1.00 | 0.00 | 0.00 |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 성공 | 50 | 17.1 | 1.00 | 0.00 | 0.00 |
 | ip 10 | bm_manoharan_rl | 실패 | 50 | 0.1 | 1.00 | 0.00 | 0.00 |
 | ip 10 | bm_manoharan_rlonly_l20_rl | 성공 | 48 | 14.2 | 1.00 | 0.00 | 0.00 |
 | ip 10 | bm_manoharan_rlonly_l20_rl | 실패 | 2 | 23.0 | 1.00 | 0.00 | 0.00 |
@@ -3469,7 +3480,7 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pcb 10 | bm2_rlonly_s1_rl | 성공 | 1 | 44.0 | 1.00 | 0.00 | 0.00 |
 | pcb 10 | bm2_rlonly_s1_rl | 실패 | 49 | 76.5 | 1.00 | 0.00 | 0.00 |
 | pcb 10 | bm2_rlonly_s1_rl+rep4 | 성공 | 1 | 44.0 | 1.00 | 0.00 | 0.00 |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 실패 | 24 | 75.1 | 1.00 | 0.00 | 0.00 |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 실패 | 49 | 76.5 | 1.00 | 0.00 | 0.00 |
 | pcb 10 | bm_manoharan_rl | 실패 | 50 | 0.4 | 0.00 | 0.00 | 1.00 |
 | pcb 10 | bm_manoharan_rlonly_l20_rl | 실패 | 50 | 3.1 | 0.00 | 0.00 | 1.00 |
 | pcb 10 | bm_manoharan_rlonly_l20_s1_rl | 실패 | 50 | 0.0 | 0.00 | 0.00 | 0.00 |
@@ -3913,6 +3924,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | bm2_rlonly_rl+rep4 | 실패 | 5 | 65.6 | 0.99 | 0.00 | 0.01 |
 | pkg 10 | bm2_rlonly_s1_rl | 성공 | 42 | 36.0 | 0.98 | 0.02 | 0.00 |
 | pkg 10 | bm2_rlonly_s1_rl | 실패 | 8 | 48.6 | 0.99 | 0.01 | 0.00 |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 성공 | 45 | 35.9 | 0.97 | 0.03 | 0.00 |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 실패 | 5 | 65.6 | 0.99 | 0.01 | 0.00 |
 | pkg 10 | bm_manoharan_rl | 실패 | 50 | 0.7 | 0.00 | 0.83 | 0.17 |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 성공 | 44 | 49.9 | 0.00 | 1.00 | 0.00 |
 | pkg 10 | bm_manoharan_rlonly_l20_rl | 실패 | 6 | 70.0 | 0.00 | 1.00 | 0.00 |
@@ -4074,6 +4087,8 @@ genetic = 문제마다 GA (`decap_loop/baselines.py` `genetic`, 개체 64 × 100
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 실패 | 5 | 50.8 | 0.01 | 0.10 | 0.89 |
 | pkg 10 | lo_pkg_r0_s3_rl | 성공 | 32 | 8.8 | 0.37 | 0.23 | 0.40 |
 | pkg 10 | lo_pkg_r0_s3_rl | 실패 | 18 | 13.4 | 0.15 | 0.10 | 0.74 |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 성공 | 24 | 5.7 | 0.15 | 0.26 | 0.59 |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 실패 | 1 | 82.0 | 0.17 | 0.00 | 0.83 |
 | pkg 10 | lo_pkg_r1_rl | 성공 | 37 | 5.7 | 0.16 | 0.27 | 0.57 |
 | pkg 10 | lo_pkg_r1_rl | 실패 | 13 | 13.2 | 0.26 | 0.40 | 0.34 |
 | pkg 10 | lo_pkg_r1_s1_rl | 성공 | 37 | 5.9 | 0.15 | 0.27 | 0.57 |
@@ -4843,6 +4858,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | ip 10 | bdf_s1_distill+rep4 | 0.84 → 1.00 | 8 | -7.25 | 1.24 | 50 | +0.16 [+0.06, +0.26] | 1.000 [1.000, 1.000] |
 | ip 10 | bdf_s2_distill+rep4 | 0.88 → 0.96 | 4 | -2.25 | 0.67 | 50 | +0.08 [+0.02, +0.16] | 1.000 [1.000, 1.000] |
 | ip 10 | bm2_rlonly_rl+rep4 | 0.96 → 1.00 | 2 | 1.00 | 0.07 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 0.96 → 1.00 | 2 | 1.00 | 0.07 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | ip 10 | greedy+prune+rep4 | 0.40 → 0.40 | 0 | – | 2.96 | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
 | ip 10 | lo_pkg_bdf_distill+rep4 | 0.96 → 1.00 | 2 | 6.50 | 0.09 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | ip 10 | lo_pkg_bdf_s1_distill+rep4 | 0.96 → 0.98 | 1 | 2.00 | 0.14 | 50 | +0.02 [+0.00, +0.06] | 1.000 [1.000, 1.000] |
@@ -4880,7 +4896,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pcb 10 | bdf_s1_distill+rep4 | 0.88 → 0.94 | 3 | -3.00 | 0.76 | 50 | +0.06 [+0.00, +0.14] | 1.000 [1.000, 1.000] |
 | pcb 10 | bdf_s2_distill+rep4 | 0.02 → 0.02 | 0 | – | 5.37 | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
 | pcb 10 | bm2_rlonly_rl+rep4 | 0.04 → 0.04 | 0 | – | 98.45 | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 0.04 → 0.04 | 0 | – | 109.09 | 25 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 0.02 → 0.02 | 0 | – | 115.84 | 50 | +0.00 [+0.00, +0.00] | 1.000 [1.000, 1.000] |
 | pcb 10 | greedy+prune+rep4 | 0.90 → 0.94 | 2 | -1.00 | 0.44 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | pcb 10 | lo_pkg_bdf_distill+rep4 | 0.96 → 1.00 | 2 | 2.50 | 0.14 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | pcb 10 | lo_pkg_bdf_s1_distill+rep4 | 0.42 → 0.48 | 3 | 13.00 | 4.33 | 50 | +0.06 [+0.00, +0.14] | 1.000 [1.000, 1.000] |
@@ -4918,6 +4934,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | bdf_s1_distill+rep4 | 0.48 → 0.62 | 7 | 2.29 | 2.99 | 50 | +0.14 [+0.06, +0.24] | 1.000 [1.000, 1.000] |
 | pkg 10 | bdf_s2_distill+rep4 | 0.70 → 0.90 | 10 | 2.40 | 1.54 | 50 | +0.20 [+0.10, +0.32] | 1.000 [1.000, 1.000] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 0.84 → 0.90 | 3 | 6.67 | 6.43 | 50 | +0.06 [+0.00, +0.14] | 1.000 [1.000, 1.000] |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 0.84 → 0.90 | 3 | 7.00 | 7.68 | 50 | +0.06 [+0.00, +0.14] | 1.000 [1.000, 1.000] |
 | pkg 10 | greedy+prune+rep4 | 0.90 → 0.94 | 2 | -1.00 | 0.51 | 50 | +0.04 [+0.00, +0.10] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_bdf_distill+rep4 | 0.44 → 0.84 | 20 | 10.65 | 2.45 | 50 | +0.40 [+0.26, +0.54] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 0.06 → 0.08 | 1 | 3.00 | 6.31 | 50 | +0.02 [+0.00, +0.06] | 1.000 [1.000, 1.000] |
@@ -4931,6 +4948,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_r0_rl+rep4 | 0.78 → 0.90 | 6 | 0.50 | 1.25 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 0.84 → 0.96 | 6 | 0.00 | 0.82 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 0.78 → 0.90 | 6 | 0.67 | 1.71 | 50 | +0.12 [+0.04, +0.22] | 1.000 [1.000, 1.000] |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 0.64 → 0.96 | 8 | 0.25 | 0.91 | 25 | +0.32 [+0.16, +0.52] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r2pk_rl+rep4 | 0.70 → 1.00 | 15 | 0.33 | 1.00 | 50 | +0.30 [+0.18, +0.42] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r2pk_s1_rl+rep4 | 0.64 → 1.00 | 18 | -2.61 | 1.38 | 50 | +0.36 [+0.22, +0.50] | 1.000 [1.000, 1.000] |
 | pkg 10 | lo_pkg_r2pk_s2_rl+rep4 | 0.78 → 0.98 | 10 | 1.20 | 0.55 | 50 | +0.20 [+0.10, +0.32] | 1.000 [1.000, 1.000] |
@@ -4977,6 +4995,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | ip 10 | bdf_s1_distill+rep4 | 50 | +0.60 [+0.46, +0.72] | 1.634 [1.027, 2.372] |
 | ip 10 | bdf_s2_distill+rep4 | 50 | +0.56 [+0.40, +0.70] | 1.407 [1.034, 1.810] |
 | ip 10 | bm2_rlonly_rl+rep4 | 50 | +0.60 [+0.46, +0.72] | 2.335 [1.683, 3.007] |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.60 [+0.46, +0.72] | 2.151 [1.565, 2.785] |
 | ip 10 | lo_pkg_bdf_distill+rep4 | 50 | +0.60 [+0.46, +0.72] | 1.763 [1.143, 2.594] |
 | ip 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | +0.58 [+0.44, +0.72] | 1.607 [1.149, 2.166] |
 | ip 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | +0.60 [+0.46, +0.72] | 2.125 [1.584, 2.774] |
@@ -5006,7 +5025,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pcb 10 | bdf_s1_distill+rep4 | 50 | +0.00 [-0.08, +0.08] | 2.039 [1.780, 2.297] |
 | pcb 10 | bdf_s2_distill+rep4 | 50 | -0.92 [-0.98, -0.84] | 4.857 [4.857, 4.857] |
 | pcb 10 | bm2_rlonly_rl+rep4 | 50 | -0.90 [-0.98, -0.80] | 3.993 [1.700, 6.286] |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 25 | -0.96 [-1.00, -0.88] | 6.286 [6.286, 6.286] |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.92 [-0.98, -0.84] | 6.286 [6.286, 6.286] |
 | pcb 10 | lo_pkg_bdf_distill+rep4 | 50 | +0.06 [+0.00, +0.14] | 2.993 [2.439, 3.566] |
 | pcb 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.46 [-0.62, -0.32] | 3.065 [1.835, 4.712] |
 | pcb 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.06 [-0.18, +0.06] | 4.060 [3.361, 4.761] |
@@ -5036,6 +5055,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | bdf_s1_distill+rep4 | 50 | -0.32 [-0.44, -0.20] | 1.315 [1.179, 1.469] |
 | pkg 10 | bdf_s2_distill+rep4 | 50 | -0.04 [-0.16, +0.06] | 2.355 [2.167, 2.541] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | -0.04 [-0.16, +0.06] | 4.554 [3.883, 5.238] |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.04 [-0.16, +0.06] | 4.566 [3.887, 5.254] |
 | pkg 10 | lo_pkg_bdf_distill+rep4 | 50 | -0.10 [-0.22, +0.00] | 3.905 [3.307, 4.601] |
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.86 [-0.94, -0.76] | 1.896 [1.229, 2.333] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.50 [-0.66, -0.34] | 4.961 [4.120, 5.901] |
@@ -5048,6 +5068,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | -0.04 [-0.10, +0.00] | 1.093 [0.922, 1.357] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 50 | +0.02 [-0.04, +0.08] | 0.826 [0.757, 0.895] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | -0.04 [-0.14, +0.04] | 0.797 [0.738, 0.858] |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 25 | +0.00 [+0.00, +0.00] | 0.848 [0.724, 0.987] |
 | pkg 10 | lo_pkg_r2pk_rl+rep4 | 50 | +0.06 [+0.00, +0.14] | 0.894 [0.839, 0.950] |
 | pkg 10 | lo_pkg_r2pk_s1_rl+rep4 | 50 | +0.06 [+0.00, +0.14] | 0.936 [0.866, 1.013] |
 | pkg 10 | lo_pkg_r2pk_s2_rl+rep4 | 50 | +0.04 [-0.04, +0.12] | 0.867 [0.810, 0.930] |
@@ -5085,6 +5106,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | ip 10 | bdf_s1_distill+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.688 [1.171, 2.420] |
 | ip 10 | bdf_s2_distill+rep4 | 50 | -0.04 [-0.10, +0.00] | 1.272 [1.108, 1.512] |
 | ip 10 | bm2_rlonly_rl+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.679 [1.406, 2.033] |
+| ip 10 | bm2_rlonly_s1_rl+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.613 [1.357, 1.963] |
 | ip 10 | lo_pkg_bdf_distill+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.638 [1.287, 2.112] |
 | ip 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.02 [-0.06, +0.00] | 1.682 [1.311, 2.164] |
 | ip 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.835 [1.470, 2.295] |
@@ -5114,7 +5136,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pcb 10 | bdf_s1_distill+rep4 | 50 | -0.06 [-0.14, +0.00] | 2.413 [2.199, 2.635] |
 | pcb 10 | bdf_s2_distill+rep4 | 50 | -0.98 [-1.00, -0.94] | 5.667 [5.667, 5.667] |
 | pcb 10 | bm2_rlonly_rl+rep4 | 50 | -0.96 [-1.00, -0.90] | 5.367 [3.400, 7.333] |
-| pcb 10 | bm2_rlonly_s1_rl+rep4 | 25 | -0.96 [-1.00, -0.88] | 7.333 [7.333, 7.333] |
+| pcb 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.98 [-1.00, -0.94] | 7.333 [7.333, 7.333] |
 | pcb 10 | lo_pkg_bdf_distill+rep4 | 50 | +0.00 [+0.00, +0.00] | 3.312 [2.915, 3.719] |
 | pcb 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.52 [-0.66, -0.38] | 3.555 [2.362, 4.987] |
 | pcb 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.12 [-0.22, -0.04] | 4.750 [4.269, 5.214] |
@@ -5144,6 +5166,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | bdf_s1_distill+rep4 | 50 | -0.36 [-0.50, -0.22] | 1.529 [1.377, 1.698] |
 | pkg 10 | bdf_s2_distill+rep4 | 50 | -0.08 [-0.18, +0.00] | 2.965 [2.613, 3.361] |
 | pkg 10 | bm2_rlonly_rl+rep4 | 50 | -0.08 [-0.18, +0.00] | 5.405 [4.611, 6.198] |
+| pkg 10 | bm2_rlonly_s1_rl+rep4 | 50 | -0.08 [-0.18, +0.00] | 5.418 [4.621, 6.207] |
 | pkg 10 | lo_pkg_bdf_distill+rep4 | 50 | -0.14 [-0.24, -0.06] | 4.440 [3.829, 5.175] |
 | pkg 10 | lo_pkg_bdf_s1_distill+rep4 | 50 | -0.90 [-0.98, -0.80] | 2.046 [1.453, 2.333] |
 | pkg 10 | lo_pkg_bdf_s2_distill+rep4 | 50 | -0.54 [-0.68, -0.40] | 5.405 [4.613, 6.235] |
@@ -5156,6 +5179,7 @@ seed 0 짝지은 bootstrap 95% CI (같은 50문제):
 | pkg 10 | lo_pkg_r0_rl+rep4 | 50 | -0.08 [-0.16, -0.02] | 1.304 [1.110, 1.640] |
 | pkg 10 | lo_pkg_r0_s1_rl+rep4 | 50 | -0.02 [-0.06, +0.00] | 0.964 [0.910, 1.024] |
 | pkg 10 | lo_pkg_r0_s2_rl+rep4 | 50 | -0.08 [-0.16, -0.02] | 0.930 [0.888, 0.972] |
+| pkg 10 | lo_pkg_r0_s3_rl+rep4 | 25 | -0.04 [-0.12, +0.00] | 0.970 [0.862, 1.113] |
 | pkg 10 | lo_pkg_r2pk_rl+rep4 | 50 | +0.02 [+0.00, +0.06] | 1.058 [1.004, 1.110] |
 | pkg 10 | lo_pkg_r2pk_s1_rl+rep4 | 50 | +0.02 [+0.00, +0.06] | 1.086 [1.035, 1.135] |
 | pkg 10 | lo_pkg_r2pk_s2_rl+rep4 | 50 | +0.00 [+0.00, +0.00] | 1.017 [0.967, 1.069] |
