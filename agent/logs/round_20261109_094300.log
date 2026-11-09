@@ -15,3 +15,7 @@ Round 234 is committed and pushed to `r2e/main` (c849301).
 - **Next round:** evaluate bdf_s4 once its training ends, then r2pk_s4 and s5. Server 2 still owes one N harness eval. DAILY.md is due at 11/10 01:15 UTC.
 
 `collect_results.py` takes more than 2 minutes now, so I added a note to memory to run it in the background.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c849301..621214d  main -> main
