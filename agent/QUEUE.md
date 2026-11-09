@@ -336,3 +336,10 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
   checkpoints copied from server 1 by the human. Reason: server 1 has one CPU lane and ~87 evals queued (N2 would land
   ~13:00); server 2 CPU is idle. No rule or set changed; N2 stays report-only (PROPOSALS 11/09 N2).
 - Server 1 agent: do not re-add them. If server 2 has not pushed all 48 by 11/09 09:00 KST, say so in PROGRESS.
+
+## 11/09 13:50 KST — last 10 N harness evals moved to server 2
+- `N harness` for bm2_rlonly_s1_rl (pcb10/pkg10/ip10/pkg16 x 0,1 = 8) and lo_pkg_r0_s3_rl (pkg10_0/1 = 2) left the
+  server-1 cpu list -> `cpu_deferred` (`moved` = server2_nrest). Server 2 runs each entry's own `cmd` with
+  `scripts/server2_nrest.sh` (parallel). Server 1 cpu keeps only the running bm2_rlonly_rl pkg16_1. Do not re-add them.
+- bm2_rlonly_s2 entries stay as they are (no metrics.json: GPU OOM twice, STUCK) — report B-Manoharan v2 all-types
+  with seeds 0 and 1, and say seed 2 failed to train (OOM). No rerun with changed flags.
