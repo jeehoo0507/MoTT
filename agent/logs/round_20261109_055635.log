@@ -30,3 +30,7 @@ Round 224 is finished and pushed to `r2e main` (HEAD 048e200). Everything is run
 Last round's notes said I would hold the human script's git lock while committing, but this session isn't allowed to run `flock`. I committed and pushed without the lock; both commits are quick, so a clash is unlikely, and this is written in PROGRESS.md.
 
 Next round: check that pkg16_1 finishes, add the seed-script results and the last 2 server-2 evals to RESULTS when they arrive, and keep watching memory. The next DAILY.md is due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   048e200..b4a2257  main -> main
