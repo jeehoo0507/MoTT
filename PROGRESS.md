@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 11:45 UTC, 라운드 240 — S bdf_s4_distill 평가 5 / 6 (ip10_1 남음); GPU = 사람 S r2pk_s4 distill it 1200 (2089 s); RESULTS 다시 생성 1549 → 1559 기록)
+# PROGRESS (갱신 2026-11-09 12:05 UTC, 라운드 241 — S bdf_s4_distill 정책만 평가 6 / 6 끝, harness (--repair 4, 8 세트) 시작; GPU = 사람 S r2pk_s4 distill 끝 (it 1500) → rl 단계; RESULTS 1559 → 1560 기록)
+
+## 라운드 241 (2026-11-09 11:57 ~ 12:05 UTC)
+- `git fetch r2e` (11:57): 새 원격 커밋 없음 (사람 c882002 s1 11:44 = bdf_s4_distill ip10_1 기록, 이미 HEAD). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch alive, resume_agent 다시 띄움. `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (197570 B). mem 28.7 GiB / 60 (S harness 평가 + rl 학습 겹침), oom_kill 2.
+- S (사람 `seeds_s.sh s1 run`): bdf_s4_distill 정책만 10칸 6 / 6 끝 (ip10_1 포함). 이어서 같은 정책 harness `--repair 4` 8 세트 (eval_policy 2090493, ≈11:44 시작) 진행 중. r2pk_s4 distill log.csv 마지막 it 1500 (2631 s) → 지금 `train.py --stage rl` (2090838 + worker 2) 도는 중. 손대지 않음.
+- `collect_results.py` (11:59, `run_in_background` 알림) → 1560 기록. 스크립트 숫자 그대로 (성공률 / 개수 비 / 문제당 초 [n]): bdf_s4_distill ip10 0.10 / 6.72 / 12.00 [50], pcb10 0.80 / 2.79 / 0.67 [50], pkg10 0.44 / 1.20 / 0.96 [50]. 판정 없음 (S 는 보고만).
+- 한 줄 (N 6단계): GPU = 사람 S (r2pk_s4 rl), cpu = 사람 S 평가 (bdf_s4_distill harness), 새 기록 1.
+- 결정: 새 항목 넣지 않음 — 이유: QUEUE 11/09 14:00 (S 도는 동안 GPU 금지, S 는 큐 밖), 11/09 19:20 (T 는 서버 2).
+- 할 일 (다음): (1) bdf_s4_distill harness 8 세트 → 사람 push → collect_results. (2) r2pk_s4 rl 끝 → 평가 → r2pk_s5. (3) T 기록 push → `speed_table.py` 출력 그대로. (4) nrest 남은 1 (서버 2). (5) restore_proc_log. (6) DAILY 11/10 01:15 UTC. (7) mem 감시 (28.7 GiB, 16칸 harness 겹치면 오름).
+
+# (이전) 라운드 240 머리말: (갱신 2026-11-09 11:45 UTC, 라운드 240 — S bdf_s4_distill 평가 5 / 6 (ip10_1 남음); GPU = 사람 S r2pk_s4 distill it 1200 (2089 s); RESULTS 다시 생성 1549 → 1559 기록)
 
 ## 라운드 240 (2026-11-09 11:36 ~ 11:45 UTC)
 - `git fetch r2e` (11:36): 새 원격 커밋 없음 (7f9034b s2 11:29 이미 HEAD). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.

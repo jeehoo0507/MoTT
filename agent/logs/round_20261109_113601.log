@@ -41,3 +41,7 @@ Applied autostash.
 2. r2pk_s4가 약 13:00 UTC에 끝나면 S의 마지막인 r2pk_s5가 이어집니다.
 3. T 기록이 push되면 `speed_table.py` 출력을 그대로 옮깁니다.
 4. DAILY.md는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ca59c3b..edbd106  main -> main
