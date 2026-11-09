@@ -20,3 +20,7 @@ Already up to date.
 **기록**
 - PROGRESS에 "결정:"으로 적은 것: T 기록을 본 표에서 뺀 이유(같은 문제 중복, QUEUE 11/05 규칙상 서버 2 시간은 서버 1 시간표와 섞지 않음), 그리고 S가 도는 동안 GPU를 쓰지 않으므로 새 항목을 넣지 않은 이유.
 - 같은 문제가 다시 생기지 않도록 메모리에 적어 두었습니다: 사람이 push한 뒤에는 기록 수가 갑자기 뛰었는지 확인한다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3666a22..e0839e5  main -> main
