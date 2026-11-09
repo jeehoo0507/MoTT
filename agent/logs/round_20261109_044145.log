@@ -18,3 +18,10 @@ Fast-forward
  create mode 100644 runs/2026-10-29/lo_pkg_r0_rl/eval/eval_pcb10_1__lo_pkg_r0_rl+rep4.json
  create mode 100755 scripts/server2_nrest.sh
 Applied autostash.
+This round is done and pushed. Server 1 has one evaluation left, and 25 of the 48 server 2 records (N2) are in.
+
+- **New QUEUE item (11/09 13:50 KST):** the last 10 N harness evals moved to server 2, and the instruction is not to add them back. The driver re-reads the queue before every step, so I changed nothing. Server 1's CPU lane now has only the running `bm2_rlonly_rl+rep4` pkg16_1 eval. It is at about 80 minutes, with the worker at 100% CPU. If it runs as long as pkg16_0 did, it ends around 05:55 UTC.
+- **`bm2_rlonly_s2` (training ran out of GPU memory twice):** its 8 eval entries stay in the queue but can never run, because the model has no metrics file. Under the new item, the report uses seeds 0 and 1 and says seed 2 failed to train. I recorded that decision on the STUCK line.
+- **Server 2 records (N2):** these went from 14 to 25 of 48. The new ones are r0_rl and r2pk_s2 (4 each) and 3 from r0_s1. Records that server 2 commits don't reach RESULTS automatically, so I re-ran `collect_results.py` by hand. RESULTS.md now has 1479 records, with numbers only and no verdicts. Per the QUEUE rule, server 2's timings aren't used for comparisons.
+- **Late:** the deadline for all 48 was 09:00 KST and 23 are still missing. I reported that in PROGRESS and did not re-queue them on server 1.
+- **Next:** the GPU is idle, and once pkg16_1 finishes the CPU lane will be too. I won't start new work myself, because the 11/06 deadline for new experiments has passed and there are no new human items. That decision is in PROGRESS.md.
