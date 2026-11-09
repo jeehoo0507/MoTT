@@ -8,3 +8,13 @@ Fast-forward
  1 file changed, 1 insertion(+)
  create mode 100644 runs/2026-10-29/bm2_rlonly_s1_rl/eval/eval_pkg16_1__bm2_rlonly_s1_rl+rep4.json
 Applied autostash.
+라운드 233을 마쳤고, 커밋해서 `r2e main`에 push했습니다 (e0b3690).
+
+- **새 기록 7건**: 서버 1의 S 실험 `lo_pkg_bdf_s4_distill` 평가가 6세트 모두 끝났습니다. 서버 2는 `bm2_rlonly_s1_rl+rep4` 의 pkg16_1 평가를 보내 왔고, 서버 2 몫 평가(nrest)는 10개 중 9개가 끝났습니다.
+- **RESULTS.md 재생성**: 평가 기록이 1529개에서 1536개로 늘었습니다. 숫자는 스크립트 출력 그대로이고 판정은 하지 않았습니다 (성공률 / 개수 비, [평가 문제 수]):
+  - `lo_pkg_bdf_s4_distill`: ip10 0.94 / 1.54, pcb10 0.78 / 3.17, pkg10 0.36 / 3.66 [50]
+  - `bm2_rlonly_s1_rl+rep4`: pkg16_1 0.92 / 12.32 [25]
+- **사람이 봐야 할 점 (판정 아님)**: seed 1의 pkg16_1 결과(성공률 0.92, 개수 146.09)가 seed 0과 정확히 같습니다. 앞서 pcb10 개수 비 6.29에서도 seed끼리 같은 값이 나온 적이 있습니다. PROGRESS에 관찰로만 적었습니다.
+- **상태**: 드라이버는 살아 있고 메모리는 22.1 / 60 GiB입니다. GPU는 사람이 돌리는 S 학습(`bdf_s4` distill)이 쓰고 있어 손대지 않았습니다.
+- **결정**: 새 항목은 넣지 않았습니다. QUEUE 11/09 14:00 KST 지시(S가 도는 동안 GPU에 다른 것 시작 금지)와 11/08 11:30 6번(에이전트가 항목 추가 금지)에 따른 것이고, PROGRESS에 이유와 함께 적었습니다.
+- **다음 할 일**: 사람의 속도 측정 프로토콜을 기다립니다. 그 밖에 `bdf_s4` 평가, 서버 2의 `r0_coord_s4` 평가, nrest 마지막 1개가 push되면 RESULTS에 반영합니다. DAILY는 11/10 01:15 UTC에 새로 씁니다.
