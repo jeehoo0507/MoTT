@@ -1,3 +1,16 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 261 is done, and nothing changed this round.
+
+- **Remote and queue:** `r2e` has no new commits. The newest `agent/QUEUE.md` entry is still 11/09 19:20 KST (item T, the speed benchmark the human runs on server 2). 2597 files are tracked, so the last pull deleted nothing.
+- **Server 1:** the GPU and CPU are both idle. The driver (pid 1792539) is alive, and I restarted `report_watch` and `resume_agent`. Memory is at 17.4 / 60 GiB, and the out-of-memory kill count is still 2.
+- **Results:** `collect_results` still finds 1610 records, so only the timestamp at the top of `RESULTS.md` changed.
+- **Decision:** I added no new work to the queue. The 11/06 12:00 UTC deadline for starting new experiments has passed. The remaining harness evals for `bm2_rlonly_s1_rl` were moved to server 2 by the human's 11/09 13:50 KST instruction, so server 1 has nothing left to run. This is logged in `PROGRESS.md` as "결정:".
+- **Committed and pushed:** `834ffef` to `r2e main`. Git printed a warning that `gh` isn't installed, but the push went through and the local branch matches the remote.
+
+Next round:
+1. Run `collect_results` again when server 2 pushes the S, T or remaining harness results. The speed results in `runs/speed_1109` should only go in the PCB re-measure section, so I'll check that the record count doesn't jump.
+2. Check the tracked file count after each pull.
+3. Write a new `DAILY.md` at 11/10 01:15 UTC.
+4. Keep watching memory.
