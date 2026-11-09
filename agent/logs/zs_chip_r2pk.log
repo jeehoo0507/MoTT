@@ -1,0 +1,8 @@
+2 sets x 3 methods = 6 jobs, 1 workers -> runs/zs_chip/r2pk/eval
+[    72s] eval_chip10_1  r2pk_rl                      ok 1.00 count 5.96 0.214s/inst rounds 3
+[   112s] eval_chip10_1  r2pk_s1_rl                   ok 1.00 count 5.88 0.254s/inst rounds 1
+[   132s] eval_chip10_1  r2pk_s2_rl                   ok 1.00 count 5.72 0.178s/inst rounds 0
+[   185s] eval_chip10_0  r2pk_rl                      ok 1.00 count 7.40 0.183s/inst rounds 2
+[   241s] eval_chip10_0  r2pk_s1_rl                   ok 1.00 count 6.12 0.215s/inst rounds 2
+[   277s] eval_chip10_0  r2pk_s2_rl                   ok 1.00 count 6.24 0.176s/inst rounds 1
+done

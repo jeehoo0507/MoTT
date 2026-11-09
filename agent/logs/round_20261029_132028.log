@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 56 is done. It was a status check only, and PROGRESS.md is committed and pushed to `r2e main`.
+
+- **Health:** the day-2 queue runner (GPU and CPU job lists) and the side 16-port greedy+prune job are both still running. Pod memory is 29.5 of 60 GiB, with no out-of-memory kills.
+- **bm_manoharan finished training** at 13:25 UTC: 321 RL iterations in 1.27 h, the same budget as the other runs. The best checkpoint is iteration 300. On the small 16-problem check at iteration 300 it still fails almost everything: pcb and ip 1.00, pkg 0.94. The proper result will come from the 50-problem 10-port evaluation.
+- **GPU now:** the runner started the next queued job, the seed-1 retrain of rung 0 (`r0_coord_s1`). It should finish around 15:30 UTC.
+- **CPU:** the 16-port type-aware greedy job (pcb16_0, type 0) has been running since 11:38, and I can't tell when it will end. The bm_manoharan evaluation is queued behind it. As decided in round 50, I left that job running and did not reorder anything.
+- No new evaluation results came in, so RESULTS.md was not regenerated. It is before 15:00 UTC, so per the queue instructions I started no new code or experiments.
+
+The first round after 15:00 UTC will run the shutdown steps from the queue: write the end-of-loop summary, regenerate RESULTS.md, create `agent/STOP`, and leave the runner and running jobs alone.
+To https://github.com/jeehoo0507/R2E.git
+   127e2fa..2a98df0  main -> main

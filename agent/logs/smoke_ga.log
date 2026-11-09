@@ -1,0 +1,10 @@
+eval_ip10_0 gens 0 100.1s grid-feasible 0.4399999976158142 count 50.08000183105469
+eval_ip10_0 gens 3 116.4s grid-feasible 0.4399999976158142 count 49.040000915527344
+eval_ip10_0 {'B': 25, 'sec_gens0': 100.09425663948059, 'sec_gens3': 116.36955070495605, 'sec_per_inst_gen': 0.21700392087300618, 'est_sec_per_inst_100gens': 25.70416235287984}
+eval_pcb10_0 gens 0 72.6s grid-feasible 0.9200000166893005 count 14.720000267028809
+eval_pcb10_0 gens 3 103.6s grid-feasible 0.9599999785423279 count 17.200000762939453
+eval_pcb10_0 {'B': 25, 'sec_gens0': 72.57798290252686, 'sec_gens3': 103.56523585319519, 'sec_per_inst_gen': 0.4131633726755778, 'est_sec_per_inst_100gens': 44.219456583658854}
+eval_pkg10_0 gens 0 16.4s grid-feasible 1.0 count 8.0
+eval_pkg10_0 gens 3 53.0s grid-feasible 1.0 count 6.519999980926514
+eval_pkg10_0 {'B': 25, 'sec_gens0': 16.39240574836731, 'sec_gens3': 52.96259045600891, 'sec_per_inst_gen': 0.4876024627685547, 'est_sec_per_inst_100gens': 49.41594250679016}
+done

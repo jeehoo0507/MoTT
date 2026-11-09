@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 29 was a status check only. No new experiments finished, so I didn't regenerate RESULTS.md.
+
+- **What's running:** the driver and the 16-cell g+p job are both up. Pod memory is 15.6 of 60 GiB, with no OOM kills.
+- **r3a (stage-3 model with the frequency-match bias, RL phase):** at iteration 125, with no GPU out-of-memory errors. The last validation score was 1.678 at iteration 100, almost the same as the unbiased r3 at that point (1.679).
+- **Type-aware greedy baseline (E0+):** 1 of 6 10-cell files is done (pcb10_0). The type-2 g+p runs for the other five are still going.
+- **Prior-work baselines:** the RESULTS section and the one-line-per-table notes on how each reimplementation differs from its paper are already in `scripts/collect_results.py`. The tables will fill in automatically once the B-Park and B-Manoharan runs produce results.
+- **Decision:** I didn't start new experiments or change code, because all 4 CPU slots are taken. The next decision point is after r3a's RL finishes (around 05:15): evaluate it on the 10-cell sets, then compare it against the unbiased r3 and against E0+.
+
+I updated `PROGRESS.md` and committed and pushed it to `r2e main`. DAILY.md isn't due for a rewrite until around 01:50 on 10/30.
+To https://github.com/jeehoo0507/R2E.git
+   c22ddb4..3a4d06b  main -> main

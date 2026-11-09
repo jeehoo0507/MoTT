@@ -1,0 +1,23 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+라운드 26을 마치고 PROGRESS, RESULTS, 기록 파일을 commit해 `r2e main`에 push했습니다. QUEUE에 새 지시는 없었고, 드라이버·학습·감시 프로세스는 모두 정상입니다 (pod 메모리 60 GiB 중 7.8~13.8 GiB, oom_kill 0).
+
+**끝난 실험**
+- **r2g (격자 상한 완화, seed 0):** 같은 종류 학습 쪽에서는 효과가 없습니다. r2_mott_rl 대비 성공률이 pcb +0.00 [−0.10, +0.10], pkg +0.04 [−0.12, +0.22], ip −0.02라서, 미리 적은 라운드 14 규칙의 같은 종류 갈래는 충족되지 않았습니다.
+  - 비교 자체는 공정합니다. RL 반복 수가 348 대 354로 비슷하고, 격자 상한에 닿은 step은 145에서 23으로 줄어 변경이 실제로 적용됐습니다.
+  - 남은 갈래는 처음 보는 pcb 쪽 `lo_pcb_r2g` 하나입니다. 지금 GPU에서 학습 중이며 평가는 03:35쯤 나옵니다.
+- **chip zero-shot, seed 0 (학습에 없던 네 번째 종류, 50문제):** 0~3단과 r2a가 모두 성공률 1.00이고, g+p는 0.94, modal_rule은 1.00입니다.
+  - 0단도 1.00이라 미리 적은 성공률 판정 (b) "2단 − 0단 > 0"은 이번 판 정의로는 충족될 수 없습니다. 판 정의·목표·규칙은 PROPOSALS에 적은 대로 바꾸지 않았습니다.
+  - 단 사이 차이는 decap 개수에서만 보입니다. 2단은 0단 개수의 0.744배 [0.661, 0.832]를 씁니다. RESULTS에 판정 대상이 아닌 기술용 행으로만 넣었습니다.
+
+**코드 변경:** `scripts/collect_results.py`에 chip zero-shot 절을 추가했습니다. seed별 표, 판정 문장 자동 생성, g+p·modal_rule·종류 인식 greedy·0단 대비 짝지은 CI가 들어 있습니다.
+
+**다음 라운드**
+- `lo_pcb_r2g`가 평가되면 r2g의 최종 판정을 냅니다.
+- GPU는 라운드 24 결정을 그대로 따릅니다. r2g가 이기면 seed 1·2를 돌리고, 아니면 진단 근거가 있는 후보가 생길 때까지 비워 둡니다.
+- chip seed 1·2와 종류 인식 greedy 평가는 4번째 CPU 칸에서 학습 평가 사이에 돕니다.
+- 20칸 평가 판 생성의 세 번째 파일이 21:36부터 4시간 넘게 돌고 있습니다. 프로세스는 살아 있고 CPU를 계속 쓰지만, 로그에 아직 새 줄이 없습니다. 다음 라운드에도 끝나지 않았으면 판 생성 진행 상황을 따로 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b339a7e..b8d6af6  main -> main

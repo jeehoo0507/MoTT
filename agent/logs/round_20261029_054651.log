@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+This round was a status check only. Nothing new finished, so I added no results and changed no code.
+
+- **GPU:** the r2a run is in its first (distillation) phase at iteration 1175. Its best validation score so far is 1.856, at iteration 1100. There have been no out-of-memory errors, and GPU memory peaked at 12.1 GB. The RL phase should start around 05:58 UTC.
+- **CPU:** the job running greedy+prune with decap type 0 only on the first 16-cell PCB eval file has been going for 37 minutes. The 10-cell evaluation of the earlier r3a run is next in line after it. The 16-cell greedy+prune evaluation is also still running on one worker.
+- **Memory:** the pod is using 23.7 of its 60 GiB, with no out-of-memory kills.
+- **Decision:** I didn't start the r3a evaluation early. Once r2a's RL phase starts two more processes, that would make five CPU processes, over the QUEUE limit of four. I wrote this in PROGRESS.md under "결정:".
+- **Commit:** I updated PROGRESS.md (round 40), then committed and pushed to `r2e main`.
+
+Next round I'll judge r3a against r3 (the same level without the new bias) and against the type-aware greedy baseline (E0+), once r3a's 10-cell evaluation results exist, then regenerate RESULTS.md. The next DAILY.md is due around 2026-10-30 01:50 UTC.
+To https://github.com/jeehoo0507/R2E.git
+   99cd541..80cbd5b  main -> main

@@ -1,0 +1,38 @@
+30 pool files -> runs/pool_v1, 14 workers
+[   334s] train_pcb10_0    built     330s F=205 rounds 8 g+p ok 1.00 count 6.0
+[   545s] val_pkg10_0      built     542s F=238 rounds 10 g+p ok 0.75 count 3.5
+[   649s] train_pcb10_2    built     646s F=216 rounds 10 g+p ok 0.88 count 8.214285714285714
+[   665s] val_pcb10_0      built     661s F=236 rounds 10 g+p ok 1.00 count 10.25
+[   861s] train_pkg10_0    built     528s F=227 rounds 9 g+p ok 0.94 count 9.0
+[  1015s] train_ip12_1     built    1011s F=117 rounds 6 g+p ok 0.69 count 16.90909090909091
+[  1050s] train_pkg12_0    built    1047s F=263 rounds 10 g+p ok 0.75 count 3.9166666666666665
+[  1186s] train_pkg10_2    built     537s F=253 rounds 10 g+p ok 0.75 count 6.666666666666667
+[  1209s] train_pkg12_2    built    1205s F=255 rounds 10 g+p ok 0.56 count 6.0
+[  1261s] val_ip10_0       built     596s F=163 rounds 9 g+p ok 0.62 count 10.1
+[  1310s] train_ip12_0     built    1307s F=135 rounds 7 g+p ok 0.56 count 28.444444444444443
+[  1311s] train_ip10_2     built     261s F=107 rounds 5 g+p ok 0.62 count 6.1
+[  1315s] train_pcb8_0     built     129s F=187 rounds 9 g+p ok 1.00 count 4.125
+[  1330s] train_ip10_0     built     468s F=140 rounds 8 g+p ok 0.69 count 8.545454545454545
+[  1331s] train_ip12_2     built    1328s F=135 rounds 7 g+p ok 0.62 count 14.7
+[  1358s] train_pkg10_1    built     812s F=267 rounds 10 g+p ok 0.38 count 9.333333333333334
+[  1410s] train_ip8_0      built      80s F=83 rounds 4 g+p ok 0.62 count 2.7
+[  1411s] train_pcb8_1     built     203s F=243 rounds 10 g+p ok 0.94 count 4.533333333333333
+[  1455s] train_pkg8_1     built     144s F=223 rounds 10 g+p ok 0.81 count 4.230769230769231
+[  1461s] train_pkg8_0     built     151s F=232 rounds 10 g+p ok 0.75 count 5.5
+[  1462s] train_pkg8_2     built     147s F=220 rounds 10 g+p ok 0.81 count 5.384615384615385
+[  1462s] train_ip8_2      built     105s F=107 rounds 5 g+p ok 0.44 count 2.2857142857142856
+[  1486s] train_pcb8_2     built     225s F=213 rounds 10 g+p ok 1.00 count 6.875
+[  1546s] train_ip8_1      built     215s F=177 rounds 10 g+p ok 0.56 count 8.11111111111111
+[  1597s] train_pcb10_1    built    1594s F=262 rounds 10 g+p ok 0.81 count 25.0
+[  1749s] train_ip10_1     built     734s F=177 rounds 10 g+p ok 0.38 count 19.0
+[  1915s] train_pkg12_1    built    1912s F=253 rounds 10 g+p ok 0.44 count 11.0
+[  2262s] train_pcb12_0    built    2259s F=280 rounds 10 g+p ok 0.75 count 13.0
+[  2489s] train_pcb12_1    built    2485s F=251 rounds 10 g+p ok 0.75 count 30.5
+[  2531s] train_pcb12_2    built    2528s F=257 rounds 10 g+p ok 0.75 count 17.25
+done
+18 pool files -> runs/pool_v1, 14 workers
+[     3s] eval_pcb10_1     exists      0s 
+[     3s] eval_pkg10_0     exists      0s 
+[     3s] eval_pcb10_0     exists      0s 
+[  2482s] eval_pkg10_1     built    2479s F=258 rounds 10 g+p ok 0.84 count 9.0
+[  2598s] eval_ip10_0      built    2595s F=164 rounds 9 g+p ok 0.40 count 11.6

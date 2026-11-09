@@ -1,0 +1,8 @@
+eval_pcb10_0 {'n_solved': 22, 'mean_count': 6.7727272727272725, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 73.3}
+eval_pcb10_1 {'n_solved': 22, 'mean_count': 6.7727272727272725, 'mean_removable': 0.18181818181818182, 'frac_with_removable': 0.09090909090909091, 'sec': 85.3}
+eval_pkg10_0 {'n_solved': 21, 'mean_count': 5.904761904761905, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 60.4}
+eval_pkg10_1 {'n_solved': 15, 'mean_count': 6.666666666666667, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 29.2}
+eval_pcb10_0 {'n_solved': 24, 'mean_count': 6.583333333333333, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 77.9}
+eval_pcb10_1 {'n_solved': 24, 'mean_count': 7.25, 'mean_removable': 0.20833333333333334, 'frac_with_removable': 0.041666666666666664, 'sec': 91.8}
+eval_pkg10_0 {'n_solved': 21, 'mean_count': 5.619047619047619, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 58.7}
+eval_pkg10_1 {'n_solved': 17, 'mean_count': 6.0588235294117645, 'mean_removable': 0.0, 'frac_with_removable': 0.0, 'sec': 30.2}

@@ -1,0 +1,31 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 37 is done. Two more of the single-type greedy runs finished (ip10_0 and pkg10_1), so the type-aware greedy baseline (E0+) now covers 5 of 6 files. I regenerated `RESULTS.md`, updated `PROGRESS.md`, and committed and pushed to `r2e main` (7ce0686).
+
+**New results:**
+- **ip 10 (25 problems):** E0+ solved all of them with 7.92 decaps on average, all type 0. Plain greedy+prune solved only 0.40 on the same boards.
+  - Every policy rung solved all 25 too, so the comparison comes down to decap count against E0+:
+
+    | Rung | Count ÷ E0+ | 95% CI |
+    |---|---|---|
+    | 0 | 1.44 | [1.26, 1.63] |
+    | 1 | 1.21 | [1.11, 1.30] |
+    | 2 | 1.02 | [0.98, 1.06] |
+    | 3 | 1.03 | [1.00, 1.07] |
+  - So on ip, rungs 2 and 3 only match E0+; they don't beat it. Rungs 0 and 1 use more decaps. Measured against E0+, the ladder now shows an effect on ip that the greedy+prune comparison didn't show. `PROGRESS.md` reports the "no win" as it is.
+- **pkg 10 (now 50 problems):** E0+ solved 0.82 and used 1.59× as many decaps as greedy+prune. The policies use 0.53–0.59× as many as E0+. Their success-rate differences range from −0.14 to +0.06, and every confidence interval includes 0, so there is no clear difference in success rate.
+- **Best single decap type differs by board:** type 0 for ip, type 1 for pcb, type 0 for pkg. On pkg, E0+ mixed types 0 and 1 (41% / 54% of solved problems). `RESULTS.md` now generates the "differs by board type" sentence from these numbers.
+
+**Running now:** memory is fine (16.3 of 60 GiB, no out-of-memory kills).
+- **GPU:** r3a reinforcement learning is at iteration 275 and should finish around 05:15.
+- **CPU:** the last single-type run (ip10_1, type 2) is still going.
+
+I didn't start any new experiments or change code because all 4 CPU slots are in use.
+
+**Next round:**
+- Read r3a's 10-board evaluation and judge it against r3 (same rung without the frequency bias) and against E0+.
+- When ip10_1 finishes, complete E0+ at 6/6 files.
+
+`DAILY.md` is next due around 01:50 UTC on 10/30.
+To https://github.com/jeehoo0507/R2E.git
+   7ce0686..134efec  main -> main

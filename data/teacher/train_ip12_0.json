@@ -1,0 +1,17 @@
+{
+ "name": "train_ip12_0",
+ "B": 16,
+ "H": 12,
+ "W": 12,
+ "gp_ok": 0.5625,
+ "ls_ok": 0.5,
+ "ls_over_gp": 0.34032269192678716,
+ "improved_frac": 0.875,
+ "gp_count_mean": 28.444444444444443,
+ "teacher_count_mean": 11.0,
+ "t_ls": 615.3008246421814,
+ "t_total": 631.6304018497467,
+ "passes": 4,
+ "trials": 32,
+ "seed": 12
+}

@@ -1,0 +1,18 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+The waiter is running in the background. I'll be notified when the first train file lands or the build errors.
+
+The first train file (`train_pcb10_0`) took 330 s, and greedy+prune passed the exact check on all of its boards. The pool build is working, so I'll keep waiting.
+
+I'm waiting for the train/val pools to finish and for the driver to start the teacher stage.
+
+`val_pkg10_0` is built. Greedy+prune passed the exact check on 75% of its boards, averaging 3.5 decaps. Still waiting on the remaining train/val files.
+
+`train_pcb10_2` is built: greedy+prune passed on 88% of boards, averaging 8.2 decaps. I'm still waiting for the rest of the train/val files.
+
+`val_pcb10_0` is built; greedy+prune passed on every board, averaging 10.25 decaps. Still waiting for the remaining train/val files before the teacher stage starts.
+
+The file-by-file watch expired, and I won't re-arm it. A separate background waiter will tell me when the teacher stage starts or the pool build errors.
+
+The teacher is running. A background waiter will report when the teacher finishes and rungs 0 and 1 begin training, or when the teacher stage fails.

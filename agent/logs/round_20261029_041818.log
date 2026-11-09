@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+라운드 27은 상태 점검만 했습니다. 새로 끝난 실험이 없어서 RESULTS.md는 다시 만들지 않았고, 코드도 바꾸지 않았습니다.
+
+- **프로세스·메모리:** 2일차 드라이버와 16칸 g+p(side16_gp)가 둘 다 살아 있습니다. CPU 한도 4칸이 꽉 차 있습니다(학습 정확 검사 2, 10칸 종류 2 g+p 1, 16칸 g+p 1). 파드 메모리는 16.5 / 60 GiB이고 OOM은 0입니다.
+- **r3a(3단 + 주파수 궁합 편향) 강화학습:** iter 100까지 GPU 메모리 부족은 없었고 GPU 최대 사용량은 14.6 GB입니다. 같은 시점의 검증 점수는 1.678로, 편향 없는 r3의 1.679와 거의 같습니다. 검증 세트가 16문제뿐이라 보고서용 숫자는 아니고, r3 대비 판정은 10칸 평가 뒤에 합니다.
+- **종류 2만 쓰는 g+p:** 6파일 중 아직 끝난 것이 없습니다.
+- **결정:** 새 실험은 띄우지 않았습니다. CPU 칸이 남지 않았고, 다음 판단은 r3a 학습이 끝나는 05:15 무렵 이후에야 가능합니다. 이 이유는 PROGRESS.md에 "결정:"으로 적었습니다.
+- **커밋:** PROGRESS.md를 갱신해 `a70d69f`로 커밋하고 `r2e main`에 push했습니다.
+
+다음 라운드 순서는 이렇습니다: r3a 학습 종료 확인 → 드라이버가 r3a 10칸 평가 → 종류 2 g+p 종료(05:30 무렵) → `make_type_aware.py`로 종류 인식 greedy 기준선 표 채우기 → r3 대비, 종류 인식 greedy 대비 판정 → RESULTS.md 재생성.
+To https://github.com/jeehoo0507/R2E.git
+   a70d69f..675f16e  main -> main

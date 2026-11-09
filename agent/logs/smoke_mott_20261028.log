@@ -1,0 +1,7 @@
+smoke test on cuda
+[ OK ] 1 tiny certified pools (12.5s) — train_pcb6_0 F=80, test_pcb6_0 F=73, test_ip6_0 F=72
+[ OK ] 2 bank reload + Woodbury vs direct (0.2s) — rel err 5.1e-15 on F=80
+[ OK ] 3 models: rollout + backward (2.9s) — mott 53 steps, grid+prior 37 steps
+[ OK ] 4 train.py (mott, grid_prior) (19.9s) — 2 iterations each, checkpoints written
+[ OK ] 5 eval_mott.py (17.7s) — runs/smoke/eval.md
+SMOKE PASSED

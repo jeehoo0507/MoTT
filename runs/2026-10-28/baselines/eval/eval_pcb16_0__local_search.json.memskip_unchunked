@@ -1,0 +1,9 @@
+{
+ "reason": "memory",
+ "detail": "kernel oom_kill x2 (2026-11-03 03:55 UTC; 2026-11-05 02:24-03:27 UTC)",
+ "limit_gib": 60.0,
+ "cmd": [
+  ".venv/bin/python scripts/mem_guard.py runs/2026-10-28/baselines/eval/eval_pcb16_0__local_search.json.memskip .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets eval_pcb16_0 --methods ls --workers 1 --out runs/2026-10-28/baselines"
+ ],
+ "time": "2026-11-05 03:29:29 UTC"
+}

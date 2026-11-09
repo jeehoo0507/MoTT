@@ -1,0 +1,23 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+라운드 35를 마쳤습니다. 이번 라운드의 증류 단계 진단 넷은 모두 기각됐고, 그래서 지금 GPU는 비어 있습니다. PROGRESS·RESULTS를 갱신해 commit하고 `r2e main`에 push했습니다(`ddc2409`).
+
+**배경:** D1에서 MoTT(2단)는 증류만 했을 때 pkg 성공률이 seed 3개 모두 0단·1단보다 낮았습니다. 이번 라운드는 그 원인을 찾는 진단 넷을 돌렸습니다. 판정 규칙은 모두 결과 전에 PROPOSALS에 적고 커밋해 두었습니다.
+
+| 진단 | 가설 | 결과 |
+|---|---|---|
+| D3 | MoTT가 학습 판 선생님만 외워서 처음 보는 판을 못 따라 한다 | 기각. 학습 밖 판 nll이 0단 7.37, MoTT 3.89로 MoTT가 더 낮음. 0단은 nll이 가장 나쁜데 성공률은 가장 높아서, 모방 nll은 성공을 예측하지 못함 |
+| D4 | 목표를 만족한 뒤 decap을 격자 경계까지 빼서 정확 검사에 실패한다 | 기각. 빼서 잃는 정확 통과가 MoTT 0.06/0.16/0.12, 0단 0.12/0.26/0.14로 0단이 더 큼 |
+| D5 | MoTT에 내장된 물리 prior가 빼기를 부추긴다 | 기각. 추론 때 제거 쪽 prior를 0으로 해도 빼는 양이 거의 같음(1.14→1.10 등). 빼기는 학습된 부분에서 나옴 |
+| D6 | 증류 목표 배치 자체가 정확 검사를 통과하지 못한다 | 기각. 목표의 정확 통과가 pkg 0.98, pcb 0.98, ip 1.00 |
+
+- **덧붙여 확인한 것:** 평가 pkg 판이 학습 판보다 더 어렵지 않고, 주파수 격자 밀도도 같습니다(227점 vs 236점).
+- **사후 관찰 (판정에는 안 씀):** cutting-plane 없이 기본 격자에서 한 번만 풀면, MoTT의 정확 검사 통과율이 pcb·pkg × seed 3, 6칸 모두에서 가장 낮습니다(pkg 0.10~0.20, 1단은 0.34~0.38). 놓는 개수는 1단과 비슷합니다. 즉 같은 격자를 만족해도 격자점 사이에 피크가 남는 배치를 더 자주 고릅니다. 다음 라운드의 D7은 이 실패가 어느 주파수에 있는지 새로 측정할 예정입니다.
+- **재현성:** 같은 seed로 증류와 RL을 다시 돌린 `r2it_rl` best.pt가 `r2_mott_rl` best.pt와 비트 단위로 같습니다. 같은 seed면 전체 학습이 결정적입니다.
+- **결정: GPU는 비워 둠.** 근거 있는 수정 후보가 없고, 이전 라운드에 정한 규칙상 수정 하나마다 seed 2개가 필요해 근거 없는 run은 GPU 4~8시간을 쓰고도 판정을 못 냅니다. QUEUE의 "GPU를 비우지 마라"와 충돌하므로, 진단(CPU)을 계속하는 것으로 해석했습니다. 이유는 PROGRESS에 "결정:"으로 적었습니다.
+- **일정:** 새 시도는 11/6 12:00 UTC까지만 시작합니다. 그때까지 이긴 수정이 없으면 r2_mott를 최종 구조로 확정하고, 시도한 수정과 효과 없음을 RESULTS ABLATIONS에 남깁니다. DAILY.md는 24시간이 되는 11/04 00:15 UTC 이후 첫 라운드에서 씁니다.
+- **도는 중:** 드라이버의 16칸 고치기 평가(`repair16 pkg greedy+prune`)와 `r2it_rl` 10칸 평가가 돌고 있습니다. 결과를 자동으로 올리는 `report_watch`는 꺼져 있어서 다시 띄웠습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ddc2409..0e6609c  main -> main

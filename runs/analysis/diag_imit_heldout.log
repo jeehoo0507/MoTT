@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/coder/R2E/scripts/diag_imit_heldout.py", line 126, in <module>
+    main()
+    ~~~~^^
+  File "/home/coder/R2E/scripts/diag_imit_heldout.py", line 103, in main
+    sc, k = score(pol, a["feat"], p)
+            ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/coder/R2E/.venv/lib/python3.14/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/coder/R2E/scripts/diag_imit_heldout.py", line 62, in score
+    occ, keep, _ = heldout_occ(os.path.basename(path)[:-4], b.B)
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/coder/R2E/scripts/diag_imit_heldout.py", line 41, in heldout_occ
+    ls = json.load(open(os.path.join(BASE, f"eval_{set_name}__local_search.json")))
+                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/coder/R2E/runs/2026-10-28/baselines/eval/eval_eval_pkg10_0__local_search.json'
+r0_coord pkg {'nll': 7.3744, 'top1': 0.1589, 'cell': 0.075, 'tcell': 0.4938, 'n_steps': 365, 'n_boards': 45, 'train_nll': 2.3852, 'gap': 4.9892}
+r0_coord pcb {'nll': 6.2192, 'top1': 0.1799, 'cell': 0.1047, 'tcell': 0.5669, 'n_steps': 389, 'n_boards': 45, 'train_nll': 1.367, 'gap': 4.8522}
+r0_coord ip {'nll': 5.2933, 'top1': 0.4757, 'cell': 0.3735, 'tcell': 0.9157, 'n_steps': 103, 'n_boards': 20, 'train_nll': 0.6931, 'gap': 4.6002}
+r1_modal pkg {'nll': 3.8494, 'top1': 0.2329, 'cell': 0.1906, 'tcell': 0.6625, 'n_steps': 365, 'n_boards': 45, 'train_nll': 2.8062, 'gap': 1.0432}
+r1_modal pcb {'nll': 3.7168, 'top1': 0.2571, 'cell': 0.186, 'tcell': 0.7122, 'n_steps': 389, 'n_boards': 45, 'train_nll': 2.9914, 'gap': 0.7254}
+r1_modal ip {'nll': 2.133, 'top1': 0.4563, 'cell': 0.3373, 'tcell': 0.988, 'n_steps': 103, 'n_boards': 20, 'train_nll': 1.6067, 'gap': 0.5263}
+r2_mott pkg {'nll': 3.8884, 'top1': 0.274, 'cell': 0.2219, 'tcell': 0.725, 'n_steps': 365, 'n_boards': 45, 'train_nll': 2.6484, 'gap': 1.24}
+r2_mott pcb {'nll': 4.9786, 'top1': 0.2596, 'cell': 0.1802, 'tcell': 0.7035, 'n_steps': 389, 'n_boards': 45, 'train_nll': 2.8061, 'gap': 2.1725}

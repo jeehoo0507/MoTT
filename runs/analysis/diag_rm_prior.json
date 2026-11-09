@@ -1,0 +1,38 @@
+{
+ "r2_mott": {
+  "ok_s": 0.18,
+  "cnt_s": 8.96,
+  "ok_p": 0.18,
+  "cnt_p": 8.92,
+  "cnt_n": 10.06,
+  "drop_d4": 1.14,
+  "drop_s": 1.1,
+  "d_ok": 0.0
+ },
+ "r2_mott_s1": {
+  "ok_s": 0.24,
+  "cnt_s": 7.4,
+  "ok_p": 0.2,
+  "cnt_p": 7.34,
+  "cnt_n": 8.52,
+  "drop_d4": 1.18,
+  "drop_s": 1.12,
+  "d_ok": 0.04
+ },
+ "r2_mott_s2": {
+  "ok_s": 0.1,
+  "cnt_s": 7.72,
+  "ok_p": 0.1,
+  "cnt_p": 7.66,
+  "cnt_n": 8.86,
+  "drop_d4": 1.2,
+  "drop_s": 1.14,
+  "d_ok": 0.0
+ },
+ "H_rmprior_per_seed": [
+  false,
+  false,
+  false
+ ],
+ "H_rmprior": false
+}

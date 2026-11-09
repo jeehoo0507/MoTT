@@ -1,0 +1,13 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 9 is done. Nothing went wrong, and the progress notes are committed and pushed (`d73473a`).
+
+- **1단 (modal) RL finished at 20:57.** It ran 413 iterations in 1.27 h with no GPU out-of-memory errors (peak 17.2 GB). The best checkpoint is iteration 200.
+- **RL is not beating distillation-only on validation yet.** Compared with the distill-only checkpoint, RL uses fewer decaps but fails the full 700-point check more often (pcb 0.44, pkg 0.56, ip 0.38 vs 0.38, 0.44, 0.31). By the validation score, distill (1.714) is slightly better than RL (1.737). 0단 showed the same pattern. My suspicion is that the policy fits the coarse working frequency grid used in training rather than the 700-point check. These are checkpoint-picking numbers on 16 problems per board type, not report results.
+- **2단 (mott) RL started at 20:58.** It is running without errors at iteration 50 (peak 13.8 GB). Each iteration takes about 16.5 s against about 12 s for 0단 and 1단, so it will get fewer iterations in the same 1.25 h; the count goes in `metrics.json`. It should end around 22:15, and then the 3단 (looped model) smoke test and training start automatically.
+- **No 0/1단 evaluation exists yet.** It waits for the size-10 and 16 evaluation boards. The second pair of size-16 board files (pkg16) has run for about 3 h and is still building, so `RESULTS.md` still has no evaluation rows. The full set is still expected early on 10/29.
+- **Memory is fine but rising:** 33.8 GiB of the 60 GiB limit at 21:13, and no processes killed for memory. All 4 allowed CPU processes are in use, so I started nothing new and changed no settings.
+
+Next round: log the 2단 result, confirm the 3단 smoke test passes and training starts, and record when the pkg16 boards finish. The first `DAILY.md` is due around 05:30 UTC on 10/29.
+To https://github.com/jeehoo0507/R2E.git
+   d73473a..a793c4e  main -> main

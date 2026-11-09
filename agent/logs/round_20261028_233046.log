@@ -1,0 +1,29 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+All four rungs of the ladder (0–3) have now finished training. Evaluation has started but there are no rung results yet. The only finished eval numbers are the greedy+prune baseline on the side-10 boards. Progress is committed and pushed (`e5eb65b`).
+
+**Training**
+- **Rung 3 (loop) RL** finished at 00:19 UTC: 352 iterations in 1.27 h, no GPU out-of-memory, peak 17.1 GB. The best checkpoint is iteration 100. All four rungs used the same settings (0.75 h distillation + 1.25 h RL).
+- **Best validation score per rung** (lower is better): 1.999 → 1.737 → 1.691 → 1.679 for rungs 0 to 3. These come from 16-problem validation sets and are too noisy to use in the report. The real comparison will come from the eval pools.
+
+**Evaluation**
+- The eval pools for side 10 and 16 are built except `eval_ip16_1`, which is still building on one worker.
+- At 00:20 the driver started evaluating the rungs on the pools already built, starting with rung 0 distill. The side-16 jobs are slow: after 60 minutes, not one had produced a record. With 11 policies, evaluating them all on side 16 could take more than a day.
+- I added `scripts/side_evals.py`, which runs side-10 evals on the free 4th CPU slot so the side-10 ladder table fills in sooner. It runs greedy+prune first, then the four RL rungs, then rung 3 at R = 2, 4 and 16, then the four distill rungs. It writes the same record files the driver uses, so the driver skips anything already done.
+  - It keeps the total at 4 CPU processes (1 pool + 2 driver evals + 1 side), within the limit in `QUEUE.md`. It stops if the side-20 pool build starts.
+  - I logged this as a "결정:" entry in `PROGRESS.md`.
+- **Side-10 greedy+prune results** (6 records, also in `RESULTS.md`), fraction passing the exact 700-point check:
+
+| Board kind | File 0 | File 1 |
+|---|---|---|
+| PCB-like | 1.00 | 0.80 |
+| Package-like | 0.92 | 0.88 |
+| Interposer-like | 0.40 | 0.40 |
+
+**Resources**
+- Pod memory peaked at 35.2 GiB (two side-16 eval workers growing), below the 45 GiB stop line. There have been no OOM kills.
+- The GPU is idle, but I didn't start new training because no CPU check slots are free.
+
+**Next round:** record how long the first side-16 eval takes. If side 16 would take too long, consider evaluating the four RL rungs first and moving distill and the R = 2, 4, 16 runs later. Only the order would change, not the eval conditions. Then fill in the side-10 ladder table and write the first `DAILY.md` around 05:30 UTC.
+To https://github.com/jeehoo0507/R2E.git
+   e5eb65b..2ed2a53  main -> main

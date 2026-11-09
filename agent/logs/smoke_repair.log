@@ -1,0 +1,10 @@
+built [True, True, True, True, True, True] [5, 8, 4, 7, 5, 9] rounds 8
+1 sets x 3 methods = 3 jobs, 1 workers -> runs/analysis/smoke_repair/eval
+[     5s] eval_pkg8_0    greedy+prune+rep2            ok 1.00 count 6.33 0.128s/inst rounds 0
+[    14s] eval_pkg8_0    modal_rule+rep2              ok 0.83 count 6.00 0.113s/inst rounds 1
+[    24s] eval_pkg8_0    r2_mott_rl+rep2              ok 0.83 count 5.40 0.152s/inst rounds 1
+done
+eval_pkg8_0__greedy+prune+rep2.json ok pre 6 -> post 6 | count pre [5, 8, 4, 7, 5, 9] post [5, 8, 4, 7, 5, 9] | repair rounds used 0 | passed untouched True
+eval_pkg8_0__modal_rule+rep2.json ok pre 5 -> post 5 | count pre [7, 7, 5, 6, 5, 5] post [7, 7, 5, 6, 5, 5] | repair rounds used 2 | passed untouched True
+eval_pkg8_0__r2_mott_rl+rep2.json ok pre 3 -> post 5 | count pre [6, 7, 4, 7, 5, 5] post [6, 7, 4, 7, 5, 5] | repair rounds used 2 | passed untouched True
+smoke ok

@@ -1,0 +1,20 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+This was a short round. The previous one ended only minutes before it started, so the main job was a health check plus one fix to the figure script.
+
+**Status at 22:24 UTC**
+- **Health:** the driver is running. Pod memory is 17.6–19.0 GiB of the 60 GiB limit, with no OOM kills. Four CPU processes are running (2 eval-pool workers + 2 certify workers), which is the QUEUE limit, so I didn't start anything new.
+- **Rung 3 (loop) distill:** at iter 225, GPU peak 12.1 GB, no OOM. The iter-200 validation numbers are in PROGRESS.md; they're from the checkpoint-selection set, so they don't go in the report.
+- **Eval pools:** none finished this round. pkg16_0 and the side-16 interposer pools are still building.
+
+**Figure-script fix** (`scripts/fig_results.py`)
+- The count-ratio calculation in figures 2 and 3 would have crashed whenever a method had been evaluated on only one of the `_0`/`_1` pool files while greedy+prune had both. That will be common once partial evals start coming in.
+- Re-running the same file would also have counted it twice.
+- It now compares each method with greedy+prune only on the pool files both have, and a re-run replaces the earlier record. Both figures ran on a fake partial dataset kept in `/tmp`, outside `runs/`.
+- The success-rate bars still use every file a method was evaluated on, so they can cover different files from the greedy+prune reference line.
+
+PROGRESS.md is updated (round 12). RESULTS.md is unchanged because no experiment finished. The work is committed as `e393afa` and pushed to `r2e main`, and the branch matches the remote.
+
+**Next round:** confirm rung-3 distill finishes (about 23:05) and its RL stage starts without OOM, then record when the pkg16_0 pool finishes.
+To https://github.com/jeehoo0507/R2E.git
+   e393afa..c22b3c0  main -> main

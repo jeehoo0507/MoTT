@@ -1,0 +1,17 @@
+{
+ "name": "train_pcb10_1",
+ "B": 16,
+ "H": 10,
+ "W": 10,
+ "gp_ok": 0.8125,
+ "ls_ok": 0.25,
+ "ls_over_gp": 0.5112229102167183,
+ "improved_frac": 0.75,
+ "gp_count_mean": 25.0,
+ "teacher_count_mean": 17.923076923076923,
+ "t_ls": 1279.2573912143707,
+ "t_total": 1287.0910217761993,
+ "passes": 4,
+ "trials": 32,
+ "seed": 7
+}

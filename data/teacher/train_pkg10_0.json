@@ -1,0 +1,17 @@
+{
+ "name": "train_pkg10_0",
+ "B": 16,
+ "H": 10,
+ "W": 10,
+ "gp_ok": 0.9375,
+ "ls_ok": 0.0,
+ "ls_over_gp": null,
+ "improved_frac": null,
+ "gp_count_mean": 9.0,
+ "teacher_count_mean": 9.0,
+ "t_ls": 1859.109652519226,
+ "t_total": 1879.8246793746948,
+ "passes": 4,
+ "trials": 32,
+ "seed": 9
+}

@@ -1,0 +1,24 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 38 is done and pushed to `r2e main`. P1 (`--peak_refine`) failed one of its two pre-registered checks: the distill-stage check came out "no". The main verdict waits for the last seed-1 run, which finishes around 07:20 UTC.
+
+**P1 results**
+- **Held-out pcb, seed 0 (`lo_pcb_r2pk`):** 0.88 vs 0.92 for `lo_pcb_r2`, a gap of −0.04 [−0.16, +0.08]. pkg came in at −0.02 and ip at 0.00. The early-stop rule needed both the same-kind pkg and held-out pcb estimates at −0.16 or lower; they are +0.06 and −0.04, so the seed-1 runs stay queued.
+- **Distill stage (`r2pk_distill` − `r2_mott_distill`, pkg):** +0.04 in seed 0 and +0.12 in seed 1, pooled +0.080 [−0.030, +0.190]. The rule needed the lower bound above 0, so the verdict is **"D1 is not explained by peak refinement."** Both seeds point the same way, but I recorded the rule's outcome unchanged. This is now in PROPOSALS (P1) and in the auto-generated RESULTS table.
+- **Report-only check (D7/D8b, no decision rule):** I re-ran the same failure-location diagnostic on both peak-refined distill checkpoints. In both seeds, one greedy pass passes the exact check more often (0.18 → 0.26 and 0.20 → 0.28), and fewer failures are uncovered (14 → 12, 17 → 10). The under-resolution gap stays at about 0.42 decade. The new `--ckpt` option in `scripts/diag_fail_freq.py` does this. For P2 (`--dedup_modes`) checkpoints it counts coverage with the deduplicated tokens the policy actually sees.
+
+**Operations**
+- `report_watch` and `resume_agent` had stopped; `ensure_running` restarted them.
+- Decision (logged in PROGRESS): I restarted the 4th-slot scheduler (`side_slot`) while it was idle, now covering the remaining P1 runs and all four P2 runs. P2 evals no longer depend on a later round relaunching it.
+- CPU stays at 4 processes; memory is about 12 / 60 GiB. The out-of-memory count is still the single old kill from round 27.
+- There were no new instructions in `agent/QUEUE.md`.
+
+**Next round**
+1. The `r2pk_s1` RL eval comes in around 05:20.
+2. Once `lo_pcb_r2pk_s1` finishes (~07:20), the full P1 seed 0+1 pooled verdict gets recorded.
+3. When `r2dd` distillation finishes (~08:00), queue its distill-only eval and run the same diagnostic on it.
+4. If P1 wins, queue seed 2 plus the held-out ip and pkg runs before the 11/6 12:00 UTC cutoff for new attempts.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3082796..8ab91a8  main -> main

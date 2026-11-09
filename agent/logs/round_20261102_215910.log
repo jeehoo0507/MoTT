@@ -1,0 +1,16 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 18 was a status-only round. No experiment finished, so RESULTS.md is unchanged.
+
+- **GPU:** `lo_pkg_r2a` reinforcement learning (RL) training is at iteration 275, with no out-of-memory errors (GPU peak 11.5 GB). It should finish around 22:15. Next in line are r2m, lo_pcb_r2m, r2g and lo_pcb_r2g.
+- **CPU:** The 20-cell evaluation board set (`pool20`) has 2 of 6 files done (pcb20_0 and pcb20_1). It should finish around 23:10.
+- **4th slot:** The GA run on `pkg10_0` has taken 3640 s so far, against about 2000 s for the pcb files. pkg boards are heavier, so I don't read this as a problem. When it ends, the evaluation of `lo_pkg_r2a` runs.
+- **Memory:** 10.7 GiB of 60 GiB, with no OOM kills.
+- **QUEUE.md:** no new instructions.
+- **Empty `side_slot4.log`:** this is expected. The script only writes a line when it starts or ends a job, and it hasn't started one yet. This is not a repeat of the round 9 problem where a log was being written to a deleted file.
+
+The round 18 entry is in PROGRESS.md, committed (`b63a90b`) and pushed to `r2e main`. Next round: check the GA pkg10_0 result, evaluate `lo_pkg_r2a` (table only), and use the memory peak from the first 20-cell evaluation to decide whether to queue the rest. Also evaluate r2m (around 23:35) and apply the pass/fail rule written down in round 7.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b63a90b..39262c3  main -> main

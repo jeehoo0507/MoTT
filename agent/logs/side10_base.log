@@ -1,0 +1,9 @@
+6 sets x 2 methods = 12 jobs, 1 workers -> runs/2026-10-28/baselines/eval
+/usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-8e061zse', '/mp-yqc9qw__', '/mp-czpl9se9', '/mp-wzn47nik', '/mp-t0ny7ht7', '/mp-334qbbh4'}
+  warnings.warn(
+usage: analyze_gp_one_type.py [-h] [--pool POOL] --sets SETS --type TYPE
+                              [--rounds ROUNDS] --out OUT
+analyze_gp_one_type.py: error: unrecognized arguments: --skip_existing
+eval_pcb10_0 type 0 ok 0.04 count 32.00 rounds 1 459s
+eval_pcb10_1 type 0 ok 0.00 count nan rounds 3 974s
+eval_pkg10_0 type 0 ok 0.76 count 16.00 rounds 4 434s

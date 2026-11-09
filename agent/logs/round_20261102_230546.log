@@ -1,0 +1,19 @@
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+Round 22 was status only: no experiment finished, so I added nothing to RESULTS.md and changed no settings.
+
+- **GPU, `r2m` RL:** it's at iteration 200 with no out-of-memory errors and 16.4 GB peak GPU memory. I expect it to finish around 23:30 UTC. The "resume checkpoint" line in the log is the 20-minute checkpoint save, not a restart; the process has run without a break since 22:13. After it come `lo_pcb_r2m`, `r2g` and `lo_pcb_r2g`.
+- **CPU, building the 20-cell evaluation set:** 2 of 6 files are done. The 3rd file has been running for about 90 minutes. The two PCB files took about 22 minutes each, and the remaining board types are heavier, so this isn't a problem yet.
+- **Fourth slot, GA evaluation of `pkg10_1`:** it's running and should finish around 23:40.
+- **Resources:** 4 CPU-heavy processes are running, within the limit of 4. The pod is using 14.4 of 60 GiB, with no OOM kills. QUEUE.md has no new instructions.
+
+I added the round 22 entry to PROGRESS.md and committed it with this round's logs. That's commit `35875a2`, pushed to `r2e main`, and the branch is in sync with the remote.
+
+Next round:
+- Once `r2m` finishes, evaluate it after the GA job and apply the pass/fail rule written down in round 7.
+- Once the 20-cell set is built, use the peak memory of the first 20-cell evaluation to decide whether to queue the remaining 20-cell evaluations.
+- Write the new DAILY.md at 05:00 UTC on 11/03.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   35875a2..4066da7  main -> main
