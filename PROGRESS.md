@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 09:30 UTC, 라운드 233 — 새 기록 7: 서버 1 S lo_pkg_bdf_s4_distill 평가 6 / 6 (54250e2), 서버 2 nrest bm2_rlonly_s1_rl+rep4 pkg16_1 (005897c, nrest 9 / 10); RESULTS 다시 생성 (1529 → 1536 기록); GPU = 사람 S bdf_s4 distill)
+# PROGRESS (갱신 2026-11-09 09:55 UTC, 라운드 234 — 새 기록 12: 서버 1 S lo_pkg_bdf_s4_distill+rep4 6 (eca0e28), 서버 2 S r0_coord_s4_rl 평가 6 (fad9fed); RESULTS 다시 생성 (1536 → 1548 기록); GPU = 사람 S bdf_s4 distill it 500)
+
+## 라운드 234 (2026-11-09 09:43 ~ 09:55 UTC)
+- `git fetch r2e` (09:43): 새 원격 커밋 없음. 라운드 233 뒤 사람 커밋 eca0e28 (s1 S records 09:38: `lo_pkg_bdf_s4_distill/eval/*+rep4.json` 6 개) 은 이 작업 트리에서 직접. QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (197570 B). mem 19.1 GiB / 60, oom_kill 2.
+- S (사람 `seeds_s.sh s1 run`): run.log `09:38 eval done lo_pkg_bdf_s4_distill`; bdf_s4 distill 학습 it 500 (2494 s). 손대지 않음.
+- `collect_results.py` 손으로 (`.venv/bin/python`, 1536 → 1548 기록). 라운드 233 의 09:23 생성 뒤에 들어온 서버 2 fad9fed (09:26, r0_coord_s4_rl 평가 6) 도 이번에 들어감. 스크립트 숫자 그대로 (성공률 / 개수 비 [n]): lo_pkg_bdf_s4_distill+rep4 ip10 1.00 / 2.06, pcb10 1.00 / 3.66, pkg10 0.82 / 3.64 [50]; r0_coord_s4_rl ip10 0.96 / 1.02, pcb10 1.00 / 0.78, pkg10 0.88 / 0.77 [50]. 판정 없음. r0_coord_s4_rl 은 서버 2 기록 → 시간 비교에 쓰지 않음.
+- 한 줄 (N 6단계): GPU = 사람 S (bdf_s4), cpu = 없음 (S 다음 평가 대기), 새 기록 12.
+- 결정: 새 항목 넣지 않음 — 이유: QUEUE 11/09 14:00 (S 도는 동안 GPU 에 다른 것 금지), 11/08 11:30 6번 (에이전트가 항목 추가 금지).
+- 할 일 (다음): (1) 사람 속도 측정 프로토콜. (2) bdf_s4 distill 끝 → 평가 push → collect_results; 그 뒤 r2pk_s4·s5. (3) nrest 남은 1 (서버 2). (4) restore_proc_log (pipeline_day2.log). (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+
+# (이전) 라운드 233 머리말: (갱신 2026-11-09 09:30 UTC, 라운드 233 — 새 기록 7: 서버 1 S lo_pkg_bdf_s4_distill 평가 6 / 6 (54250e2), 서버 2 nrest bm2_rlonly_s1_rl+rep4 pkg16_1 (005897c, nrest 9 / 10); RESULTS 다시 생성 (1529 → 1536 기록); GPU = 사람 S bdf_s4 distill)
 
 ## 라운드 233 (2026-11-09 09:22 ~ 09:30 UTC)
 - `git fetch r2e` (09:23): 라운드 232 커밋 뒤 사람 커밋 2 개 — 54250e2 (s1 S records 09:17: `lo_pkg_bdf_s4_distill/eval` 6 세트), 005897c (서버 2 N records 09:20: `bm2_rlonly_s1_rl/eval/eval_pkg16_1__bm2_rlonly_s1_rl+rep4.json`). 이미 작업 트리에 있음. QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
