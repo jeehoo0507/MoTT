@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 03:48 UTC, 라운드 218 — cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (03:21~, 25 분째, 워커 100 %); N2 여전히 늦음 0 / 48; GPU 빔 (s2 STUCK 그대로); 새 기록 0)
+# PROGRESS (갱신 2026-11-09 04:04 UTC, 라운드 219 — cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (03:21~, 41 분째, 워커 100 %); 서버 2 가 N2 를 병렬판 `server2_n2b.sh` 로 다시 돌림 (사람 커밋 913b8e9, 12:46 KST); N2 0 / 48; GPU 빔; 새 기록 0)
+
+## 라운드 219 (2026-11-09 04:02 ~ 04:04 UTC)
+- `git fetch r2e` (04:02): 새 커밋 없음 (사람 913b8e9 `server2_n2b: run N2 evals as parallel single jobs, slowest first` 는 이미 merge 됨 — 서버 2 가 48 개를 `xargs -P` 로, B-Manoharan v2 pcb 먼저; 같은 명령·플래그). QUEUE 끝 = 11/09 01:40 KST 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 25.5 GiB / 60, oom_kill 2 (변화 없음). `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 197214 B). GPU 85 MiB / 0 % (빔).
+- cpu: `N harness eval_pkg16_1 bm2_rlonly_rl+rep4` 2442 s 째, 워커 2016660 util 100 % / rss 8.9 GB (살아 있음). ≈ 06:00 UTC 예상.
+- N2: `eval_{pcb10,ip10}_*__lo_pkg_*+rep4.json` 12 개는 모두 `lo_pkg_bdf*` (N2 아님) → N2 **0 / 48**. 서버 2 가 병렬판으로 다시 시작했으니 "늦음" 보고는 거두고 push 를 기다림. 서버 1 은 다시 넣지 않음.
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로 — 이유: 사람 새 지시 없음, pkg16_1 정상 진행, N2 는 사람이 서버 2 에서 맡음 (QUEUE 11/09 01:40 KST "do not re-add them").
+- 할 일 (다음): (1) pkg16_1 경과 감시 (기준 14400 s ≈ 07:20 UTC; 넘거나 util 0 % 이면 eval.log·py-spy). (2) pkg16_1 끝나면 RESULTS 행이 [50] 이 되는지 확인. (3) 서버 2 N2 push 오면 개수 세기 (collect_results 가 RESULTS 에 숫자만). (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) GPU 는 사람 항목 없으면 빈 채로.
+
+# (이전) 라운드 218 머리말: (갱신 2026-11-09 03:48 UTC, 라운드 218 — cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (03:21~, 25 분째, 워커 100 %); N2 여전히 늦음 0 / 48; GPU 빔 (s2 STUCK 그대로); 새 기록 0)
 
 ## 라운드 218 (2026-11-09 03:46 ~ 03:48 UTC)
 - `git fetch r2e` (03:46): 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
