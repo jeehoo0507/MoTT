@@ -343,3 +343,9 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
   `scripts/server2_nrest.sh` (parallel). Server 1 cpu keeps only the running bm2_rlonly_rl pkg16_1. Do not re-add them.
 - bm2_rlonly_s2 entries stay as they are (no metrics.json: GPU OOM twice, STUCK) — report B-Manoharan v2 all-types
   with seeds 0 and 1, and say seed 2 failed to train (OOM). No rerun with changed flags.
+
+## 11/09 14:00 KST — S: supplement seeds (PROPOSALS "11/09 S"), human-run on both GPUs
+- Server 1 GPU is used by the human script `scripts/seeds_s.sh s1 run` (lo_pkg_bdf_s3/s4, bdf_s4, r2pk_s4/s5; evals one at a
+  time in the background). It is not in day2_queue.json on purpose: do not add these to the train list, do not start
+  anything else on the GPU while it runs, do not kill its processes. Server 2 runs `seeds_s.sh s2 run`.
+- Report only (no verdict); every listed seed goes into RESULTS, failed or not.

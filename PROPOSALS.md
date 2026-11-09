@@ -305,6 +305,16 @@
 - **보고 (판정 규칙):** 10칸 세 종류 50문제, 정책 단독, ablation − `r2pk_rl` 짝지은 성공률 차와 개수비 (bootstrap 95% CI). 어떤 종류에서든 CI 상한 < 0 **이고** 점추정 ≤ −0.16 (seed 잡음 d*)이면 "그 설계를 빼면 나빠진다"로 쓴다. 아니면 "seed 0에서 차이를 확인하지 못함"으로 쓰고 설계 근거로 쓰지 않는다. seed를 더하지 않는다.
 - 가장 가까운 선행: Residual Policy Learning (A2), cutting plane (A1) / 다른 점: 기여 아님, 우리 RL 설계의 ablation.
 
+## 11/09 S: 편차가 큰·실패한 설정의 보충 seed (사람, 11/09 14:00 KST, 어떤 S run도 돌기 전에 고정; 보고용, 판정 없음)
+- **결정 (사람):** seed 간 편차가 크거나 학습이 실패한 설정에 seed를 더한다. 학습 9개, 모두 기존과 같은 arm·시간·플래그 (`scripts/seeds_s.sh`):
+  - B-DevFormer, 패키지형을 빼고 학습: `lo_pkg_bdf_s3`, `lo_pkg_bdf_s4` (distill만 2.0 h, `--skip_rl`).
+  - B-DevFormer, 전 종류: `bdf_s3`, `bdf_s4` (같음).
+  - 전 종류 MoTT+P1 `r2pk_s4`, `r2pk_s5` 와 좌표 `r0_coord_s4`, `r0_coord_s5` (distill 0.75 h + RL 1.25 h). pkg16 에서 seed 3 이 뒤집힌 것 (MoTT 0.90 / 좌표 0.92) 을 보고 양쪽에 **같은 수** 를 더한다.
+  - B-Manoharan v2 전 종류 `bm2_rlonly_s3` (RL만 2.0 h): seed 2 가 GPU OOM 으로 두 번 같은 자리에서 실패해서 그 자리를 채운다. seed 2 실패도 그대로 보고한다. s3 도 OOM 이면 다시 돌리지 않고 실패로 적는다.
+- **평가 (F·N 과 같은 플래그 `--workers 1 --inst_chunk 5`, 하네스 `--repair 4`):** 모든 모델 = 10칸 6세트 정책 단독. 하네스: `lo_pkg_bdf_s*` → pkg10·pcb10·ip10 (N2 와 같은 꼴); 전 종류 모델 → 10칸 6세트 + pkg16_0/1.
+- **왜 지금 (정직하게):** B-DevFormer 의 seed 편차 (뺀 pkg 하네스 0.84 / 0.08 / 0.44, 전 종류 pcb 0.02 / 0.94 / 0.02), pkg16 seed 3 의 뒤집힘, bm2_rlonly_s2 OOM 을 **본 뒤** 에 추가한다. 그래서 **보고용 (판정 없음)** 이다. N·F·N2 의 판정과 읽기 규칙 (seed 0~2) 은 바꾸지 않는다.
+- **읽기 (결과 전에 고정):** (1) 위 seed 는 결과와 상관없이 **전부** 표에 적는다 (실패·중단 포함). seed 를 골라 빼지 않는다. 이 목록 밖으로 seed 를 더 늘리려면 새 등록이 먼저다. (2) 묶음마다 기존 seed 와 합친 전체 seed 점추정 + seed 범위 (최소~최대) 를 "보충" 열로 적는다. (3) B-DevFormer: 각 seed 에서 정책 단독 실패 문제의 decap 중 0번 종류 비율을 적고, 그 비율이 0.9 이상인 seed 수를 "종류 쏠림 seed 수 / 전체" 로 적는다 (11/09 13:50 KST 에 seed 0 전 종류 pcb 1.00, bm2_rlonly seed 0 0.97 로 본 현상).
+
 ## 11/09 N2: 패키지형을 뺀 모델의 PCB·인터포저 하네스 평가 (사람, 11/09 00:20 KST, 어떤 N2 평가도 돌기 전에 고정; 평가만, 학습 없음)
 - **결정 (사람):** N 에서 뺀 pkg 모델은 하네스를 pkg10 에만 씌웠다. "하네스 안에서도 세 종류를 다 푸는가" 를 보려면 같은 모델의 학습한 종류 (PCB·인터포저) 하네스가 필요하다. 그래서 **패키지형을 뺀 모델 15개 모두** 에 `eval_pcb10_0/1`, `eval_ip10_0/1` `--repair 4` (F·N 과 같은 플래그 `--workers 1 --inst_chunk 5`) 를 더한다: MoTT+P1 `lo_pkg_r2pk{,_s1,_s2}`, 좌표 `lo_pkg_r0{,_s1,_s2}`, B-Park `lo_pkg_bp_park{,_s1,_s2}`, B-Manoharan v2 `lo_pkg_bm2_rlonly{,_s1,_s2}` (서버 1 cpu 큐), B-DevFormer `lo_pkg_bdf{,_s1,_s2}_distill` (서버 2 `scripts/server2_n2.sh`, 체크포인트가 서버 2 에만 있음).
 - **왜 지금 (정직하게):** 서버 1 정책 단독 중간 결과 (11/09 00:00) 에서 B-Park·B-Manoharan v2 가 뺀 pkg 에서 0.79·0.83 (MoTT+P1 0.71) 이면서 학습한 PCB 에서 0.03 인 것을 **본 뒤** 에 추가한다. 그래서 이 평가는 **보고용 (판정 없음)** 이다; N 의 읽기 규칙·판정은 바꾸지 않는다.
