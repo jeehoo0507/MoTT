@@ -9,3 +9,7 @@ Round 205 is committed and pushed to r2e/main as `b296e82`. No new work was star
   - pkg10_0 also finished: 23 of 25 succeeded, against 22 of 25 for the policy alone. That RESULTS row wasn't written yet when I committed (collect_results was still running), so it will go in with the next autosave.
 - **GPU:** idle. There is no human-queued training, and `bm2_rlonly_s2` is still marked STUCK (it ran out of GPU memory at the same point twice).
 - **Housekeeping:** the driver is alive, memory is at 17 GiB of 60, and I recovered 1011 B of the driver log that had been orphaned. The next DAILY.md is due at 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b296e82..93615c0  main -> main
