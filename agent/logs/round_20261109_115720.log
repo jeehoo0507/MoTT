@@ -2,3 +2,25 @@ From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
 collect_results is still running. I'll write up this round's status once it finishes.
+
+Round 241 is done and pushed to `r2e/main` as commit 02cda43. I started nothing new on server 1: per the QUEUE (11/09 14:00 and 19:20 KST), only the human's S script uses the GPU and T runs on server 2.
+
+- **S on server 1 (human-run):**
+  - The first bdf_s4_distill evaluation (policy only, 6 small 10-cell problem sets) has finished all 6.
+  - The same policy is now being evaluated with up to 4 repair rounds (`--repair 4`) on 8 sets, started around 11:44 UTC.
+  - r2pk_s4 finished its first stage (distill, last logged iteration 1500) and is now in the RL training stage.
+- **RESULTS:** I regenerated it and it now has 1,560 records. The script's numbers for bdf_s4_distill (success rate / count ratio / seconds per problem, out of 50 problems):
+
+  | Sets | Success | Count ratio | s / problem |
+  |---|---|---|---|
+  | ip10 | 0.10 | 6.72 | 12.00 |
+  | pcb10 | 0.80 | 2.79 | 0.67 |
+  | pkg10 | 0.44 | 1.20 | 0.96 |
+
+  These go in as reported numbers only; no verdict, since S is report-only.
+- **Server health:** the background driver and the results watcher are running, and I restarted the resume helper. Memory is at 28.7 / 60 GiB, up from about 20 last round because the repair evaluation and RL training overlap. I'm watching it but haven't acted. The kernel has killed processes for memory 2 times, the same as before.
+- **PROGRESS.md:** updated with this round and the next steps:
+  1. Collect the repair-evaluation records once the human pushes them.
+  2. After r2pk_s4's RL stage, it gets evaluated and then r2pk_s5 runs.
+  3. Copy in the speed table when T's records are pushed.
+  4. Write the next DAILY.md at 11/10 01:15 UTC.
