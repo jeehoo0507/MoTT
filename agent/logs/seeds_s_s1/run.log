@@ -12,3 +12,6 @@
 09:17 pushed
 09:38 pushed
 11-09 09:38 eval done lo_pkg_bdf_s4_distill
+11-09 11:00 end train bdf_s4 rc=0
+11:00 pushed
+11-09 11:00 start train r2pk_s4 (std, seed 4)

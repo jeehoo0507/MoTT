@@ -1,6 +1,18 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 10:56 UTC, 라운드 238 — 새 기록 0; GPU = 사람 S bdf_s4 distill it 1325 (6654 s, 끝 ≈ 11:00 UTC); RESULTS 1548 기록 그대로)
+# PROGRESS (갱신 2026-11-09 11:22 UTC, 라운드 239 — S bdf_s4 distill 끝 (11:00 rc=0) → 평가 3 / 6 진행 중; GPU = 사람 S r2pk_s4 (std, seed 4, 11:00 시작); RESULTS 1549 기록 (report_watch 자동 8c74776))
+
+## 라운드 239 (2026-11-09 11:08 ~ 11:22 UTC)
+- `git fetch r2e` (11:08): 새 원격 커밋 없음 (사람 커밋 67665f7 s1 11:00 = `bdf_s4_distill/{log.csv,metrics.json}`, ca358a7 s2 11:05 = `r0_coord_s5_rl/{log.csv,metrics.json}` 은 이미 HEAD). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (197570 B). mem 20.7 GiB / 60, oom_kill 2.
+- S (사람 `seeds_s.sh s1 run`, run.log): `11:00 end train bdf_s4 rc=0`, `11:00 start train r2pk_s4 (std, seed 4)` (train.py 2083793). bdf_s4_distill 평가 (`eval_policy.py` 2083790, 6 작업 1 worker) 백그라운드 중 — 11:20 기준 pcb10_0·pkg10_0·pkg10_1 끝. 손대지 않음.
+- `collect_results.py` (손으로, 11:12) → 1549 기록; report_watch 가 같은 내용 자동 커밋 (8c74776 "results: auto"). 스크립트 숫자 그대로: bdf_s4_distill pkg10_1 0.48 / 1.29 [25] (나머지 세트는 다음 생성 때). 판정 없음.
+- 실수 기록: 대기 루프 `pgrep -f collect_results.py` 가 자기 bash 명령줄에 걸려 안 끝남 → TaskStop. 다음엔 `pgrep -f '^.venv/bin/python scripts/collect'` 꼴이나 `run_in_background` 알림만 쓴다.
+- 한 줄 (N 6단계): GPU = 사람 S (r2pk_s4), cpu = 사람 S 평가 (bdf_s4_distill), 새 기록 1 (+ 학습 표 bdf_s4_distill·r0_coord_s5_rl).
+- 결정: 새 항목 넣지 않음 — 이유: QUEUE 11/09 14:00 (S 도는 동안 GPU 금지, S 는 큐 밖), 11/09 19:20 (T 는 서버 2).
+- 할 일 (다음): (1) bdf_s4_distill 평가 6 / 6 → 사람 push → collect_results. (2) r2pk_s4 → r2pk_s5 (S 마지막). (3) T 기록 push (`runs/speed_1109/eval`, 21) → `speed_table.py` 출력 그대로. (4) nrest 남은 1 (서버 2). (5) restore_proc_log. (6) DAILY 11/10 01:15 UTC. (7) mem 감시.
+
+# (이전) 라운드 238 머리말: (갱신 2026-11-09 10:56 UTC, 라운드 238 — 새 기록 0; GPU = 사람 S bdf_s4 distill it 1325 (6654 s, 끝 ≈ 11:00 UTC); RESULTS 1548 기록 그대로)
 
 ## 라운드 238 (2026-11-09 10:52 ~ 10:56 UTC)
 - `git fetch r2e` (10:52): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T, 서버 2 사람 실행) 그대로.
