@@ -9,3 +9,7 @@ Already up to date.
 - 이번 라운드에 새로 끝난 실험이 없어서 RESULTS는 바꾸지 않았습니다.
 - **결정:** 큐·플래그·순서를 그대로 두었습니다. PROGRESS에 이유와 함께 적었습니다.
 - **다음:** pcb10_1 결과 행이 RESULTS에 들어가는지 확인하고, DAILY는 11/09 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   4148d83..7f2e52e  main -> main
