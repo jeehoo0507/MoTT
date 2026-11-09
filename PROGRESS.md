@@ -1,6 +1,6 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 04:24 UTC, 라운드 220 — 서버 2 N2 기록 도착 시작: **10 / 48** (사람 커밋 10 개, 04:07~04:15 UTC); RESULTS 손으로 collect_results 다시 돌려 반영; cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (57 분째, 워커 100 %); GPU 빔)
+# PROGRESS (갱신 2026-11-09 04:24 UTC, 라운드 220 — 서버 2 N2 기록 도착 시작: **14 / 48** (사람 커밋 16 개, 04:07~04:24 UTC); RESULTS 손으로 collect_results 다시 돌려 반영; cpu N 하네스 `bm2_rlonly_rl+rep4` pkg16_1 진행 (57 분째, 워커 100 %); GPU 빔)
 
 ## 라운드 220 (2026-11-09 04:19 ~ 04:24 UTC)
 - `git fetch r2e` (04:19): 새 커밋 없음 (사람 "N2 records" 커밋 10 개 223995f..9575af4 는 이미 로컬). QUEUE 끝 = 11/09 01:40 KST 그대로.
@@ -9,8 +9,9 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - **N2 (서버 2, 보고만): 10 / 48 도착.** bm2_rlonly {s0,s1,s2} ip10_{0,1} (6) + r2pk_rl (s0) ip10_{0,1}·pcb10_{0,1} (4). 아직 없음: bm2_rlonly pcb10 ×6 (병렬판이 "느린 것 먼저" 라 진행 중일 것), r2pk s1·s2, r0 ×3, bp_park ×3 (38 개).
 - report_watch 는 untracked 파일만 보므로 사람이 커밋한 N2 파일을 RESULTS 에 넣지 않음 → `.venv/bin/python scripts/collect_results.py` 손으로 돌림 (1454 → 1464 기록). 숫자는 스크립트가 쓴 그대로, 손 숫자 없음: ip10 bm2_rlonly+rep4 세 seed 모두 1.00 (수리 전 0.96 → 1.00, 개수 비 2.50), r2pk_rl+rep4 ip10 1.00 / 1.01, pcb10 0.98 / 0.20.
 - 주의: N2 파일의 문제당 초 (`sec_per_inst`) 는 서버 2 CPU 값 — QUEUE 11/05 규칙대로 시간 비교·규모 곡선에 쓰지 않음. N2 판정 줄은 사람이 씀 (PROPOSALS 11/09 N2, report-only).
-- QUEUE "11/09 09:00 KST 까지 48 개 다 안 오면 PROGRESS 에 말하라": 지금 13:24 KST, **38 개 아직 안 옴 (늦음, 보고만).** 서버 1 은 다시 넣지 않음.
-- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 10 (서버 2 N2, RESULTS 반영).
+- 04:24 merge 에서 4 개 더 옴: r2pk_s1 ip10_{0,1}·pcb10_{0,1} → **14 / 48**. collect_results 다시 (1468 기록): r2pk_s1+rep4 ip10 1.00 / 1.01, pcb10 1.00 / 0.19.
+- QUEUE "11/09 09:00 KST 까지 48 개 다 안 오면 PROGRESS 에 말하라": 지금 13:24 KST, **34 개 아직 안 옴 (늦음, 보고만).** 서버 1 은 다시 넣지 않음.
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 14 (서버 2 N2, RESULTS 반영).
 - 결정: RESULTS 를 손으로 collect_results 다시 돌려 갱신 — 이유: 같은 스크립트·같은 규칙 (report_watch 가 하던 일), 사람이 커밋한 파일이라 자동 경로가 못 봄; 숫자만 넣고 판정은 안 씀. 큐·플래그·순서 그대로.
 - 할 일 (다음): (1) pkg16_1 경과 감시 (기준 14400 s ≈ 07:20 UTC; 넘거나 util 0 % 이면 eval.log·py-spy). (2) pkg16_1 끝나면 RESULTS 행이 [50] 이 되는지 확인. (3) 서버 2 N2 push 더 오면 개수 세고 `collect_results.py` 다시 돌림. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) GPU 는 사람 항목 없으면 빈 채로.
 
