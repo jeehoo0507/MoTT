@@ -1,6 +1,16 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 15:15 UTC, 라운드 249 — 새 기록 4; S r2pk_s4_rl 정책 6 / 6 끝, 하네스 1 / 8; r2pk_s5 rl 학습 끝 (15:08 rc=0); RESULTS 1576 → 1580 기록)
+# PROGRESS (갱신 2026-11-09 15:31 UTC, 라운드 250 — 새 기록 0; S r2pk_s4_rl 하네스 1 / 8 (2번째 세트 진행 중); GPU 비어 있음 (S gpu lane 끝); RESULTS 1580 기록 그대로)
+
+## 라운드 250 (2026-11-09 15:28 ~ 15:31 UTC)
+- `git fetch r2e` (15:28): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. `runs/speed_1109b` 아직 없음.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 29.2 GiB / 60, oom_kill 2.
+- S (사람): run.log 마지막 "15:08 gpu lane done, waiting for evals". r2pk_s4_rl 하네스 `+rep4` 파일 1 개 (pkg16_1), 다음 세트 worker 2118043 (util 100%, rss 12.3 GB, 21 분째). 손대지 않음.
+- 한 줄 (N 6단계): GPU = 비어 있음, cpu = 사람 S 평가 (r2pk_s4_rl 하네스 1 / 8), 새 기록 0.
+- 결정: 새 항목 넣지 않음, RESULTS 다시 만들지 않음 — 이유: QUEUE 11/09 14:00 (S 스크립트가 평가 대기로 살아 있는 동안 GPU 금지), 새 기록 없음.
+- 할 일 (다음): (1) r2pk_s4_rl 하네스 남은 7 + r2pk_s5_rl 정책·하네스 평가 → collect_results (venv). (2) S 끝나면 run.log 확인, GPU 다시 쓸지 QUEUE 확인. (3) `runs/speed_1109b`·U push → 주 표에 안 섞이는지 확인. (4) nrest 남은 1 (서버 2). (5) DAILY 11/10 01:15 UTC. (6) mem 감시 (29.2 GiB).
+
+# (이전) 라운드 249 머리말: (갱신 2026-11-09 15:15 UTC, 라운드 249 — 새 기록 4; S r2pk_s4_rl 정책 6 / 6 끝, 하네스 1 / 8; r2pk_s5 rl 학습 끝 (15:08 rc=0); RESULTS 1576 → 1580 기록)
 
 ## 라운드 249 (2026-11-09 14:59 ~ 15:15 UTC)
 - `git fetch r2e` (14:59, 15:12): 새 원격 커밋은 사람 9229ad8 s1 (15:08, r2pk_s5_rl log.csv·metrics.json) 하나, 이미 HEAD (s1 스크립트가 이 작업 트리에서 커밋). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
