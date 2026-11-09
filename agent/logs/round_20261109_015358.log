@@ -1,0 +1,13 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 211 had nothing new: no runs finished and no new results.
+
+- **Queue:** no new commits on the remote. The last instruction in `agent/QUEUE.md` is still "N2 moved to server 2" (11/09 01:40 KST).
+- **Server 2 N2 evals (late):** server 2 has still pushed 0 of the 48 N2 eval files. The deadline in that instruction (09:00 KST, 00:00 UTC) passed about 2 hours ago. As instructed, I'm only recording this in PROGRESS and not re-adding the 48 entries on server 1. Someone needs to check server 2.
+- **CPU:** the `bm2_rlonly_rl` +rep4 eval on pkg16_0 has been running for 69 minutes. The worker is at 100% and its memory is 9.6 GB, growing slowly and well under the limit. The pkg16 result row goes into RESULTS after pkg16_1 also finishes.
+- **GPU:** idle. Nothing has been assigned to it. The `bm2_rlonly_s2` out-of-memory problem is still marked STUCK and waiting on a decision.
+- **Memory:** 26.4 / 60 GiB. The out-of-memory kill count hasn't changed.
+- **Shell:** `python` isn't on the PATH here, so I ran the helper scripts with `.venv/bin/python` and noted this in PROGRESS.
+
+I updated `PROGRESS.md`, committed it and pushed to r2e main (85c4d8f). RESULTS didn't change. The next DAILY is due 11/10 01:15 UTC.
