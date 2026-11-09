@@ -1,3 +1,21 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 256 is finished, and the commit is pushed to `r2e/main` (89e6380). Nothing new was started.
+
+**Human-run eval failed.** Your rerun of the `bm2_rlonly_s1_rl` `eval_pkg16_0 +rep4` harness eval (pid 2131724, started 16:37 UTC) has failed. Its worker process was running at 17:34 UTC and had vanished by 17:50.
+- There is no pkg16_0 result file in `runs/2026-10-29/bm2_rlonly_s1_rl/eval/`.
+- `agent/logs/bm2fix.log` has only the start line and no error traceback.
+- It was not killed for running out of memory: the cgroup's OOM-kill count is still 2. I don't know what killed it.
+- The parent process is now hung waiting for the dead worker. It is idle and uses 23 MB, so it blocks nothing, and its 4-hour `timeout` should end it at 20:37 UTC.
+
+This is the second failure of this eval, after the server 2 hang. I added a STUCK line about it at the top of PROGRESS.md. I did not kill the process and won't requeue it; whether to run it again is your call.
+
+**Everything else is unchanged:**
+- There were no new remote commits, and the QUEUE.md tail is still the 11/09 19:20 KST T entry.
+- The tracked-file count is 2592 after the merge, so no files were deleted.
+- The GPU is idle, memory is at 26.5 of 60 GiB, and the driver is alive.
+- RESULTS.md still has 1609 records.
+- Reason for not adding work (logged in PROGRESS.md as 결정): the 11/06 12:00 UTC deadline has passed.
+
+**Next round:** confirm the process ended at its 20:37 UTC timeout, then run `collect_results` when server 2 pushes its S/T/nrest records. DAILY.md is next due at 11/10 01:15 UTC.
