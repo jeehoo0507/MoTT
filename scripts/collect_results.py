@@ -29,9 +29,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # replace the server-1 records). L1-L4 use the server-1 pools: kept, but their per-problem seconds come from another
 # CPU and are blanked, and a server-1 record of the same (set, method) always wins over a server-2 duplicate (L3).
 S2_EXCLUDE = ("runs/2026-11-05fresh/", "runs/pool_s2_fresh/")
+# PROPOSALS 11/09 T (server 2 speed benchmark): the first 10 problems of eval_*16_0 again, set name eval_*16_0_k10.
+# Pooling them would count the same problems twice -> never merged; their table is scripts/speed_table.py.
+SPEED_EXCLUDE = ("runs/speed_1109",)   # also runs/speed_1109b (PCB rerun)
 S2_PREFIX = ("runs/2026-11-05s2/", "runs/2026-11-07s2/")   # 11/07: A1/A2, C1 + control (scripts/server2_c1.sh)
 S2_L1 = re.compile(r"runs/2026-10-29/(r2_mott|r3_loop)_s[12]_rl/eval/eval_[a-z]+(16|20)_\d__")
-S2_COUNT = {"excluded": 0, "server2": 0, "dup_dropped": 0}
+S2_COUNT = {"excluded": 0, "server2": 0, "dup_dropped": 0, "speed": 0}
 
 
 def is_server2(f):
@@ -43,6 +46,9 @@ def load_evals():
     for f in sorted(glob.glob("runs/**/eval/*.json", recursive=True)):
         if f.startswith(S2_EXCLUDE):
             S2_COUNT["excluded"] += 1
+            continue
+        if f.startswith(SPEED_EXCLUDE):
+            S2_COUNT["speed"] += 1
             continue
         try:
             d = json.load(open(f))
@@ -1999,6 +2005,23 @@ def grid_diag_table(recs):
             "|---|---|---|---|---|---|---|---|"] + rows + [""]
 
 
+def speed_section():
+    """PROPOSALS 11/09 T: scripts/speed_table.py output pasted as is (server-2 CPU, cores 10-15; not comparable with
+    the server-1 seconds above). runs/speed_1109b = PCB rerun (T addendum 11/09 21:40 KST), shown when pushed."""
+    import subprocess
+    lines = []
+    for d, title in (("runs/speed_1109/eval", "1차 측정"), ("runs/speed_1109b/eval", "PCB형 재측정 (네 방법)")):
+        if not glob.glob(f"{d}/*.json"):
+            continue
+        out = subprocess.run([sys.executable, "scripts/speed_table.py", d], capture_output=True, text=True).stdout
+        if not lines:
+            lines += ["## T 속도 측정 (서버 2, PROPOSALS 11/09 T, `scripts/speed_table.py` 출력 그대로)", "",
+                      "16칸 `eval_*16_0` 앞 10문제, 서버 2 코어 10–15. 결정 = 마지막 cutting-plane 라운드의 방법 시간, "
+                      "합계 = 정확 검사·재풀이·하네스 포함. 서버 1 시간표와 섞지 않음. 판정 없음 (읽기 규칙은 PROPOSALS T, 사람).", ""]
+        lines += [f"{title} (`{d}`):", ""] + out.strip().splitlines() + [""]
+    return lines
+
+
 def train_table():
     lines = []
     files = sorted(glob.glob("runs/**/metrics.json", recursive=True))
@@ -2045,7 +2068,9 @@ def main():
     if any(S2_COUNT.values()):
         lines += [f"서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 {S2_COUNT['server2']}개는 표에 넣되 시간 칸은 \"–\" "
                   f"(다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 {S2_COUNT['dup_dropped']}개; "
-                  f"FRESH (다시 만든 풀, 이름만 같음) {S2_COUNT['excluded']}개는 이 문서의 어떤 표에도 넣지 않음.", ""]
+                  f"FRESH (다시 만든 풀, 이름만 같음) {S2_COUNT['excluded']}개는 이 문서의 어떤 표에도 넣지 않음; "
+                  f"T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) {S2_COUNT['speed']}개도 넣지 않음 "
+                  f"(같은 문제 중복) → `scripts/speed_table.py` 표.", ""]
     lines += ["## 평가 (정확 검사)", ""]
     lines += ladder_table(recs)
     lines += ci_table(recs)
@@ -2084,6 +2109,7 @@ def main():
     lines += repair_ladder_table()
     lines += ckpt_table(recs)
     lines += grid_diag_table(recs)
+    lines += speed_section()
     lines += train_table()
     lines += teacher_table()
     open(a.out, "w").write("\n".join(lines) + "\n")

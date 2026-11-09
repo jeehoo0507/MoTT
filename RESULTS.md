@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 13:01 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 13:19 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 21개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6117,6 +6117,36 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | r3_loop_s2_rl | 114 / 319 | 0.3 | 1.00 | 4.8 | 0.96 | 10.0 | 0.82 |
 | r3a_rl | 128 / 346 | 0.8 | 1.00 | 4.4 | 0.92 | 11.0 | 0.86 |
 
+## T 속도 측정 (서버 2, PROPOSALS 11/09 T, `scripts/speed_table.py` 출력 그대로)
+
+16칸 `eval_*16_0` 앞 10문제, 서버 2 코어 10–15. 결정 = 마지막 cutting-plane 라운드의 방법 시간, 합계 = 정확 검사·재풀이·하네스 포함. 서버 1 시간표와 섞지 않음. 판정 없음 (읽기 규칙은 PROPOSALS T, 사람).
+
+1차 측정 (`runs/speed_1109/eval`):
+
+| set | method | n | success | decision s/problem | total s/problem |
+|---|---|---|---|---|---|
+| eval_ip16_0 | greedy+prune | 10 | 0.50 | 69.4 | 74.6 |
+| eval_ip16_0 | modal_rule+rep4 | 10 | 1.00 | 2.6 | 19.8 |
+| eval_ip16_0 | modal_rule | 10 | 1.00 | 2.5 | 19.8 |
+| eval_ip16_0 | r0_coord_rl+rep4 | 10 | 1.00 | 6.5 | 48.3 |
+| eval_ip16_0 | r0_coord_rl | 10 | 1.00 | 6.5 | 48.5 |
+| eval_ip16_0 | r2pk_rl+rep4 | 10 | 1.00 | 2.3 | 12.7 |
+| eval_ip16_0 | r2pk_rl | 10 | 1.00 | 2.2 | 12.9 |
+| eval_pcb16_0 | greedy+prune | 10 | 1.00 | 44.5 | 147.3 |
+| eval_pcb16_0 | modal_rule+rep4 | 10 | 1.00 | 3.4 | 38.5 |
+| eval_pcb16_0 | modal_rule | 10 | 1.00 | 4.0 | 38.6 |
+| eval_pcb16_0 | r0_coord_rl+rep4 | 10 | 1.00 | 31.2 | 161.3 |
+| eval_pcb16_0 | r0_coord_rl | 10 | 1.00 | 31.4 | 163.2 |
+| eval_pcb16_0 | r2pk_rl+rep4 | 10 | 0.90 | 33.3 | 171.4 |
+| eval_pcb16_0 | r2pk_rl | 10 | 0.80 | 34.8 | 167.8 |
+| eval_pkg16_0 | greedy+prune | 10 | 0.90 | 154.7 | 807.4 |
+| eval_pkg16_0 | modal_rule+rep4 | 10 | 1.00 | 7.8 | 62.9 |
+| eval_pkg16_0 | modal_rule | 10 | 0.80 | 7.8 | 57.8 |
+| eval_pkg16_0 | r0_coord_rl+rep4 | 10 | 0.70 | 69.8 | 381.5 |
+| eval_pkg16_0 | r0_coord_rl | 10 | 0.50 | 71.0 | 315.3 |
+| eval_pkg16_0 | r2pk_rl+rep4 | 10 | 1.00 | 5.6 | 55.5 |
+| eval_pkg16_0 | r2pk_rl | 10 | 0.80 | 5.9 | 48.1 |
+
 ## 학습 기록 (train.py metrics.json)
 
 | run | feat / model | stage | iters | 시간 (h) | 최종 val (count/g+p, fail) | 출처 |
@@ -6132,6 +6162,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/bdf_distill | coord / devformer | distill | 1500 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: –/1.00 | `runs/2026-10-29/bdf_distill/metrics.json` |
 | runs/2026-10-29/bdf_s1_distill | coord / devformer | distill | 1457 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: 0.66/0.62 | `runs/2026-10-29/bdf_s1_distill/metrics.json` |
 | runs/2026-10-29/bdf_s2_distill | coord / devformer | distill | 1323 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 5.65/0.75, val_ip10_0: 0.92/0.31 | `runs/2026-10-29/bdf_s2_distill/metrics.json` |
+| runs/2026-10-29/bdf_s3_distill | coord / devformer | distill | 1365 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 2.19/0.81, val_ip10_0: 1.03/0.50 | `runs/2026-10-29/bdf_s3_distill/metrics.json` |
 | runs/2026-10-29/bdf_s4_distill | coord / devformer | distill | 1439 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: –/1.00, val_ip10_0: 0.64/0.62 | `runs/2026-10-29/bdf_s4_distill/metrics.json` |
 | runs/2026-10-29/bm2_rlonly_rl | manoharan2 / manoharan2 | rl | 419 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 9.00/0.94, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/bm2_rlonly_rl/metrics.json` |
 | runs/2026-10-29/bm2_rlonly_s1_rl | manoharan2 / manoharan2 | rl | 430 | 2.03 | val_pcb10_0: –/1.00, val_pkg10_0: 9.00/0.94, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/bm2_rlonly_s1_rl/metrics.json` |
