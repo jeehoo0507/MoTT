@@ -1,0 +1,10 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 257 is done. One thing needs a decision from you: the bm2_rlonly_s1_rl pkg16_0 eval you re-ran will probably hit its 4-hour timeout before it finishes. PROGRESS.md, RESULTS.md (still 1609 records) and the commit are pushed to `r2e/main` (71ecc78).
+
+- **Last round's report was wrong.** Round 256 said the worker process of your `eval_pkg16_0 +rep4` re-run (started 16:37) had died. It hadn't: worker 2131728 is running at 100% CPU and about 10–11 GB of memory. Last round's process check probably searched for "eval_policy", and the worker's command line doesn't contain that, so it was missed. I removed the false "STUCK" line at the top of PROGRESS.md and put a correction there. I've also noted in memory to check this worker with `ps.py forkserver` from now on.
+- **The timeout problem:** the same model's pkg16_1 eval took 16,655 s (4.6 h). If pkg16_0 takes about as long, your `timeout 4h` will kill it at 20:37 UTC before it writes a result. That would also mean the earlier "hang" on server 2 may just have been slow. This conflicts with the 4-hour per-job rule in PROPOSALS 11/09 U. I didn't change the timeout or restart anything, because you started this run yourself. I wrote this up under "사람에게" in PROGRESS.md.
+- **Everything else is unchanged:** no new remote commits, no new QUEUE instructions, GPU idle, memory 28.4 / 60 GiB with no new out-of-memory kills, 2592 tracked files. I added no new jobs, since the 11/06 deadline has passed.
+
+Next round: check whether the pkg16_0 eval produced a result or hit the timeout. If it was killed, that's its second failure and it goes in PROGRESS.md as STUCK. After that, pick up the server 2 pushes when they arrive. The next DAILY.md is due 11/10 01:15 UTC.
