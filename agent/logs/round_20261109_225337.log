@@ -10,3 +10,7 @@ I finished round 271 and pushed it to `r2e main` (commit `dea7b0a`). Nothing cha
 - **Next:** pull in results when server 2 pushes them, keeping `runs/speed_1109` out of the main tables and checking for a jump in the record count. After that pull, check the tracked-file count. Write a new `DAILY.md` at 11/10 01:15 UTC.
 
 `bm2_rlonly_s2` is still marked STUCK at the top of `PROGRESS.md` (out of GPU memory twice). Per the human's decision it won't be rerun, and the report will cover seeds 0 and 1 only.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   dea7b0a..767bad5  main -> main
