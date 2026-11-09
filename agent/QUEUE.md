@@ -349,3 +349,6 @@ r2g 판정 뒤 "근거 있는 후보가 생길 때까지 GPU를 비워 둔다"(�
   time in the background). It is not in day2_queue.json on purpose: do not add these to the train list, do not start
   anything else on the GPU while it runs, do not kill its processes. Server 2 runs `seeds_s.sh s2 run`.
 - Report only (no verdict); every listed seed goes into RESULTS, failed or not.
+
+## 11/09 19:20 KST — T: speed benchmark on server 2 (PROPOSALS "11/09 T"), human-run
+- `scripts/speed_bench.sh run` on server 2, cores 10-15, ~1.7 h. Records -> runs/speed_1109/eval. Not in the queue.
