@@ -1634,3 +1634,7 @@
 [03:19:59] END collect_results rc=0 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
 [03:21:29] START N harness eval_pkg16_1 bm2_rlonly_rl+rep4 | mem 16.8 GiB / 60.0 GiB, oom_kill 2
 [03:21:29] $ .venv/bin/python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_pkg16_1' --policy bm2_rlonly_rl=runs/2026-10-29/bm2_rlonly_rl/best.pt --repair 4 --workers 1 --inst_chunk 5 --out runs/2026-10-29/bm2_rlonly_rl  (log runs/2026-10-29/bm2_rlonly_rl/eval.log)
+[07:47:22] END N harness eval_pkg16_1 bm2_rlonly_rl+rep4 rc=0 | mem 21.4 GiB / 60.0 GiB, oom_kill 2
+[07:47:22] START collect_results | mem 21.4 GiB / 60.0 GiB, oom_kill 2
+[07:47:22] $ /home/coder/R2E/.venv/bin/python scripts/collect_results.py  (log agent/logs/collect_results.log)
+[07:51:20] END collect_results rc=0 | mem 21.7 GiB / 60.0 GiB, oom_kill 2

@@ -1,6 +1,20 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 07:37 UTC, 라운드 228 — S 기록 12 (bdf_s3_distill 6 / 6, 서버 2 bm2_rlonly_s3 6), RESULTS 다시 생성 (1522 기록); S: lo_pkg_bdf_s3 distill 끝 (rc=0, 06:55) → 평가 6 / 6, lo_pkg_bdf_s4 distill 시작 (06:57); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (13680 s 째, 워커 100 %); 서버 2 nrest 8 / 10 그대로)
+# PROGRESS (갱신 2026-11-09 08:10 UTC, 라운드 229 — **서버 1 cpu N 하네스 다 끝남** (`bm2_rlonly_rl+rep4` pkg16_1 rc=0 07:47, pkg16 [50] 0.92); S lo_pkg_bdf_s3_distill +rep4 평가 6 / 6 push (08:05), RESULTS 다시 생성 (1529 기록); GPU = 사람 S lo_pkg_bdf_s4 distill it 725; cpu 비어 있음 (남은 대기 = bm2_rlonly_s2 8 개, metrics 없음 → 영영 안 돎))
+
+## 라운드 229 (2026-11-09 07:54 ~ 08:10 UTC)
+- `git fetch r2e` (07:55, 08:05): 새 커밋 없음. QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. `restore_proc_log` → 356 B 되살림 (07:47 END pkg16_1, collect_results). mem 19–21 GiB / 60, oom_kill 2.
+- **cpu: `N harness eval_pkg16_1 bm2_rlonly_rl+rep4` 끝 (07:47:22 rc=0, 15952 s).** 스크립트 숫자 그대로: pkg16_1 ok 0.92, count 146.09, 92.6 s/inst; 묶음 pkg16 [50] 0.92 / 10.15 / 6.13 (pkg16_0 0.92 와 합침). 판정 없음.
+- cpu 큐 남은 것: `N harness … bm2_rlonly_s2_rl+rep4` 8 개 pending — `after` = metrics.json 인데 bm2_rlonly_s2 는 OOM STUCK (사람 결정: 다시 안 돌림) → 영영 안 돎. 그 밖에 pending 없음 → **서버 1 cpu 줄 비어 있음.**
+- S (사람 `seeds_s.sh s1 run`): `08:05 eval done lo_pkg_bdf_s3_distill` + push (caf2dcc). lo_pkg_bdf_s4 distill it 725 (3956 s). 손대지 않음.
+- `collect_results.py` 손으로 (1525 → 1529 기록). 스크립트 숫자 그대로 (성공률 / 개수 비 [n]): lo_pkg_bdf_s3_distill+rep4 ip10 1.00 / 1.29, pcb10 0.98 / 2.38, pkg10 0.42 / 2.11 [50]. 판정 없음.
+- 한 줄 (N 6단계): GPU = 사람 S (lo_pkg_bdf_s4), cpu = 없음 (N 하네스 서버 1 몫 끝), 새 기록 2 (bm2_rlonly pkg16_1) + S 4.
+- 결정: cpu 가 비어도 새 항목을 넣지 않음 — 이유: QUEUE 11/08 11:30 6번 "에이전트가 스스로 항목을 더 넣지 않는다", 7번 "모든 평가가 끝나면 사람이 속도 측정 프로토콜을 적는다" → 사람 지시 기다림. bm2_rlonly_s2 8 개는 큐에 그대로 둠 (사람 13:50 KST "entries stay as they are").
+- 참고: `until ! pgrep -f scripts/collect_results.py` 대기 줄은 자기 bash 명령줄에 걸려 끝나지 않음 → 쓰지 말 것 (`scripts/ps.py` 로 확인).
+- 할 일 (다음): (1) 사람 속도 측정 프로토콜 (QUEUE) 오면 따름. (2) S bdf_s4 / r2pk_s4·s5 기록 push 되면 collect_results (실패 포함 전부). (3) nrest 남은 2 (서버 2 bm2_rlonly_s1 pkg16) 오면 collect_results. (4) restore_proc_log. (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+
+# (이전) 라운드 228 머리말: (갱신 2026-11-09 07:37 UTC, 라운드 228 — S 기록 12 (bdf_s3_distill 6 / 6, 서버 2 bm2_rlonly_s3 6), RESULTS 다시 생성 (1522 기록); S: lo_pkg_bdf_s3 distill 끝 (rc=0, 06:55) → 평가 6 / 6, lo_pkg_bdf_s4 distill 시작 (06:57); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (13680 s 째, 워커 100 %); 서버 2 nrest 8 / 10 그대로)
 
 ## 라운드 228 (2026-11-09 07:09 ~ 07:15 UTC)
 - `git fetch r2e` (07:09): 새 커밋 없음. QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
