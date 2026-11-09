@@ -1,6 +1,6 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-09 07:15 UTC, 라운드 228 — 새 기록 없음; S: lo_pkg_bdf_s3 distill 끝 (rc=0, 06:55) → 평가 진행 중 (2 / 6), lo_pkg_bdf_s4 distill 시작 (06:57); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (13680 s 째, 워커 100 %); 서버 2 nrest 8 / 10 그대로)
+# PROGRESS (갱신 2026-11-09 07:37 UTC, 라운드 228 — S 기록 12 (bdf_s3_distill 6 / 6, 서버 2 bm2_rlonly_s3 6), RESULTS 다시 생성 (1522 기록); S: lo_pkg_bdf_s3 distill 끝 (rc=0, 06:55) → 평가 6 / 6, lo_pkg_bdf_s4 distill 시작 (06:57); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (13680 s 째, 워커 100 %); 서버 2 nrest 8 / 10 그대로)
 
 ## 라운드 228 (2026-11-09 07:09 ~ 07:15 UTC)
 - `git fetch r2e` (07:09): 새 커밋 없음. QUEUE 끝 = 11/09 14:00 KST (S) 그대로.
@@ -12,6 +12,10 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - 한 줄 (N 6단계): GPU = 사람 S (lo_pkg_bdf_s4), cpu = N 하네스 bm2_rlonly pkg16_1 + S 평가 (bdf_s3), 새 기록 0.
 - 결정: 큐·플래그·순서 그대로, S 손대지 않음 — 이유: 사람 새 지시 없음, 모든 프로세스 정상.
 - 할 일 (다음): (1) pkg16_1 끝나면 RESULTS `bm2_rlonly_rl+rep4` pkg16 [50] (07:20 기준, 넘거나 util 0 % 면 eval.log·py-spy). (2) S bdf_s3 평가 6 / 6 + push 되면 collect_results (실패 포함 전부). (3) nrest 남은 2. (4) restore_proc_log. (5) DAILY 11/10 01:15 UTC. (6) mem 감시.
+- **07:35 추가:** S 기록 push 2 개 (07:18 서버 2 `bm2_rlonly_s3_rl` 6 세트, 07:25 서버 1 `lo_pkg_bdf_s3_distill` 나머지 4 세트 → 6 / 6). `collect_results.py` 손으로 (1510 → 1522 기록). 스크립트 숫자 그대로 (성공률 / 개수 비 [n]): lo_pkg_bdf_s3_distill ip10 0.88 / 1.29, pcb10 0.72 / 2.12, pkg10 0.16 / 1.38 [50]; bm2_rlonly_s3_rl ip10 0.96 / 1.97, pcb10 0.02 / 6.29, pkg10 0.84 / 4.68 [50]. 판정 없음. bm2_rlonly_s3 는 서버 2 기록 → 시간 비교에 쓰지 않음.
+- 관찰 (판정 아님): bm2_rlonly_s3 pcb10 개수 비 6.286 = lo_pkg_bm2_rlonly s2 pcb10 6.29 와 같은 값 (라운드 222·223 의 "seed 가 달라도 같은 배치로 모임" 과 같은 꼴). 사람 판단용.
+- S 서버 1: 07:25 push 뒤 새 평가 (eval_policy 2055118, bdf_s3 다음 평가) 진행, lo_pkg_bdf_s4 distill 진행 (2235 s). 손대지 않음.
+- cpu pkg16_1: 07:35 에 15200 s 째 — 14400 s 기준 넘음, 하지만 워커 util 100 %, rss 10.8 ↔ 12.5 GB 로 바뀌는 중 → 살아 있음 (멈춤 아님). pkg16_0 (9055 s) 보다 느린 것은 S 학습·평가 2 개와 CPU 를 나누기 때문으로 보임 (load 4). 기다림.
 
 # (이전) 라운드 227 머리말: (갱신 2026-11-09 06:55 UTC, 라운드 227 — 새 기록 없음; 서버 2 nrest 8 / 10 그대로; GPU = 사람 S (lo_pkg_bdf_s3 distill it 1275, 6993 s / 7200 s); cpu = `bm2_rlonly_rl+rep4` pkg16_1 (12730 s 째, 워커 100 %))
 
