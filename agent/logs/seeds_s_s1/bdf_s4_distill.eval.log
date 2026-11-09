@@ -6,3 +6,5 @@
 [  2072s] eval_ip10_0    bdf_s4_distill               ok 0.04 count 18.00 6.602s/inst rounds 4
 8 sets x 1 methods = 8 jobs, 1 workers -> runs/2026-10-29/bdf_s4_distill/eval
 [  3236s] eval_pkg16_1   bdf_s4_distill+rep4          ok 0.48 count 22.92 20.162s/inst rounds 4
+[  7097s] eval_pkg16_0   bdf_s4_distill+rep4          ok 0.60 count 29.67 24.134s/inst rounds 4
+[  7423s] eval_pkg10_1   bdf_s4_distill+rep4          ok 0.60 count 10.33 1.918s/inst rounds 4
