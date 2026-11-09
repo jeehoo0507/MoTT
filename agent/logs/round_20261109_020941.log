@@ -10,3 +10,7 @@ Round 212 is done: PROGRESS.md is updated and the commit `4a1f694` is pushed to 
 - **N2:** server 2 has pushed 0 of the 48 expected result files, and it is past its deadline. As QUEUE says, I did not re-add them on server 1; that decision is logged in PROGRESS.md.
 
 Next round: check the RESULTS row once pkg16_1 is done, count N2 files if server 2 pushes, and write the next DAILY.md at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   4a1f694..cb80738  main -> main
