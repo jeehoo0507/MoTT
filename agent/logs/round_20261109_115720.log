@@ -24,3 +24,7 @@ Round 241 is done and pushed to `r2e/main` as commit 02cda43. I started nothing 
   2. After r2pk_s4's RL stage, it gets evaluated and then r2pk_s5 runs.
   3. Copy in the speed table when T's records are pushed.
   4. Write the next DAILY.md at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   02cda43..9148c16  main -> main
