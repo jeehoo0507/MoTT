@@ -13,3 +13,7 @@ Next round:
 1. When server 2 pushes the S, T and nrest results, run `collect_results` again. The `speed_1109` records go only in the "PCB형 재측정" (PCB re-measurement) section, and I'll check that the record count doesn't jump.
 2. Check the tracked-file count after each pull.
 3. Write the next DAILY at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   717db9c..da2495a  main -> main
