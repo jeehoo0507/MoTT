@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 12:39 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 13:01 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -6102,7 +6102,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | r2pk_rl | 116 / 349 | 0.2 | 0.98 | 7.7 | 0.90 | 8.5 | 0.78 |
 | r2pk_s1_rl | 133 / 340 | 0.8 | 1.00 | 3.7 | 0.92 | 9.3 | 0.88 |
 | r2pk_s2_rl | 125 / 341 | 0.8 | 0.98 | 5.2 | 0.94 | 12.3 | 0.80 |
-| r2pk_s4_rl | 26 / – | 0.5 | – | 6.0 | – | 11.7 | – |
+| r2pk_s4_rl | 83 / 277 | 0.3 | – | 6.0 | – | 11.0 | – |
 | r2pkdd_rl | 111 / 341 | 0.0 | 0.98 | 5.7 | 0.96 | 7.5 | 0.82 |
 | r2pkdd_s1_rl | 121 / 338 | 0.8 | 1.00 | 3.7 | 0.96 | 9.8 | 0.86 |
 | r2pkfc_rl | 113 / 342 | 0.5 | 1.00 | 5.7 | 0.94 | 7.8 | 0.84 |
@@ -6322,6 +6322,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/r2pk_s2_rl | mott_pk / mott | rl | 341 | 1.27 | val_pcb10_0: 0.97/0.56, val_pkg10_0: 1.00/0.75, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2pk_s2_rl/metrics.json` |
 | runs/2026-10-29/r2pk_s3_rl | mott_pk / mott | rl | 328 | 1.28 | val_pcb10_0: 1.07/0.69, val_pkg10_0: 0.99/0.50, val_ip10_0: 0.65/0.19 | `runs/2026-10-29/r2pk_s3_rl/metrics.json` |
 | runs/2026-10-29/r2pk_s4_distill | mott_pk / mott | distill | 1545 | 0.78 | val_pcb10_0: 0.85/0.69, val_pkg10_0: 1.12/0.75, val_ip10_0: 0.69/0.25 | `runs/2026-10-29/r2pk_s4_distill/metrics.json` |
+| runs/2026-10-29/r2pk_s4_rl | mott_pk / mott | rl | 277 | 1.28 | val_pcb10_0: 1.14/0.62, val_pkg10_0: 0.92/0.62, val_ip10_0: 0.60/0.19 | `runs/2026-10-29/r2pk_s4_rl/metrics.json` |
 | runs/2026-10-29/r2pkdd_distill | mott_pkdd / mott | distill | 1520 | 0.77 | val_pcb10_0: 1.43/0.56, val_pkg10_0: 1.12/0.62, val_ip10_0: 0.69/0.25 | `runs/2026-10-29/r2pkdd_distill/metrics.json` |
 | runs/2026-10-29/r2pkdd_rl | mott_pkdd / mott | rl | 341 | 1.27 | val_pcb10_0: 0.85/0.56, val_pkg10_0: 1.05/0.50, val_ip10_0: 0.69/0.12 | `runs/2026-10-29/r2pkdd_rl/metrics.json` |
 | runs/2026-10-29/r2pkdd_s1_distill | mott_pkdd / mott | distill | 1527 | 0.77 | val_pcb10_0: 0.84/0.69, val_pkg10_0: 1.00/0.62, val_ip10_0: 0.69/0.25 | `runs/2026-10-29/r2pkdd_s1_distill/metrics.json` |
