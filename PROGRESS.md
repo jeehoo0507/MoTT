@@ -1,8 +1,19 @@
-정정 (11/09 18:15 UTC, 라운드 257): 라운드 256 의 "bm2_rlonly_s1_rl pkg16_0 재실행 worker 가 사라짐" 과 그 STUCK 줄은 **틀렸다** — worker 2131728 은 살아 있다 (18:13 cpu 5664 s / elapsed 5662 s, util 100%, rss 10–11 GB). 라운드 256 은 `ps.py` 로 `eval_policy` 같은 패턴만 찾아 forkserver worker 줄 (cmdline 이 `multiprocessing.forkserver`) 을 놓친 것으로 보임. STUCK 아님 (서버 2 hang 1 번 + 지금 진행 중). timeout 4h = 20:37 UTC — 단, 같은 run pkg16_1 이 4.6 h 걸렸으므로 timeout 에 걸릴 가능성 큼 (아래 라운드 257 "사람에게").
+해결 (11/09 19:15 UTC, 라운드 260): 사람 bm2_rlonly_s1_rl `eval_pkg16_0 +rep4` 재실행이 19:07 UTC 에 rc=0 으로 끝남 (9029 s = 2.5 h, timeout 4h 안; 0.92, 문제당 71.6 s). 사람 커밋 ed964c6 에 결과 파일 들어감. 라운드 256 의 "worker 사라짐" (라운드 257 에서 정정) 과 라운드 257 의 "timeout 에 걸릴 가능성 큼" 예측은 둘 다 틀렸다. RESULTS 1610 기록, pkg16 [50] 완성.
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-09 18:55 UTC, 라운드 259 — 새 기록 0; 사람 bm2_rlonly_s1_rl pkg16_0 재실행 진행 중 (worker 2 h 15 m, util 100%); GPU 비어 있음; RESULTS 1609 기록 그대로)
+# PROGRESS (갱신 2026-11-09 19:16 UTC, 라운드 260 — 새 기록 1; 사람 bm2_rlonly_s1_rl pkg16_0 재실행 끝 (rc=0, 2.5 h); GPU·CPU 비어 있음; RESULTS 1609 → 1610 기록)
+
+## 라운드 260 (2026-11-09 19:12 ~ 19:16 UTC)
+- `git fetch r2e` (19:12): 새 원격 커밋 없음 (HEAD = r2e/main = ed964c6). QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2596 (줄지 않음).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 17.4 GiB / 60, oom_kill 2 (늘지 않음). GPU 85 MiB, 0% (비어 있음).
+- 사람 `timeout 4h eval_policy … eval_pkg16_0 … bm2_rlonly_s1_rl` (2131724, 16:37 시작): bm2fix.log `[ 9029s] eval_pkg16_0 bm2_rlonly_s1_rl+rep4 ok 0.92 count 115.87 71.622s/inst rounds 4`, `rc=0`. 결과 파일 19:07, 사람 커밋 ed964c6 (19:08). `ps.py forkserver` → worker 없음 (정상 종료).
+- `.venv/bin/python scripts/collect_results.py` (19:12) → 1610 기록 (+1). 스크립트 숫자 그대로: bm2_rlonly_s1_rl+rep4 pkg16 (pkg16_0 + pkg16_1) 0.92 / 10.15 / 6.13 [50] (전엔 pkg16_1 만 [25]: 0.92 / 12.32 / 6.92). 하네스 전후 0.84 → 0.92, +0.08 [+0.02, +0.16]. 판정 없음 (N 은 보고만).
+- 한 줄 (N 6단계): GPU = 비어 있음, cpu = 비어 있음 (서버 1), 새 기록 1.
+- 결정: 새 항목 넣지 않음 — 이유: 11/06 12:00 UTC 마감 지남 (QUEUE 11/07 "새 시도 시작은 하지 않는다"); bm2_rlonly_s1_rl 의 남은 하네스는 QUEUE 11/09 13:50 대로 서버 2 nrest 몫. 가장 보수적인 선택.
+- 할 일 (다음): (1) 서버 2 S·T·nrest push 오면 collect_results (speed_1109 는 "PCB형 재측정" 절에만 — 기록 수 점프 확인). (2) pull 뒤 추적 파일 수 (≈ 2596) 확인. (3) DAILY 11/10 01:15 UTC. (4) mem 감시.
+
+# (이전) 라운드 259 머리말: (갱신 2026-11-09 18:55 UTC, 라운드 259 — 새 기록 0; 사람 bm2_rlonly_s1_rl pkg16_0 재실행 진행 중 (worker 2 h 15 m, util 100%); GPU 비어 있음; RESULTS 1609 기록 그대로)
 
 ## 라운드 259 (2026-11-09 18:52 ~ 18:55 UTC)
 - `git fetch r2e` (18:52): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2594 (줄지 않음).

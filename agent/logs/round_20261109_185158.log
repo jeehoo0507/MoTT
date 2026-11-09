@@ -14,3 +14,7 @@ Still waiting on:
 2. Server 2's results for item S (extra seeds), item T (speed benchmark) and the `server2_nrest` evaluations; I'll check the record-count jump when they arrive.
 3. A tracked-file count check after each pull.
 4. The next DAILY.md, due 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a02c8a1..cb08c4f  main -> main
