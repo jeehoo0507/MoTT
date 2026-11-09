@@ -19,8 +19,13 @@ one() {
   local s=$1; shift
   local tag=$(echo "$s $*" | tr ' =/' '___' | cut -c1-120)
   echo "$(date '+%m-%d %H:%M') start $s $*" >> $L/run.log
-  taskset -c $CORES $PY scripts/eval_policy.py --pool $POOL --sets $s "$@" --workers 1 --out $OUT >> $L/$tag.log 2>&1
-  echo "$(date '+%m-%d %H:%M') end rc=$? $s $*" >> $L/run.log
+  local try rc
+  for try in 1 2; do   # PROPOSALS 11/09 U: a job over 4 h is a technical hang (0 % CPU seen in 11/09 T) -> same job once more
+    timeout 4h taskset -c $CORES $PY scripts/eval_policy.py --pool $POOL --sets $s "$@" --workers 1 --out $OUT >> $L/$tag.log 2>&1
+    rc=$?
+    echo "$(date '+%m-%d %H:%M') end rc=$rc try=$try $s $*" >> $L/run.log
+    [ $rc -ne 124 ] && break
+  done
 }
 case "${1:-}" in
 go)
