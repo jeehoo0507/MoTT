@@ -1,9 +1,0 @@
-[18:31:16] START eval10 r2s2_rl | mem 14.5 GiB / 60.0 GiB, oom_kill 1
-[18:43:42] END eval10 r2s2_rl rc=0 | mem 15.9 GiB / 60.0 GiB, oom_kill 1
-[19:27:25] START eval10 lo_pcb_r2s2_rl | mem 12.3 GiB / 60.0 GiB, oom_kill 1
-[19:42:39] END eval10 lo_pcb_r2s2_rl rc=0 | mem 15.0 GiB / 60.0 GiB, oom_kill 1
-[20:32:26] START ls10 distill-last r2it_distill | mem 24.1 GiB / 60.0 GiB, oom_kill 1
-[20:38:34] END ls10 distill-last r2it_distill rc=0 | mem 13.9 GiB / 60.0 GiB, oom_kill 1
-[21:46:23] START eval10 r2it_rl | mem 14.1 GiB / 60.0 GiB, oom_kill 1
-[21:58:38] END eval10 r2it_rl rc=0 | mem 18.7 GiB / 60.0 GiB, oom_kill 1
-[22:00:23] done

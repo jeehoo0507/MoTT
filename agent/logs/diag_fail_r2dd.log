@@ -1,2 +1,0 @@
-r2dd_distill pkg {'n_fail': 36, 'covered': 1.0, 'uncovered': 0.0, 'd_tok_med': 0.0263, 's_med': 0.0738, 'underres_med': 0.4516, 'worst_med': 0.2607, 'grid_feasible': 0.98, 'exact_pass': 0.26, 'n': 50, 'n_uncov': 0, 'A_budget': None, 'B_invisible': None, 'other': 0, 'D_dup': None, 'Bu_invisible': None, 'n_tok_distinct_med': 5.0, 'n_max_u_med': 5.0, 'n_max_med': 127.0, 'frac_gt_K': 1.0}
-wrote /home/coder/R2E/runs/analysis/diag_fail_rank_r2dd_distill.json
