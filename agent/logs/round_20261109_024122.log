@@ -11,3 +11,7 @@ Already up to date.
 - **드라이버:** 살아 있습니다. report_watch와 resume_agent를 다시 띄웠습니다. 메모리는 26.3 / 60 GiB이고 OOM kill 횟수는 2에서 늘지 않았습니다.
 
 다음 DAILY는 11/10 01:15 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   eb5433b..c001d6a  main -> main
