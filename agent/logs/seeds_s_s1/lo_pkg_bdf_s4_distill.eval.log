@@ -1,0 +1,3 @@
+6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-29/lo_pkg_bdf_s4_distill/eval
+[   322s] eval_pkg10_1   lo_pkg_bdf_s4_distill        ok 0.40 count 27.50 2.434s/inst rounds 4
+[   521s] eval_pcb10_0   lo_pkg_bdf_s4_distill        ok 0.80 count 25.05 1.244s/inst rounds 4

@@ -1,4 +1,4 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 08:06 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-09 09:03 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
@@ -6126,6 +6126,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/lo_pkg_bdf_s1_distill | coord / devformer | distill | 1361 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: –/1.00 | `runs/2026-10-29/lo_pkg_bdf_s1_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bdf_s2_distill | coord / devformer | distill | 1431 | 2.01 | val_pcb10_0: 3.89/0.38, val_ip10_0: 0.76/0.38 | `runs/2026-10-29/lo_pkg_bdf_s2_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bdf_s3_distill | coord / devformer | distill | 1322 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: 0.72/0.62 | `runs/2026-10-29/lo_pkg_bdf_s3_distill/metrics.json` |
+| runs/2026-10-29/lo_pkg_bdf_s4_distill | coord / devformer | distill | 1435 | 2.01 | val_pcb10_0: 9.38/0.94, val_ip10_0: 0.78/0.81 | `runs/2026-10-29/lo_pkg_bdf_s4_distill/metrics.json` |
 | runs/2026-10-29/lo_pkg_bm2_rlonly_rl | manoharan2 / manoharan2 | rl | 371 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/lo_pkg_bm2_rlonly_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl | manoharan2 / manoharan2 | rl | 353 | 2.02 | val_pcb10_0: –/1.00, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/lo_pkg_bm2_rlonly_s1_rl/metrics.json` |
 | runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl | manoharan2 / manoharan2 | rl | 360 | 2.01 | val_pcb10_0: –/1.00, val_ip10_0: 0.92/0.69 | `runs/2026-10-29/lo_pkg_bm2_rlonly_s2_rl/metrics.json` |
@@ -6181,6 +6182,7 @@ cert-bad = 그 iter에서 작업 격자로는 성공인 최선 샘플 중 정확
 | runs/2026-10-29/r0_coord_s2_distill | coord / grid | distill | 2281 | 0.77 | val_pcb10_0: 2.04/0.50, val_pkg10_0: 1.17/0.75, val_ip10_0: 0.79/0.25 | `runs/2026-10-29/r0_coord_s2_distill/metrics.json` |
 | runs/2026-10-29/r0_coord_s2_rl | coord / grid | rl | 349 | 1.27 | val_pcb10_0: 0.98/0.50, val_pkg10_0: 0.94/0.81, val_ip10_0: 0.77/0.31 | `runs/2026-10-29/r0_coord_s2_rl/metrics.json` |
 | runs/2026-10-29/r0_coord_s3_rl | coord / grid | rl | 347 | 1.28 | val_pcb10_0: 0.77/0.56, val_pkg10_0: 0.94/0.56, val_ip10_0: 0.86/0.31 | `runs/2026-10-29/r0_coord_s3_rl/metrics.json` |
+| runs/2026-10-29/r0_coord_s4_rl | coord / grid | rl | 338 | 1.28 | val_pcb10_0: 1.05/0.62, val_pkg10_0: 0.83/0.88, val_ip10_0: 0.58/0.56 | `runs/2026-10-29/r0_coord_s4_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_distill | modal / grid | distill | 2100 | 0.77 | val_pcb10_0: 1.23/0.56, val_pkg10_0: 1.15/0.69, val_ip10_0: 0.79/0.31 | `runs/2026-10-29/r1_modal_s1_distill/metrics.json` |
 | runs/2026-10-29/r1_modal_s1_rl | modal / grid | rl | 377 | 1.27 | val_pcb10_0: 0.99/0.75, val_pkg10_0: 0.92/0.75, val_ip10_0: 0.78/0.44 | `runs/2026-10-29/r1_modal_s1_rl/metrics.json` |
 | runs/2026-10-29/r1_modal_s2_distill | modal / grid | distill | 2217 | 0.77 | val_pcb10_0: 1.10/0.44, val_pkg10_0: 0.94/0.69, val_ip10_0: 0.68/0.31 | `runs/2026-10-29/r1_modal_s2_distill/metrics.json` |
