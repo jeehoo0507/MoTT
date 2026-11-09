@@ -11,3 +11,7 @@ Already up to date.
   - 서버 2 결과가 push되면 `collect_results.py`를 돌리고 기록 수가 갑자기 뛰는지 확인합니다.
   - pull 뒤 추적 파일 수(약 2600)를 확인합니다.
   - DAILY.md는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6471a83..9d93af8  main -> main
