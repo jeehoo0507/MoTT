@@ -1,6 +1,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 필요 (보고만).
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
-# PROGRESS (갱신 2026-11-08 23:42 UTC, 라운드 203 — GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu = N 하네스 `bm2_rlonly_rl+rep4` pcb10_1 (23:17~, 워커 100 %, 정상); 원격 새 push 없음 → N2 0/48 (마감 11/09 00:00 UTC 18분 전); 새 기록 0)
+# PROGRESS (갱신 2026-11-09 00:01 UTC, 라운드 204 — **N2 늦음: 마감 11/09 00:00 UTC (09:00 KST) 지났는데 서버 2 push 0 / 48**; GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu = N 하네스 `bm2_rlonly_rl+rep4` pcb10_1 (23:17~, 워커 100 %, 정상); 새 기록 0)
+
+## 라운드 204 (2026-11-08 23:55 ~ 11-09 00:01 UTC)
+- `git fetch r2e` (23:55, 다시 00:00:43): 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 18.6 GiB / 60, oom_kill 2. `restore_proc_log.py 1792539` → 되살릴 것 없음 (live = disk 192846 B). GPU 85 MiB / 0 % (빔).
+- cpu: `N harness eval_pcb10_1 bm2_rlonly_rl+rep4` ~2500 s 째, 워커 1982793 util 100 % / rss 2.0 GB (정상; pcb10_0 은 3286 s).
+- **N2 늦음 (QUEUE 11/09 01:40 KST 지시대로 보고):** 11/09 00:00 UTC 지난 뒤 (00:00:43) 센 결과 `runs/*/*/eval/eval_{pcb10,ip10}_{0,1}__lo_pkg_{r2pk,r0,bp_park,bm2_rlonly}*+rep4.json` **0 / 48**. 서버 2 에서 N2 push 가 하나도 없음. 서버 1 은 이 48개를 다시 넣지 않음 (QUEUE 지시) — 사람 확인 필요 (보고만).
+- 한 줄 (N 6단계): GPU = 없음, cpu = N 하네스 bm2_rlonly pcb10_1, 새 기록 0.
+- 결정: 큐·플래그·순서 그대로, N2 를 서버 1 에 다시 넣지 않음 — 이유: QUEUE 11/09 01:40 KST "do not re-add them" (늦으면 PROGRESS 에 적기만).
+- 할 일 (다음): (1) cpu N 하네스 pcb10_1 진행, RESULTS 자동 행 확인. (2) 서버 2 N2 push 오면 개수 세고 RESULTS 자동 행 확인. (3) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (4) DAILY 다음 11/09 01:15 UTC. (5) GPU 는 사람 항목 없으면 빈 채로.
+
+# (이전) 라운드 203 머리말: (갱신 2026-11-08 23:42 UTC, 라운드 203 — GPU 빔 (사람 항목 없음, s2 STUCK 그대로); cpu = N 하네스 `bm2_rlonly_rl+rep4` pcb10_1 (23:17~, 워커 100 %, 정상); 원격 새 push 없음 → N2 0/48 (마감 11/09 00:00 UTC 18분 전); 새 기록 0)
 
 ## 라운드 203 (2026-11-08 23:39~ UTC)
 - `git fetch r2e`: 새 커밋 없음. QUEUE 끝 = 11/09 01:40 KST "N2 moved to server 2" 그대로.
