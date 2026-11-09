@@ -16,3 +16,7 @@ Round 260 is finished and pushed to `r2e/main` (ecbec39). The `gh: not found` wa
 - **Memory:** I saved a note that eval worker processes have to be found with `ps.py forkserver` (searching for `eval_policy` misses them). It also records that a pkg16 `+rep4` harness normally takes 2.5–4.6 h, so a long run is not evidence of a hang.
 
 **Next round:** run `collect_results` when server 2 pushes S, T or nrest results, and check the record count for a sudden jump. Write the new DAILY.md at 11/10 01:15 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ecbec39..6d2f015  main -> main
