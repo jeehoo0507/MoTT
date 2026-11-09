@@ -25,3 +25,7 @@ This round is done and pushed. Server 1 has one evaluation left, and 25 of the 4
 - **Server 2 records (N2):** these went from 14 to 25 of 48. The new ones are r0_rl and r2pk_s2 (4 each) and 3 from r0_s1. Records that server 2 commits don't reach RESULTS automatically, so I re-ran `collect_results.py` by hand. RESULTS.md now has 1479 records, with numbers only and no verdicts. Per the QUEUE rule, server 2's timings aren't used for comparisons.
 - **Late:** the deadline for all 48 was 09:00 KST and 23 are still missing. I reported that in PROGRESS and did not re-queue them on server 1.
 - **Next:** the GPU is idle, and once pkg16_1 finishes the CPU lane will be too. I won't start new work myself, because the 11/06 deadline for new experiments has passed and there are no new human items. That decision is in PROGRESS.md.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   c7ca533..e173563  main -> main
