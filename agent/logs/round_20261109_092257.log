@@ -18,3 +18,7 @@ Applied autostash.
 - **상태**: 드라이버는 살아 있고 메모리는 22.1 / 60 GiB입니다. GPU는 사람이 돌리는 S 학습(`bdf_s4` distill)이 쓰고 있어 손대지 않았습니다.
 - **결정**: 새 항목은 넣지 않았습니다. QUEUE 11/09 14:00 KST 지시(S가 도는 동안 GPU에 다른 것 시작 금지)와 11/08 11:30 6번(에이전트가 항목 추가 금지)에 따른 것이고, PROGRESS에 이유와 함께 적었습니다.
 - **다음 할 일**: 사람의 속도 측정 프로토콜을 기다립니다. 그 밖에 `bdf_s4` 평가, 서버 2의 `r0_coord_s4` 평가, nrest 마지막 1개가 push되면 RESULTS에 반영합니다. DAILY는 11/10 01:15 UTC에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e0b3690..b16b2ca  main -> main

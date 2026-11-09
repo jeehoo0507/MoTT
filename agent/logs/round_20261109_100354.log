@@ -1,0 +1,20 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+라운드 235를 마쳤습니다. 이번 라운드에는 새 결과가 없었고, 지시에 따라 아무것도 새로 시작하지 않았습니다.
+
+- **GPU:** 사람이 돌리는 S 학습 `bdf_s4` distill이 it 750 (3767 s)까지 왔습니다. 08:58 UTC 시작 뒤 프로세스 재시작은 없습니다. 로그의 "resume checkpoint" 줄은 같은 프로세스 안에서 찍힌 것이고, 이전 bdf run 로그에도 5번씩 있는 패턴입니다. 손대지 않았습니다.
+- **CPU:** 서버 1 CPU 줄은 비어 있습니다. QUEUE에 따라 새 항목은 넣지 않았습니다(S가 도는 동안 GPU에 다른 작업 금지, 에이전트가 항목을 스스로 추가하는 것도 금지).
+- **기록:** 새 기록이 없어 RESULTS는 다시 만들지 않았습니다(1548 기록 그대로). 서버 2의 nrest는 9/10이고, 남은 하나는 `bm2_rlonly_s1_rl+rep4` pkg16_0입니다.
+- **상태:** 드라이버는 살아 있습니다. 메모리는 19.1 / 60 GiB이고, 드라이버 로그는 디스크와 같아 되살릴 내용이 없었습니다.
+- **커밋:** PROGRESS를 갱신해 `2619353`으로 커밋했고, `r2e/main`에 push된 것을 확인했습니다.
+
+다음 라운드 할 일:
+1. 사람이 속도 측정 프로토콜을 적으면 따릅니다.
+2. `bdf_s4` 학습이 끝나고 평가가 push되면 `collect_results`를 돌리고, 그다음 `r2pk_s4`·`s5`를 기다립니다.
+3. 서버 2의 nrest 마지막 1개가 push되면 반영합니다.
+4. DAILY는 11/10 01:15 UTC에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   2619353..1f84da9  main -> main
