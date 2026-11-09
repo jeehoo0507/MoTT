@@ -11,6 +11,7 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 - **nrest (서버 2, QUEUE 13:50 KST 의 10 개): 1 / 10** — `bm2_rlonly_s1_rl+rep4` pcb10_0 만 옴. 남은 9: bm2_rlonly_s1 pcb10_1, pkg10 ×2, ip10 ×2, pkg16 ×2, lo_pkg_r0_s3 pkg10 ×2.
 - `collect_results.py` 손으로 (1488 → 1503 기록). 스크립트 숫자 그대로 (성공률 / 개수 비, 판정 없음): bp_park+rep4 pcb10 s0 0.06 / 1.22, s1 0.04 / 1.10, s2 0.02 / 5.86; ip10 세 seed 1.00 / 1.28. lo_pkg_bm2_rlonly+rep4 pcb10 s0 0.04 / 3.99, s1 0.04 / 3.99, s2 0.02 / 6.29; ip10 세 seed 1.00 / 2.15. bm2_rlonly_s1+rep4 pcb10_0 0.04 [25]. 서버 2 시간은 쓰지 않음.
 - 관찰 (판정 아님): lo_pkg_bm2_rlonly s0 와 s1 의 pcb10 개수 비 (3.993) 와 ip10 숫자가 같음, bp_park 세 seed ip10 개수 비 1.284 도 같음 — 지난 라운드에 적은 "seed 가 달라도 같은 배치로 모임" 과 같은 꼴. 사람 판단용.
+- 05:50 push 전 merge 로 nrest 1 개 더 (a18a628: bm2_rlonly_s1_rl+rep4 pcb10_1) → **nrest 2 / 10**; RESULTS 에는 다음 collect_results 때.
 - 한 줄 (N 6단계): GPU = 사람 S (lo_pkg_bdf_s3), cpu = N 하네스 bm2_rlonly pkg16_1, 새 기록 4 (서버 2 N2 3 + nrest 1, RESULTS 반영).
 - 결정: 큐·플래그·순서 그대로, S 손대지 않음 — 이유: 사람 새 지시 없음, 모든 프로세스 정상.
 - 할 일 (다음): (1) pkg16_1 경과 (07:20 UTC 기준; 넘거나 util 0 % 면 eval.log·py-spy); 끝나면 RESULTS `bm2_rlonly_rl+rep4` pkg16 [50]. (2) S: lo_pkg_bdf_s3 distill 끝 ≈ 06:55 UTC → seeds_s 가 평가·push; S 기록 오면 collect_results (실패 포함 전부). (3) nrest 남은 9 오면 세고 collect_results. (4) 라운드마다 `restore_proc_log.py 1792539 agent/logs/pipeline_day2.log`. (5) DAILY 다음 11/10 01:15 UTC. (6) mem 감시 (S 평가 + cpu 겹칠 때 45 GiB).
