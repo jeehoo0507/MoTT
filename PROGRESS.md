@@ -2,7 +2,18 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 13:56 UTC, 라운드 317 — 사람 V base 80 gp·coord+rep4 30/30 끝, r2pk_rl+rep4 29/30, modal_rule+rep4 5/30 (기록 94/120); 새 원격 커밋 없음; 주 표 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 14:30 UTC, 라운드 318 — 사람 V base 80 측정 120/120 끝 (14:06 rc 전부 0, try=2 없음, 사람 스크립트가 push = 21ba528), RESULTS V 절 base 80 표 완성; base 90 문제 만들기 시작; 주 표 1610 기록 그대로)
+
+## 라운드 318 (2026-11-10 14:10 ~ 14:30 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음 (21ba528 = 사람 `speed_fresh.sh` 가 이 작업 트리에서 14:06 commit+push 한 것, 이미 HEAD). QUEUE 새 절 없음 (끝 = 11/09 19:20 KST T). X·W 는 라운드 307·310 결정 그대로.
+- V (사람): base 80 기록 **120 / 120** (gp·coord+rep4·r2pk+rep4·modal_rule+rep4 각 30), `run.log` 에 rc≠0·`try=2` 0 개. `speed_fresh.sh reps` 가 이어서 **base 90 문제 만들기** 시작 (14:06 UTC~, `speed_fresh.py --base 90` 6 개, 코어 10–15). 건드리지 않음.
+- `collect_results.py` 돌림 (코어 0–9 `taskset`, bg, 14:11 UTC 끝): 주 표 **1610 그대로** (V 는 `SPEED_EXCLUDE` 로 빠짐; 속도 제외 수 241 → 267 = V 기록 94 → 120). RESULTS "V 반복 속도 측정 6세트" base 80 표 120/120. MoTT+P1+하네스 전체 ÷ greedy+prune 전체 (base 80): ip **0.17**, pcb **0.97**, pkg **0.21** (성공률 ip 1.00 / pcb 0.98 / pkg 0.94; g+p 0.56 / 0.84 / 0.82). 판정·해석 없음 (보고용, 사람).
+  - 결정: base 90 문제 만들기 중에 collect 를 돌림 — 이유: 코어 0–9 로 묶어 V 코어 10–15 와 겹치지 않고, 문제 만들기는 시간을 재지 않음 (PROPOSALS U "만들기 시간은 재지 않음"). base 90 측정 단계에서는 다시 collect 를 피한다.
+- `merge_orphan_v80`: 프로세스 끝남, 마지막 출력 11:00 "appended 6 lines" = holder 가 그때 끝나서 붙인 것 (라운드 312–313 의 "아직 fd 잡고 기다림" 은 잘못 읽은 것; 기다리는 동안은 출력이 없다). build.log 정리 끝.
+- 14:06 사람 스크립트의 `git pull --rebase --autostash` → `restore_proc_log 1792539` 디스크와 같음 (빠진 줄 없음). `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 25.8 GiB / 60, oom_kill 2 (그대로). 추적 파일 2983.
+- 할 일 (다음): base 90 기록 120 개 → V 절 (collect 는 측정 끝난 뒤), base 100 도 같음; 서버 2 `speed_1109u_s2`·V 110–130 push 되면 pull + 추적 파일 수 확인; W push 되면 RESULTS 표; DAILY 11/11 01:06 UTC 뒤.
+
+# (이전) 라운드 317 머리말: (갱신 2026-11-10 13:56 UTC, 라운드 317 — 사람 V base 80 gp·coord+rep4 30/30 끝, r2pk_rl+rep4 29/30, modal_rule+rep4 5/30 (기록 94/120); 새 원격 커밋 없음; 주 표 1610 기록 그대로)
 
 ## 라운드 317 (2026-11-10 13:53 ~ 13:56 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. QUEUE 새 절 없음 (끝 = 11/09 19:20 KST T). X (취소)·W (사람) 는 라운드 307·310 결정 그대로 아무것도 안 함.

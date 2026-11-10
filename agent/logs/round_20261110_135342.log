@@ -24,3 +24,7 @@ Already up to date.
 - 문제 만들기 셸이 끝나면, 지워진 로그에 쓰던 줄이 디스크 파일에 붙었는지 확인합니다.
 - 서버 2 결과가 push되면 반영합니다.
 - 11/11 01:06 UTC가 지나면 DAILY.md를 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   1b371d3..16b4edb  main -> main

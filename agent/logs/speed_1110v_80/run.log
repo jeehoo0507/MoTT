@@ -241,3 +241,4 @@
 11-10 14:04 end rc=0 try=1 eval_ip16_89 --methods modal_rule --repair 4
 11-10 14:06 end rc=0 try=1 eval_pcb16_88 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
 11-10 14:06 all done
+14:06 pushed
