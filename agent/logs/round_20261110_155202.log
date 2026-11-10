@@ -15,3 +15,7 @@ Round 323 was a monitoring round. Nothing new needed doing, and it's committed a
 **Next:** when the last problem is built and the 120 base 90 measurements finish, fill in the base 90 table in RESULTS.md, then do the same for base 100. Pull whenever server 2 pushes, and write the next DAILY.md after 11/11 01:06 UTC.
 
 The push printed a `gh: not found` credential-helper warning, but the push went through anyway.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   59e2175..b7b3120  main -> main
