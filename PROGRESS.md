@@ -2,7 +2,17 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 02:09 UTC, 라운드 280 — 새 기록 0; GPU·CPU 비어 있음; RESULTS 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 02:26 UTC, 라운드 281 — 새 기록 0; GPU·CPU 비어 있음; RESULTS 1610 기록 그대로)
+
+## 라운드 281 (2026-11-10 02:21 ~ 02:26 UTC)
+- `git fetch r2e` (02:21): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2622 (줄지 않음).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 17.4 GiB / 60, oom_kill 2 (늘지 않음). GPU 85 MiB, 0%. `ps.py forkserver`·`train.py` → 없음. `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (202402 B).
+- `collect_results.py` → `bg.py` (`agent/logs/collect_r281.log`), `wait_log.py <log> 380 record` 로 기다림 (인자 순서: 로그, 초, 패턴), 02:25 끝, 1610 기록 (변화 없음).
+- 한 줄 (N 6단계): GPU = 비어 있음, cpu = 비어 있음 (서버 1), 새 기록 0.
+- 결정: 새 항목 넣지 않음 — 이유: 라운드 260 과 같음 (에이전트 스스로 항목 추가 금지, U·T 는 서버 2/사람). 가장 보수적인 선택.
+- 할 일 (다음): 라운드 280 의 (1)–(5) 그대로 — (1) 서버 2 U push → collect_results (기록 수 점프 확인). (2) pull 뒤 추적 파일 수 (≈ 2622). (3) 다음 DAILY 11/11 01:06 UTC 뒤 첫 라운드. (4) mem 감시. (5) collect_results 는 약 5 분, 끝날 때만 찍음.
+
+# (이전) 라운드 280 머리말: (갱신 2026-11-10 02:09 UTC, 라운드 280 — 새 기록 0; GPU·CPU 비어 있음; RESULTS 1610 기록 그대로)
 
 ## 라운드 280 (2026-11-10 02:01 ~ 02:09 UTC)
 - `git fetch r2e` (02:01): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2620 (줄지 않음).

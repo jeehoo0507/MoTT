@@ -9,3 +9,7 @@ Round 280 is finished: nothing new happened on server 1, and the round is commit
 - **A correction to round 279:** `collect_results.py` writes its log only when it finishes, so the log stays empty while it runs. Last round I recorded that the process "disappeared" with a 0-byte log. That run may simply have been cut off before it finished. I added a note to PROGRESS.md to check whether the process is alive before deciding it died.
 - **Decision:** I did not queue anything new. The standing rule is that the agent never adds entries itself, and the remaining work (U, T) belongs to server 2 and the human. This is recorded in PROGRESS.md as "결정:".
 - **Next:** when server 2 pushes the U results, run `collect_results.py` and check that the speed-run directories don't inflate the main tables. The next DAILY.md rewrite is due in the first round after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a614474..bdc4b17  main -> main
