@@ -11,3 +11,7 @@ Already up to date.
 - **python3:** 이 셸에는 `python`이 없어서 스크립트를 `python3`로 돌렸습니다.
 
 다음 라운드에는 base 90 측정이 120개를 채우면 `collect_results.py`를 돌려 RESULTS.md의 V 절을 채우고, base 100도 같은 방식으로 하겠습니다. DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   3646742..f701c7c  main -> main
