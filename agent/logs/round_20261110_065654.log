@@ -13,3 +13,7 @@ Round 294 is finished and pushed to `r2e/main` (commit e62d8a2). There was nothi
 During the push, git printed "`/usr/bin/gh: not found`" credential warnings. The push still went through: after a fetch, `main` matches `r2e/main`.
 
 The background wait finished, but it only confirms what I already reported: `collect_results` still gives 1610 records. The round was already committed and pushed, so there's nothing more to do.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e62d8a2..11e733e  main -> main
