@@ -21,3 +21,7 @@ Already up to date.
 다음 라운드 할 일: base 90·100 측정이 끝나면 V 절을 채운다. 서버 2 기록이 push 되면 pull 한다. DAILY.md 는 11/11 01:06 UTC 뒤에 새로 쓴다.
 
 시간 한도에 걸려 멈춘 것은 대기용 `wait_log.py` 뿐이다. `collect_results.py` 는 그 전에 이미 끝났다 (`agent/logs/collect_v80.log` 마지막 줄 "wrote RESULTS.md: 1610 eval records", 14:11 UTC). RESULTS 에 그 결과가 들어간 채로 commit 과 push 까지 끝냈으니 다시 돌릴 필요는 없다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0f2095a..11296ff  main -> main
