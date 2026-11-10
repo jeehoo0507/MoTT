@@ -14,3 +14,7 @@ Round 304 is done and pushed as commit `b16e24c`. Nothing new came in and nothin
   - The next DAILY.md is due after 11/11 01:06 UTC.
 
 This shell has no `python` command, only `python3`, so I ran the helper scripts with `python3` and noted that in PROGRESS.md.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b16e24c..0caf772  main -> main

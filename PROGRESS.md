@@ -2,7 +2,18 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 10:24 UTC, 라운드 304 — 새 원격 커밋 없음; 서버 1 GPU·CPU 비어 있음; 주 표 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 10:45 UTC, 라운드 305 — 사람 커밋 016b153 PROPOSALS 11/10 V (반복 속도 6세트, 보고용) 확인, collect_results 에 V 제외·표 준비; 서버 1 GPU·CPU 비어 있음; 주 표 1610 기록 그대로)
+
+## 라운드 305 (2026-11-10 10:36 ~ 10:45 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음 (사람 커밋 016b153 "PROPOSALS 11/10 V" 는 이미 HEAD). QUEUE 새 절 없음 (끝 = 11/09 19:20 KST T).
+- V (PROPOSALS 11/10 V, 사람, 보고용): U 와 같은 조건의 새 50문제/종류 6세트, base 80·90·100 = 서버 1, 110·120·130 = 서버 2, `scripts/speed_fresh.sh reps <base...>`, 코어 10–15, 기록 `runs/speed_1110v_{base}/eval`. 10:36 UTC 서버 1 에는 아직 안 돎 (`ps.py speed_fresh`·`eval_policy` 0개, `agent/logs/speed_1110v_*` 없음).
+  - 결정: 에이전트는 V 를 시작하지 않음 — 이유: "사람" 등록 실행이고 QUEUE 에 에이전트 지시 없음 (가장 보수적). 사람이 서버 1 에서 띄우면 코어 10–15 를 비워 두고 건드리지 않는다.
+- `scripts/collect_results.py`: (1) `SPEED_EXCLUDE` 에 `runs/speed_1110v` 추가 — 접두사 `runs/speed_1109` 로는 안 걸려 V 기록 720 개가 주 표 (1610) 에 섞일 뻔함 (memory: collect_results new dirs). (2) `speed_section` 끝에 "V 반복 속도 측정 6세트" 절: V 기록이 하나라도 생기면 6세트를 **전부** 줄 세움 (기록 0 인 세트도 "기록 0 / 120"), 각 세트 `speed_table.py --by_type` 표 그대로 (PROPOSALS V 읽기: 세트를 골라 빼지 않음). 임시 폴더에 U 기록 4개를 base 80 처럼 넣어 시험 → 표·제외 둘 다 정상, 시험 폴더 지움.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 17.4 GiB / 60, oom_kill 2 (늘지 않음), load 1.3.
+- `collect_results.py` 안 돌림 — 결정: 새 결과 파일 0 (V 기록 아직 없음) → 1610 그대로; V push 뒤 돌린다.
+- 할 일 (다음): (1) V 기록이 생기면 collect → V 절에 붙는지, 주 표 1610 그대로인지 확인. (2) V 가 서버 1 에서 도는 동안 무거운 CPU 작업 띄우지 않음 (속도 측정 보호). (3) 라운드 301 의 (1)–(4) 그대로 (서버 2 `speed_1109u_s2` push, 추적 파일 수, DAILY 11/11 01:06 UTC 뒤).
+
+# (이전) 라운드 304 머리말: (갱신 2026-11-10 10:24 UTC, 라운드 304 — 새 원격 커밋 없음; 서버 1 GPU·CPU 비어 있음; 주 표 1610 기록 그대로)
 
 ## 라운드 304 (2026-11-10 10:20 ~ 10:24 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2818 (줄지 않음). 서버 2 `runs/speed_1109u_s2` 아직 push 없음.

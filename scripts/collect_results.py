@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 S2_EXCLUDE = ("runs/2026-11-05fresh/", "runs/pool_s2_fresh/")
 # PROPOSALS 11/09 T (server 2 speed benchmark): the first 10 problems of eval_*16_0 again, set name eval_*16_0_k10.
 # Pooling them would count the same problems twice -> never merged; their table is scripts/speed_table.py.
-SPEED_EXCLUDE = ("runs/speed_1109",)   # also runs/speed_1109b (PCB rerun)
+SPEED_EXCLUDE = ("runs/speed_1109", "runs/speed_1110v")   # also speed_1109b/u (PCB rerun, U), 11/10 V replicates
 S2_PREFIX = ("runs/2026-11-05s2/", "runs/2026-11-07s2/")   # 11/07: A1/A2, C1 + control (scripts/server2_c1.sh)
 S2_L1 = re.compile(r"runs/2026-10-29/(r2_mott|r3_loop)_s[12]_rl/eval/eval_[a-z]+(16|20)_\d__")
 S2_COUNT = {"excluded": 0, "server2": 0, "dup_dropped": 0, "speed": 0}
@@ -2034,6 +2034,21 @@ def speed_section():
                              capture_output=True, text=True).stdout
         n = len(glob.glob(f"{d}/*.json"))
         lines += [f"{title} (`{d}`, 기록 {n} / 120):", ""] + out.strip().splitlines() + [""]
+    # PROPOSALS 11/10 V: six replicate sets (base 80/90/100 server 1, 110/120/130 server 2), report-only; all six listed
+    vs = [(b, f"runs/speed_1110v_{b}/eval") for b in (80, 90, 100, 110, 120, 130)]
+    if any(glob.glob(f"{d}/*.json") for _, d in vs):
+        lines += ["## V 반복 속도 측정 6세트 (PROPOSALS 11/10 V, 보고용, `scripts/speed_table.py --by_type`)", "",
+                  "U 와 같은 생성기·조건, 세트마다 새 문제 `eval_{pcb,pkg,ip}16_{base..base+9}`. 주 결과는 U 그대로; "
+                  "6세트 전부 적음 (기록 120 미만 = 진행 중 또는 미완료). 판정 없음 (사람).", ""]
+        for b, d in vs:
+            n = len(glob.glob(f"{d}/*.json"))
+            srv = "서버 1" if b < 110 else "서버 2"
+            if not n:
+                lines += [f"base {b} ({srv}, `{d}`): 기록 0 / 120", ""]
+                continue
+            out = subprocess.run([sys.executable, "scripts/speed_table.py", d, "--by_type"],
+                                 capture_output=True, text=True).stdout
+            lines += [f"base {b} ({srv}, `{d}`, 기록 {n} / 120):", ""] + out.strip().splitlines() + [""]
     return lines
 
 
