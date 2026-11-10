@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 345를 마쳤습니다. 이번 라운드는 상태만 확인했고, 새로 시작한 작업은 없습니다.
+
+- **원격과 QUEUE:** 새 원격 커밋이 없고, QUEUE에도 새 지시가 없습니다. 마지막 절은 여전히 11/09 19:20 KST의 T입니다.
+- **사람이 돌리는 V base 100 측정:** 120개 중 108개가 끝났고, 끝난 것은 전부 rc=0 try=1입니다. gp, coord+V, `r2pk_rl`은 각각 30개를 모두 마쳤습니다. 네 번째 정책인 규칙 기준선 `modal_rule --repair 4`는 30개 중 18개를 마쳤고 ip16_101–103이 지금 돌고 있습니다. 측정에는 손대지 않았습니다.
+- **프로세스와 메모리:** 드라이버는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. 메모리는 27.8 GiB / 60 GiB이고, OOM kill은 이전과 같은 2회입니다. 사람 지시가 없어서 GPU 학습은 하지 않았습니다. 추적 파일 수는 줄지 않았습니다.
+- **기록:** RESULTS.md는 바꾸지 않았습니다. 측정이 아직 진행 중이라 collect_results도 돌리지 않았고, 주 표는 1610건 그대로입니다.
+- PROGRESS.md를 갱신하고 커밋(ca326ce)한 뒤 `r2e main`에 push했습니다. 다시 fetch해서 로컬과 원격이 같은 것을 확인했습니다.
+
+다음 라운드에는 `modal_rule` 남은 12개가 끝나면 collect를 한 번 돌리고 V 절에 base 100 표(정책 4개)를 씁니다. 서버 2가 base 110–130 결과를 push하면 pull한 뒤 추적 파일 수를 확인합니다. DAILY.md는 11/11 01:06 UTC 이후에 새로 씁니다.
