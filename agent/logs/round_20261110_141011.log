@@ -1,3 +1,23 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 318을 마쳤다. 사람 지시는 새로 없었고, 기존 V 속도 측정의 base 80 세트가 끝나서 그 결과를 RESULTS 에 반영했다. commit 후 `r2e main` 에 push 했고, 로컬과 원격이 같은 상태인 것을 확인했다.
+
+- **V base 80 측정 120/120 완료 (14:06 UTC):** 실패(rc≠0)나 재시도(`try=2`)는 하나도 없다. 결과는 사람 스크립트가 직접 push 했다 (21ba528).
+- **RESULTS:** 코어 0–9 에서 `collect_results.py` 를 돌렸다. 주 표는 1610개 그대로이고, V 기록은 의도대로 주 표에서 빠졌다. "V 반복 속도 측정 6세트" 절의 base 80 표가 채워졌다.
+- **base 80 숫자** (MoTT+P1+하네스 전체 시간 ÷ greedy+prune 전체 시간; 판정·해석은 사람이 한다):
+
+| 종류 | 시간 배수 | 성공률 MoTT+P1+하네스 | 성공률 greedy+prune |
+|---|---|---|---|
+| ip | 0.17 | 1.00 | 0.56 |
+| pcb | 0.97 | 0.98 | 0.84 |
+| pkg | 0.21 | 0.94 | 0.82 |
+
+- **base 90:** 같은 스크립트가 이어서 문제 만들기를 시작했다 (코어 10–15). 건드리지 않았다.
+- **결정 (PROGRESS 에 기록):** base 90 문제 만들기 중에 collect 를 돌렸다. 코어를 V 와 나눴고, 문제 만들기 시간은 재지 않기 때문이다. base 90 의 측정 단계에 들어가면 collect 를 피한다.
+- **정정:** 라운드 312–313 에서 로그 정리 스크립트가 "아직 기다리는 중"이라고 적었는데, 잘못 읽은 것이었다. 실제로는 11:00 에 이미 끝나 있었다. 이 사실을 memory 에도 추가했다.
+- **상태:** 드라이버는 살아 있다. 메모리 25.8 GiB / 60, oom_kill 2 (늘지 않음), 추적 파일 2983.
+
+다음 라운드 할 일: base 90·100 측정이 끝나면 V 절을 채운다. 서버 2 기록이 push 되면 pull 한다. DAILY.md 는 11/11 01:06 UTC 뒤에 새로 쓴다.
+
+시간 한도에 걸려 멈춘 것은 대기용 `wait_log.py` 뿐이다. `collect_results.py` 는 그 전에 이미 끝났다 (`agent/logs/collect_v80.log` 마지막 줄 "wrote RESULTS.md: 1610 eval records", 14:11 UTC). RESULTS 에 그 결과가 들어간 채로 commit 과 push 까지 끝냈으니 다시 돌릴 필요는 없다.
