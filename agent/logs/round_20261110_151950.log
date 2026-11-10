@@ -8,3 +8,7 @@ Round 321 is done, committed as cbb0bb8 and pushed to `r2e main`. Nothing new ne
 - **Processes:** the driver is still running, and I restarted `report_watch` and `resume_agent`. The GPU is idle because no training is queued. Memory is at 24.1 of 60 GiB.
 - **Files and results:** the tracked-file count is 2988, so nothing has been deleted. The main RESULTS table still has 1610 records; I didn't run `collect_results` because there are no new results.
 - **Next:** once all 120 base 90 measurements are in, fill the V section in RESULTS, then do the same for base 100. Pull and check the file count when server 2 pushes. Write DAILY after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   cbb0bb8..4034851  main -> main
