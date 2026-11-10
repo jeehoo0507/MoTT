@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 09:27 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 12:32 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 147개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 148개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6342,6 +6342,26 @@ U 주 결과 (서버 1, 코어 10–15) (`runs/speed_1109u/eval`, 기록 120 / 1
 | pkg | modal_rule+rep4 | 10 | 50 | 0.94 | 0.64 | 2.7 | 39.4 | 0.15 |
 | pkg | r0_coord_rl+rep4 | 10 | 50 | 0.96 | 0.78 | 18.5 | 87.1 | 0.33 |
 | pkg | r2pk_rl+rep4 | 10 | 50 | 0.94 | 0.72 | 2.2 | 35.1 | 0.13 |
+
+## V 반복 속도 측정 6세트 (PROPOSALS 11/10 V, 보고용, `scripts/speed_table.py --by_type`)
+
+U 와 같은 생성기·조건, 세트마다 새 문제 `eval_{pcb,pkg,ip}16_{base..base+9}`. 주 결과는 U 그대로; 6세트 전부 적음 (기록 120 미만 = 진행 중 또는 미완료). 판정 없음 (사람).
+
+base 80 (서버 1, `runs/speed_1110v_80/eval`, 기록 1 / 120):
+
+| type | method | files | n | success | policy-only success | decision s/problem | total s/problem | total / greedy+prune |
+|---|---|---|---|---|---|---|---|---|
+| pkg | greedy+prune | 1 | 5 | 1.00 | 1.00 | 1.3 | 10.5 | 1.00 |
+
+base 90 (서버 1, `runs/speed_1110v_90/eval`): 기록 0 / 120
+
+base 100 (서버 1, `runs/speed_1110v_100/eval`): 기록 0 / 120
+
+base 110 (서버 2, `runs/speed_1110v_110/eval`): 기록 0 / 120
+
+base 120 (서버 2, `runs/speed_1110v_120/eval`): 기록 0 / 120
+
+base 130 (서버 2, `runs/speed_1110v_130/eval`): 기록 0 / 120
 
 ## 학습 기록 (train.py metrics.json)
 
