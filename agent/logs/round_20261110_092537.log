@@ -27,3 +27,7 @@ Already up to date.
 - 커밋 01fb2b8을 `r2e main`에 push했습니다.
 
 다음 라운드에는 서버 2 반복 측정이 push됐는지 확인하고, 다음 DAILY는 11/11 01:06 UTC 이후에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   01fb2b8..b813bcf  main -> main
