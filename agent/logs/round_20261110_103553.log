@@ -16,3 +16,7 @@ Applied autostash.
 - **코드 수정:** `scripts/collect_results.py`의 주 표 제외 목록에 `runs/speed_1110v`를 더했습니다. 기존 제외 기준(`runs/speed_1109`로 시작하는 경로)으로는 V 기록 720개가 걸러지지 않아 주 표 1610개 기록에 섞였을 것입니다. 또 V 기록이 하나라도 생기면 6세트를 전부 적는 표 절을 붙였습니다. 기록이 없는 세트도 "기록 0 / 120"으로 남겨, 세트를 골라 빼지 않는다는 PROPOSALS의 읽기 규칙을 따릅니다. 임시 폴더에 U 기록 4개를 넣어 시험했고, 표와 제외 둘 다 의도대로 나왔습니다.
 - **상태:** 드라이버는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. GPU와 CPU 모두 비어 있습니다. 메모리는 17.4 / 60 GiB이고, OOM으로 죽은 횟수는 2에서 늘지 않았습니다. 추적 파일은 2820개로 줄지 않았습니다.
 - **RESULTS:** 기록은 1610개 그대로입니다. 새 결과 파일이 없어서 `collect_results.py`는 이번에 돌리지 않았고, V 기록이 push되면 돌립니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   975be4f..eca03b4  main -> main

@@ -21,6 +21,9 @@ agent/logs/side16_gp.log
 # 11/10: human speed_fresh.sh U (server 1) appends here for hours; the round autostash orphaned build.log twice
 agent/logs/speed_1109u/
 agent/logs/speed_1109u_s2/
+# 11/10: same for V (speed_fresh.sh reps, base 80..130); build.log of base 80 was orphaned at the 10:52 round pull
+agent/logs/speed_1110v_*/
+agent/logs/merge_orphan_v*.log
 
 agent/logs/resume_agent.log
 
