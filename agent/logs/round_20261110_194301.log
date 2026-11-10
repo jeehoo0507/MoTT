@@ -9,3 +9,7 @@ Already up to date.
 - **RESULTS:** 새 측정 기록이 없어 바꾸지 않았습니다(1610 기록 그대로).
 
 다음 할 일은 순서대로 이렇습니다. 문제 만들기가 끝나면 측정 120개를 기록하고, 측정까지 끝나면 `collect_results.py`로 RESULTS V 절을 채웁니다. 서버 2가 base 110–130을 push하면 pull한 뒤 추적 파일 수를 확인합니다. DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0f6ae19..1f3103f  main -> main
