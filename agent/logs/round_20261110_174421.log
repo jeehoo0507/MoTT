@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+이번 라운드(330)는 끝났고, 커밋 13f7f32를 `r2e main`에 push했습니다.
+
+- **V base 90 측정 완료:** 사람이 돌린 base 90 측정이 17:37 UTC에 120/120으로 끝났습니다. 120개 모두 rc=0이고 재시도는 없었습니다.
+- **RESULTS 갱신:** `collect_results.py`를 코어 0–9에서 다시 돌려 RESULTS "V 반복 속도 측정 6세트" 절의 base 90 표를 106/120에서 120/120으로 바꿨습니다. 그동안 빠져 있던 ip·pcb의 modal_rule+rep4 행이 채워졌습니다. 주 표는 1610 기록 그대로입니다.
+- **MoTT+P1 (`r2pk_rl+rep4`) base 90 수치:** 전체 시간은 greedy+prune 대비 ip 0.23배, pcb 0.55배, pkg 0.18배입니다. 성공률은 ip 1.00, pcb 1.00, pkg 0.94이고, greedy+prune은 0.54, 0.94, 0.84입니다. V는 보고용이라 판정은 붙이지 않았습니다.
+- **base 100:** 17:37 UTC부터 코어 10–15에서 문제를 만드는 중이라 건드리지 않았습니다. 아직 만드는 단계여서 RESULTS 재생성이 측정과 겹치지 않습니다.
+- **상태:** 드라이버는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. 메모리 24.4 / 60 GiB, GPU는 비어 있고 (사람 지시 학습 없음), 추적 파일은 3149개로 줄지 않았습니다. 새 원격 커밋과 QUEUE 새 지시는 없었습니다.
+
+다음 할 일: base 100 측정이 끝나면 같은 방식으로 표를 만들고, 서버 2의 base 110–130이 push되면 pull한 뒤 추적 파일 수를 확인합니다. DAILY.md는 11/11 01:06 UTC 이후에 새로 씁니다.
