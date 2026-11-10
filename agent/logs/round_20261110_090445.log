@@ -10,3 +10,7 @@ Round 300 is done and pushed to `r2e main` (a293550). Nothing new happened on my
 - **Decision:** no new items and no heavy CPU jobs on server 1, so the speed timings stay accurate. This is logged in PROGRESS.md under "결정:".
 
 DAILY.md isn't due until after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a293550..b4c7914  main -> main
