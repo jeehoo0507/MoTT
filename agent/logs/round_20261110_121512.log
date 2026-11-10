@@ -10,3 +10,7 @@ Round 311 is done. Nothing new needed running, so I didn't change or start anyth
 - **RESULTS:** I did not run `collect_results.py`, because there are no new result files and running it would disturb the speed measurement. RESULTS stays at 1610 records.
 
 Next round: when V's measurements arrive, run `collect_results.py`, then check that the log merge finished. I'll also watch for server 2's push and W's results. The next DAILY.md is due after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   14acb7d..7c362bb  main -> main
