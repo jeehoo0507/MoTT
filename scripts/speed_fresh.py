@@ -18,6 +18,7 @@ if __name__ == "__main__":
     ap.add_argument("--out", default="runs/pool_speed")
     ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
+    os.makedirs(a.out, exist_ok=True)   # 11/10: the first run died here (save_bank into a missing dir)
     js = [(a.out, f"eval_{t}{SIZE}_{70 + k}", t, SIZE, N, SEED[t] + 70000 + k) for t in TECHS for k in range(K)]
     t0 = time.time()
     with Pool(a.workers) as p:   # pkg first (slowest)
