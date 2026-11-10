@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 342 is done: PROGRESS.md is updated, committed, and pushed to `r2e main`. The branch is in sync with the remote. The push printed a "gh not found" credential warning but went through.
+
+- **Remote and QUEUE:** there are no new remote commits, and QUEUE has no new instructions.
+- **Human-run V measurement (base 100):** 42 of 120 measurements have finished, all with rc=0 on the first try. That's 29 of the 30 gp runs and 13 coord+V runs.
+- **Correction to round 341:** that round said all 30 gp runs were done, which was wrong. The pkg16_109 gp run (started 19:58 UTC) is still going after 66 minutes, at 100% CPU and within its 4-hour timeout. The same problem also took the longest to build (4208 s), so it looks slow rather than stuck. I left it alone, and the PROGRESS entry now says this.
+- **Background services and system:** the driver is still alive. I restarted report_watch and resume_agent. Memory is at 31.2 of 60 GiB, with no new OOM kills. The tracked-file count is 3192, so no files were lost. No GPU training is running.
+- **Not done:** I didn't run `collect_results.py` while measurements are still running, and RESULTS.md is unchanged (1610 records).
+- **Next round:**
+  - Check that pkg16_109 gp finishes; its timeout runs out at 23:58 UTC.
+  - Once all 120 measurements are done, run collect and write the V base 100 table.
+  - Pull when server 2 pushes base 110–130.
+  - Write DAILY after 11/11 01:06 UTC.
