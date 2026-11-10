@@ -10,3 +10,7 @@ Already up to date.
 - **기록:** PROGRESS.md에 라운드 347을 적고 커밋해 `r2e main`에 push했습니다 (91e1eeb).
 
 다음 라운드에서는 서버 2의 V 결과가 올라왔으면 pull하고 추적 파일 수를 확인한 뒤 collect를 돌립니다. DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   91e1eeb..eb4d812  main -> main
