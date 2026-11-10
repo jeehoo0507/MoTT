@@ -10,3 +10,7 @@ Round 285 is done. Nothing new came in and nothing ran on server 1 this round.
 - **Saved:** I added the round 285 entry to PROGRESS.md and pushed commit `a938cc0` to `r2e main`. The remote is at the same commit.
 
 Next round: if server 2 pushes its U results, pull and run collect_results, and check whether the record count jumps. After any pull, check that the tracked-file count hasn't dropped. Rewrite DAILY.md in the first round after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a938cc0..7322a95  main -> main
