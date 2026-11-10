@@ -1,0 +1,15 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 294 is finished and pushed to `r2e/main` (commit e62d8a2). There was nothing new to act on this round, so I didn't add any queue entries.
+
+- **Remote and QUEUE:** No new commits from the remote. The last QUEUE entry is still the 11/09 19:20 KST speed benchmark (T). The repo still tracks 2650 files, so nothing was deleted on the remote again.
+- **Human speed run (U) on server 1, cores 10–15:** 22 of 30 pool builds are done (pkg16 10/10, pcb16 9/10, ip16 3/10). Six are still building, all within their 2 h timeout. I didn't touch any of them. `runs/speed_1109u/eval` is still empty because the run is still in its build stage.
+- **Recovered build log lines:** At 06:42 the merge script added the 6 lines that had been going to the deleted copy of `build.log` back to the file. The build line for pkg16_78 was lost before the fix, but its result files exist.
+- **Services:** The pipeline driver is alive; report_watch and resume_agent were restarted. Memory is at 23.3 / 60 GiB with no new OOM kills, and the GPU is idle.
+- **RESULTS:** `collect_results.py` (pinned to cores 0–9) still gives 1610 records, unchanged.
+- **Decision:** I added no new work and put no heavy load on server 1, so the human's timing measurements aren't disturbed. This is in PROGRESS.md as "결정:".
+
+During the push, git printed "`/usr/bin/gh: not found`" credential warnings. The push still went through: after a fetch, `main` matches `r2e/main`.
+
+The background wait finished, but it only confirms what I already reported: `collect_results` still gives 1610 records. The round was already committed and pushed, so there's nothing more to do.
