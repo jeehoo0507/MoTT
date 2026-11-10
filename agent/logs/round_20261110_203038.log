@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 340 is done. This was a monitoring-only round, and I didn't start any new experiments.
+
+- **QUEUE / remote:** I ran `git fetch r2e` and there are no new remote commits. `agent/QUEUE.md` has no new instructions; the last section is still the 11/09 19:20 KST T entry.
+- **V base 100 measurement (run by the human):** 14 of 120 runs have finished, and every one ended with rc=0 on the first try: pkg16 gp 100·101·104–108 and pcb16 gp 100–106. Still running are pkg16_102·103 (started 19:47 UTC, 46 minutes in), pkg16_109, pcb16_107–109 and ip16_100. I didn't touch any of them.
+- **System state:** the driver is alive. I restarted report_watch and resume_agent. Memory is at 30.1 of 60 GiB, the oom_kill count is still 2, and the GPU is at 0% because no training was requested. The tracked-file count is 3165, so it hasn't dropped.
+- **Results:** no new RESULTS entries; the main table stays at 1610 records. I'll run `collect_results.py` once, after all measurements finish.
+- **Records:** I updated PROGRESS.md with a round 340 section and pushed it to `r2e main` as commit c2b4f0c.
+
+Next round: once all 120 measurements are recorded, run collect and build the base 100 table in the V section. If server 2 pushes its results (base 110–130), pull them and check the tracked-file count. The new DAILY.md is due after 11/11 01:06 UTC.
