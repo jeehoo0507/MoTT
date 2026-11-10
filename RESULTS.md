@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 13:04 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 13:20 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 174개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 183개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6347,14 +6347,15 @@ U 주 결과 (서버 1, 코어 10–15) (`runs/speed_1109u/eval`, 기록 120 / 1
 
 U 와 같은 생성기·조건, 세트마다 새 문제 `eval_{pcb,pkg,ip}16_{base..base+9}`. 주 결과는 U 그대로; 6세트 전부 적음 (기록 120 미만 = 진행 중 또는 미완료). 판정 없음 (사람).
 
-base 80 (서버 1, `runs/speed_1110v_80/eval`, 기록 29 / 120):
+base 80 (서버 1, `runs/speed_1110v_80/eval`, 기록 42 / 120):
 
 | type | method | files | n | success | policy-only success | decision s/problem | total s/problem | total / greedy+prune |
 |---|---|---|---|---|---|---|---|---|
-| ip | greedy+prune | 9 | 45 | 0.58 | 0.58 | 34.5 | 42.9 | 1.00 |
+| ip | greedy+prune | 10 | 50 | 0.56 | 0.56 | 41.6 | 67.0 | 1.00 |
 | pcb | greedy+prune | 10 | 50 | 0.84 | 0.84 | 37.8 | 51.5 | 1.00 |
-| pkg | greedy+prune | 9 | 45 | 0.82 | 0.82 | 30.0 | 138.9 | 1.00 |
-| pkg | r0_coord_rl+rep4 | 1 | 5 | 1.00 | 1.00 | 2.0 | 29.1 | 0.21 |
+| pcb | r0_coord_rl+rep4 | 3 | 15 | 1.00 | 1.00 | 4.5 | 20.7 | 0.40 |
+| pkg | greedy+prune | 10 | 50 | 0.82 | 0.82 | 39.6 | 161.8 | 1.00 |
+| pkg | r0_coord_rl+rep4 | 9 | 45 | 0.84 | 0.67 | 14.6 | 92.6 | 0.57 |
 
 base 90 (서버 1, `runs/speed_1110v_90/eval`): 기록 0 / 120
 
