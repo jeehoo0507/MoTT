@@ -1,0 +1,12 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 308 is done: PROGRESS.md is updated and committed as 8f9eb67, and the push to `r2e main` went through (the remote now shows the same commit).
+
+- **QUEUE / remote:** there are no new remote commits and no new QUEUE entries. The last entry is still T from 11/09 19:20 KST.
+- **V speed run (human-run, server 1):** 15 of the 30 base-80 problem files are built. No measurement records exist yet. I left it alone, and I'm keeping heavy CPU work, including `collect_results`, off the machine so the timings aren't disturbed.
+- **W analysis (human-run, report only):** nothing has been pushed for it. Decision: the agent won't run it, because the human registered it and QUEUE has no agent instruction for it. This is recorded in PROGRESS.md.
+- **Services:** the driver is still alive, and report_watch and resume_agent were restarted. Memory is 24.4 / 60 GiB, and the OOM-kill count is still 2. The tracked-file count is 2822, so nothing was mass-deleted.
+- **RESULTS.md:** unchanged at 1610 records, since no experiments finished this round.
+
+Next round, once V records appear, I'll run `collect_results` and check the V section. I'll also watch for the server 2 push and the W results. The next DAILY.md is due after 11/11 01:06 UTC.

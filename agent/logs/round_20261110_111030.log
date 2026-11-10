@@ -24,3 +24,7 @@ Applied autostash.
 2. 로그 복구가 끝났는지 확인합니다.
 3. 서버 2 기록이 push되면 pull합니다.
 4. DAILY.md는 11/11 01:06 UTC 뒤에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   60477a8..def9ef6  main -> main
