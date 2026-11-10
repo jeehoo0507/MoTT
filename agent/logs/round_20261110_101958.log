@@ -1,3 +1,16 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 304 is done and pushed as commit `b16e24c`. Nothing new came in and nothing is running, so this was a check-and-record round.
+
+- **Remote and queue:** there are no new remote commits, and the last instruction in QUEUE is still T from 11/09 19:20 KST. The tracked file count is 2818, so files are only being added. Server 2 hasn't pushed `runs/speed_1109u_s2` yet.
+- **Server 1:** the driver is alive with an empty queue, and I restarted report_watch and resume_agent. The GPU is idle and no eval or train processes are running. Memory is 17.4 / 60 GiB and the OOM-kill count is still 2. The driver log on disk matches the live one, so nothing needed restoring.
+- **Results:** RESULTS still has 1610 records. I didn't re-run `collect_results.py` because no new result files could have appeared.
+- **Decision:** I added no new experiments, since the rules don't allow me to add them myself and the 11/06 deadline has passed. This is recorded as "결정:" in PROGRESS.md.
+- **Next round:**
+  - Run collect when server 2 pushes the U repeat measurement.
+  - The re-run of the stalled T greedy measurement is a human job on server 2.
+  - Check the tracked file count after each pull.
+  - The next DAILY.md is due after 11/11 01:06 UTC.
+
+This shell has no `python` command, only `python3`, so I ran the helper scripts with `python3` and noted that in PROGRESS.md.
