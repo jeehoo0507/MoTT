@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 339 is done: PROGRESS.md is updated, and commit `1d960b7` is pushed to r2e/main. The push printed `gh: not found` credential warnings, but r2e/main now points to the new commit.
+
+- **Queue and remote:** there were no new remote commits, and agent/QUEUE.md has no new instructions since 11/09 19:20 KST, so the earlier decisions on X and W still stand.
+- **V base 100 (the human's run):** 7 of 120 measurements have finished, all with rc=0 on the first try (pkg16 100, 101 and 104–106; pcb16 100 and 101). pkg16 107–109 and pcb16_102 are still running. I didn't touch the run.
+- **RESULTS.md:** unchanged at 1610 records, since no experiment finished this round. I'll run `collect_results.py` once, after all 120 measurements are in.
+- **System:** the driver is alive, and I restarted report_watch and resume_agent. Memory is at 31.0 of 60 GiB, GPU use is 0%, and the tracked-file count is 3161, up from 3156 (no mass deletion).
+- **Shell note:** this shell has no `python` command, so I ran the helper scripts with `python3`. This is noted in PROGRESS.md.
+
+Next: once base 100 finishes, collect the results and add the base 100 table to the V section of RESULTS.md. If server 2 pushes base 110–130, pull it and check the tracked-file count. The new DAILY.md is due after 11/11 01:06 UTC.
