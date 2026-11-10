@@ -1,3 +1,15 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 329에서는 사람의 V base 90 측정이 계속 도는지 확인만 했고, 새로 시작한 실험은 없습니다. PROGRESS.md를 갱신해 커밋했고 `r2e/main`에 push했습니다 (bd96013).
+
+- **원격과 QUEUE:** 새 원격 커밋이 없고, QUEUE에 새 지시도 없습니다. 마지막 절은 11/09 19:20 KST의 T입니다.
+- **V base 90 측정:** 120개 중 95개 기록됐고, 모두 rc=0, try=1입니다. gp, r0_coord_rl+rep4, r2pk_rl+rep4가 각 30개씩 끝났고 modal_rule+rep4는 5개 끝났습니다. 남은 25개는 전부 modal_rule+rep4이고, 17:28 UTC에 pcb16_90이 시작됐습니다. 사람이 돌리는 측정이라 건드리지 않았습니다.
+- **`collect_results.py`:** 측정 중에는 CPU 일을 피하려고 돌리지 않았습니다 (라운드 318 결정 그대로). 그래서 RESULTS는 1610 기록 그대로입니다.
+- **프로세스·자원:** 드라이버는 살아 있습니다. report_watch와 resume_agent는 다시 띄웠습니다. 메모리는 29.6 / 60 GiB, oom_kill 2회로 그대로입니다. GPU는 0 %로 비어 있고, 지시받은 학습이 없어 그대로 두었습니다. 추적 파일은 3056개로 줄지 않았습니다.
+
+**다음 라운드:**
+- base 90 측정이 120개를 다 채우면 `collect_results.py`를 돌리고 RESULTS에 V 절을 씁니다.
+- base 100 측정도 같은 순서로 처리합니다.
+- 서버 2가 push하면 pull하고 추적 파일 수를 확인합니다.
+- DAILY.md는 11/11 01:06 UTC 뒤에 새로 씁니다.
