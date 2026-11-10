@@ -1,0 +1,18 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 298 is done: the commit (ff38aeb) is pushed to `r2e main`, and nothing new was started.
+
+- **Remote and queue:** there were no new remote commits. The last entry in `agent/QUEUE.md` is still the 11/09 19:20 KST note (T).
+- **Human's U speed run (cores 10–15):** it has 35 records now, up from 24 last round. Six evals are running, all inside their 4 h timeout. I didn't touch them.
+- **Server health:**
+  - The driver (pid 1792539) is alive, and I restarted `report_watch` and `resume_agent`.
+  - Memory is 29.8 / 60 GiB, and the OOM-kill count is still 2.
+  - The GPU is idle.
+  - The driver log on disk matches what the running process holds.
+- **RESULTS:** `collect_results` ran on cores 0–9 and still counts 1610 records, so `RESULTS.md` didn't change.
+- **Tracked files:** the count went up from 2660 to 2693. That's the U script adding its own result files, not a sign of another mass delete.
+- **Slip:** when restoring the driver log I gave the wrong target name, which wrote a stray copy, `agent/logs/day2_driver.log`. I checked it was byte-identical to `pipeline_day2.log`, deleted it, and noted it in `PROGRESS.md`.
+- **Decision:** I added no new work and launched nothing heavy on server 1. That protects the human's timing measurement, and the agent is not allowed to add queue entries itself. This is recorded as "결정:" in `PROGRESS.md`.
+
+The next DAILY.md is due after 11/11 01:06 UTC.
