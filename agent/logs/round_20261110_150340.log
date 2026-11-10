@@ -10,3 +10,7 @@ Already up to date.
 - **알아 둘 것:** 드라이버 로그의 마지막 줄은 16:36의 `collect_results` rc=1 실패입니다. 이번 라운드에는 원인을 보지 않았습니다.
 
 PROGRESS.md 맨 위에 라운드 320 기록을 넣었습니다. 다음 할 일은 base 90 문제 만들기가 끝나고 측정 120개가 끝나면 `collect_results`를 돌려 V 절을 채우는 것이고, base 100도 같은 순서로 합니다. DAILY는 11/11 01:06 UTC 뒤에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   a9cf049..2f09bff  main -> main
