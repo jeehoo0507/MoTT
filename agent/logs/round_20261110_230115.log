@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 349를 마쳤고, 새로 할 작업이 없어서 상태 확인만 했습니다.
+
+- **원격:** 새 커밋이 없고 `agent/QUEUE.md`에도 새 지시가 없습니다(마지막 절은 11/09 19:20 KST T).
+- **V 측정:** 서버 1 몫(base 80·90·100)은 이미 끝났습니다. 서버 2 몫(base 110–130)이 아직 push되지 않아 `collect_results.py`를 돌리지 않았고, 주 표는 1610 기록 그대로입니다.
+- **서버 1:** 드라이버(pid 1792539)는 살아 있고 report_watch와 resume_agent는 다시 띄웠습니다. 메모리 17.4 / 60 GiB, oom_kill 2(변화 없음), GPU 0 %로 학습은 없습니다.
+- **추적 파일:** 3318개로 줄지 않았습니다. 이번 커밋에 새 라운드 로그가 들어가 지금은 3319개입니다.
+- **기록:** PROGRESS.md를 갱신하고 commit 33bb8af를 `r2e main`에 push했습니다. 로컬과 원격이 같은 상태인 것까지 확인했습니다. push할 때 `gh` 인증 도우미가 없다는 경고가 나왔지만 push 자체는 됐습니다.
+
+다음 라운드에서는 서버 2 결과가 push됐으면 pull하고 추적 파일 수를 확인한 뒤 collect를 돌립니다. DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
