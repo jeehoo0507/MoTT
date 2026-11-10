@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 07:58 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 08:23 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 41개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 62개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
