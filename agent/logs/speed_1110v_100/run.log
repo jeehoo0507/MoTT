@@ -241,3 +241,4 @@
 11-10 22:02 end rc=0 try=1 eval_pcb16_103 --methods modal_rule --repair 4
 11-10 22:07 end rc=0 try=1 eval_pkg16_106 --methods modal_rule --repair 4
 11-10 22:07 all done
+22:07 pushed

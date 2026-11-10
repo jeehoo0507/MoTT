@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 21:52 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 22:09 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 495개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 507개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6381,20 +6381,20 @@ base 90 (서버 1, `runs/speed_1110v_90/eval`, 기록 120 / 120):
 | pkg | r0_coord_rl+rep4 | 10 | 50 | 0.92 | 0.66 | 26.0 | 135.8 | 0.71 |
 | pkg | r2pk_rl+rep4 | 10 | 50 | 0.94 | 0.78 | 2.2 | 34.3 | 0.18 |
 
-base 100 (서버 1, `runs/speed_1110v_100/eval`, 기록 116 / 120):
+base 100 (서버 1, `runs/speed_1110v_100/eval`, 기록 120 / 120):
 
 | type | method | files | n | success | policy-only success | decision s/problem | total s/problem | total / greedy+prune |
 |---|---|---|---|---|---|---|---|---|
 | ip | greedy+prune | 10 | 50 | 0.60 | 0.60 | 31.8 | 36.1 | 1.00 |
-| ip | modal_rule+rep4 | 9 | 45 | 1.00 | 1.00 | 1.6 | 16.5 | 0.46 |
+| ip | modal_rule+rep4 | 10 | 50 | 1.00 | 1.00 | 1.8 | 17.3 | 0.48 |
 | ip | r0_coord_rl+rep4 | 10 | 50 | 1.00 | 0.98 | 2.9 | 22.9 | 0.63 |
 | ip | r2pk_rl+rep4 | 10 | 50 | 1.00 | 1.00 | 1.5 | 11.3 | 0.31 |
 | pcb | greedy+prune | 10 | 50 | 0.86 | 0.86 | 37.6 | 62.6 | 1.00 |
-| pcb | modal_rule+rep4 | 8 | 40 | 1.00 | 0.97 | 1.2 | 16.8 | 0.27 |
+| pcb | modal_rule+rep4 | 10 | 50 | 0.98 | 0.96 | 7.5 | 40.3 | 0.64 |
 | pcb | r0_coord_rl+rep4 | 10 | 50 | 0.98 | 0.96 | 19.5 | 87.0 | 1.39 |
 | pcb | r2pk_rl+rep4 | 10 | 50 | 0.98 | 0.88 | 5.0 | 39.1 | 0.62 |
 | pkg | greedy+prune | 10 | 50 | 0.80 | 0.80 | 89.3 | 314.1 | 1.00 |
-| pkg | modal_rule+rep4 | 9 | 45 | 0.98 | 0.64 | 2.9 | 40.1 | 0.13 |
+| pkg | modal_rule+rep4 | 10 | 50 | 0.96 | 0.64 | 8.9 | 65.2 | 0.21 |
 | pkg | r0_coord_rl+rep4 | 10 | 50 | 0.94 | 0.66 | 29.5 | 142.0 | 0.45 |
 | pkg | r2pk_rl+rep4 | 10 | 50 | 0.94 | 0.76 | 15.8 | 86.1 | 0.27 |
 
