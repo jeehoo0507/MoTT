@@ -4,7 +4,7 @@
 #   bash scripts/speed_fresh.sh status | table
 set -u
 cd "$(dirname "$0")/.."
-PY=.venv/bin/python; POOL=runs/pool_speed; OUT=runs/speed_1109u; L=agent/logs/speed_1109u; mkdir -p $L $OUT
+PY=.venv/bin/python; POOL=runs/pool_speed; OUT=${OUT:-runs/speed_1109u}; L=${LOGD:-agent/logs/speed_1109u}; mkdir -p $L $OUT
 CORES=${CORES:-10-15}
 MOTT=runs/2026-10-29/r2pk_rl/best.pt
 COORD=runs/2026-10-28/r0_coord_rl/best.pt
@@ -44,10 +44,10 @@ go)
   git commit -q -m "$(hostname | cut -c1-40) (human): speed fresh 50 problems 11/09 U" && git pull -q --rebase --autostash r2e main \
     && git push -q r2e main && echo "$(date '+%H:%M') pushed" >> $L/run.log ;;
 status) tail -4 $L/run.log 2>/dev/null; tail -2 $L/build.log 2>/dev/null; echo "records: $(ls $OUT/eval/*.json 2>/dev/null | wc -l) / 120" ;;
-table) $PY - <<'PY'
+table) OUT=$OUT $PY - <<'PY'
 import glob, json, os, collections
 acc = collections.defaultdict(lambda: [0, 0, 0.0, 0.0, 0])
-for f in glob.glob("runs/speed_1109u/eval/*.json"):
+for f in glob.glob(os.environ["OUT"] + "/eval/*.json"):
     r = json.load(open(f)); s, m = os.path.basename(f)[:-5].split("__", 1)
     a = acc[(s.rsplit("_", 1)[0], m)]
     a[0] += r["n"]; a[1] += sum(r["ok"]); a[2] += r["sec_per_inst"] * r["n"]; a[3] += r["sec_total"]; a[4] += 1
