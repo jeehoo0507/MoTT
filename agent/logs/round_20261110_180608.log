@@ -11,3 +11,7 @@ Already up to date.
   - base 100 측정 120개가 끝나면 RESULTS의 V 절을 채웁니다 (`collect_results.py`는 측정이 끝난 뒤 코어 0–9에서 돌립니다).
   - 서버 2(base 110–130)가 push하면 pull하고 추적 파일 수를 확인합니다.
   - DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   713cf39..6da1fd5  main -> main
