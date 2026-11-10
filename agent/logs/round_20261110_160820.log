@@ -9,3 +9,7 @@ Round 324 is done and pushed (`eb49b15`).
 - **Next:** once all 120 base 90 records are in, run `collect_results.py` on cores 0–9 and fill in the V section of `RESULTS.md`. Then do the same for base 100. Write the new `DAILY.md` after 01:06 UTC on 11/11.
 
 `PROGRESS.md` has the round 324 entry.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   eb49b15..6bb5ec1  main -> main
