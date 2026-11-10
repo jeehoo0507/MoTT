@@ -10,3 +10,7 @@ Round 308 is done: PROGRESS.md is updated and committed as 8f9eb67, and the push
 - **RESULTS.md:** unchanged at 1610 records, since no experiments finished this round.
 
 Next round, once V records appear, I'll run `collect_results` and check the V section. I'll also watch for the server 2 push and the W results. The next DAILY.md is due after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   8f9eb67..69f9c58  main -> main
