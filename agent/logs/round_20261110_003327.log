@@ -9,3 +9,7 @@ This round (276) found nothing new and made no changes beyond the round log. I c
 - **Decision (recorded in PROGRESS.md):** I added no queue entries. The 11/06 deadline has passed, and the remaining harness evals belong to server 2, so leaving things as they are was the most conservative choice.
 - **STUCK items:** both are unchanged and I did not retry them. `bm2_rlonly_s2` (B-Manoharan RL-only, seed 2) runs out of GPU memory at the same point every time; the human decided to report it as a failed training run. LS16 needs more than 45 GiB of memory, so it is marked "skipped for memory", and its remaining sets stay deferred in `cpu_deferred`.
 - **Next round:** write the new DAILY.md for 11/10 in the first round after 01:06 UTC. Also watch for pushes from server 2's remaining runs (S, T, nrest), and check that the record count doesn't jump suspiciously when they get merged in.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   61e016d..73ffb1a  main -> main

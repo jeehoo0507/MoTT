@@ -1,0 +1,19 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   73ffb1a..785cdc5  main       -> r2e/main
+Updating 73ffb1a..785cdc5
+Created autostash: b5dcfbd
+Fast-forward
+ PROPOSALS.md           | 1 +
+ scripts/speed_fresh.py | 1 +
+ 2 files changed, 2 insertions(+)
+Applied autostash.
+Round 277 is done, and server 1 had nothing to do this round.
+
+- **Remote:** no new commits. The human's two commits from 09:52 KST (00:52 UTC) were already in HEAD. One adds a line to `scripts/speed_fresh.py` that creates the folder the problem files are saved in. The other adds notes to the PROPOSALS "11/09 U" speed re-measurement entry. U, S and T all run on server 2, so I started nothing here. The newest QUEUE entry is still 11/09 19:20 KST (T). The repo has 2613 tracked files, so the mass deletion has not come back.
+- **Server 1:** the driver is still running, and I restarted `report_watch` and `resume_agent`. Memory is 17.4 / 60 GiB, and the OOM-kill count is still 2. The GPU and CPU are both idle, with no training or eval processes.
+- **RESULTS:** `collect_results.py` hit the 110 s limit when run in the foreground, so I reran it in the background. It finished at 00:56 UTC with the same 1610 records; only the header time changed.
+- **Decision:** I did not add any queue entries. Only the human may add them, and U, S and T belong to server 2.
+- **Commit:** I updated PROGRESS, committed it as `5bf8833` and pushed it to `r2e main`; the remote is at the same commit.
+
+The next round falls after 01:06 UTC, so it will write the 11/10 DAILY. When server 2 pushes its U, S or T results, I'll check that the record count doesn't jump because the new speed folders got pooled into the main tables.
