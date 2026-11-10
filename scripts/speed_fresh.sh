@@ -29,16 +29,19 @@ one() {
 }
 case "${1:-}" in
 go)
-  until grep -q "pcb rerun done" agent/logs/speed_1109b/run.log 2>/dev/null; do sleep 60; done
-  echo "$(date '+%m-%d %H:%M') build start" >> $L/run.log
-  OMP_NUM_THREADS=1 taskset -c $CORES $PY scripts/speed_fresh.py --out $POOL --workers 6 >> $L/build.log 2>&1 || exit 1
-  echo "$(date '+%m-%d %H:%M') build done" >> $L/run.log
+  echo "$(date '+%m-%d %H:%M') build start ($(hostname), cores $CORES)" >> $L/run.log
   N=$(( $(echo $CORES | cut -d- -f2) - $(echo $CORES | cut -d- -f1) + 1 ))
+  # one process per problem file (no Pool), 2 h limit, one retry: the Pool build hung at 0 % CPU on server 2 (11/10)
+  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo eval_${t}16_7$k; done; done | xargs -P $N -I{} bash -c \
+    "for try in 1 2; do [ -f $POOL/{}.pkl ] && break; OMP_NUM_THREADS=1 timeout 2h taskset -c $CORES $PY scripts/speed_fresh.py --out $POOL --only {} >> $L/build.log 2>&1; done"
+  nb=$(ls $POOL/eval_*16_7?.pkl 2>/dev/null | wc -l)
+  echo "$(date '+%m-%d %H:%M') build done: $nb / 30 files" >> $L/run.log
+  [ "$nb" -eq 30 ] || { echo "build incomplete, stop" >> $L/run.log; exit 1; }
   export -f one; export PY POOL OUT L CORES
   jobs | xargs -P $N -L 1 bash -c 'one "$@"' _
   echo "$(date '+%m-%d %H:%M') all done" >> $L/run.log
   git pull -q --rebase --autostash r2e main; git add -f $OUT/eval/*.json $POOL/*.json
-  git commit -q -m "server 2 (human): speed fresh 30 problems 11/09 U" && git pull -q --rebase --autostash r2e main \
+  git commit -q -m "$(hostname | cut -c1-40) (human): speed fresh 50 problems 11/09 U" && git pull -q --rebase --autostash r2e main \
     && git push -q r2e main && echo "$(date '+%H:%M') pushed" >> $L/run.log ;;
 status) tail -4 $L/run.log 2>/dev/null; tail -2 $L/build.log 2>/dev/null; echo "records: $(ls $OUT/eval/*.json 2>/dev/null | wc -l) / 120" ;;
 table) $PY - <<'PY'
