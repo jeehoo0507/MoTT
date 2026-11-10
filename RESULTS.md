@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 21:03 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 21:20 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 429개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 445개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6381,15 +6381,17 @@ base 90 (서버 1, `runs/speed_1110v_90/eval`, 기록 120 / 120):
 | pkg | r0_coord_rl+rep4 | 10 | 50 | 0.92 | 0.66 | 26.0 | 135.8 | 0.71 |
 | pkg | r2pk_rl+rep4 | 10 | 50 | 0.94 | 0.78 | 2.2 | 34.3 | 0.18 |
 
-base 100 (서버 1, `runs/speed_1110v_100/eval`, 기록 43 / 120):
+base 100 (서버 1, `runs/speed_1110v_100/eval`, 기록 64 / 120):
 
 | type | method | files | n | success | policy-only success | decision s/problem | total s/problem | total / greedy+prune |
 |---|---|---|---|---|---|---|---|---|
 | ip | greedy+prune | 10 | 50 | 0.60 | 0.60 | 31.8 | 36.1 | 1.00 |
+| ip | r0_coord_rl+rep4 | 10 | 50 | 1.00 | 0.98 | 2.9 | 22.9 | 0.63 |
 | pcb | greedy+prune | 10 | 50 | 0.86 | 0.86 | 37.6 | 62.6 | 1.00 |
-| pcb | r0_coord_rl+rep4 | 6 | 30 | 1.00 | 1.00 | 5.9 | 29.1 | 0.46 |
-| pkg | greedy+prune | 9 | 45 | 0.80 | 0.80 | 78.2 | 254.6 | 1.00 |
-| pkg | r0_coord_rl+rep4 | 8 | 40 | 0.95 | 0.70 | 13.4 | 81.4 | 0.32 |
+| pcb | r0_coord_rl+rep4 | 9 | 45 | 1.00 | 0.98 | 15.1 | 69.1 | 1.10 |
+| pkg | greedy+prune | 10 | 50 | 0.80 | 0.80 | 89.3 | 314.1 | 1.00 |
+| pkg | r0_coord_rl+rep4 | 10 | 50 | 0.94 | 0.66 | 29.5 | 142.0 | 0.45 |
+| pkg | r2pk_rl+rep4 | 5 | 25 | 1.00 | 0.88 | 2.7 | 32.3 | 0.10 |
 
 base 110 (서버 2, `runs/speed_1110v_110/eval`): 기록 0 / 120
 
