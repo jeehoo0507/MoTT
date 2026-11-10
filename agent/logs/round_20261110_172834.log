@@ -13,3 +13,7 @@ Already up to date.
 - base 100 측정도 같은 순서로 처리합니다.
 - 서버 2가 push하면 pull하고 추적 파일 수를 확인합니다.
 - DAILY.md는 11/11 01:06 UTC 뒤에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   bd96013..3ac066a  main -> main
