@@ -1,0 +1,74 @@
+{
+ "name": "eval_pcb16_89",
+ "tech": "pcb",
+ "size": 16,
+ "n": 5,
+ "seed": 70019,
+ "difficulty": [
+  0.02,
+  0.2
+ ],
+ "F": 224,
+ "rounds": 9,
+ "gp_ok": 1.0,
+ "gp_count_mean": 6.4,
+ "gp_count": [
+  3,
+  7,
+  9,
+  7,
+  6
+ ],
+ "shapes": [
+  "rect",
+  "L",
+  "L",
+  "holes",
+  "holes"
+ ],
+ "targets": [
+  "step",
+  "flat",
+  "flat",
+  "flat",
+  "flat"
+ ],
+ "probes": 1,
+ "t_gen": 76.5408878326416,
+ "t_total": 458.40279269218445,
+ "cfg": {
+  "cell_size": 0.0005,
+  "diel_thickness": 1e-05,
+  "eps_r": 4.0,
+  "tan_d": 0.02,
+  "metal_thickness": 2e-06,
+  "sigma": 58000000.0,
+  "vrm_r": 0.005,
+  "vrm_l": 2e-10,
+  "f_min": 10000000.0,
+  "f_max": 20000000000.0,
+  "n_freq": 32,
+  "n_feat_freq": 8,
+  "decaps": [
+   [
+    1e-08,
+    1e-10,
+    0.02
+   ],
+   [
+    1e-09,
+    3e-11,
+    0.05
+   ],
+   [
+    1e-10,
+    1e-11,
+    0.1
+   ]
+  ],
+  "dense_max_nodes": 900,
+  "n_check": 700,
+  "target_on_check": true,
+  "seed_peaks": true
+ }
+}
