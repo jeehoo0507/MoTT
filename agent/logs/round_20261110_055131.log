@@ -18,3 +18,7 @@ Applied autostash.
 - **평소 점검:** 드라이버는 살아 있고, 메모리는 26.9 GiB / 60 GiB(U build 몫), GPU는 비어 있습니다. RESULTS는 1610 기록으로 그대로입니다. 나중에 U 기록이 들어와도 기존 `runs/speed_1109` 제외 규칙에 걸려 주 표에는 섞이지 않습니다.
 
 다음 라운드에서는 watcher 로그(`agent/logs/merge_orphan_u.log`)에서 줄이 붙었는지 확인하고, U가 push된 뒤 기록 수가 1610에서 갑자기 늘지 않는지 봅니다. 위 결정들과 다음 할 일은 PROGRESS.md에 적었습니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   e857380..6ae2da3  main -> main
