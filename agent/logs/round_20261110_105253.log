@@ -20,3 +20,7 @@ Applied autostash.
 - **메모리:** 사람이 돌릴 작업이 PROPOSALS에 등록되면 그 로그 폴더를 같은 라운드에 미리 `.gitignore`에 넣으라는 메모를 추가했습니다.
 
 다음 라운드에는 V 기록이 push되면 `collect_results`를 돌려 V 절이 붙는지와 주 표가 1610 그대로인지 보고, 문제 만들기가 끝나면 로그 병합이 됐는지 확인합니다. 새 DAILY는 11/11 01:06 UTC 이후에 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   0e7a74b..4d7f131  main -> main
