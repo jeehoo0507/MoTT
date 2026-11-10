@@ -15,3 +15,7 @@ Already up to date.
 
 - **점검:** 드라이버는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. 메모리 17.4 / 60 GiB, oom_kill 2회는 그대로입니다. 추적 파일은 3316개로 줄지 않았고, QUEUE에 새 지시는 없습니다.
 - **다음:** 서버 2의 base 110·120·130 세트는 아직 0/120입니다. 서버 2가 push하면 pull하고 추적 파일 수를 확인한 뒤 다시 모읍니다. DAILY는 11/11 01:06 UTC 뒤에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   f2eb6b6..518ab89  main -> main
