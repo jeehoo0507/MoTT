@@ -12,3 +12,7 @@ Round 290 is finished: I committed it as 6e392d1 and pushed it to `r2e main`. Th
 - **Results:** `collect_results.py` still finds 1610 records. The only change to `RESULTS.md` is its timestamp.
 - **Decision:** I added no new queue entries, because the rules say only the human adds them. This is logged in `PROGRESS.md` under "결정:".
 - **Still open:** the two existing STUCK items stay as they are, `bm2_rlonly_s2` (GPU OOM) and LS16 (memory). The next `DAILY.md` is due after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6e392d1..5faef22  main -> main

@@ -1,0 +1,10 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+   5faef22..3cdc74a  main       -> r2e/main
+Updating 5faef22..3cdc74a
+Created autostash: 7d73ea6
+Fast-forward
+ PROPOSALS.md           | 1 +
+ scripts/speed_fresh.sh | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+Applied autostash.

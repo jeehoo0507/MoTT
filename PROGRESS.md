@@ -2,7 +2,21 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 05:33 UTC, 라운드 290 — 새 기록 0; GPU·CPU 비어 있음; RESULTS 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 06:05 UTC, 라운드 291 — 사람 U 속도 측정이 서버 1 코어 10–15 에서 도는 중; 그 로그를 추적에서 뺌; RESULTS 1610 기록 그대로)
+
+## 라운드 291 (2026-11-10 05:51 ~ 06:05 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음. 사람 62d2062 (14:34 KST) · 3cdc74a (14:43 KST) 는 이미 HEAD — PROPOSALS 11/09 U **서버 1 로 옮김** (서버 2 build 멈춤·인증 끊김), 파일마다 별도 build 프로세스 (2 h 제한, 1번 재시도), 서버 2 는 반복 측정 (`runs/speed_1109u_s2`), 주 결과는 서버 1 `runs/speed_1109u`. 추적 파일 2645 (줄지 않음). QUEUE 끝 = 11/09 19:20 KST (T) 그대로.
+- 서버 1 에서 `bash scripts/speed_fresh.sh go` 가 05:35 UTC 부터 돌고 있음 (사람, 코어 10–15, 6 병렬). 06:00 기준 pool 4/30 (pkg16_72·74·75·78), pkg16_70·71·73·76·77·79 build 중. 에이전트는 건드리지 않음 (큐 밖, 사람 실행).
+- 문제 발견: `agent/logs/speed_1109u/build.log` 가 추적 파일이라 라운드 290 커밋 뒤 loop.sh/report_watch 의 `git pull --autostash` 가 파일을 새로 만들어, 돌던 build 프로세스 6개가 지워진 inode 에 쓰고 있었음 (`restore_proc_log` 로 확인). **pkg16_78 의 "built" 줄은 이미 잃음** (프로세스 끝남; `runs/pool_speed/eval_pkg16_78.{pkl,json}` 은 있음 — 그게 실제 기록).
+  - 고침: `git rm --cached -r agent/logs/speed_1109u` (파일은 그대로) + `.gitignore` 에 `agent/logs/speed_1109u/`·`speed_1109u_s2/` 추가 → 앞으로 autostash 가 건드리지 않음. U eval 단계의 `$L/<tag>.log` (4 h 씩 열림) 도 같은 위험이 있었으므로 미리 막음. U 스크립트의 커밋은 `git add -f $OUT/eval/*.json $POOL/*.json` 만이라 영향 없음.
+  - 남은 줄: `scripts/merge_orphan_logs.py` (새) 를 `bg.py agent/logs/merge_orphan_u.log` 로 띄움 — 지워진 inode 를 쥔 5 프로세스 (70·71·73·76·77) 의 fd/1 을 직접 열어 두고, 모두 끝나면 디스크 build.log 에 없는 줄만 뒤에 붙임 (restore_proc_log 는 한 프로세스 내용으로 덮어써서 여러 writer 일 때 줄을 잃음).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 26.9 GiB / 60 (U build 6 × ≈ 2 GB), oom_kill 2 (늘지 않음). GPU 85 MiB, 0%. `train.py`·forkserver 없음.
+- `collect_results.py` → `bg.py agent/logs/collect_r291.log 'taskset -c 0-9 ...'` (U 코어 10–15 피함), 1610 기록 (변화 없음). U 기록 (`runs/speed_1109u*`) 은 `SPEED_EXCLUDE = ("runs/speed_1109",)` 접두사에 걸려 주 표에 섞이지 않음 (확인만, 고치지 않음).
+- 결정: U 로그를 추적에서 뺌 — 이유: 사람 측정 기록을 잃지 않게 하는 가장 작은 변경 (10/30 pipeline_day2.log 와 같은 처리, .gitignore 선례). 코드·측정 조건은 안 바꿈.
+- 결정: 새 항목 넣지 않음, 서버 1 CPU 에 무거운 작업 안 띄움 — 이유: U 는 시간 측정이라 같은 기계의 다른 부하가 결과를 흔듦. 에이전트 작업은 코어 0–9 에 고정.
+- 할 일 (다음): (1) `cat agent/logs/merge_orphan_u.log` → "appended N lines" 확인. (2) `bash scripts/speed_fresh.sh status` 로 U 진행만 봄 (build 30/30 → eval 120 기록). (3) U push 뒤 collect_results 기록 수가 1610 에서 뛰지 않는지. (4) 에이전트 CPU 작업은 `taskset -c 0-9`. (5) pull 뒤 추적 파일 수 (≈ 2643, 로그 2개 뺌). (6) 다음 DAILY 11/11 01:06 UTC 뒤.
+
+# (이전) 라운드 290 머리말: (갱신 2026-11-10 05:33 UTC, 라운드 290 — 새 기록 0; GPU·CPU 비어 있음; RESULTS 1610 기록 그대로)
 
 ## 라운드 290 (2026-11-10 05:31 ~ 05:33 UTC)
 - `git fetch r2e` (05:31): 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2640 (줄지 않음).

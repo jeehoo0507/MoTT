@@ -18,6 +18,9 @@ agent/logs/report_watch.log
 agent/logs/collect_results.log
 agent/logs/day2_cpu.log
 agent/logs/side16_gp.log
+# 11/10: human speed_fresh.sh U (server 1) appends here for hours; the round autostash orphaned build.log twice
+agent/logs/speed_1109u/
+agent/logs/speed_1109u_s2/
 
 agent/logs/resume_agent.log
 
