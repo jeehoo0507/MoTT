@@ -2,7 +2,16 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 21:22 UTC, 라운드 343 — 사람 V base 100 측정 58/120 (gp 30/30 끝, coord+V 28/30, r2pk_rl 시작; 전부 rc=0 try=1); 새 원격 커밋 없음; 주 표 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 21:38 UTC, 라운드 344 — 사람 V base 100 측정 82/120 (gp 30/30, coord+V 30/30 끝 21:28, r2pk_rl 22/30; 전부 rc=0 try=1); 새 원격 커밋 없음; 주 표 1610 기록 그대로)
+
+## 라운드 344 (2026-11-10 21:36 ~ 21:38 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음. QUEUE 새 절 없음 (끝 = 11/09 19:20 KST T). X·W 는 라운드 307·310 결정 그대로.
+- V (사람): `agent/logs/speed_1110v_100/run.log` end 82 줄, 전부 rc=0 try=1 (rc≠0·try≠1 0 개). coord+V (`r0_coord_rl`) 30/30 끝 (마지막 pcb16_108, 21:28). `r2pk_rl` (같은 플래그) 22/30: pkg16 8 (105·106 아직), pcb16 9 (108 아직), ip16 5 (100–104); 남은 8 개 도는 중/대기. 네 번째 정책은 r2pk_rl 끝난 뒤 run.log 에서 확인. 건드리지 않음.
+- `collect_results.py` 안 돌림 — 측정 도는 중 (끝난 뒤 한 번, 코어 0–9).
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 28.1 GiB / 60, oom_kill 2 (그대로). GPU 학습 없음 (사람 지시 없음). 추적 파일 3220 (줄지 않음).
+- 할 일 (다음): base 100 측정 120 기록 → collect → V 절 base 100 표; 서버 2 (base 110–130) push 되면 pull + 추적 파일 수 확인; DAILY 11/11 01:06 UTC 뒤.
+
+# (이전) 라운드 343 머리말: PROGRESS (갱신 2026-11-10 21:22 UTC, 라운드 343 — 사람 V base 100 측정 58/120 (gp 30/30 끝, coord+V 28/30, r2pk_rl 시작; 전부 rc=0 try=1); 새 원격 커밋 없음; 주 표 1610 기록 그대로)
 
 ## 라운드 343 (2026-11-10 21:20 ~ 21:22 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. QUEUE 새 절 없음 (끝 = 11/09 19:20 KST T). X·W 는 라운드 307·310 결정 그대로.
