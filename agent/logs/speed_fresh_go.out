@@ -1,0 +1,4 @@
+Created autostash: 8706b30
+Applied autostash.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found

@@ -1,0 +1,12 @@
+From https://github.com/jeehoo0507/R2E
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Round 300 is done and pushed to `r2e main` (a293550). Nothing new happened on my side: the human hasn't added any new instructions, and per the queue rules I added no experiments of my own.
+
+- **Instructions:** the newest QUEUE entry is still the 11/09 19:20 KST (T) one. The only new remote commits came from the human's speed-test script (ee025ab, which added 89 result files and changed 2 lines, plus 8dfdac5). They only add files, so the tracked-file count rising from 2724 to 2813 is expected.
+- **Human speed test (U, cores 10–15):** eval results went from 73 to 113. Six `modal_rule` evals are running now. I didn't touch them.
+- **Services:** the driver is alive. I restarted `report_watch` and `resume_agent`. Memory is at 26.0 of 60 GiB, and the out-of-memory kill count is still 2. The driver's log on disk matches what it's writing, so no lines were lost.
+- **Results:** `collect_results` ran on cores 0–9 only and still gives 1610 records; RESULTS.md didn't change.
+- **Decision:** no new items and no heavy CPU jobs on server 1, so the speed timings stay accurate. This is logged in PROGRESS.md under "결정:".
+
+DAILY.md isn't due until after 11/11 01:06 UTC.
