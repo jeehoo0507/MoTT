@@ -1,0 +1,74 @@
+{
+ "name": "eval_ip16_99",
+ "tech": "ip",
+ "size": 16,
+ "n": 5,
+ "seed": 270029,
+ "difficulty": [
+  0.2,
+  0.5
+ ],
+ "F": 80,
+ "rounds": 4,
+ "gp_ok": 0.6,
+ "gp_count_mean": 63.333333333333336,
+ "gp_count": [
+  15,
+  177,
+  137,
+  38,
+  240
+ ],
+ "shapes": [
+  "L",
+  "holes",
+  "rect",
+  "rect",
+  "rect"
+ ],
+ "targets": [
+  "flat",
+  "flat",
+  "flat",
+  "step",
+  "flat"
+ ],
+ "probes": 3,
+ "t_gen": 77.56245708465576,
+ "t_total": 652.2926268577576,
+ "cfg": {
+  "cell_size": 0.0002,
+  "diel_thickness": 1e-06,
+  "eps_r": 4.0,
+  "tan_d": 0.02,
+  "metal_thickness": 1e-06,
+  "sigma": 58000000.0,
+  "vrm_r": 0.005,
+  "vrm_l": 5e-11,
+  "f_min": 10000000.0,
+  "f_max": 20000000000.0,
+  "n_freq": 32,
+  "n_feat_freq": 8,
+  "decaps": [
+   [
+    1e-10,
+    5e-12,
+    0.05
+   ],
+   [
+    2e-11,
+    2e-12,
+    0.1
+   ],
+   [
+    5e-12,
+    1e-12,
+    0.2
+   ]
+  ],
+  "dense_max_nodes": 900,
+  "n_check": 700,
+  "target_on_check": true,
+  "seed_peaks": true
+ }
+}

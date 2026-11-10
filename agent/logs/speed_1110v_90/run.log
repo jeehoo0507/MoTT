@@ -1,0 +1,243 @@
+11-10 14:06 build start (a5000-heumheum511-gmail-com-loop-69546df747-pqlkg, cores 10-15)
+11-10 15:55 build done: 30 / 30 files
+11-10 15:55 start eval_pkg16_91 --methods gp
+11-10 15:55 start eval_pkg16_93 --methods gp
+11-10 15:55 start eval_pkg16_90 --methods gp
+11-10 15:55 start eval_pkg16_95 --methods gp
+11-10 15:55 start eval_pkg16_94 --methods gp
+11-10 15:55 start eval_pkg16_92 --methods gp
+11-10 16:02 end rc=0 try=1 eval_pkg16_93 --methods gp
+11-10 16:02 start eval_pkg16_96 --methods gp
+11-10 16:04 end rc=0 try=1 eval_pkg16_91 --methods gp
+11-10 16:04 start eval_pkg16_97 --methods gp
+11-10 16:05 end rc=0 try=1 eval_pkg16_97 --methods gp
+11-10 16:05 start eval_pkg16_98 --methods gp
+11-10 16:10 end rc=0 try=1 eval_pkg16_90 --methods gp
+11-10 16:10 start eval_pkg16_99 --methods gp
+11-10 16:17 end rc=0 try=1 eval_pkg16_94 --methods gp
+11-10 16:17 start eval_pcb16_90 --methods gp
+11-10 16:17 end rc=0 try=1 eval_pkg16_98 --methods gp
+11-10 16:17 start eval_pcb16_91 --methods gp
+11-10 16:18 end rc=0 try=1 eval_pkg16_99 --methods gp
+11-10 16:18 start eval_pcb16_92 --methods gp
+11-10 16:18 end rc=0 try=1 eval_pcb16_91 --methods gp
+11-10 16:18 start eval_pcb16_93 --methods gp
+11-10 16:18 end rc=0 try=1 eval_pkg16_92 --methods gp
+11-10 16:18 start eval_pcb16_94 --methods gp
+11-10 16:18 end rc=0 try=1 eval_pcb16_90 --methods gp
+11-10 16:18 start eval_pcb16_95 --methods gp
+11-10 16:22 end rc=0 try=1 eval_pcb16_93 --methods gp
+11-10 16:22 start eval_pcb16_96 --methods gp
+11-10 16:22 end rc=0 try=1 eval_pcb16_95 --methods gp
+11-10 16:22 start eval_pcb16_97 --methods gp
+11-10 16:22 end rc=0 try=1 eval_pcb16_94 --methods gp
+11-10 16:22 start eval_pcb16_98 --methods gp
+11-10 16:23 end rc=0 try=1 eval_pcb16_97 --methods gp
+11-10 16:23 start eval_pcb16_99 --methods gp
+11-10 16:23 end rc=0 try=1 eval_pcb16_96 --methods gp
+11-10 16:23 start eval_ip16_90 --methods gp
+11-10 16:23 end rc=0 try=1 eval_pcb16_99 --methods gp
+11-10 16:23 start eval_ip16_91 --methods gp
+11-10 16:25 end rc=0 try=1 eval_pkg16_95 --methods gp
+11-10 16:25 start eval_ip16_92 --methods gp
+11-10 16:26 end rc=0 try=1 eval_ip16_91 --methods gp
+11-10 16:26 start eval_ip16_93 --methods gp
+11-10 16:27 end rc=0 try=1 eval_ip16_90 --methods gp
+11-10 16:27 start eval_ip16_94 --methods gp
+11-10 16:28 end rc=0 try=1 eval_ip16_93 --methods gp
+11-10 16:28 start eval_ip16_95 --methods gp
+11-10 16:29 end rc=0 try=1 eval_pcb16_98 --methods gp
+11-10 16:29 start eval_ip16_96 --methods gp
+11-10 16:31 end rc=0 try=1 eval_ip16_94 --methods gp
+11-10 16:31 start eval_ip16_97 --methods gp
+11-10 16:31 end rc=0 try=1 eval_ip16_92 --methods gp
+11-10 16:31 start eval_ip16_98 --methods gp
+11-10 16:32 end rc=0 try=1 eval_ip16_95 --methods gp
+11-10 16:32 start eval_ip16_99 --methods gp
+11-10 16:33 end rc=0 try=1 eval_ip16_96 --methods gp
+11-10 16:33 start eval_pkg16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:35 end rc=0 try=1 eval_ip16_99 --methods gp
+11-10 16:35 start eval_pkg16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:36 end rc=0 try=1 eval_ip16_97 --methods gp
+11-10 16:36 start eval_pkg16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:36 end rc=0 try=1 eval_ip16_98 --methods gp
+11-10 16:36 start eval_pkg16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:38 end rc=0 try=1 eval_pcb16_92 --methods gp
+11-10 16:38 start eval_pkg16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:41 end rc=0 try=1 eval_pkg16_96 --methods gp
+11-10 16:41 start eval_pkg16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:41 end rc=0 try=1 eval_pkg16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:41 start eval_pkg16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:41 end rc=0 try=1 eval_pkg16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:41 start eval_pkg16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:42 end rc=0 try=1 eval_pkg16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:42 start eval_pkg16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:43 end rc=0 try=1 eval_pkg16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:43 start eval_pkg16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:43 end rc=0 try=1 eval_pkg16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:43 start eval_pcb16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:44 end rc=0 try=1 eval_pkg16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:44 start eval_pcb16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:45 end rc=0 try=1 eval_pkg16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:45 start eval_pcb16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:46 end rc=0 try=1 eval_pcb16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:46 start eval_pcb16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:48 end rc=0 try=1 eval_pcb16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:48 start eval_pcb16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:51 end rc=0 try=1 eval_pcb16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:51 start eval_pcb16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:51 end rc=0 try=1 eval_pcb16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:51 start eval_pcb16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:52 end rc=0 try=1 eval_pcb16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:52 start eval_pcb16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:54 end rc=0 try=1 eval_pkg16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:54 start eval_pcb16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:58 end rc=0 try=1 eval_pcb16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 16:58 start eval_pcb16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:00 end rc=0 try=1 eval_pcb16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:00 start eval_ip16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:05 end rc=0 try=1 eval_pcb16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:05 start eval_ip16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:05 end rc=0 try=1 eval_pcb16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:05 start eval_ip16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:06 end rc=0 try=1 eval_pcb16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:06 start eval_ip16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:06 end rc=0 try=1 eval_ip16_91 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:06 start eval_ip16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:07 end rc=0 try=1 eval_pkg16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:07 start eval_ip16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:07 end rc=0 try=1 eval_ip16_93 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:07 start eval_ip16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 end rc=0 try=1 eval_ip16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 start eval_ip16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 end rc=0 try=1 eval_ip16_94 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 start eval_ip16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 end rc=0 try=1 eval_ip16_95 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:08 start eval_ip16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 end rc=0 try=1 eval_ip16_90 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 start eval_pkg16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 end rc=0 try=1 eval_ip16_97 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 start eval_pkg16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 end rc=0 try=1 eval_ip16_99 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:09 start eval_pkg16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:10 end rc=0 try=1 eval_ip16_98 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:10 start eval_pkg16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 end rc=0 try=1 eval_pkg16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 start eval_pkg16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 end rc=0 try=1 eval_pkg16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 start eval_pkg16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 end rc=0 try=1 eval_pkg16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:12 start eval_pkg16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:13 end rc=0 try=1 eval_pkg16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:13 start eval_pkg16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:15 end rc=0 try=1 eval_pkg16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:15 start eval_pkg16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:15 end rc=0 try=1 eval_pkg16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:15 start eval_pkg16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:16 end rc=0 try=1 eval_pkg16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:16 start eval_pcb16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:17 end rc=0 try=1 eval_pkg16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:17 start eval_pcb16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:17 end rc=0 try=1 eval_pkg16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:17 start eval_pcb16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 end rc=0 try=1 eval_pcb16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 start eval_pcb16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 end rc=0 try=1 eval_pcb16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 start eval_pcb16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 end rc=0 try=1 eval_pkg16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 start eval_pcb16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 end rc=0 try=1 eval_pkg16_96 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:19 start eval_pcb16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 end rc=0 try=1 eval_pcb16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 start eval_pcb16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 end rc=0 try=1 eval_pcb16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 start eval_pcb16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 end rc=0 try=1 eval_pcb16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 start eval_pcb16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 end rc=0 try=1 eval_pcb16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:21 start eval_ip16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:22 end rc=0 try=1 eval_pcb16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:22 start eval_ip16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:22 end rc=0 try=1 eval_ip16_90 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:22 start eval_ip16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 end rc=0 try=1 eval_pcb16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 start eval_ip16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 end rc=0 try=1 eval_ip16_91 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 start eval_ip16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 end rc=0 try=1 eval_ip16_93 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 start eval_ip16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 end rc=0 try=1 eval_pcb16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:23 start eval_ip16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 end rc=0 try=1 eval_ip16_94 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_ip16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 end rc=0 try=1 eval_pcb16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_ip16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 end rc=0 try=1 eval_ip16_92 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_ip16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 end rc=0 try=1 eval_ip16_92 --policy r0_coord_rl=runs/2026-10-28/r0_coord_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_pkg16_90 --methods modal_rule --repair 4
+11-10 17:24 end rc=0 try=1 eval_ip16_96 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_pkg16_91 --methods modal_rule --repair 4
+11-10 17:24 end rc=0 try=1 eval_ip16_95 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:24 start eval_pkg16_92 --methods modal_rule --repair 4
+11-10 17:25 end rc=0 try=1 eval_ip16_97 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:25 start eval_pkg16_93 --methods modal_rule --repair 4
+11-10 17:25 end rc=0 try=1 eval_ip16_99 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:25 start eval_pkg16_94 --methods modal_rule --repair 4
+11-10 17:25 end rc=0 try=1 eval_ip16_98 --policy r2pk_rl=runs/2026-10-29/r2pk_rl/best.pt --inst_chunk 5 --repair 4
+11-10 17:25 start eval_pkg16_95 --methods modal_rule --repair 4
+11-10 17:27 end rc=0 try=1 eval_pkg16_90 --methods modal_rule --repair 4
+11-10 17:27 start eval_pkg16_96 --methods modal_rule --repair 4
+11-10 17:27 end rc=0 try=1 eval_pkg16_91 --methods modal_rule --repair 4
+11-10 17:27 start eval_pkg16_97 --methods modal_rule --repair 4
+11-10 17:27 end rc=0 try=1 eval_pkg16_93 --methods modal_rule --repair 4
+11-10 17:27 start eval_pkg16_98 --methods modal_rule --repair 4
+11-10 17:27 end rc=0 try=1 eval_pkg16_92 --methods modal_rule --repair 4
+11-10 17:27 start eval_pkg16_99 --methods modal_rule --repair 4
+11-10 17:28 end rc=0 try=1 eval_pkg16_94 --methods modal_rule --repair 4
+11-10 17:28 start eval_pcb16_90 --methods modal_rule --repair 4
+11-10 17:29 end rc=0 try=1 eval_pkg16_97 --methods modal_rule --repair 4
+11-10 17:29 start eval_pcb16_91 --methods modal_rule --repair 4
+11-10 17:29 end rc=0 try=1 eval_pkg16_95 --methods modal_rule --repair 4
+11-10 17:29 start eval_pcb16_92 --methods modal_rule --repair 4
+11-10 17:29 end rc=0 try=1 eval_pcb16_90 --methods modal_rule --repair 4
+11-10 17:29 start eval_pcb16_93 --methods modal_rule --repair 4
+11-10 17:30 end rc=0 try=1 eval_pkg16_98 --methods modal_rule --repair 4
+11-10 17:30 start eval_pcb16_94 --methods modal_rule --repair 4
+11-10 17:30 end rc=0 try=1 eval_pcb16_91 --methods modal_rule --repair 4
+11-10 17:30 start eval_pcb16_95 --methods modal_rule --repair 4
+11-10 17:30 end rc=0 try=1 eval_pcb16_93 --methods modal_rule --repair 4
+11-10 17:30 start eval_pcb16_96 --methods modal_rule --repair 4
+11-10 17:31 end rc=0 try=1 eval_pkg16_99 --methods modal_rule --repair 4
+11-10 17:31 start eval_pcb16_97 --methods modal_rule --repair 4
+11-10 17:32 end rc=0 try=1 eval_pcb16_96 --methods modal_rule --repair 4
+11-10 17:32 start eval_pcb16_98 --methods modal_rule --repair 4
+11-10 17:32 end rc=0 try=1 eval_pkg16_96 --methods modal_rule --repair 4
+11-10 17:32 start eval_pcb16_99 --methods modal_rule --repair 4
+11-10 17:32 end rc=0 try=1 eval_pcb16_95 --methods modal_rule --repair 4
+11-10 17:32 start eval_ip16_90 --methods modal_rule --repair 4
+11-10 17:32 end rc=0 try=1 eval_pcb16_92 --methods modal_rule --repair 4
+11-10 17:32 start eval_ip16_91 --methods modal_rule --repair 4
+11-10 17:33 end rc=0 try=1 eval_pcb16_94 --methods modal_rule --repair 4
+11-10 17:33 start eval_ip16_92 --methods modal_rule --repair 4
+11-10 17:33 end rc=0 try=1 eval_ip16_91 --methods modal_rule --repair 4
+11-10 17:33 start eval_ip16_93 --methods modal_rule --repair 4
+11-10 17:33 end rc=0 try=1 eval_pcb16_97 --methods modal_rule --repair 4
+11-10 17:33 start eval_ip16_94 --methods modal_rule --repair 4
+11-10 17:34 end rc=0 try=1 eval_pcb16_99 --methods modal_rule --repair 4
+11-10 17:34 start eval_ip16_95 --methods modal_rule --repair 4
+11-10 17:34 end rc=0 try=1 eval_pcb16_98 --methods modal_rule --repair 4
+11-10 17:34 start eval_ip16_96 --methods modal_rule --repair 4
+11-10 17:34 end rc=0 try=1 eval_ip16_90 --methods modal_rule --repair 4
+11-10 17:34 start eval_ip16_97 --methods modal_rule --repair 4
+11-10 17:35 end rc=0 try=1 eval_ip16_93 --methods modal_rule --repair 4
+11-10 17:35 start eval_ip16_98 --methods modal_rule --repair 4
+11-10 17:35 end rc=0 try=1 eval_ip16_92 --methods modal_rule --repair 4
+11-10 17:35 start eval_ip16_99 --methods modal_rule --repair 4
+11-10 17:35 end rc=0 try=1 eval_ip16_94 --methods modal_rule --repair 4
+11-10 17:36 end rc=0 try=1 eval_ip16_96 --methods modal_rule --repair 4
+11-10 17:36 end rc=0 try=1 eval_ip16_99 --methods modal_rule --repair 4
+11-10 17:37 end rc=0 try=1 eval_ip16_97 --methods modal_rule --repair 4
+11-10 17:37 end rc=0 try=1 eval_ip16_98 --methods modal_rule --repair 4
+11-10 17:37 end rc=0 try=1 eval_ip16_95 --methods modal_rule --repair 4
+11-10 17:37 all done

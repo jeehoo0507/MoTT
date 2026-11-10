@@ -1,0 +1,74 @@
+{
+ "name": "eval_pkg16_94",
+ "tech": "pkg",
+ "size": 16,
+ "n": 5,
+ "seed": 170024,
+ "difficulty": [
+  0.02,
+  0.2
+ ],
+ "F": 238,
+ "rounds": 10,
+ "gp_ok": 0.2,
+ "gp_count_mean": 27.0,
+ "gp_count": [
+  9,
+  17,
+  20,
+  55,
+  27
+ ],
+ "shapes": [
+  "rect",
+  "holes",
+  "holes",
+  "holes",
+  "holes"
+ ],
+ "targets": [
+  "flat",
+  "flat",
+  "flat",
+  "step",
+  "flat"
+ ],
+ "probes": 3,
+ "t_gen": 78.38886594772339,
+ "t_total": 2283.5502247810364,
+ "cfg": {
+  "cell_size": 0.0004,
+  "diel_thickness": 3.5e-05,
+  "eps_r": 3.4,
+  "tan_d": 0.01,
+  "metal_thickness": 1.5e-05,
+  "sigma": 58000000.0,
+  "vrm_r": 0.003,
+  "vrm_l": 1e-10,
+  "f_min": 10000000.0,
+  "f_max": 20000000000.0,
+  "n_freq": 32,
+  "n_feat_freq": 8,
+  "decaps": [
+   [
+    1e-09,
+    4e-11,
+    0.03
+   ],
+   [
+    2.2e-10,
+    1.5e-11,
+    0.05
+   ],
+   [
+    4.7e-11,
+    8e-12,
+    0.1
+   ]
+  ],
+  "dense_max_nodes": 900,
+  "n_check": 700,
+  "target_on_check": true,
+  "seed_peaks": true
+ }
+}
