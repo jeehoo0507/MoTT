@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 335 is finished, committed as `a5c7f66` and pushed to `r2e main`. The branch is in sync with the remote.
+
+- **Remote and QUEUE:** there are no new remote commits and nothing new in `agent/QUEUE.md`, so I kept the earlier settings.
+- **V base 100 problem build (human-run):** 16 of 30 are built (pkg16 100–108, pcb16 100–106). The ones that finished since last round are pcb16_102, 105 and 106 with gp ok 0.60, and pcb16_103 with 0.80. I'm only recording these numbers, not judging them.
+  - Six are still running: pkg16_109 at 57 minutes, still under its 2-hour timeout, plus pcb16 107–109 and ip16 100–101. ip16 102–109 haven't started.
+  - Measurement hasn't started yet; `runs/speed_1110v_100/` is empty. I didn't touch any of it.
+- **Results:** I didn't run `collect_results.py` because there are no new measurement records. The main table in RESULTS.md stays at 1610 records.
+- **System:** the driver is alive. Memory is 24.5 / 60 GiB with the OOM-kill count unchanged at 2. The GPU is idle because no human-requested training is queued. The tracked-file count is 3153, not lower than last round.
+- **Next:** wait for the base 100 build and its 120 measurement records, then run collect and fill the base 100 table in the RESULTS.md V section. If server 2 pushes base 110–130, pull and check the tracked-file count. The new DAILY.md is due after 11/11 01:06 UTC.
