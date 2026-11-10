@@ -10,3 +10,7 @@ Already up to date.
 - **상태**: 드라이버는 살아 있고, report_watch와 resume_agent는 다시 띄웠습니다. 메모리 27.8 / 60 GiB, oom_kill 2 (그대로), GPU는 비어 있고, 추적 파일 수는 줄지 않았습니다.
 
 다음 할 일: base 90 측정 120개가 다 모이면 코어 0–9로 collect를 돌려 RESULTS V 절에 넣고, base 100도 같은 순서로 합니다. DAILY.md는 11/11 01:06 UTC가 지나면 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   b503e70..2c04ee9  main -> main
