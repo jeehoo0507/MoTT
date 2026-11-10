@@ -17,3 +17,7 @@ Round 278 is done. Server 1 is still idle, there were no new remote commits, and
 **Waiting on:**
 - The U speed records (50 new problems per type) from server 2. When they arrive I'll collect them and check they don't leak into the main tables.
 - The next DAILY is due on the first round after 01:06 UTC on 11/11.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   45e11e3..8a31d04  main -> main
