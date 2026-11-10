@@ -14,3 +14,7 @@ Round 279 is done and pushed (`6d595b3`). Nothing new came in and nothing new is
 **Next round:**
 - When server 2 pushes the U results, rerun collect_results. Check that the speed-run folders don't get counted into the main results tables by watching for a sudden jump in the record count.
 - Rewrite DAILY.md in the first round after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   6d595b3..404242e  main -> main
