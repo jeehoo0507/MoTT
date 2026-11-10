@@ -2,7 +2,20 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 09:08 UTC, 라운드 300 — 사람 U 속도 측정 eval 단계 진행 (기록 113, modal_rule 단계); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 09:33 UTC, 라운드 301 — 사람 U 속도 측정 **끝** (120/120, 09:06 UTC, try=2 0번), RESULTS 에 "U 속도 재측정" 절 추가; 새 원격 커밋 없음; 주 표 1610 기록 그대로)
+
+## 라운드 301 (2026-11-10 09:25 ~ 09:33 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2814 (줄지 않음).
+- U (사람, 서버 1 코어 10–15): `agent/logs/speed_1109u/run.log` → `11-10 07:25 build done: 30 / 30`, `09:06 all done`, `09:06 pushed` (= ee025ab, 라운드 300 에 merge 됨). `runs/speed_1109u/eval` **120 / 120 기록** (종류 3 × 방법 4 × 파일 10). `end rc≠0`·`try=2` 줄 0개 (4 h 제한·재시도 안 걸림). 서버 2 반복 측정 `runs/speed_1109u_s2` 는 아직 push 없음.
+- RESULTS: `scripts/speed_table.py --by_type` (새 모드: 종류마다 파일 10개 풀어 50문제 합계 ÷ 50, 정책 단독 성공률 `ok_pre`, 같은 종류 greedy+prune 합계 대비 배수) + `collect_results.speed_section` 에 "U 속도 재측정" 절 (서버 1 주 결과, 서버 2 반복은 push 되면 같은 꼴로 자동). 주 표 기록 수 1610 그대로 (`SPEED_EXCLUDE` 접두사 `runs/speed_1109` 가 `speed_1109u*` 도 거름 — 확인).
+  - 숫자 (판정 없음, PROPOSALS U 읽기 = r2pk_rl+rep4 전체 시간 ÷ greedy+prune): **ip 0.24 (10.1 / 41.9 s), pcb 0.59 (39.6 / 66.7 s), pkg 0.13 (35.1 / 261.0 s)**. 성공률 MoTT+P1+V ip 1.00 / pcb 0.96 / pkg 0.94, greedy+prune 0.46 / 0.88 / 0.82. modal_rule+rep4 배수 0.45 / 0.31 / 0.15, 좌표+V 0.52 / 0.85 / 0.33 — pcb·pkg 에서 공진 규칙이 MoTT+P1 보다 빠르거나 비슷 (그대로 적음).
+  - 참고 (사람용): ip greedy+prune 0.46 은 T 1차 (0.50) 와 같은 꼴 — 문제 생성은 g+p 인증 ≤ 10 rounds, 평가는 `--rounds 4`.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 17.4 GiB / 60 (U 끝나 줄어듦), oom_kill 2 (늘지 않음). `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (202402 B).
+- `collect_results.py` (`bg.py` + `taskset -c 0-9`, `collect_r301.log`) → 1610 기록. 처음 띄운 것은 코드 고치기 전 판이라 `kill_pat` 로 끄고 다시 돌림.
+- 결정: U 표는 등록된 읽기 (종류별 50문제 합계, 배수) 만 기계적으로 적고 판정·문장은 사람에게 남김 — 이유: PROPOSALS U "결과가 어떻게 나와도 그대로 쓰고" + 판정은 사람 몫. 새 항목 넣지 않음 (서버 1 GPU·CPU 비어 있음; 에이전트 스스로 항목 추가 금지).
+- 할 일 (다음): (1) 서버 2 `runs/speed_1109u_s2` push 되면 collect → 같은 절에 반복 측정 표가 붙는지. (2) PROPOSALS U 멈춤 처리: "멈춘 T 재측정 greedy 작업은 U 가 끝난 뒤 같은 조건으로 한 번 더" — 사람 일 (서버 2), 에이전트는 큐에 넣지 않음; push 되면 `runs/speed_1109b` 표에 자동. (3) pull 뒤 추적 파일 수 (≈ 2814, 줄면 restore_mass_delete). (4) 다음 DAILY 11/11 01:06 UTC 뒤.
+
+# (이전) 라운드 300 머리말: (갱신 2026-11-10 09:08 UTC, 라운드 300 — 사람 U 속도 측정 eval 단계 진행 (기록 113, modal_rule 단계); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
 
 ## 라운드 300 (2026-11-10 09:04 ~ 09:08 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2724 (U 스크립트의 `git add -f` 로 늘기만 함). 커밋 뒤 merge 에 U 스크립트 커밋 ee025ab ("speed fresh 50 problems 11/09 U", 89 파일 추가·삭제 2줄) + 8dfdac5 가 들어와 추적 파일 2813 — 더하기만, 정상.

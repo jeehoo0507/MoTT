@@ -1,8 +1,8 @@
-# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 09:05 UTC)
+# RESULTS (자동 생성: `scripts/collect_results.py`, 2026-11-10 09:27 UTC)
 
 성공 = `verify.py` 700점 + 피크 정밀화 정확 검사에서 최악 |Z| ≤ 1.01·Zt. 모든 방법은 cutting-plane 안에서 실행. 시간은 문제당 초(판 준비 제외, 같은 CPU 계산기). 손으로 적은 숫자는 없다.
 
-서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 140개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
+서버 2 기록 (PROPOSALS 11/05 L1~L4·FRESH): 같은 풀 기록 30개는 표에 넣되 시간 칸은 "–" (다른 CPU); 서버 1에 같은 (파일, 방법)이 있어 뺀 중복 0개; FRESH (다시 만든 풀, 이름만 같음) 0개는 이 문서의 어떤 표에도 넣지 않음; T 속도 측정 (`runs/speed_1109*`, 16칸 앞 10문제 재측정) 147개도 넣지 않음 (같은 문제 중복) → `scripts/speed_table.py` 표.
 
 ## 평가 (정확 검사)
 
@@ -6321,6 +6321,27 @@ PCB형 재측정 (네 방법) (`runs/speed_1109b/eval`):
 | eval_pcb16_0 | r0_coord_rl | 10 | 1.00 | 26.6 | 144.7 |
 | eval_pcb16_0 | r2pk_rl+rep4 | 10 | 0.90 | 27.8 | 150.2 |
 | eval_pcb16_0 | r2pk_rl | 10 | 0.80 | 31.4 | 151.2 |
+
+## U 속도 재측정 (새 문제 50개/종류, PROPOSALS 11/09 U, `scripts/speed_table.py --by_type`)
+
+16칸 `runs/pool_speed/eval_{pcb,pkg,ip}16_{70..79}` (파일 10개 × 5문제, 만든 문제 전부). 종류마다 50문제 합계 ÷ 50. 합계에 정확 검사·재풀이·하네스·실패 문제 포함. 마지막 열 = 같은 종류 greedy+prune 합계 시간 대비 배수 (연구 질문 1: r2pk_rl+rep4 행). 두 서버 절대 시간은 직접 비교하지 않음. 판정 없음 (사람).
+
+U 주 결과 (서버 1, 코어 10–15) (`runs/speed_1109u/eval`, 기록 120 / 120):
+
+| type | method | files | n | success | policy-only success | decision s/problem | total s/problem | total / greedy+prune |
+|---|---|---|---|---|---|---|---|---|
+| ip | greedy+prune | 10 | 50 | 0.46 | 0.46 | 37.5 | 41.9 | 1.00 |
+| ip | modal_rule+rep4 | 10 | 50 | 1.00 | 1.00 | 1.9 | 18.8 | 0.45 |
+| ip | r0_coord_rl+rep4 | 10 | 50 | 1.00 | 1.00 | 2.9 | 21.9 | 0.52 |
+| ip | r2pk_rl+rep4 | 10 | 50 | 1.00 | 1.00 | 1.2 | 10.1 | 0.24 |
+| pcb | greedy+prune | 10 | 50 | 0.88 | 0.88 | 24.2 | 66.7 | 1.00 |
+| pcb | modal_rule+rep4 | 10 | 50 | 1.00 | 0.98 | 1.4 | 20.9 | 0.31 |
+| pcb | r0_coord_rl+rep4 | 10 | 50 | 0.98 | 0.96 | 12.0 | 56.6 | 0.85 |
+| pcb | r2pk_rl+rep4 | 10 | 50 | 0.96 | 0.86 | 7.7 | 39.6 | 0.59 |
+| pkg | greedy+prune | 10 | 50 | 0.82 | 0.82 | 67.9 | 261.0 | 1.00 |
+| pkg | modal_rule+rep4 | 10 | 50 | 0.94 | 0.64 | 2.7 | 39.4 | 0.15 |
+| pkg | r0_coord_rl+rep4 | 10 | 50 | 0.96 | 0.78 | 18.5 | 87.1 | 0.33 |
+| pkg | r2pk_rl+rep4 | 10 | 50 | 0.94 | 0.72 | 2.2 | 35.1 | 0.13 |
 
 ## 학습 기록 (train.py metrics.json)
 

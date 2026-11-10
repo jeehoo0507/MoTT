@@ -2019,6 +2019,21 @@ def speed_section():
                       "16칸 `eval_*16_0` 앞 10문제, 서버 2 코어 10–15. 결정 = 마지막 cutting-plane 라운드의 방법 시간, "
                       "합계 = 정확 검사·재풀이·하네스 포함. 서버 1 시간표와 섞지 않음. 판정 없음 (읽기 규칙은 PROPOSALS T, 사람).", ""]
         lines += [f"{title} (`{d}`):", ""] + out.strip().splitlines() + [""]
+    # PROPOSALS 11/09 U: new 50 problems per type (runs/pool_speed eval_*16_70..79), server 1 main, server 2 repeat
+    for d, title in (("runs/speed_1109u/eval", "U 주 결과 (서버 1, 코어 10–15)"),
+                     ("runs/speed_1109u_s2/eval", "U 반복 측정 (서버 2, 코어 10–15)")):
+        if not glob.glob(f"{d}/*.json"):
+            continue
+        if not any(l.startswith("## U 속도") for l in lines):
+            lines += ["## U 속도 재측정 (새 문제 50개/종류, PROPOSALS 11/09 U, `scripts/speed_table.py --by_type`)", "",
+                      "16칸 `runs/pool_speed/eval_{pcb,pkg,ip}16_{70..79}` (파일 10개 × 5문제, 만든 문제 전부). "
+                      "종류마다 50문제 합계 ÷ 50. 합계에 정확 검사·재풀이·하네스·실패 문제 포함. "
+                      "마지막 열 = 같은 종류 greedy+prune 합계 시간 대비 배수 (연구 질문 1: r2pk_rl+rep4 행). "
+                      "두 서버 절대 시간은 직접 비교하지 않음. 판정 없음 (사람).", ""]
+        out = subprocess.run([sys.executable, "scripts/speed_table.py", d, "--by_type"],
+                             capture_output=True, text=True).stdout
+        n = len(glob.glob(f"{d}/*.json"))
+        lines += [f"{title} (`{d}`, 기록 {n} / 120):", ""] + out.strip().splitlines() + [""]
     return lines
 
 
