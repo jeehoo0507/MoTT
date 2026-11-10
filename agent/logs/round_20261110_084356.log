@@ -1,3 +1,12 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 299 is done and pushed to `r2e main` as `ca9f8f7`. Nothing new needed action.
+
+- **Remote and queue:** there are no new remote commits, and the last entry in `agent/QUEUE.md` is still the one from 11/09 19:20 KST (T).
+- **Human U speed test (server 1, cores 10–15):** it is in its eval stage. Records went from 35 to 73 this round, and 6 `eval_policy` processes are still running. I left them alone.
+- **Services:** the driver is still running, and I restarted report_watch and resume_agent. Memory is 29.3 / 60 GiB with no new OOM kills, and the GPU is idle. The driver's live log matches the copy on disk.
+- **Results:** `collect_results.py` ran on cores 0–9 and still finds 1610 records, so RESULTS.md didn't change.
+- **Decision (logged in PROGRESS.md):** I added no new queue entries and started no heavy CPU work, so the U timing measurements aren't disturbed. Same reasoning as round 291.
+- **New note:** calling `taskset` directly in Bash gets refused. It has to go inside the `bg.py` command string, and I added that to PROGRESS.md.
+- **Next:** keep watching U's progress. The next DAILY.md is due after 11/11 01:06 UTC.
