@@ -9,3 +9,7 @@ Already up to date.
 - **프로세스·메모리:** 드라이버는 살아 있고, report_watch·resume_agent 를 다시 띄웠습니다. 메모리 28.1 / 60 GiB, oom_kill 2 (변화 없음)입니다. 사람 지시가 없어 GPU 학습은 돌리지 않았습니다.
 - **추적 파일 수:** 3220 개로 줄지 않았습니다.
 - **다음 라운드:** 측정 120 개가 끝나면 네 번째 정책을 run.log 에서 확인하고, collect 를 돌린 뒤 V 절에 base 100 표를 씁니다. 서버 2 의 base 110–130 결과가 push 되면 pull 하고 추적 파일 수를 확인합니다. DAILY 는 11/11 01:06 UTC 뒤에 새로 씁니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   7a5254d..2cd4254  main -> main
