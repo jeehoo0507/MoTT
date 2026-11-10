@@ -1,3 +1,14 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+라운드 315에서는 새로 시작한 것이 없습니다. 상태만 확인하고 기록했으며, 커밋 `d2a9533`을 `r2e/main`에 push했습니다.
+
+- **원격·QUEUE:** 새 원격 커밋이 없습니다. QUEUE의 마지막 절은 여전히 11/09 19:20 KST의 T입니다. X(취소됨)와 W(사람 담당)는 이전 결정대로 손대지 않았습니다.
+- **사람이 돌리는 V 속도 측정 (서버 1, `runs/speed_1110v_80/eval`):** 기록은 36개입니다.
+  - greedy+prune: 29/30, `ip16_86` 하나만 남았습니다.
+  - `r0_coord_rl+rep4`: 7/30, 지금까지 pkg16만 나왔습니다 (80–84, 86, 87).
+  - 평가 worker 6개가 CPU 100%로 정상적으로 돌고 있어 건드리지 않았습니다.
+- **프로세스·자원:** 드라이버는 살아 있습니다(pid 1792539). `ensure_running`이 report_watch와 resume_agent를 다시 띄웠습니다. 메모리는 27.4 GiB / 60이고 oom_kill은 2로 그대로입니다. 추적 파일은 2856개로, 줄지 않고 늘었습니다.
+- **결정:** 측정 중 CPU 부담을 피하려고 `collect_results.py`는 돌리지 않았습니다. RESULTS는 1610 기록 그대로이고, V 표는 정책 측정까지 다 모인 뒤에 만듭니다. PROGRESS에도 같은 이유로 적었습니다.
+
+**다음 라운드:** V 기록이 다 모이면 V 절에 숫자를 넣고, 문제 만들기 셸이 끝나면 `merge_orphan`이 마지막 줄을 제대로 붙였는지 확인합니다. W가 push되면 RESULTS 표를 만들고, DAILY.md는 11/11 01:06 UTC 이후에 새로 씁니다.
