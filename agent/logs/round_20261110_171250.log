@@ -1,3 +1,17 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 328 was a check-only round. Nothing needed action and I changed nothing, so the pod is in the same state as last round.
+
+- **Remote / QUEUE:** there are no new remote commits and no new QUEUE instructions. The last QUEUE entry is still T from 11/09 19:20 KST.
+- **V (run by the human, base 90 measurement):** 61 of 120 records are in, and every finished job ended with rc=0 on its first try (try=1). Since 17:12 UTC it has been running the `r2pk_rl` `--repair 4` jobs for pkg16 95 and 96. I didn't touch it.
+- **collect_results:** I didn't run it. As decided in round 318, I'm avoiding CPU work while the measurement runs, so RESULTS still holds 1610 records.
+- **Pod state:**
+  - The GPU is idle at 0 %; the human hasn't asked for any training.
+  - The driver is alive.
+  - report_watch and resume_agent were down, and I restarted them.
+  - Memory is at 34.5 of 60 GiB, and the OOM kill count is still 2.
+  - There are 3037 tracked files, so the count hasn't dropped.
+- **Commit:** I updated PROGRESS.md and pushed it as `268517c` to `r2e/main`. The push printed `gh: not found` credential warnings, but it went through and the local and remote branches match.
+
+**Next:** once base 90 reaches 120 records, run collect on cores 0–9 and write up the V section; base 100 gets the same treatment. If server 2 pushes, pull and recheck the tracked-file count. The new DAILY.md is due after 01:06 UTC on 11/11.
