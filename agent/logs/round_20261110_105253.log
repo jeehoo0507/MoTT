@@ -7,3 +7,16 @@ Fast-forward
  PROPOSALS.md | 1 +
  1 file changed, 1 insertion(+)
 Applied autostash.
+라운드 306을 마쳤고, 커밋 `0e7a74b`를 `r2e main`에 push했습니다(로컬 HEAD와 `r2e/main`이 같은 것을 확인).
+
+- **원격·QUEUE:** 새 원격 커밋도, QUEUE 새 지시도 없습니다.
+- **V 속도 측정 (사람이 돌림, PROPOSALS 11/10 V):** 서버 1에서 10:36 UTC에 `speed_fresh.sh reps 80 90 100`으로 시작됐습니다. 지금은 문제를 만드는 단계로, base 80 파일 30개 중 4개가 만들어졌고 코어 10–15에서 6개 프로세스가 돌고 있습니다. 측정 기록은 아직 0개이고, 저는 이 작업을 건드리지 않았습니다.
+- **로그 문제와 처리:** 10:52 라운드 pull이 git에 추적되던 `agent/logs/speed_1110v_80/build.log`를 새 파일로 바꿔 버렸습니다. 그래서 문제 만들기 프로세스 5개가 지워진 파일에 쓰고 있습니다(U 때와 같은 문제).
+  - `merge_orphan_logs.py`를 백그라운드로 띄워 그 5개의 출력을 잡아 두었습니다. 프로세스가 다 끝나면 빠진 줄을 디스크의 로그에 붙입니다.
+  - `.gitignore`에 `agent/logs/speed_1110v_*/`를 추가해 base 90·100 폴더도 미리 막았고, 기존 로그 2개는 추적만 해제했습니다(파일은 디스크에 그대로).
+  - 사람 스크립트는 끝에서 `git add -f`로 `run.log`를 넣으므로 그 push는 그대로 됩니다.
+- **서버 상태:** 학습·평가 드라이버는 살아 있고, `report_watch`와 `resume_agent`는 다시 띄웠습니다. 메모리 26 GiB / 60 GiB, OOM kill은 늘지 않았고, GPU는 비어 있습니다.
+- **결정 (PROGRESS에 기록):** `collect_results.py`는 돌리지 않았습니다. 새 결과 파일이 없고, 같은 서버에서 속도를 재는 중이라 CPU를 쓰지 않는 쪽을 택했습니다. 주 표는 1610 기록 그대로입니다.
+- **메모리:** 사람이 돌릴 작업이 PROPOSALS에 등록되면 그 로그 폴더를 같은 라운드에 미리 `.gitignore`에 넣으라는 메모를 추가했습니다.
+
+다음 라운드에는 V 기록이 push되면 `collect_results`를 돌려 V 절이 붙는지와 주 표가 1610 그대로인지 보고, 문제 만들기가 끝나면 로그 병합이 됐는지 확인합니다. 새 DAILY는 11/11 01:06 UTC 이후에 씁니다.
