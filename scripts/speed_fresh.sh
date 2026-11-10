@@ -6,14 +6,16 @@ set -u
 cd "$(dirname "$0")/.."
 PY=.venv/bin/python; POOL=runs/pool_speed; OUT=${OUT:-runs/speed_1109u}; L=${LOGD:-agent/logs/speed_1109u}; mkdir -p $L $OUT
 CORES=${CORES:-10-15}
+B=${B:-70}   # first file index: U = 70..79; PROPOSALS 11/10 V replicates = 80.., 90.., ...
+files() { for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo eval_${t}16_$((B + k)); done; done; }
 MOTT=runs/2026-10-29/r2pk_rl/best.pt
 COORD=runs/2026-10-28/r0_coord_rl/best.pt
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 CERTIFY_WORKERS=1
 jobs() {   # slowest first: greedy+prune pkg, coord pkg, then the rest
-  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo "eval_${t}16_7$k --methods gp"; done; done
-  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo "eval_${t}16_7$k --policy r0_coord_rl=$COORD --inst_chunk 5 --repair 4"; done; done
-  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo "eval_${t}16_7$k --policy r2pk_rl=$MOTT --inst_chunk 5 --repair 4"; done; done
-  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo "eval_${t}16_7$k --methods modal_rule --repair 4"; done; done
+  files | sed "s|$| --methods gp|"
+  files | sed "s|$| --policy r0_coord_rl=$COORD --inst_chunk 5 --repair 4|"
+  files | sed "s|$| --policy r2pk_rl=$MOTT --inst_chunk 5 --repair 4|"
+  files | sed "s|$| --methods modal_rule --repair 4|"
 }
 one() {
   local s=$1; shift
@@ -32,17 +34,21 @@ go)
   echo "$(date '+%m-%d %H:%M') build start ($(hostname), cores $CORES)" >> $L/run.log
   N=$(( $(echo $CORES | cut -d- -f2) - $(echo $CORES | cut -d- -f1) + 1 ))
   # one process per problem file (no Pool), 2 h limit, one retry: the Pool build hung at 0 % CPU on server 2 (11/10)
-  for t in pkg pcb ip; do for k in 0 1 2 3 4 5 6 7 8 9; do echo eval_${t}16_7$k; done; done | xargs -P $N -I{} bash -c \
-    "for try in 1 2; do [ -f $POOL/{}.pkl ] && break; OMP_NUM_THREADS=1 timeout 2h taskset -c $CORES $PY scripts/speed_fresh.py --out $POOL --only {} >> $L/build.log 2>&1; done"
-  nb=$(ls $POOL/eval_*16_7?.pkl 2>/dev/null | wc -l)
+  files | xargs -P $N -I{} bash -c \
+    "for try in 1 2; do [ -f $POOL/{}.pkl ] && break; OMP_NUM_THREADS=1 timeout 2h taskset -c $CORES $PY scripts/speed_fresh.py --out $POOL --base $B --only {} >> $L/build.log 2>&1; done"
+  nb=$(files | while read f; do [ -f $POOL/$f.pkl ] && echo; done | wc -l)
   echo "$(date '+%m-%d %H:%M') build done: $nb / 30 files" >> $L/run.log
   [ "$nb" -eq 30 ] || { echo "build incomplete, stop" >> $L/run.log; exit 1; }
-  export -f one; export PY POOL OUT L CORES
+  export -f one; export PY POOL OUT L CORES B
   jobs | xargs -P $N -L 1 bash -c 'one "$@"' _
   echo "$(date '+%m-%d %H:%M') all done" >> $L/run.log
-  git pull -q --rebase --autostash r2e main; git add -f $OUT/eval/*.json $POOL/*.json
-  git commit -q -m "$(hostname | cut -c1-40) (human): speed fresh 50 problems 11/09 U" && git pull -q --rebase --autostash r2e main \
+  git pull -q --rebase --autostash r2e main; git add -f $OUT/eval/*.json $POOL/*.json $L/run.log
+  git commit -q -m "$(hostname | cut -c1-40) (human): speed fresh 50 problems B=$B ($OUT)" && git pull -q --rebase --autostash r2e main \
     && git push -q r2e main && echo "$(date '+%H:%M') pushed" >> $L/run.log ;;
+reps)   # PROPOSALS 11/10 V: replicate sets one after another on the same cores, e.g. reps 80 90 100
+  shift
+  while pgrep -f "pool runs/pool_speed" > /dev/null; do sleep 300; done   # wait for a running U measurement on these cores
+  for b in "$@"; do B=$b OUT=runs/speed_1110v_$b LOGD=agent/logs/speed_1110v_$b bash "$0" go; done ;;
 status) tail -4 $L/run.log 2>/dev/null; tail -2 $L/build.log 2>/dev/null; echo "records: $(ls $OUT/eval/*.json 2>/dev/null | wc -l) / 120" ;;
 table) OUT=$OUT $PY - <<'PY'
 import glob, json, os, collections
