@@ -9,3 +9,7 @@ Already up to date.
 - **RESULTS:** `collect_results.py`를 코어 0–9에서 돌렸고, 기록은 1610개로 변화가 없습니다.
 - **결정:** 새 항목을 넣지 않고 서버 1 CPU에 무거운 작업도 띄우지 않았습니다. U는 시간 측정이라 같은 기계의 다른 부하가 결과를 흔들기 때문입니다. PROGRESS.md에 기록했습니다.
 - **다음 라운드:** pool이 30/30이 되면 U eval 단계가 시작됐는지, 그 eval 로그가 git에 추적되지 않는지 확인합니다.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   43ae46e..bcef989  main -> main

@@ -2,7 +2,18 @@
 STUCK: `bm2_rlonly_s2` (B-Manoharan RL만, seed 2) GPU OOM 2번 — 11/08 19:15 UTC it 300, 같은 명령 resume (it 288 에서) 도 21:24 UTC 같은 자리 (it 300 val 직후 `manoharan_reward` → `probe_impedance` 의 `torch.linalg.solve`/magma OOM, 24.5 GB 카드). 결정적 재현이라 플래그 그대로는 다시 안 됨 → 다시 돌리지 않음, best.pt (it 100) 만 있고 metrics.json 없음 → 평가 없음. 사람 결정 (QUEUE 11/09 13:50 KST): 다시 돌리지 않음, 보고서엔 seed 0·1 로 적고 seed 2 는 학습 OOM 실패라고 씀.
 STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45 GiB를 넘음. `--ls_chunk 8`로 **ip16_0 (0.64), pcb16_1 (0.64) 완주**. **ip16_1은 11/07 04:51 mem_guard가 멈춤** (18.7 h째, r2pkfc pkg16_0 평가 시작과 겹쳐 pod 45.09 GiB — 사람 결정 QUEUE 13:40 KST: r2pkfc 평가 우선, LS16은 부록 기준선 → `.memskip`, "메모리로 생략"). pcb16_0은 chunk 판 2번 중단. 남은 LS16 (pcb16_0, pkg16_0·1)은 `cpu_deferred` (G1 뒤).
 사람에게 (11/09 16:55 UTC): 커밋 31663a9 (cjh, "PROPOSALS 11/09 U: change time = commit time", 01:30 KST) 가 PROPOSALS 한 줄과 함께 **추적 파일 1443개를 지웠다** (README, agent/AGENT_PROMPT.md·MODEL, decap_loop/, baselines_ml/, scripts 대부분, runs/*/metrics.json·eval, data/teacher, research_notes). 16:33 report_watch 의 pull 로 서버 1 작업 트리에도 적용 → 드라이버가 끝난 학습 (r2m, r2g, lo_pcb_r2g, r2s1, r2pkdd, lo_pcb_r2pkdd) 과 평가 (r3a_rl, r2a_rl) 를 "안 끝남" 으로 보고 다시 시작하려 했으나 코드도 없어 2–3 초 만에 rc=1 로 실패 (GPU 안 씀, 체크포인트 그대로). 이번 라운드에 부모 5590fb7 에서 1443 개 그대로 복원해 커밋함 (`scripts/restore_mass_delete.py`, 682ddb1). 같은 때 사람도 9449762 (Revert 31663a9) 를 push → merge 92d58b8, 내용 차이 0, HEAD 추적 파일 2582 개. 해결됨 — 다음 pull 뒤 파일 수만 확인.
-# PROGRESS (갱신 2026-11-10 07:22 UTC, 라운드 295 — 사람 U 속도 측정 pool 29/30 (ip16_75 만 build 중); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
+# PROGRESS (갱신 2026-11-10 07:43 UTC, 라운드 296 — 사람 U 속도 측정 pool 30/30 끝, eval 단계 시작 (기록 4); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
+
+## 라운드 296 (2026-11-10 07:37 ~ 07:43 UTC)
+- `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 그대로. 추적 파일 2654 (줄지 않음).
+- U (사람, 코어 10–15): `runs/pool_speed` **30/30** (build 끝). eval 단계 07:25 UTC 시작 — `runs/speed_1109u/eval` 4 기록 (pkg16_72·74·75·78 `greedy+prune`). 도는 중: `eval_policy.py --pool runs/pool_speed --methods gp` 6개 (pkg16_70·71·73·76·77·79, `timeout 4h taskset -c 10-15`). 건드리지 않음.
+- eval 로그 `agent/logs/speed_1109u/*.log` 는 `.gitignore:22` 에 걸림 (`git check-ignore` 확인) → autostash 위험 없음.
+- `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 30.1 GiB / 60, oom_kill 2 (늘지 않음). GPU 85 MiB, 0%. `restore_proc_log 1792539` → 디스크와 같음 (202402 B).
+- `collect_results.py` (`taskset -c 0-9`, `collect_r296.log`, ≈ 6 분) → 1610 기록 (변화 없음; U 기록은 `SPEED_EXCLUDE` 로 빠짐).
+- 결정: 새 항목 넣지 않음, 서버 1 CPU 에 무거운 작업 안 띄움 — 이유: 라운드 291 과 같음 (U 시간 측정 보호, 에이전트 스스로 항목 추가 금지).
+- 할 일 (다음): 라운드 291 의 (3)–(6) 그대로. U eval 진행은 `ls runs/speed_1109u/eval | wc -l` + `ps.py pool`. 참고: `wait_log.py` 인자 순서는 `<log> <timeout> <pat>`.
+
+# (이전) 라운드 295 머리말: (갱신 2026-11-10 07:22 UTC, 라운드 295 — 사람 U 속도 측정 pool 29/30 (ip16_75 만 build 중); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
 
 ## 라운드 295 (2026-11-10 07:17 ~ 07:22 UTC)
 - `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2652 (줄지 않음).
