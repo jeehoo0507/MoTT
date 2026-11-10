@@ -5,7 +5,7 @@ STUCK (해제 시도 중, 11/05 08:10; 11/07 05:05 갱신): LS16이 메모리 45
 # PROGRESS (갱신 2026-11-10 09:08 UTC, 라운드 300 — 사람 U 속도 측정 eval 단계 진행 (기록 113, modal_rule 단계); 새 원격 커밋 없음; RESULTS 1610 기록 그대로)
 
 ## 라운드 300 (2026-11-10 09:04 ~ 09:08 UTC)
-- `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2724 (U 스크립트의 `git add -f` 로 늘기만 함).
+- `git fetch r2e`: 새 원격 커밋 없음. QUEUE 끝 = 11/09 19:20 KST (T) 그대로. 추적 파일 2724 (U 스크립트의 `git add -f` 로 늘기만 함). 커밋 뒤 merge 에 U 스크립트 커밋 ee025ab ("speed fresh 50 problems 11/09 U", 89 파일 추가·삭제 2줄) + 8dfdac5 가 들어와 추적 파일 2813 — 더하기만, 정상.
 - U (사람, 코어 10–15): `runs/speed_1109u/eval` 73 → **113 기록**. 지금 `eval_policy.py --pool runs/pool_speed --methods modal_rule --repair ...` 6개 (pcb16_79, ip16_73·74·75·77·78, 0–3 분째). 건드리지 않음.
 - `ensure_running`: 드라이버 alive (1792539), report_watch·resume_agent 다시 띄움. mem 26.0 GiB / 60, oom_kill 2 (늘지 않음). `restore_proc_log 1792539 agent/logs/pipeline_day2.log` → 디스크와 같음 (202402 B).
 - `collect_results.py` (`bg.py` + `taskset -c 0-9`, `collect_r300.log`) → 1610 기록 (변화 없음; U 기록은 `SPEED_EXCLUDE` 접두사로 주 표 밖).
