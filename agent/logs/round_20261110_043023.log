@@ -10,3 +10,7 @@ Round 287 finished with nothing new: no new commits on the remote, nothing runni
 - **Commit:** `ee5ce04` is pushed to `r2e main`, and local and remote match. The push printed a "gh not found" credential warning, but it went through.
 
 The next DAILY.md rewrite is due after 11/11 01:06 UTC.
+/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
+/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
+To https://github.com/jeehoo0507/R2E.git
+   ee5ce04..62c56cb  main -> main
