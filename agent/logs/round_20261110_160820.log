@@ -1,3 +1,11 @@
 From https://github.com/jeehoo0507/R2E
  * branch            main       -> FETCH_HEAD
 Already up to date.
+Round 324 is done and pushed (`eb49b15`).
+
+- **V base 90 problem build (human-run):** finished at 15:55 UTC with all 30 problems built. Measurement has started: 3 of 120 records so far (greedy+prune on pkg16 91, 93 and 97), all with rc=0 and no retries. I left it alone.
+- **`collect_results.py`:** I didn't run it, so CPU work doesn't skew the timing while measurement runs (same decision as round 318). The main results table stays at 1610 records.
+- **Other checks:** no new remote commits and no new section in `agent/QUEUE.md`. The driver is alive; `report_watch` and `resume_agent` weren't running and I restarted them. Memory is 29.3 / 60 GiB with no new OOM kills (the count is still 2). The tracked-file count went up and didn't drop.
+- **Next:** once all 120 base 90 records are in, run `collect_results.py` on cores 0–9 and fill in the V section of `RESULTS.md`. Then do the same for base 100. Write the new `DAILY.md` after 01:06 UTC on 11/11.
+
+`PROGRESS.md` has the round 324 entry.
