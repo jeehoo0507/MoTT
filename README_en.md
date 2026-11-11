@@ -238,13 +238,29 @@ python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
 
 Open "Records and decision rules" under each experiment for its folders and commits.
 
-## Prior work compared
+## Prior work
+
+**Re-implemented and compared**
 
 Methods named B- carry the architecture and inputs of the papers below into the problem setting of this repository. The setting and the training budget (2 h) differ from the papers, so they are not reproductions of the original results.
 
-- Park et al., "Transformer network-based reinforcement learning method for PDN optimization of HBM," IEEE T-MTT, 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
-- Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," ICML, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
-- Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," IEEE T-SIPI, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+- **B-Park**: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
+- **B-DevFormer**: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
+- **B-Manoharan**: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+
+**Other work on decap placement**
+
+- Zhang et al., "Decoupling optimization for complex PDN structures using deep reinforcement learning," *IEEE Trans. Microwave Theory and Techniques*, 71(9), 2023. [doi](https://doi.org/10.1109/TMTT.2023.3248237) (trained separately for each board, so not included in the comparison)
+- Park et al., "Deep reinforcement learning-based optimal decoupling capacitor design method for silicon interposer-based 2.5-D/3-D ICs," *IEEE Trans. Components, Packaging and Manufacturing Technology*, 10(3), 2020. [doi](https://doi.org/10.1109/TCPMT.2020.2972019)
+- Jiang et al., "A novel physics-assisted genetic algorithm for decoupling capacitor optimization," *IEEE Trans. Microwave Theory and Techniques*, 72(8), 2024. [doi](https://doi.org/10.1109/TMTT.2024.3356575) (search-based)
+- Anderson et al., "Methodology for determining the placement of decoupling capacitors in a power distribution system," US Patent 6,789,241 B2, 2004. [patent](https://patents.google.com/patent/US6789241B2/en) (places decaps matched to resonance peaks; the resonance rule here is of this family)
+
+**Learning methods**
+
+- Vaswani et al., "Attention is all you need," *NeurIPS*, 2017.
+- Shao et al., "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models," arXiv:2402.03300, 2024. (group-normalized advantage, GRPO)
+- Kwon et al., "POMO: Policy optimization with multiple optima for reinforcement learning," *NeurIPS*, 2020. (mean over several solutions of the same problem as the baseline)
+- Anthony et al., "Thinking fast and slow with deep learning and tree search," *NeurIPS*, 2017. (imitation, then replacing the teacher with better solutions)
 
 ## Limitations
 

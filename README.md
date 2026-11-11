@@ -240,13 +240,29 @@ python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
 
 각 실험 아래의 "기록과 판정 규칙"을 펼치면 해당 폴더와 커밋으로 바로 갈 수 있다.
 
-## 비교한 선행 연구
+## 선행 연구
+
+**재구현하여 비교한 연구**
 
 B-로 시작하는 방법은 아래 논문의 구조와 입력을 이 저장소의 문제에 맞게 옮긴 재구현이다. 문제 설정과 학습 예산(2시간)이 원 논문과 다르므로 원 논문의 성능을 재현한 것은 아니다.
 
-- Park et al., "Transformer network-based reinforcement learning method for PDN optimization of HBM," IEEE T-MTT, 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
-- Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," ICML, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
-- Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," IEEE T-SIPI, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+- **B-Park**: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
+- **B-DevFormer**: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
+- **B-Manoharan**: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+
+**decap 배치의 다른 선행 연구**
+
+- Zhang et al., "Decoupling optimization for complex PDN structures using deep reinforcement learning," *IEEE Trans. Microwave Theory and Techniques*, 71(9), 2023. [doi](https://doi.org/10.1109/TMTT.2023.3248237) (판마다 새로 학습하는 방식이라 비교 대상에서 제외)
+- Park et al., "Deep reinforcement learning-based optimal decoupling capacitor design method for silicon interposer-based 2.5-D/3-D ICs," *IEEE Trans. Components, Packaging and Manufacturing Technology*, 10(3), 2020. [doi](https://doi.org/10.1109/TCPMT.2020.2972019)
+- Jiang et al., "A novel physics-assisted genetic algorithm for decoupling capacitor optimization," *IEEE Trans. Microwave Theory and Techniques*, 72(8), 2024. [doi](https://doi.org/10.1109/TMTT.2024.3356575) (탐색 기반)
+- Anderson et al., "Methodology for determining the placement of decoupling capacitors in a power distribution system," US Patent 6,789,241 B2, 2004. [patent](https://patents.google.com/patent/US6789241B2/en) (공진 피크에 맞는 decap을 놓는 규칙. 이 저장소의 공진 규칙과 같은 계열)
+
+**학습 방법**
+
+- Vaswani et al., "Attention is all you need," *NeurIPS*, 2017.
+- Shao et al., "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models," arXiv:2402.03300, 2024. (그룹 정규화 이점, GRPO)
+- Kwon et al., "POMO: Policy optimization with multiple optima for reinforcement learning," *NeurIPS*, 2020. (같은 문제의 여러 해 평균을 기준선으로)
+- Anthony et al., "Thinking fast and slow with deep learning and tree search," *NeurIPS*, 2017. (모방한 뒤 더 나은 해로 교사를 갱신)
 
 ## 한계
 
