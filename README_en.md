@@ -24,6 +24,14 @@ This repository contains the simulator, the model and training code, the baselin
 Placements by MoTT on the three board kinds (10×10). Bottom: impedance before (dashed) and after (solid).
 </div>
 
+## How to check the numbers
+
+- Every number in this document is computed from the evaluation records (JSON) under [`runs/`](runs). A record was saved and pushed to this repository each time an evaluation finished. See [runs/README.md](runs/README.md) for the format and [docs/RESULTS.md](docs/RESULTS.md) for the full tables.
+- The decision rule of each experiment was written to [docs/PROPOSALS.md](docs/PROPOSALS.md) and pushed before its results existed. [docs/PREREGISTRATION.md](docs/PREREGISTRATION.md) lists the commit that registered each rule and the commit with the first result. Analyses added after seeing results are marked as such.
+- `main` was cleaned up for submission. The full record, including agent logs and notes, is kept unchanged on the [`research-log`](../../tree/research-log) branch and the [`experiments-final`](../../tree/experiments-final) tag.
+
+The "Records" line at the end of each experiment gives the folders behind that table and the commit that registered its decision rule.
+
 ## Experiments and results
 
 Success rate is the fraction of problems that pass the exact check (700 frequency points plus refinement around peaks). Unless noted: 10×10 boards, 3 seeds × 50 problems. All methods are evaluated on the same problems with the same check.
@@ -40,6 +48,8 @@ Before training, we measured by AUC whether an input that separates good cells o
 | Resonance features | 0.86 | 0.59 | 0.32 |
 
 Inputs used in prior work fall below chance when the kind of board changes. The model therefore uses the exact one-step effect as its base score and resonance features only as a correction.
+
+> Records: the analysis code and results are on the [`research-log` branch](../../tree/research-log/research_notes/%ED%86%A0%ED%81%B0%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B6%84%EC%84%9D).
 
 ### 2. Unseen kind of board
 
@@ -64,6 +74,8 @@ The same harness applied to the re-implemented prior methods (trained without pa
 | B-DevFormer | 0.45 | 0.79 | 0.99 | 4.5× |
 | B-Manoharan | 0.89 | 0.03 | 1.00 | 4.3× |
 
+> Records: under [`runs/2026-10-29/`](runs/2026-10-29), `lo_<kind>_r2pk*_rl` (MoTT), `lo_<kind>_r0*_rl` (coordinate input), `lo_pkg_bp_park*`, `lo_pkg_bdf*`, `lo_pkg_bm2_rlonly*` (re-implementations). Harness results are the files ending in `+rep4`. · Decision rules: F1 [`ed4ced5`](https://github.com/jeehoo0507/R2E/commit/ed4ced5), N [`ce4422f`](https://github.com/jeehoo0507/R2E/commit/ce4422f), package harness (added after seeing results) [`451ec4d`](https://github.com/jeehoo0507/R2E/commit/451ec4d)
+
 ### 3. Unseen board size
 
 Models trained on 8–12 cell boards are evaluated on 16×16 and 20×20.
@@ -83,6 +95,8 @@ Models trained on 8–12 cell boards are evaluated on 16×16 and 20×20.
 Success rate and decap count on 16×16 package boards, the hardest case (with harness).
 </div>
 
+> Records: under [`runs/2026-10-29/`](runs/2026-10-29), `r2pk*_rl/eval/eval_<kind>16_*` and `eval_<kind>20_*` · Decision rule: F [`0242e56`](https://github.com/jeehoo0507/R2E/commit/0242e56)
+
 ### 4. Effect of the input and of the architecture
 
 | Model | Input | Architecture | Unseen PCB | Unseen interposer | Decaps (interposer 10 / 16) |
@@ -94,6 +108,8 @@ Success rate and decap count on 16×16 package boards, the hardest case (with ha
 
 Adding resonance features raises the success rate on unseen kinds; changing the architecture to MoTT lowers the decap count.
 
+> Records: `r0_coord*` (coordinate input), `r1_modal*` (resonance input), `r2_mott*` (no P1), `r2pk*` (MoTT) and their `lo_<kind>_*` runs · Decision rule: P1 [`4b496a5`](https://github.com/jeehoo0507/R2E/commit/4b496a5)
+
 ### 5. Trained on all three kinds
 
 <div align="center">
@@ -101,6 +117,8 @@ Adding resonance features raises the success rate on unseen kinds; changing the 
 </div>
 
 MoTT is the only learned method at or above 0.99 on all three kinds. The re-implemented prior methods drop to 0.02 on PCB boards for some seeds.
+
+> Records: under [`runs/2026-10-29/`](runs/2026-10-29), `r2pk*`, `r0_coord*`, `bp_park*`, `bdf*`, `bm2_rlonly*` · Decision rules: B1 [`e70de68`](https://github.com/jeehoo0507/R2E/commit/e70de68), N [`ce4422f`](https://github.com/jeehoo0507/R2E/commit/ce4422f)
 
 ### 6. Decap count and speed
 
@@ -119,6 +137,8 @@ Speed was measured three times on different problem sets. Total time of greedy+p
 | 3 (150 problems, another server) | 3.9× | 1.7× | 6.0× |
 
 Records of measurements 1 and 2 are under `runs/speed_*`. Records of measurement 3 (server 2) will be added.
+
+> Records: [`runs/speed_1109u/`](runs/speed_1109u), `runs/speed_1110v_*/` · Conditions: 11/09 U and 11/10 V in [docs/PROPOSALS.md](docs/PROPOSALS.md)
 
 ## Usage
 
@@ -147,12 +167,6 @@ python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
 | `train.py`, `scripts/` | training, problem generation, evaluation, result tables, speed measurement |
 | `runs/` | evaluation records behind every number above ([format](runs/README.md)) |
 | `docs/` | decision rules, pre-registration timeline, result tables, agent operation |
-
-## Research record
-
-The decision rule of each experiment was written to [docs/PROPOSALS.md](docs/PROPOSALS.md) and pushed to this repository before its results existed. [docs/PREREGISTRATION.md](docs/PREREGISTRATION.md) lists the commit that registered each rule and the commit with the first result. Analyses added after seeing results (such as the harness result on held-out package boards) are marked as such.
-
-`main` was cleaned up for submission. The full record, including agent logs and notes, is kept unchanged on the [`research-log`](../../tree/research-log) branch and the [`experiments-final`](../../tree/experiments-final) tag.
 
 ## Prior work compared
 
