@@ -1,4 +1,0 @@
-[15:56:41] START eval10 r2s1_rl | mem 4.6 GiB / 60.0 GiB, oom_kill 1
-[16:07:55] END eval10 r2s1_rl rc=0 | mem 4.7 GiB / 60.0 GiB, oom_kill 1
-[16:59:34] START eval10 lo_pcb_r2s1_rl | mem 14.8 GiB / 60.0 GiB, oom_kill 1
-[17:12:47] END eval10 lo_pcb_r2s1_rl rc=0 | mem 14.3 GiB / 60.0 GiB, oom_kill 1

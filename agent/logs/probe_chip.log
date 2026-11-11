@@ -1,3 +1,0 @@
-chip: cell 100um diel 0um C_cell 1.727pF L_edge 0.25pH R_edge 68.97mohm VRM 2mohm+30pH f1(10x10) 75.9GHz f1(20x20) 38.0GHz SRF ['2.91GHz', '7.50GHz', '31.83GHz']
-  chip hard 10x10: g+p feasible 1.00 count [3, 8, 11, 14] types [25, 11, 0] F=36 targets ['flat', 'flat', 'step', 'flat'] (7s)
-  chip easy 10x10: g+p feasible 1.00 count [1, 2, 2, 2] types [4, 3, 0] F=36 targets ['flat', 'flat', 'step', 'flat'] (7s)

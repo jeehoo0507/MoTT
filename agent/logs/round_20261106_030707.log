@@ -1,7 +1,0 @@
-error: cannot pull with rebase: You have unstaged changes.
-error: Please commit or stash them.
-You've hit your weekly limit · resets 1am (UTC)
-/usr/bin/gh auth git-credential get: 1: /usr/bin/gh: not found
-/usr/bin/gh auth git-credential store: 1: /usr/bin/gh: not found
-To https://github.com/jeehoo0507/R2E.git
-   d67e7a3..736997a  main -> main

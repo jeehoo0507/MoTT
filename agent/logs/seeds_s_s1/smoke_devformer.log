@@ -1,9 +1,0 @@
-1. forward ok: x (4, 49, 30) -> logits (4, 49, 4), stop (4,) | params: smoke (d 64) 0.219M, run size (d 128, L 3, FF 512) 0.863M (B-Park d 128 L 4: 1.012M)
-2. permutation invariance: shuffled cells -> embeddings max |diff| 1.2e-06, logits 1.7e-06, stop 6.0e-08 (valid cells)
-3. AP augmentation: add-phase lengths k [2, 4, 3, 3], P = 4 distinct permuted orders per instance (k >= 3), same set and suffix; replay valid 16/16, each valid one ends in the teacher solution
-4a. distill_step EE P=4 + SE lambda=5: loss 3.324, |grad| 8406.188, stats {'aug_ok': 1.0, 'self_loss': 0.03147321054711938, 'self_ok': 1.0}
-4b. P=0, lambda=0 equals the plain distill step: loss 3.2930 vs 3.2930, max |grad diff| 0.0e+00
-5a. greedy rollout ok: count [4, 17, 12, 22] feasible [True, True, True, True]
-5b. train.py --stage distill --model devformer --df_perm 4 --df_self 5 (3 iters, CPU) ok: done: 3 iters, 0.00 h, best iter 3 score 2.389, replaced 0 | gpu peak 0.0 GB
-5c. train.py --stage rl --model devformer is refused (distill-only): B-DevFormer is distill-only (offline imitation, no rl): use --stage distill
-OK

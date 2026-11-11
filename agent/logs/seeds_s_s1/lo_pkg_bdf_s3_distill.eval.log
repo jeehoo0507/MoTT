@@ -1,9 +1,0 @@
-6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-29/lo_pkg_bdf_s3_distill/eval
-[   489s] eval_pkg10_1   lo_pkg_bdf_s3_distill        ok 0.24 count 14.00 4.388s/inst rounds 4
-[   683s] eval_pcb10_0   lo_pkg_bdf_s3_distill        ok 0.64 count 14.69 1.117s/inst rounds 4
-[   917s] eval_pkg10_0   lo_pkg_bdf_s3_distill        ok 0.08 count 8.50 2.664s/inst rounds 4
-6 sets x 1 methods = 6 jobs, 1 workers -> runs/2026-10-29/lo_pkg_bdf_s3_distill/eval
-[   878s] eval_pkg10_1   lo_pkg_bdf_s3_distill+rep4   ok 0.48 count 14.50 5.313s/inst rounds 4
-[  1101s] eval_pcb10_0   lo_pkg_bdf_s3_distill+rep4   ok 0.96 count 16.17 1.081s/inst rounds 4
-[  1549s] eval_pkg10_0   lo_pkg_bdf_s3_distill+rep4   ok 0.36 count 13.89 2.580s/inst rounds 4
-[  1794s] eval_pcb10_1   lo_pkg_bdf_s3_distill+rep4   ok 1.00 count 16.52 1.336s/inst rounds 4

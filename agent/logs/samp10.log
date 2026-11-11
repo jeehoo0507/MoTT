@@ -1,6 +1,0 @@
-1 sets x 1 methods = 1 jobs, 1 workers -> runs/analysis/sampling/eval
-[  3838s] eval_pcb10_0   r2a_rl@8                     ok 0.92 count 6.17 33.612s/inst rounds 4
-done
-1 sets x 1 methods = 1 jobs, 1 workers -> runs/analysis/sampling/eval
-[  1966s] eval_pcb10_1   r2a_rl@8                     ok 0.88 count 6.18 17.020s/inst rounds 4
-done

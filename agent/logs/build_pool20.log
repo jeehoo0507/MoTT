@@ -1,8 +1,0 @@
-6 pool files -> runs/pool_v1, 1 workers
-[  1312s] eval_pcb20_0     built    1309s F=176 rounds 9 g+p ok 1.00 count 6.375
-[  2670s] eval_pcb20_1     built    1358s F=226 rounds 10 g+p ok 1.00 count 6.875
-[ 19273s] eval_pkg20_0     built   16602s F=260 rounds 10 g+p ok 0.50 count 13.25
-[ 40143s] eval_pkg20_1     built   20870s F=286 rounds 10 g+p ok 0.62 count 19.4
-[ 42990s] eval_ip20_0      built    2847s F=89 rounds 4 g+p ok 0.62 count 73.2
-[ 46105s] eval_ip20_1      built    3114s F=115 rounds 5 g+p ok 0.62 count 61.6
-done
