@@ -8,7 +8,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 한국어 | [English](README_en.md)
 
-[소개](#소개) · [주요 결과](#주요-결과) · [실험](#실험) · [실행](#실행) · [수치 확인 방법](#수치-확인-방법)
+[소개](#소개) · [방법](#방법) · [주요 결과](#주요-결과) · [실험](#실험) · [실행](#실행) · [수치 확인 방법](#수치-확인-방법)
 
 <img src="assets/mott_architecture.png" width="500">
 
@@ -26,6 +26,26 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 <sub>세 종류의 판(10×10)에 MoTT가 decap을 배치한 결과. 아래: 배치 전(점선)과 후(실선)의 임피던스</sub>
 </div>
 
+## 방법
+
+**입력.** 판을 세 종류의 토큰으로 나타낸다. 모드 토큰은 가장 높은 공진 피크 8개의 주파수와 높이를, 칸 토큰은 그 칸에 decap 하나를 놓았을 때의 정확한 효과를, decap 토큰은 종류별 특성을 담는다. 좌표는 쓰지 않는다.
+
+**모델.** 칸끼리는 직접 attention하지 않고 모드 토큰을 거쳐서만 정보를 주고받는다. 실제 판에서 칸들이 공진 모드를 통해 서로 영향을 주는 것을 그대로 옮긴 구조이며, 계산량이 칸 수의 제곱이 아니라 칸 수 × 모드 수에 비례한다. 출력 점수는 정확히 계산한 1수 효과에 학습한 보정을 더한 값이다.
+
+**학습.** 탐색으로 구한 교사 해를 모방한 뒤(0.75시간) 강화학습으로 다듬는다(1.25시간). 판마다 배치 8개를 샘플링하여 같은 판 안에서 정규화한 이점으로 정책을 갱신하고, 정밀 검사를 통과하면서 decap이 더 적은 해가 나오면 교사 해를 그 해로 바꾼다.
+
+<div align="center">
+<img src="assets/training.png" width="620">
+
+<sub>학습 과정. (a) 모방 학습, (b) 강화학습</sub>
+</div>
+
+**검증 하네스.** 정책은 32개 주파수만 보고 배치하므로 그 사이의 피크를 놓칠 수 있다. 배치를 정밀 검사로 확인하고, 실패한 주파수를 입력에 더해 다시 풀거나 이어서 고치게 한다.
+
+<div align="center">
+<img src="assets/harness.png" width="760">
+</div>
+
 ## 주요 결과
 
 | 질문 | 결과 |
@@ -36,6 +56,12 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 | 탐색보다 빠른가 | greedy+prune보다 인터포저형 약 4배, 패키지형 4–7배, PCB형 약 1.5배 |
 
 성공률은 정밀 검사(700개 주파수와 피크 주변)를 통과한 문제의 비율이다. 모든 방법을 같은 문제와 같은 검사로 평가하였다.
+
+<div align="center">
+<img src="assets/benchmark.png" width="640">
+
+<sub>패키지형을 제외하고 학습한 모델의 성공률 (10×10, seed 3개 × 50문제, 하네스 적용). B-는 선행 연구를 같은 문제와 같은 학습 예산으로 옮긴 재구현</sub>
+</div>
 
 ## 실험
 

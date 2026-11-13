@@ -6,7 +6,7 @@
 
 [한국어](README.md) | English
 
-[Introduction](#introduction) · [Main results](#main-results) · [Experiments](#experiments) · [Usage](#usage) · [Checking the numbers](#checking-the-numbers)
+[Introduction](#introduction) · [Method](#method) · [Main results](#main-results) · [Experiments](#experiments) · [Usage](#usage) · [Checking the numbers](#checking-the-numbers)
 
 <img src="assets/mott_architecture.png" width="500">
 
@@ -24,6 +24,26 @@ Prior reinforcement-learning methods decide placements quickly but mostly take c
 <sub>MoTT placements on the three board kinds (10×10). Bottom: impedance before (dashed) and after (solid)</sub>
 </div>
 
+## Method
+
+**Input.** A board is described by three kinds of tokens. Mode tokens hold the frequency and height of the eight highest resonance peaks, cell tokens hold the exact effect of placing one decap on that cell, and decap tokens hold the properties of each type. Coordinates are not used.
+
+**Model.** Cells do not attend to each other directly; they exchange information only through the mode tokens, as cells on a real board interact through resonant modes. The cost grows with cells × modes instead of cells squared. The output score is the exactly computed one-step effect plus a learned correction.
+
+**Training.** The policy first imitates teacher solutions found by search (0.75 h) and is then refined by reinforcement learning (1.25 h). Eight placements are sampled per board and the policy is updated with advantages normalized within the board; a solution that passes the exact check with fewer decaps replaces the teacher solution.
+
+<div align="center">
+<img src="assets/training.png" width="620">
+
+<sub>Training. (a) Imitation learning, (b) reinforcement learning</sub>
+</div>
+
+**Verification harness.** The policy decides from 32 frequencies and can miss peaks between them. Each placement is checked exactly; the failing frequency is added to the input and the policy solves again or repairs the placement.
+
+<div align="center">
+<img src="assets/harness.png" width="760">
+</div>
+
 ## Main results
 
 | Question | Result |
@@ -34,6 +54,12 @@ Prior reinforcement-learning methods decide placements quickly but mostly take c
 | Is it faster than search? | About 4× (interposer), 4–7× (package), 1.5× (PCB) faster than greedy+prune |
 
 Success rate is the fraction of problems passing the exact check (700 frequency points plus refinement around peaks). All methods are evaluated on the same problems with the same check.
+
+<div align="center">
+<img src="assets/benchmark_en.png" width="640">
+
+<sub>Success rate of models trained without package boards (10×10, 3 seeds × 50 problems, with harness). B- are re-implementations of prior work in the same setting and training budget</sub>
+</div>
 
 ## Experiments
 
