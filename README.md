@@ -20,6 +20,14 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 강화학습으로 배치를 빠르게 정하는 선행 연구는 주로 칸의 좌표를 입력으로 쓰며, 판의 종류(PCB, 패키지, 인터포저)가 바뀌면 다시 학습해야 한다. MoTT는 판을 좌표 대신 **공진 모드, 칸, decap 종류의 토큰**으로 나타내어, 학습에서 보지 못한 종류와 크기의 판에도 재학습 없이 쓸 수 있다.
 
+처음 보는 종류의 판에서 MoTT는 **PCB형 89%, 인터포저형 99%**를 풀어 좌표 입력 모델(64%, 65%)보다 높았다. 검증 하네스를 더하면 처음 보는 패키지형에서 **99%**, 학습하지 않은 16×16·20×20 판에서 **94% 이상**을 풀었고, 선행 연구 재구현과 비교해 세 종류를 모두 99% 이상 푼 유일한 방법이었다. decap은 인터포저형에서 공진 규칙보다 약 30% 적게 썼다.
+
+<div align="center">
+<img src="assets/benchmark.png" width="640">
+
+<sub>패키지형을 제외하고 학습한 모델의 성공률 (10×10, seed 3개 × 50문제, 하네스 적용). B-는 선행 연구를 같은 문제와 같은 학습 예산으로 옮긴 재구현</sub>
+</div>
+
 <div align="center">
 <img src="assets/boards.png" width="620">
 
@@ -56,12 +64,6 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 | 탐색보다 빠른가 | greedy+prune보다 인터포저형 약 4배, 패키지형 4–7배, PCB형 약 1.5배 |
 
 성공률은 정밀 검사(700개 주파수와 피크 주변)를 통과한 문제의 비율이다. 모든 방법을 같은 문제와 같은 검사로 평가하였다.
-
-<div align="center">
-<img src="assets/benchmark.png" width="640">
-
-<sub>패키지형을 제외하고 학습한 모델의 성공률 (10×10, seed 3개 × 50문제, 하네스 적용). B-는 선행 연구를 같은 문제와 같은 학습 예산으로 옮긴 재구현</sub>
-</div>
 
 ## 실험
 

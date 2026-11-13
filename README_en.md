@@ -18,6 +18,14 @@ A power distribution network (PDN) resonates at certain frequencies, where its i
 
 Prior reinforcement-learning methods decide placements quickly but mostly take cell coordinates as input, and need retraining when the kind of board (PCB, package, interposer) changes. MoTT describes a board with **resonant-mode, cell and decap-type tokens** instead of coordinates, so one policy works on board kinds and sizes it has not seen in training.
 
+On an unseen kind of board MoTT solves **89% (PCB) and 99% (interposer)**, against 64% and 65% for the coordinate model. With the verification harness it solves **99%** of unseen package boards and **94% or more** on 16×16 and 20×20 boards it was not trained on, and it is the only method, compared with re-implemented prior work, at 99% or above on all three kinds. It uses about 30% fewer decaps than the resonance rule on interposer boards.
+
+<div align="center">
+<img src="assets/benchmark_en.png" width="640">
+
+<sub>Success rate of models trained without package boards (10×10, 3 seeds × 50 problems, with harness). B- are re-implementations of prior work in the same setting and training budget</sub>
+</div>
+
 <div align="center">
 <img src="assets/boards.png" width="620">
 
@@ -54,12 +62,6 @@ Prior reinforcement-learning methods decide placements quickly but mostly take c
 | Is it faster than search? | About 4× (interposer), 4–7× (package), 1.5× (PCB) faster than greedy+prune |
 
 Success rate is the fraction of problems passing the exact check (700 frequency points plus refinement around peaks). All methods are evaluated on the same problems with the same check.
-
-<div align="center">
-<img src="assets/benchmark_en.png" width="640">
-
-<sub>Success rate of models trained without package boards (10×10, 3 seeds × 50 problems, with harness). B- are re-implementations of prior work in the same setting and training budget</sub>
-</div>
 
 ## Experiments
 
