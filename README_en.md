@@ -178,7 +178,7 @@ Adding resonance features raises the success rate on unseen kinds; changing the 
 <sub>Success rate (%, 10×10, harness applied to every method). Bars: mean over seeds; whiskers: range over seeds</sub>
 </div>
 
-MoTT is the only learned method at or above 0.99 on all three kinds. The re-implemented prior methods drop to 0.02 on PCB boards for some seeds.
+MoTT is the only learned method at or above 0.98 on all three kinds. The re-implemented prior methods drop to 0.02 on PCB boards for some seeds.
 
 <details>
 <summary>Records and decision rules</summary>

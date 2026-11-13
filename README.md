@@ -180,7 +180,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 <sub>성공률 (%, 10×10, 모든 방법에 하네스 적용). 막대는 seed 평균, 세로선은 seed별 범위</sub>
 </div>
 
-세 종류 모두에서 0.99 이상인 학습 방법은 MoTT뿐이었다. 선행 연구 재구현은 seed에 따라 PCB형 성공률이 0.02까지 떨어졌다.
+세 종류 모두에서 0.98 이상인 학습 방법은 MoTT뿐이었다. 선행 연구 재구현은 seed에 따라 PCB형 성공률이 0.02까지 떨어졌다.
 
 <details>
 <summary>기록과 판정 규칙</summary>
