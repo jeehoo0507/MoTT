@@ -2,7 +2,7 @@
 
 # MoTT: Modal-Token Transformer
 
-**Decap 배치 범용화를 위한 모달 토큰 트랜스포머**
+<b>Decap 배치 범용화를 위한 모달 토큰 트랜스포머</b>
 
 A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
@@ -18,9 +18,9 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 전원 분배망(PDN)은 특정 주파수에서 공진하여 임피던스가 커진다. 디커플링 커패시터(decap)를 알맞은 칸에 놓으면 이 피크를 낮출 수 있지만, 칸과 종류의 조합이 너무 많아 모두 따져 볼 수는 없다.
 
-강화학습으로 배치를 빠르게 정하는 선행 연구는 주로 칸의 좌표를 입력으로 쓰며, 판의 종류(PCB, 패키지, 인터포저)가 바뀌면 다시 학습해야 한다. MoTT는 판을 좌표 대신 **공진 모드, 칸, decap 종류의 토큰**으로 나타내어, 학습에서 보지 못한 종류와 크기의 판에도 재학습 없이 쓸 수 있다.
+강화학습으로 배치를 빠르게 정하는 선행 연구는 주로 칸의 좌표를 입력으로 쓰며, 판의 종류(PCB, 패키지, 인터포저)가 바뀌면 다시 학습해야 한다. MoTT는 판을 좌표 대신 <b>공진 모드, 칸, decap 종류의 토큰</b>으로 나타내어, 학습에서 보지 못한 종류와 크기의 판에도 재학습 없이 쓸 수 있다.
 
-처음 보는 종류의 판에서 MoTT는 **PCB형 89%, 인터포저형 99%**를 풀어 좌표 입력 모델(64%, 65%)보다 높았다. 검증 하네스를 더하면 처음 보는 패키지형에서 **99%**, 학습하지 않은 16×16·20×20 판에서 **94% 이상**을 풀었고, 선행 연구 재구현과 비교해 세 종류를 모두 99% 이상 푼 유일한 방법이었다. decap은 인터포저형에서 공진 규칙보다 약 30% 적게 썼다.
+처음 보는 종류의 판에서 MoTT는 <b>PCB형 89%, 인터포저형 99%</b>를 풀어 좌표 입력 모델(64%, 65%)보다 높았다. 검증 하네스를 더하면 처음 보는 패키지형에서 <b>99%</b>, 학습하지 않은 16×16·20×20 판에서 <b>94% 이상</b>을 풀었고, 선행 연구 재구현과 비교해 세 종류를 모두 99% 이상 푼 유일한 방법이었다. decap은 인터포저형에서 공진 규칙보다 약 30% 적게 썼다.
 
 <div align="center">
 <img src="assets/benchmark.png" width="640">
@@ -36,11 +36,11 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 ## 방법
 
-**입력.** 판을 세 종류의 토큰으로 나타낸다. 모드 토큰은 가장 높은 공진 피크 8개의 주파수와 높이를, 칸 토큰은 그 칸에 decap 하나를 놓았을 때의 정확한 효과를, decap 토큰은 종류별 특성을 담는다. 좌표는 쓰지 않는다.
+<b>입력.</b> 판을 세 종류의 토큰으로 나타낸다. 모드 토큰은 가장 높은 공진 피크 8개의 주파수와 높이를, 칸 토큰은 그 칸에 decap 하나를 놓았을 때의 정확한 효과를, decap 토큰은 종류별 특성을 담는다. 좌표는 쓰지 않는다.
 
-**모델.** 칸끼리는 직접 attention하지 않고 모드 토큰을 거쳐서만 정보를 주고받는다. 실제 판에서 칸들이 공진 모드를 통해 서로 영향을 주는 것을 그대로 옮긴 구조이며, 계산량이 칸 수의 제곱이 아니라 칸 수 × 모드 수에 비례한다. 출력 점수는 정확히 계산한 1수 효과에 학습한 보정을 더한 값이다.
+<b>모델.</b> 칸끼리는 직접 attention하지 않고 모드 토큰을 거쳐서만 정보를 주고받는다. 실제 판에서 칸들이 공진 모드를 통해 서로 영향을 주는 것을 그대로 옮긴 구조이며, 계산량이 칸 수의 제곱이 아니라 칸 수 × 모드 수에 비례한다. 출력 점수는 정확히 계산한 1수 효과에 학습한 보정을 더한 값이다.
 
-**학습.** 탐색으로 구한 교사 해를 모방한 뒤(0.75시간) 강화학습으로 다듬는다(1.25시간). 판마다 배치 8개를 샘플링하여 같은 판 안에서 정규화한 이점으로 정책을 갱신하고, 정밀 검사를 통과하면서 decap이 더 적은 해가 나오면 교사 해를 그 해로 바꾼다.
+<b>학습.</b> 탐색으로 구한 교사 해를 모방한 뒤(0.75시간) 강화학습으로 다듬는다(1.25시간). 판마다 배치 8개를 샘플링하여 같은 판 안에서 정규화한 이점으로 정책을 갱신하고, 정밀 검사를 통과하면서 decap이 더 적은 해가 나오면 교사 해를 그 해로 바꾼다.
 
 <div align="center">
 <img src="assets/training.png" width="620">
@@ -48,7 +48,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 <sub>학습 과정. (a) 모방 학습, (b) 강화학습</sub>
 </div>
 
-**검증 하네스.** 정책은 32개 주파수만 보고 배치하므로 그 사이의 피크를 놓칠 수 있다. 배치를 정밀 검사로 확인하고, 실패한 주파수를 입력에 더해 다시 풀거나 이어서 고치게 한다.
+<b>검증 하네스.</b> 정책은 32개 주파수만 보고 배치하므로 그 사이의 피크를 놓칠 수 있다. 배치를 정밀 검사로 확인하고, 실패한 주파수를 입력에 더해 다시 풀거나 이어서 고치게 한다.
 
 <div align="center">
 <img src="assets/harness.png" width="760">
@@ -78,7 +78,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 | 관측 지점까지의 거리 | 0.74 | 0.46 | 0.23 |
 | 루프 인덕턴스 + 고정 주파수 임피던스 | 0.88 | 0.45 | 0.59 |
 | 공진 정보 | 0.86 | 0.59 | 0.32 |
-| **decap 하나를 놓았을 때의 효과** | 0.73 | **0.98** | **0.74** |
+| <b>decap 하나를 놓았을 때의 효과</b> | 0.73 | <b>0.98</b> | <b>0.74</b> |
 
 선행 연구에서 쓰는 입력은 판의 종류가 바뀌면 무작위 수준 아래로 떨어졌다. 그래서 종류를 넘어 유지되는 "decap 하나의 효과"를 기본 점수로, 공진 정보는 보정으로만 쓰도록 모델을 설계하였다.
 
@@ -95,18 +95,18 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 | 제외한 종류 | MoTT | 좌표 입력 모델 |
 |:--|:-:|:-:|
-| PCB형 | **0.89** | 0.64 |
-| 인터포저형 | **0.99** | 0.65 |
-| 패키지형 | 0.71 | **0.80** |
-| 패키지형 + 검증 하네스 | **0.99** | 0.92 |
+| PCB형 | <b>0.89</b> | 0.64 |
+| 인터포저형 | <b>0.99</b> | 0.65 |
+| 패키지형 | 0.71 | <b>0.80</b> |
+| 패키지형 + 검증 하네스 | <b>0.99</b> | 0.92 |
 
-정책만으로는 패키지형에서 좌표 입력 모델보다 낮았다. 원인은 계산에 쓰는 32개 주파수 사이에 숨은 피크였다. 정밀 검사로 실패 주파수를 찾아 다시 고치게 하는 **검증 하네스**를 더하자, 실패한 44문제 중 43문제가 decap을 늘리지 않고 풀렸다.
+정책만으로는 패키지형에서 좌표 입력 모델보다 낮았다. 원인은 계산에 쓰는 32개 주파수 사이에 숨은 피크였다. 정밀 검사로 실패 주파수를 찾아 다시 고치게 하는 <b>검증 하네스</b>를 더하자, 실패한 44문제 중 43문제가 decap을 늘리지 않고 풀렸다.
 
 같은 하네스를 선행 연구 재구현에도 적용하였다(패키지형을 제외하고 학습한 모델).
 
 | 방법 | 패키지형 (처음 봄) | PCB형 | 인터포저형 | decap 수 (MoTT = 1) |
 |:--|:-:|:-:|:-:|:-:|
-| **MoTT** | **0.99** | **0.99** | 1.00 | 1.0 |
+| <b>MoTT</b> | <b>0.99</b> | <b>0.99</b> | 1.00 | 1.0 |
 | 좌표 입력 | 0.92 | 0.94 | 1.00 | 1.0 |
 | B-Park | 0.91 | 0.04 | 1.00 | 2.8 |
 | B-DevFormer | 0.45 | 0.79 | 0.99 | 4.5 |
@@ -159,8 +159,8 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 |:--|:--|:--|:-:|:-:|:-:|
 | 좌표 입력 | 좌표 | 기본 | 0.64 | 0.65 | 11.2 / 20.6 |
 | 공진 입력 | 좌표 + 공진 | 기본 | 0.84 | 0.89 | 9.8 / 17.9 |
-| MoTT (P1 제외) | 공진 | MoTT | **0.90** | 0.89 | 8.0 / 14.6 |
-| **MoTT** | 공진 + P1 | MoTT | 0.89 | **0.99** | **8.0 / 13.9** |
+| MoTT (P1 제외) | 공진 | MoTT | <b>0.90</b> | 0.89 | 8.0 / 14.6 |
+| <b>MoTT</b> | 공진 + P1 | MoTT | 0.89 | <b>0.99</b> | <b>8.0 / 13.9</b> |
 
 공진 정보를 입력에 넣으면 처음 보는 종류의 성공률이 올랐고, 구조를 MoTT로 바꾸면 decap 수가 줄었다. P1은 모드 토큰에 더하는 피크 높이 보정이다.
 
@@ -197,15 +197,15 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 <img src="assets/decap_speed.png" width="800">
 </div>
 
-**decap 수.** 인터포저형에서 공진 규칙보다 약 30% 적게 썼다.
+<b>decap 수.</b> 인터포저형에서 공진 규칙보다 약 30% 적게 썼다.
 
 | 크기 | MoTT | 공진 규칙 |
 |:--|:-:|:-:|
-| 10×10 | **8.4** | 12.4 |
-| 16×16 | **13.8** | 20.3 |
-| 20×20 | **21.8** | 31.2 |
+| 10×10 | <b>8.4</b> | 12.4 |
+| 16×16 | <b>13.8</b> | 20.3 |
+| 20×20 | <b>21.8</b> | 31.2 |
 
-**속도.** 문제 세트를 바꿔 세 번 측정하였다. 값은 하네스를 포함한 전체 시간에서 greedy+prune이 MoTT의 몇 배 걸렸는지이다(16×16).
+<b>속도.</b> 문제 세트를 바꿔 세 번 측정하였다. 값은 하네스를 포함한 전체 시간에서 greedy+prune이 MoTT의 몇 배 걸렸는지이다(16×16).
 
 | 측정 | 인터포저형 | PCB형 | 패키지형 |
 |:--|:-:|:-:|:-:|
@@ -229,21 +229,21 @@ pip install -r requirements.txt
 python sanity_check.py
 ```
 
-**1. 문제와 교사 해 만들기**
+<b>1. 문제와 교사 해 만들기</b>
 
 ```bash
 python scripts/build_pools.py --out runs/pool_v1
 python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher
 ```
 
-**2. 학습** (교사 해 모방 0.75시간 → 강화학습 1.25시간)
+<b>2. 학습</b> (교사 해 모방 0.75시간 → 강화학습 1.25시간)
 
 ```bash
 python scripts/run_rung.py --name r2pk --arm "--model mott --peak_refine" \
     --distill_hours 0.75 --rl_hours 1.25 --seed 0
 ```
 
-**3. 평가** (`--repair 4`가 검증 하네스)
+<b>3. 평가</b> (`--repair 4`가 검증 하네스)
 
 ```bash
 python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
@@ -271,22 +271,22 @@ python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
 
 ## 선행 연구
 
-**재구현하여 비교한 연구**
+<b>재구현하여 비교한 연구</b>
 
 B-로 시작하는 방법은 아래 논문의 구조와 입력을 이 저장소의 문제에 맞게 옮긴 재구현이다. 문제 설정과 학습 예산(2시간)이 원 논문과 다르므로 원 논문의 성능을 재현한 것은 아니다.
 
-- **B-Park**: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
-- **B-DevFormer**: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
-- **B-Manoharan**: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+- <b>B-Park</b>: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
+- <b>B-DevFormer</b>: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
+- <b>B-Manoharan</b>: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
 
-**decap 배치의 다른 선행 연구**
+<b>decap 배치의 다른 선행 연구</b>
 
 - Zhang et al., "Decoupling optimization for complex PDN structures using deep reinforcement learning," *IEEE Trans. Microwave Theory and Techniques*, 71(9), 2023. [doi](https://doi.org/10.1109/TMTT.2023.3248237) (판마다 새로 학습하는 방식이라 비교 대상에서 제외)
 - Park et al., "Deep reinforcement learning-based optimal decoupling capacitor design method for silicon interposer-based 2.5-D/3-D ICs," *IEEE Trans. Components, Packaging and Manufacturing Technology*, 10(3), 2020. [doi](https://doi.org/10.1109/TCPMT.2020.2972019)
 - Jiang et al., "A novel physics-assisted genetic algorithm for decoupling capacitor optimization," *IEEE Trans. Microwave Theory and Techniques*, 72(8), 2024. [doi](https://doi.org/10.1109/TMTT.2024.3356575) (탐색 기반)
 - Anderson et al., "Methodology for determining the placement of decoupling capacitors in a power distribution system," US Patent 6,789,241 B2, 2004. [patent](https://patents.google.com/patent/US6789241B2/en) (공진 피크에 맞는 decap을 놓는 규칙. 이 저장소의 공진 규칙과 같은 계열)
 
-**학습 방법**
+<b>학습 방법</b>
 
 - Vaswani et al., "Attention is all you need," *NeurIPS*, 2017.
 - Shao et al., "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models," arXiv:2402.03300, 2024. (그룹 정규화 이점, GRPO)

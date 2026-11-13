@@ -2,7 +2,7 @@
 
 # MoTT: Modal-Token Transformer
 
-**A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement**
+<b>A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement</b>
 
 [한국어](README.md) | English
 
@@ -16,9 +16,9 @@
 
 A power distribution network (PDN) resonates at certain frequencies, where its impedance rises. Decoupling capacitors (decaps) at the right cells lower these peaks, but there are far too many combinations of cells and decap types to enumerate.
 
-Prior reinforcement-learning methods decide placements quickly but mostly take cell coordinates as input, and need retraining when the kind of board (PCB, package, interposer) changes. MoTT describes a board with **resonant-mode, cell and decap-type tokens** instead of coordinates, so one policy works on board kinds and sizes it has not seen in training.
+Prior reinforcement-learning methods decide placements quickly but mostly take cell coordinates as input, and need retraining when the kind of board (PCB, package, interposer) changes. MoTT describes a board with <b>resonant-mode, cell and decap-type tokens</b> instead of coordinates, so one policy works on board kinds and sizes it has not seen in training.
 
-On an unseen kind of board MoTT solves **89% (PCB) and 99% (interposer)**, against 64% and 65% for the coordinate model. With the verification harness it solves **99%** of unseen package boards and **94% or more** on 16×16 and 20×20 boards it was not trained on, and it is the only method, compared with re-implemented prior work, at 99% or above on all three kinds. It uses about 30% fewer decaps than the resonance rule on interposer boards.
+On an unseen kind of board MoTT solves <b>89% (PCB) and 99% (interposer)</b>, against 64% and 65% for the coordinate model. With the verification harness it solves <b>99%</b> of unseen package boards and <b>94% or more</b> on 16×16 and 20×20 boards it was not trained on, and it is the only method, compared with re-implemented prior work, at 99% or above on all three kinds. It uses about 30% fewer decaps than the resonance rule on interposer boards.
 
 <div align="center">
 <img src="assets/benchmark_en.png" width="640">
@@ -34,11 +34,11 @@ On an unseen kind of board MoTT solves **89% (PCB) and 99% (interposer)**, again
 
 ## Method
 
-**Input.** A board is described by three kinds of tokens. Mode tokens hold the frequency and height of the eight highest resonance peaks, cell tokens hold the exact effect of placing one decap on that cell, and decap tokens hold the properties of each type. Coordinates are not used.
+<b>Input.</b> A board is described by three kinds of tokens. Mode tokens hold the frequency and height of the eight highest resonance peaks, cell tokens hold the exact effect of placing one decap on that cell, and decap tokens hold the properties of each type. Coordinates are not used.
 
-**Model.** Cells do not attend to each other directly; they exchange information only through the mode tokens, as cells on a real board interact through resonant modes. The cost grows with cells × modes instead of cells squared. The output score is the exactly computed one-step effect plus a learned correction.
+<b>Model.</b> Cells do not attend to each other directly; they exchange information only through the mode tokens, as cells on a real board interact through resonant modes. The cost grows with cells × modes instead of cells squared. The output score is the exactly computed one-step effect plus a learned correction.
 
-**Training.** The policy first imitates teacher solutions found by search (0.75 h) and is then refined by reinforcement learning (1.25 h). Eight placements are sampled per board and the policy is updated with advantages normalized within the board; a solution that passes the exact check with fewer decaps replaces the teacher solution.
+<b>Training.</b> The policy first imitates teacher solutions found by search (0.75 h) and is then refined by reinforcement learning (1.25 h). Eight placements are sampled per board and the policy is updated with advantages normalized within the board; a solution that passes the exact check with fewer decaps replaces the teacher solution.
 
 <div align="center">
 <img src="assets/training.png" width="620">
@@ -46,7 +46,7 @@ On an unseen kind of board MoTT solves **89% (PCB) and 99% (interposer)**, again
 <sub>Training. (a) Imitation learning, (b) reinforcement learning</sub>
 </div>
 
-**Verification harness.** The policy decides from 32 frequencies and can miss peaks between them. Each placement is checked exactly; the failing frequency is added to the input and the policy solves again or repairs the placement.
+<b>Verification harness.</b> The policy decides from 32 frequencies and can miss peaks between them. Each placement is checked exactly; the failing frequency is added to the input and the policy solves again or repairs the placement.
 
 <div align="center">
 <img src="assets/harness.png" width="760">
@@ -76,7 +76,7 @@ Before training, we measured by AUC whether an input that separates good cells o
 | Distance to the probe | 0.74 | 0.46 | 0.23 |
 | Loop inductance + fixed-frequency impedance | 0.88 | 0.45 | 0.59 |
 | Resonance features | 0.86 | 0.59 | 0.32 |
-| **Effect of placing one decap** | 0.73 | **0.98** | **0.74** |
+| <b>Effect of placing one decap</b> | 0.73 | <b>0.98</b> | <b>0.74</b> |
 
 Inputs used in prior work fall below chance when the kind of board changes. The model therefore uses the one-decap effect, which carries over, as its base score and resonance features only as a correction.
 
@@ -93,18 +93,18 @@ One of the three kinds is removed from training and used only for evaluation.
 
 | Held-out kind | MoTT | Coordinate input |
 |:--|:-:|:-:|
-| PCB | **0.89** | 0.64 |
-| Interposer | **0.99** | 0.65 |
-| Package | 0.71 | **0.80** |
-| Package + verification harness | **0.99** | 0.92 |
+| PCB | <b>0.89</b> | 0.64 |
+| Interposer | <b>0.99</b> | 0.65 |
+| Package | 0.71 | <b>0.80</b> |
+| Package + verification harness | <b>0.99</b> | 0.92 |
 
-The policy alone is below the coordinate model on held-out package boards. The cause was peaks hidden between the 32 frequencies used for decisions. With the **verification harness**, which finds the failing frequency by the exact check and lets the policy fix the placement, 43 of the 44 failed problems were solved without adding decaps.
+The policy alone is below the coordinate model on held-out package boards. The cause was peaks hidden between the 32 frequencies used for decisions. With the <b>verification harness</b>, which finds the failing frequency by the exact check and lets the policy fix the placement, 43 of the 44 failed problems were solved without adding decaps.
 
 The same harness was applied to the re-implemented prior methods (models trained without package boards).
 
 | Method | Package (held out) | PCB | Interposer | Decaps (MoTT = 1) |
 |:--|:-:|:-:|:-:|:-:|
-| **MoTT** | **0.99** | **0.99** | 1.00 | 1.0 |
+| <b>MoTT</b> | <b>0.99</b> | <b>0.99</b> | 1.00 | 1.0 |
 | Coordinate input | 0.92 | 0.94 | 1.00 | 1.0 |
 | B-Park | 0.91 | 0.04 | 1.00 | 2.8 |
 | B-DevFormer | 0.45 | 0.79 | 0.99 | 4.5 |
@@ -157,8 +157,8 @@ From the coordinate model to MoTT, one change at a time.
 |:--|:--|:--|:-:|:-:|:-:|
 | Coordinate input | coordinates | baseline | 0.64 | 0.65 | 11.2 / 20.6 |
 | Resonance input | coordinates + resonance | baseline | 0.84 | 0.89 | 9.8 / 17.9 |
-| MoTT (no P1) | resonance | MoTT | **0.90** | 0.89 | 8.0 / 14.6 |
-| **MoTT** | resonance + P1 | MoTT | 0.89 | **0.99** | **8.0 / 13.9** |
+| MoTT (no P1) | resonance | MoTT | <b>0.90</b> | 0.89 | 8.0 / 14.6 |
+| <b>MoTT</b> | resonance + P1 | MoTT | 0.89 | <b>0.99</b> | <b>8.0 / 13.9</b> |
 
 Adding resonance features raises the success rate on unseen kinds; changing the architecture to MoTT lowers the decap count. P1 is a peak-height correction added to the mode tokens.
 
@@ -195,15 +195,15 @@ MoTT is the only learned method at or above 0.99 on all three kinds. The re-impl
 <img src="assets/decap_speed.png" width="800">
 </div>
 
-**Decap count.** About 30% fewer than the resonance rule on interposer boards.
+<b>Decap count.</b> About 30% fewer than the resonance rule on interposer boards.
 
 | Size | MoTT | Resonance rule |
 |:--|:-:|:-:|
-| 10×10 | **8.4** | 12.4 |
-| 16×16 | **13.8** | 20.3 |
-| 20×20 | **21.8** | 31.2 |
+| 10×10 | <b>8.4</b> | 12.4 |
+| 16×16 | <b>13.8</b> | 20.3 |
+| 20×20 | <b>21.8</b> | 31.2 |
 
-**Speed.** Measured three times on different problem sets. Values are the total time of greedy+prune divided by that of MoTT with the harness (16×16).
+<b>Speed.</b> Measured three times on different problem sets. Values are the total time of greedy+prune divided by that of MoTT with the harness (16×16).
 
 | Measurement | Interposer | PCB | Package |
 |:--|:-:|:-:|:-:|
@@ -227,21 +227,21 @@ pip install -r requirements.txt
 python sanity_check.py
 ```
 
-**1. Problems and teacher solutions**
+<b>1. Problems and teacher solutions</b>
 
 ```bash
 python scripts/build_pools.py --out runs/pool_v1
 python scripts/make_teacher.py --pool runs/pool_v1 --out data/teacher
 ```
 
-**2. Training** (imitation 0.75 h, then reinforcement learning 1.25 h)
+<b>2. Training</b> (imitation 0.75 h, then reinforcement learning 1.25 h)
 
 ```bash
 python scripts/run_rung.py --name r2pk --arm "--model mott --peak_refine" \
     --distill_hours 0.75 --rl_hours 1.25 --seed 0
 ```
 
-**3. Evaluation** (`--repair 4` turns on the verification harness)
+<b>3. Evaluation</b> (`--repair 4` turns on the verification harness)
 
 ```bash
 python scripts/eval_policy.py --pool runs/pool_v1 --sets 'eval_*' \
@@ -269,22 +269,22 @@ Open "Records and decision rules" under each experiment for its folders and comm
 
 ## Prior work
 
-**Re-implemented and compared**
+<b>Re-implemented and compared</b>
 
 Methods named B- carry the architecture and inputs of the papers below into the problem setting of this repository. The setting and the training budget (2 h) differ from the papers, so they are not reproductions of the original results.
 
-- **B-Park**: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
-- **B-DevFormer**: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
-- **B-Manoharan**: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
+- <b>B-Park</b>: Park et al., "Transformer network-based reinforcement learning method for power distribution network (PDN) optimization of high bandwidth memory (HBM)," *IEEE Trans. Microwave Theory and Techniques*, 70(11), 2022. [doi](https://doi.org/10.1109/TMTT.2022.3202221)
+- <b>B-DevFormer</b>: Kim et al., "DevFormer: A symmetric transformer for context-aware device placement," *ICML*, 2023. [paper](https://proceedings.mlr.press/v202/kim23h.html)
+- <b>B-Manoharan</b>: Manoharan et al., "Reinforcement learning for decoupling capacitor optimization in postlayout PDNs using transformer architecture," *IEEE Trans. Signal and Power Integrity*, 5, 2026. [doi](https://doi.org/10.1109/TSIPI.2026.3691276)
 
-**Other work on decap placement**
+<b>Other work on decap placement</b>
 
 - Zhang et al., "Decoupling optimization for complex PDN structures using deep reinforcement learning," *IEEE Trans. Microwave Theory and Techniques*, 71(9), 2023. [doi](https://doi.org/10.1109/TMTT.2023.3248237) (trained separately for each board, so not included in the comparison)
 - Park et al., "Deep reinforcement learning-based optimal decoupling capacitor design method for silicon interposer-based 2.5-D/3-D ICs," *IEEE Trans. Components, Packaging and Manufacturing Technology*, 10(3), 2020. [doi](https://doi.org/10.1109/TCPMT.2020.2972019)
 - Jiang et al., "A novel physics-assisted genetic algorithm for decoupling capacitor optimization," *IEEE Trans. Microwave Theory and Techniques*, 72(8), 2024. [doi](https://doi.org/10.1109/TMTT.2024.3356575) (search-based)
 - Anderson et al., "Methodology for determining the placement of decoupling capacitors in a power distribution system," US Patent 6,789,241 B2, 2004. [patent](https://patents.google.com/patent/US6789241B2/en) (places decaps matched to resonance peaks; the resonance rule here is of this family)
 
-**Learning methods**
+<b>Learning methods</b>
 
 - Vaswani et al., "Attention is all you need," *NeurIPS*, 2017.
 - Shao et al., "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models," arXiv:2402.03300, 2024. (group-normalized advantage, GRPO)
