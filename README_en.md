@@ -147,7 +147,7 @@ Adding resonance features raises the success rate on unseen kinds; changing the 
 <div align="center">
 <img src="assets/all_kinds.png" width="800">
 
-<sub>Success rate (10×10, with harness). Bars: mean over seeds; whiskers: range over seeds. B-Park is without harness</sub>
+<sub>Success rate (%, 10×10, harness applied to every method). Bars: mean over seeds; whiskers: range over seeds</sub>
 </div>
 
 MoTT is the only learned method at or above 0.99 on all three kinds. The re-implemented prior methods drop to 0.02 on PCB boards for some seeds.
@@ -157,6 +157,7 @@ MoTT is the only learned method at or above 0.99 on all three kinds. The re-impl
 
 - `r2pk*`, `r0_coord*`, `bp_park*`, `bdf*`, `bm2_rlonly*` under [`runs/2026-10-29/`](runs/2026-10-29)
 - Decision rules: B1 [`e70de68`](https://github.com/jeehoo0507/R2E/commit/e70de68), N [`ce4422f`](https://github.com/jeehoo0507/R2E/commit/ce4422f)
+- The harness evaluation of B-Park was added after seeing its policy result (reported as post hoc). The plan was recorded before the run: [`bd69f36`](https://github.com/jeehoo0507/MoTT/commit/bd69f36), results [`aa92f10`](https://github.com/jeehoo0507/MoTT/commit/aa92f10)
 
 </details>
 
@@ -265,3 +266,15 @@ Methods named B- carry the architecture and inputs of the papers below into the 
 ## Limitations
 
 Synthetic boards only, up to 20×20 cells and three decap types per kind.
+
+## Environment
+
+| Item | Spec |
+|---|---|
+| GPU | NVIDIA RTX A5000 (24 GB), driver 595.99.02 |
+| CPU | Intel Xeon Gold 5218R @ 2.10 GHz (40 threads) |
+| RAM | 123 GB |
+| OS | Ubuntu 26.04.1 LTS |
+| Software | Python 3.14.4, PyTorch 2.14.1 (CUDA 13.0), NumPy 2.5.4 |
+
+The per-problem times in the report and in `docs/RESULTS.md` were measured on this server (server 1). Records from server 2, which has a different CPU, have their times left blank in `docs/RESULTS.md`.

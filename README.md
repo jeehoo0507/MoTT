@@ -149,7 +149,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 <div align="center">
 <img src="assets/all_kinds.png" width="800">
 
-<sub>성공률 (10×10, 하네스 적용). 막대는 seed 평균, 세로선은 seed별 범위. B-Park은 하네스 미적용</sub>
+<sub>성공률 (%, 10×10, 모든 방법에 하네스 적용). 막대는 seed 평균, 세로선은 seed별 범위</sub>
 </div>
 
 세 종류 모두에서 0.99 이상인 학습 방법은 MoTT뿐이었다. 선행 연구 재구현은 seed에 따라 PCB형 성공률이 0.02까지 떨어졌다.
@@ -159,6 +159,7 @@ A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
 - [`runs/2026-10-29/`](runs/2026-10-29)의 `r2pk*`, `r0_coord*`, `bp_park*`, `bdf*`, `bm2_rlonly*`
 - 판정 규칙: B1 [`e70de68`](https://github.com/jeehoo0507/R2E/commit/e70de68), N [`ce4422f`](https://github.com/jeehoo0507/R2E/commit/ce4422f)
+- B-Park의 하네스 평가는 정책 결과를 본 뒤 추가하였다(보고용). 평가 전에 계획을 기록하였다: [`bd69f36`](https://github.com/jeehoo0507/MoTT/commit/bd69f36), 결과 [`aa92f10`](https://github.com/jeehoo0507/MoTT/commit/aa92f10)
 
 </details>
 
