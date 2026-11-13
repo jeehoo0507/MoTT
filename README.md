@@ -6,7 +6,7 @@
 
 A Modal-Token Transformer for Generalizable Decoupling Capacitor Placement
 
-한국어 | [English](README_en.md)
+한국어 | [English](README_en.md) · [보고서 PDF](paper/MoTT_report.pdf)
 
 [소개](#소개) · [방법](#방법) · [주요 결과](#주요-결과) · [실험](#실험) · [실행](#실행) · [수치 확인 방법](#수치-확인-방법)
 
